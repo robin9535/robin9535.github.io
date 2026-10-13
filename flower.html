@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flower</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:#fdf2f8;color:#1f2937;overflow:hidden}
+  .card{text-align:center;padding:32px 24px;max-width:480px;width:100%}
+  .emoji{font-size:56px}
+  h1{font-size:clamp(24px,6vw,34px);margin:12px 0 28px}
+  .options{display:flex;gap:16px;justify-content:center;align-items:center;min-height:56px}
+  button{font:inherit;font-size:18px;font-weight:600;border:0;border-radius:12px;padding:12px 32px;cursor:pointer}
+  #yes{background:#16a34a;color:#fff;transition:left .15s ease,top .15s ease}
+  #no{background:#dc2626;color:#fff}
+  .overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;padding:16px;z-index:10}
+  .overlay.show{display:flex}
+  .modal{background:#fff;border-radius:16px;padding:28px 24px;max-width:380px;width:100%;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.3)}
+  .modal h2{margin:0 0 8px;color:#16a34a}
+  .modal p{margin:0 0 20px;font-size:18px}
+  .pay{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+  .bkash{background:#e2136e;color:#fff}
+  .nagad{background:#f6921e;color:#fff}
+  #result{font-size:22px;font-weight:700;color:#dc2626;margin-top:6px}
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="emoji">🌸</div>
+    <h1>Is Robin Vondo?</h1>
+    <div class="options">
+      <button id="yes">Yes</button>
+      <button id="no">No</button>
+    </div>
+  </div>
+
+  <div class="overlay" id="overlay">
+    <div class="modal">
+      <h2 id="title">You are correct.</h2>
+      <p id="msg">Now pay 499 taka to improve his life.</p>
+      <div class="pay" id="pay">
+        <button class="bkash" id="bkash">Pay with bKash</button>
+        <button class="nagad" id="nagad">Pay with Nagad</button>
+      </div>
+      <div id="result"></div>
+    </div>
+  </div>
+
+<script>
+  const yes = document.getElementById('yes');
+  const no = document.getElementById('no');
+  let floating = false;
+
+  function dodge(e){
+    if(e){ e.preventDefault(); e.stopPropagation(); }
+    if(!floating){
+      const r = yes.getBoundingClientRect();
+      const ph = document.createElement('div');
+      ph.style.width = r.width + 'px';
+      ph.style.height = r.height + 'px';
+      yes.parentNode.insertBefore(ph, yes);
+      yes.style.position = 'fixed';
+      yes.style.left = r.left + 'px';
+      yes.style.top = r.top + 'px';
+      floating = true;
+    }
+    const w = yes.offsetWidth, h = yes.offsetHeight;
+    const cur = yes.getBoundingClientRect();
+    let x, y, tries = 0;
+    do {
+      x = Math.random() * (window.innerWidth - w - 16) + 8;
+      y = Math.random() * (window.innerHeight - h - 16) + 8;
+      tries++;
+    } while (Math.hypot(x - cur.left, y - cur.top) < 150 && tries < 20);
+    yes.style.left = x + 'px';
+    yes.style.top = y + 'px';
+  }
+
+  ['mouseenter','mouseover','pointerenter','pointerdown','touchstart','mousedown','click','focus'].forEach(ev =>
+    yes.addEventListener(ev, dodge, {passive:false})
+  );
+
+  no.addEventListener('click', () => {
+    document.getElementById('overlay').classList.add('show');
+  });
+
+  function showResult(){
+    document.getElementById('title').textContent = '';
+    document.getElementById('msg').textContent = '';
+    document.getElementById('pay').style.display = 'none';
+    document.getElementById('result').textContent = 'Real Vondo is you 😎';
+  }
+  document.getElementById('bkash').addEventListener('click', showResult);
+  document.getElementById('nagad').addEventListener('click', showResult);
+</script>
+</body>
+</html>
