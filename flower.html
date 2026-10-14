@@ -1,99 +1,156 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Flower</title>
-<style>
-  *{box-sizing:border-box}
-  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
-    font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:#fdf2f8;color:#1f2937;overflow:hidden}
-  .card{text-align:center;padding:32px 24px;max-width:480px;width:100%}
-  .emoji{font-size:56px}
-  h1{font-size:clamp(24px,6vw,34px);margin:12px 0 28px}
-  .options{display:flex;gap:16px;justify-content:center;align-items:center;min-height:56px}
-  button{font:inherit;font-size:18px;font-weight:600;border:0;border-radius:12px;padding:12px 32px;cursor:pointer}
-  #yes{background:#16a34a;color:#fff;transition:left .15s ease,top .15s ease}
-  #no{background:#dc2626;color:#fff}
-  .overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;padding:16px;z-index:10}
-  .overlay.show{display:flex}
-  .modal{background:#fff;border-radius:16px;padding:28px 24px;max-width:380px;width:100%;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.3)}
-  .modal h2{margin:0 0 8px;color:#16a34a}
-  .modal p{margin:0 0 20px;font-size:18px}
-  .pay{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-  .bkash{background:#e2136e;color:#fff}
-  .nagad{background:#f6921e;color:#fff}
-  #result{font-size:22px;font-weight:700;color:#dc2626;margin-top:6px}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flower | Important Question</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; overflow: hidden; }
+        #yesBtn { transition: top 0.15s ease, left 0.15s ease; }
+    </style>
 </head>
-<body>
-  <div class="card">
-    <div class="emoji">🌸</div>
-    <h1>Is Robin Vondo?</h1>
-    <div class="options">
-      <button id="yes">Yes</button>
-      <button id="no">No</button>
+<body class="bg-gradient-to-br from-rose-100 via-pink-50 to-teal-100 min-h-screen flex flex-col justify-between items-center p-4 select-none">
+
+    <!-- Top Back Button -->
+    <div class="w-full max-w-4xl pt-4 flex justify-between items-center z-30">
+        <button onclick="goBackPage()" class="inline-flex items-center gap-2 text-slate-700 hover:text-rose-600 font-semibold bg-white/90 backdrop-blur px-5 py-2.5 rounded-full shadow-md transition cursor-pointer">
+            <i class="fas fa-arrow-left"></i> Back
+        </button>
+        <span class="text-rose-500 font-bold text-lg">🌸 Flower</span>
     </div>
-  </div>
 
-  <div class="overlay" id="overlay">
-    <div class="modal">
-      <h2 id="title">You are correct.</h2>
-      <p id="msg">Now pay 499 taka to improve his life.</p>
-      <div class="pay" id="pay">
-        <button class="bkash" id="bkash">Pay with bKash</button>
-        <button class="nagad" id="nagad">Pay with Nagad</button>
-      </div>
-      <div id="result"></div>
+    <!-- Main Question Card -->
+    <div class="bg-white/95 backdrop-blur-md p-8 sm:p-12 rounded-3xl shadow-2xl border border-pink-100 max-w-md w-full text-center relative z-20">
+        <div class="text-6xl mb-4 animate-bounce">🌸</div>
+        <h1 class="text-3xl sm:text-4xl font-bold text-slate-800 mb-3">Is Robin Vondo?</h1>
+        <p class="text-slate-500 text-sm mb-8">Be honest! Choose your answer carefully...</p>
+
+        <div class="flex justify-center items-center gap-6 h-16 relative">
+            <!-- Runaway YES Button -->
+            <button id="yesBtn" class="bg-rose-500 hover:bg-rose-600 text-white font-bold py-3 px-8 rounded-xl shadow-lg cursor-pointer">
+                Yes 😈
+            </button>
+
+            <!-- Clickable NO Button -->
+            <button id="noBtn" onclick="goToStep(1)" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-8 rounded-xl shadow-lg transition transform hover:scale-105 active:scale-95">
+                No 😇
+            </button>
+        </div>
     </div>
-  </div>
 
-<script>
-  const yes = document.getElementById('yes');
-  const no = document.getElementById('no');
-  let floating = false;
+    <div class="pb-4 text-xs text-slate-400">mdrokibul.me/flower</div>
 
-  function dodge(e){
-    if(e){ e.preventDefault(); e.stopPropagation(); }
-    if(!floating){
-      const r = yes.getBoundingClientRect();
-      const ph = document.createElement('div');
-      ph.style.width = r.width + 'px';
-      ph.style.height = r.height + 'px';
-      yes.parentNode.insertBefore(ph, yes);
-      yes.style.position = 'fixed';
-      yes.style.left = r.left + 'px';
-      yes.style.top = r.top + 'px';
-      floating = true;
-    }
-    const w = yes.offsetWidth, h = yes.offsetHeight;
-    const cur = yes.getBoundingClientRect();
-    let x, y, tries = 0;
-    do {
-      x = Math.random() * (window.innerWidth - w - 16) + 8;
-      y = Math.random() * (window.innerHeight - h - 16) + 8;
-      tries++;
-    } while (Math.hypot(x - cur.left, y - cur.top) < 150 && tries < 20);
-    yes.style.left = x + 'px';
-    yes.style.top = y + 'px';
-  }
+    <!-- Popup Modal -->
+    <div id="modalOverlay" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+        
+        <!-- First Popup: You are correct & Payment -->
+        <div id="step1Box" class="bg-white rounded-3xl p-8 max-w-sm w-full text-center shadow-2xl transform transition-all">
+            <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2 class="text-2xl font-bold text-slate-800 mb-2">You are correct! 🎉</h2>
+            <p class="text-slate-600 mb-6 leading-relaxed">
+                Now pay <span class="font-bold text-rose-600 text-lg">499 Taka</span> to improve his life.
+            </p>
+            <button onclick="goToStep(2)" class="w-full bg-gradient-to-r from-pink-600 to-rose-500 hover:from-pink-700 hover:to-rose-600 text-white font-bold py-3.5 px-6 rounded-xl shadow-lg transition transform hover:scale-105 flex items-center justify-center gap-2 mb-3">
+                <i class="fas fa-wallet"></i> Pay 499 BDT Now
+            </button>
+            <!-- Previous Option Button -->
+            <button onclick="window.history.back()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-600 font-semibold py-2.5 px-6 rounded-xl text-sm transition flex items-center justify-center gap-2">
+                <i class="fas fa-arrow-left"></i> Go Back
+            </button>
+        </div>
 
-  ['mouseenter','mouseover','pointerenter','pointerdown','touchstart','mousedown','click','focus'].forEach(ev =>
-    yes.addEventListener(ev, dodge, {passive:false})
-  );
+        <!-- Second Popup: Real Vondo is you -->
+        <div id="step2Box" class="bg-white rounded-3xl p-8 max-w-sm w-full text-center shadow-2xl hidden transform transition-all">
+            <div class="text-6xl mb-4">🤡</div>
+            <h2 class="text-3xl font-extrabold text-rose-600 mb-3">Real Vondo is you! 😂</h2>
+            <p class="text-slate-500 text-sm mb-6">টাকা দেওয়ার কথা শুনেই ক্লিক করেছো! আসল ভণ্ড তো তুমিই!</p>
+            <div class="flex flex-col gap-3">
+                <button onclick="window.history.back()" class="w-full bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold py-3 px-6 rounded-xl transition flex items-center justify-center gap-2">
+                    <i class="fas fa-arrow-left"></i> Previous Option
+                </button>
+                <button onclick="goToStep(0)" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-semibold py-3 px-6 rounded-xl transition">
+                    Start Over 🔄
+                </button>
+            </div>
+        </div>
 
-  no.addEventListener('click', () => {
-    document.getElementById('overlay').classList.add('show');
-  });
+    </div>
 
-  function showResult(){
-    document.getElementById('title').textContent = '';
-    document.getElementById('msg').textContent = '';
-    document.getElementById('pay').style.display = 'none';
-    document.getElementById('result').textContent = 'Contact 635 bidrohi hall 😎';
-  }
-  document.getElementById('bkash').addEventListener('click', showResult);
-  document.getElementById('nagad').addEventListener('click', showResult);
-</script>
+    <script>
+        const yesBtn = document.getElementById('yesBtn');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const step1Box = document.getElementById('step1Box');
+        const step2Box = document.getElementById('step2Box');
+
+        // Make the Yes button run away
+        function moveButton(e) {
+            if (e) e.preventDefault();
+            const btnWidth = yesBtn.offsetWidth || 100;
+            const btnHeight = yesBtn.offsetHeight || 50;
+
+            const maxX = window.innerWidth - btnWidth - 30;
+            const maxY = window.innerHeight - btnHeight - 30;
+
+            const randomX = Math.max(20, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(20, Math.floor(Math.random() * maxY));
+
+            yesBtn.style.position = 'fixed';
+            yesBtn.style.left = randomX + 'px';
+            yesBtn.style.top = randomY + 'px';
+            yesBtn.style.zIndex = '40';
+        }
+
+        yesBtn.addEventListener('mouseover', moveButton);
+        yesBtn.addEventListener('touchstart', moveButton, { passive: false });
+        yesBtn.addEventListener('click', moveButton);
+
+        // Render UI based on current step (0 = Question, 1 = Payment popup, 2 = Final popup)
+        function renderStep(step) {
+            if (step === 1) {
+                modalOverlay.classList.remove('hidden');
+                modalOverlay.classList.add('flex');
+                step1Box.classList.remove('hidden');
+                step2Box.classList.add('hidden');
+            } else if (step === 2) {
+                modalOverlay.classList.remove('hidden');
+                modalOverlay.classList.add('flex');
+                step1Box.classList.add('hidden');
+                step2Box.classList.remove('hidden');
+            } else {
+                modalOverlay.classList.add('hidden');
+                modalOverlay.classList.remove('flex');
+                yesBtn.style.position = 'static';
+            }
+        }
+
+        // Push state to browser history so Browser/Phone Back button works between options!
+        function goToStep(step) {
+            history.pushState({ step: step }, '');
+            renderStep(step);
+        }
+
+        // Listen for Browser/Phone Back button press
+        window.addEventListener('popstate', function(event) {
+            if (event.state && event.state.step !== undefined) {
+                renderStep(event.state.step);
+            } else {
+                renderStep(0);
+            }
+        });
+
+        // Top Back button logic (goes to previous page or main domain)
+        function goBackPage() {
+            if (document.referrer && document.referrer.includes(window.location.hostname)) {
+                window.history.back();
+            } else {
+                window.location.href = 'https://mdrokibul.me/';
+            }
+        }
+    </script>
 </body>
 </html>
