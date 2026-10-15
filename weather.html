@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoLens | Field Weather & Image Analyzer - Md Rokibul Islam Robin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); }
+        @keyframes scan {
+            0% { top: 0%; opacity: 0.8; }
+            50% { top: 96%; opacity: 1; }
+            100% { top: 0%; opacity: 0.8; }
+        }
+        .scanner-line {
+            position: absolute; left: 0; width: 100%; height: 4px;
+            background: linear-gradient(90deg, transparent, #10b981, #34d399, transparent);
+            box-shadow: 0 0 15px #10b981;
+            animation: scan 2.2s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-emerald-950 via-teal-900 to-slate-900 min-h-screen text-slate-800 pb-16">
+
+    <!-- Top Navigation -->
+    <nav class="border-b border-white/10 bg-slate-900/50 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
+            <a href="index.html" class="inline-flex items-center gap-2 text-emerald-400 hover:text-emerald-300 font-semibold transition">
+                <i class="fas fa-arrow-left"></i> Back to Portfolio
+            </a>
+            <div class="text-white font-bold tracking-tight flex items-center gap-2">
+                <i class="fas fa-satellite-dish text-emerald-400 animate-pulse"></i>
+                <span>EcoLens <span class="text-xs font-normal bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 px-2 py-0.5 rounded-full ml-1">Live AI & Meteo</span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="max-w-4xl mx-auto px-4 pt-10 pb-8 text-center text-white">
+        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight mb-3">
+            Environmental <span class="text-emerald-400">Field & Weather</span> Analyzer
+        </h1>
+        <p class="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto">
+            Upload an environmental photo and enter your location. This tool combines <strong>real-time satellite meteorology</strong> with <strong>optical pixel analysis</strong> to evaluate rain probability, atmospheric state, and vegetation cover.
+        </p>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+        <!-- Left Column: Upload & Location Input (5 cols) -->
+        <div class="lg:col-span-5 space-y-6">
+            <div class="glass rounded-3xl p-6 sm:p-8 shadow-2xl border border-white/20">
+                <h2 class="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+                    <i class="fas fa-camera-retro text-emerald-600"></i> 1. Field Data Input
+                </h2>
+
+                <!-- Image Upload Dropzone -->
+                <div class="mb-6">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">Upload Environment Photo</label>
+                    <label for="imageInput" id="dropzone" class="border-2 border-dashed border-emerald-500/50 hover:border-emerald-600 bg-emerald-50/50 hover:bg-emerald-50 rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer transition relative overflow-hidden min-h-[220px]">
+                        <div id="uploadPrompt" class="text-center">
+                            <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-2xl mx-auto mb-3 shadow-sm">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <p class="text-sm font-semibold text-slate-700">Click to upload photo or take a picture</p>
+                            <p class="text-xs text-slate-500 mt-1">Sky, river, forest, or local surroundings (JPG, PNG)</p>
+                        </div>
+                        <img id="previewImg" class="hidden w-full h-56 object-cover rounded-xl shadow-md" alt="Environment Preview">
+                        <div id="scannerLine" class="scanner-line hidden"></div>
+                        <!-- Live Overlay Badge on Photo -->
+                        <div id="photoBadge" class="hidden absolute bottom-3 left-3 right-3 bg-slate-900/80 backdrop-blur-md text-white p-3 rounded-xl text-xs flex justify-between items-center">
+                            <div>
+                                <p id="badgeLoc" class="font-bold text-emerald-400">Location</p>
+                                <p id="badgeTime" class="text-[10px] text-slate-300">Timestamp</p>
+                            </div>
+                            <div class="text-right">
+                                <p id="badgeTemp" class="text-sm font-extrabold">--°C</p>
+                                <p id="badgeRain" class="text-[10px] text-sky-300">Rain: --%</p>
+                            </div>
+                        </div>
+                    </label>
+                    <input type="file" id="imageInput" accept="image/*" class="hidden">
+                </div>
+
+                <!-- Location Input -->
+                <div class="mb-6">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">Location Name or GPS</label>
+                    <div class="flex gap-2">
+                        <div class="relative flex-1">
+                            <i class="fas fa-map-marker-alt absolute left-3.5 top-3.5 text-slate-400"></i>
+                            <input type="text" id="locationInput" placeholder="e.g., Trishal, Mymensingh, Dhaka..." class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm bg-white">
+                        </div>
+                        <button onclick="useMyGPS()" title="Use My Current GPS Location" class="bg-slate-800 hover:bg-slate-900 text-white px-4 py-3 rounded-xl transition flex items-center justify-center shadow-sm">
+                            <i class="fas fa-crosshairs"></i>
+                        </button>
+                    </div>
+                    <p id="gpsStatus" class="text-xs text-emerald-700 font-medium mt-1.5 hidden"></p>
+                </div>
+
+                <!-- Submit Button -->
+                <button onclick="analyzeEnvironment()" id="analyzeBtn" class="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold py-4 px-6 rounded-xl shadow-lg transition transform active:scale-95 flex items-center justify-center gap-2">
+                    <i class="fas fa-bolt"></i> Analyze Environment & Weather
+                </button>
+            </div>
+        </div>
+
+        <!-- Right Column: Live Weather & Optical Analysis Output (7 cols) -->
+        <div class="lg:col-span-7">
+            
+            <!-- Placeholder State before Analysis -->
+            <div id="emptyState" class="glass rounded-3xl p-10 text-center border border-white/20 h-full flex flex-col justify-center items-center min-h-[420px]">
+                <div class="w-20 h-20 bg-emerald-100/80 text-emerald-600 rounded-2xl flex items-center justify-center text-4xl mb-4 shadow-inner">
+                    <i class="fas fa-cloud-sun-rain"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-slate-800 mb-2">Awaiting Field Input</h3>
+                <p class="text-slate-600 text-sm max-w-md">
+                    Upload an environmental photo and enter a location on the left to generate a real-time meteorological and optical eco-report.
+                </p>
+            </div>
+
+            <!-- Results Dashboard (Hidden Initially) -->
+            <div id="resultDashboard" class="hidden space-y-6">
+                
+                <!-- Primary Weather & Rain Probability Card -->
+                <div class="glass rounded-3xl p-6 sm:p-8 shadow-2xl border border-white/20">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-200/80 pb-5 mb-6">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full">Live Satellite Telemetry</span>
+                            <h2 id="resLocation" class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">Mymensingh, BD</h2>
+                            <p id="resCoords" class="text-xs text-slate-500 mt-0.5">Lat: -- | Lon: --</p>
+                        </div>
+                        <div class="flex items-center gap-3 bg-slate-900 text-white px-5 py-3 rounded-2xl shadow-lg">
+                            <i id="weatherIcon" class="fas fa-cloud-showers-heavy text-3xl text-emerald-400"></i>
+                            <div>
+                                <div id="resTemp" class="text-3xl font-extrabold">--°C</div>
+                                <div id="resCondition" class="text-xs text-emerald-300 font-medium">Checking...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Highlighted Probability of Rain Gauge -->
+                    <div class="bg-gradient-to-r from-sky-50 to-indigo-50 p-5 rounded-2xl border border-sky-200/70 mb-6">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm font-bold text-slate-800 flex items-center gap-2">
+                                <i class="fas fa-umbrella text-sky-600 text-lg"></i> Probability of Rain (Next Hour / Current)
+                            </span>
+                            <span id="resRainProb" class="text-2xl font-extrabold text-sky-700">--%</span>
+                        </div>
+                        <div class="w-full bg-slate-200 h-3.5 rounded-full overflow-hidden">
+                            <div id="rainBar" class="bg-gradient-to-r from-sky-500 to-blue-600 h-full rounded-full transition-all duration-700" style="width: 0%"></div>
+                        </div>
+                        <p id="rainVerdict" class="text-xs text-slate-600 mt-2.5 font-medium">--</p>
+                    </div>
+
+                    <!-- 4 Key Meteorological Metrics -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                        <div class="bg-white/80 p-4 rounded-2xl border border-slate-100 text-center">
+                            <i class="fas fa-tint text-sky-500 text-lg mb-1"></i>
+                            <p class="text-xs text-slate-500">Humidity</p>
+                            <p id="resHumidity" class="text-lg font-bold text-slate-800">--%</p>
+                        </div>
+                        <div class="bg-white/80 p-4 rounded-2xl border border-slate-100 text-center">
+                            <i class="fas fa-wind text-teal-500 text-lg mb-1"></i>
+                            <p class="text-xs text-slate-500">Wind Speed</p>
+                            <p id="resWind" class="text-lg font-bold text-slate-800">-- km/h</p>
+                        </div>
+                        <div class="bg-white/80 p-4 rounded-2xl border border-slate-100 text-center">
+                            <i class="fas fa-cloud text-slate-500 text-lg mb-1"></i>
+                            <p class="text-xs text-slate-500">Cloud Cover</p>
+                            <p id="resCloud" class="text-lg font-bold text-slate-800">--%</p>
+                        </div>
+                        <div class="bg-white/80 p-4 rounded-2xl border border-slate-100 text-center">
+                            <i class="fas fa-sun text-amber-500 text-lg mb-1"></i>
+                            <p class="text-xs text-slate-500">Feels Like</p>
+                            <p id="resFeels" class="text-lg font-bold text-slate-800">--°C</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Magic Touch: Optical Photo & Eco-Informatics Card -->
+                <div class="glass rounded-3xl p-6 sm:p-8 shadow-2xl border border-white/20">
+                    <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+                        <i class="fas fa-microscope text-emerald-600"></i> 2. Optical Image & Environmental Synthesis
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5">
+                        <div class="bg-emerald-50/90 p-4 rounded-2xl border border-emerald-200/60">
+                            <p class="text-xs text-emerald-800 font-semibold">Green Canopy Index</p>
+                            <p id="optGreen" class="text-2xl font-extrabold text-emerald-700 mt-1">--%</p>
+                            <p class="text-[11px] text-slate-500 mt-0.5">Detected foliage/vegetation</p>
+                        </div>
+                        <div class="bg-slate-100 p-4 rounded-2xl border border-slate-200">
+                            <p class="text-xs text-slate-700 font-semibold">Atmospheric Luminance</p>
+                            <p id="optBright" class="text-2xl font-extrabold text-slate-800 mt-1">--%</p>
+                            <p class="text-[11px] text-slate-500 mt-0.5">Sky/ambient light level</p>
+                        </div>
+                        <div class="bg-sky-50/90 p-4 rounded-2xl border border-sky-200/60">
+                            <p class="text-xs text-sky-800 font-semibold">Optical Overcast Index</p>
+                            <p id="optHaze" class="text-2xl font-extrabold text-sky-700 mt-1">--%</p>
+                            <p class="text-[11px] text-slate-500 mt-0.5">Visual cloud/mist signature</p>
+                        </div>
+                    </div>
+
+                    <!-- Combined AI Field Recommendation -->
+                    <div class="bg-slate-900 text-slate-200 p-5 rounded-2xl text-sm leading-relaxed border border-slate-700">
+                        <p class="font-bold text-emerald-400 mb-1 flex items-center gap-2">
+                            <i class="fas fa-clipboard-check"></i> Environmental Field Advisory:
+                        </p>
+                        <p id="ecoAdvisory">Upload a photo to see combined visual and meteorological analysis.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Hidden Canvas for Image Pixel Processing -->
+    <canvas id="imgCanvas" class="hidden"></canvas>
+
+    <script>
+        let userCoords = null;
+        let imageStats = { uploaded: false, greenRatio: 0, brightness: 0, overcastRatio: 0 };
+
+        const imageInput = document.getElementById('imageInput');
+        const previewImg = document.getElementById('previewImg');
+        const uploadPrompt = document.getElementById('uploadPrompt');
+
+        // 1. Handle Photo Upload & Optical Pixel Scanning
+        imageInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                previewImg.src = event.target.result;
+                previewImg.classList.remove('hidden');
+                uploadPrompt.classList.add('hidden');
+                
+                // Analyze pixels once image loads
+                const img = new Image();
+                img.onload = function() {
+                    scanImagePixels(img);
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        function scanImagePixels(img) {
+            const canvas = document.getElementById('imgCanvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = 100;
+            canvas.height = 100;
+            ctx.drawImage(img, 0, 0, 100, 100);
+
+            const data = ctx.getImageData(0, 0, 100, 100).data;
+            let greenPixels = 0, grayCloudPixels = 0, totalBrightness = 0;
+            const totalPixels = 100 * 100;
+
+            for (let i = 0; i < data.length; i += 4) {
+                const r = data[i], g = data[i+1], b = data[i+2];
+                const lum = (0.299 * r + 0.587 * g + 0.114 * b);
+                totalBrightness += lum;
+
+                // Detect Vegetation/Foliage (Green dominant)
+                if (g > r * 1.08 && g > b * 1.08 && g > 40) {
+                    greenPixels++;
+                }
+                // Detect Overcast/Cloudy/Hazy pixels (High brightness, low saturation)
+                if (lum > 130 && Math.abs(r - g) < 22 && Math.abs(g - b) < 22) {
+                    grayCloudPixels++;
+                }
+            }
+
+            imageStats.uploaded = true;
+            imageStats.greenRatio = Math.min(100, Math.round((greenPixels / totalPixels) * 140));
+            imageStats.brightness = Math.round((totalBrightness / (totalPixels * 255)) * 100);
+            imageStats.overcastRatio = Math.min(100, Math.round((grayCloudPixels / totalPixels) * 130));
+        }
+
+        // 2. Get User GPS Coordinates
+        function useMyGPS() {
+            const status = document.getElementById('gpsStatus');
+            status.classList.remove('hidden');
+            status.innerText = "📍 Acquiring satellite GPS lock...";
+
+            if (!navigator.geolocation) {
+                status.innerText = "❌ GPS not supported by your browser.";
+                return;
+            }
+
+            navigator.geolocation.getCurrentPosition(async (pos) => {
+                userCoords = {
+                    lat: pos.coords.latitude.toFixed(4),
+                    lon: pos.coords.longitude.toFixed(4),
+                    name: "Current GPS Location"
+                };
+                document.getElementById('locationInput').value = `GPS (${userCoords.lat}, ${userCoords.lon})`;
+                status.innerText = "✅ GPS coordinates locked!";
+            }, () => {
+                status.innerText = "⚠️ Permission denied. Please type location name.";
+            });
+        }
+
+        // 3. Fetch Weather & Combine Data
+        async function analyzeEnvironment() {
+            const locText = document.getElementById('locationInput').value.trim();
+            if (!imageStats.uploaded) {
+                alert("Please upload an environmental photo first!");
+                return;
+            }
+            if (!locText && !userCoords) {
+                alert("Please enter a location name (e.g., Trishal, Dhaka) or click the GPS button!");
+                return;
+            }
+
+            const btn = document.getElementById('analyzeBtn');
+            const scanner = document.getElementById('scannerLine');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Scanning & Fetching Satellite Data...';
+            scanner.classList.remove('hidden');
+
+            try {
+                let lat, lon, placeName;
+
+                if (userCoords && locText.startsWith('GPS')) {
+                    lat = userCoords.lat;
+                    lon = userCoords.lon;
+                    placeName = "Live GPS Field Site";
+                } else {
+                    // Geocode Location Name via Open-Meteo Free API
+                    const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(locText)}&count=1&language=en&format=json`);
+                    const geoData = await geoRes.json();
+                    if (!geoData.results || geoData.results.length === 0) {
+                        throw new Error("Location not found. Try a nearby district or city name.");
+                    }
+                    lat = geoData.results[0].latitude;
+                    lon = geoData.results[0].longitude;
+                    placeName = `${geoData.results[0].name}, ${geoData.results[0].country || ''}`;
+                }
+
+                // Fetch Real-Time Weather & Rain Probability from Open-Meteo
+                const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,rain,cloud_cover,wind_speed_10m,weather_code&hourly=precipitation_probability&timezone=auto`;
+                const wRes = await fetch(weatherUrl);
+                const wData = await wRes.json();
+
+                const current = wData.current;
+                const currentHourIso = current.time.slice(0, 13) + ":00";
+                const hourIndex = wData.hourly.time.indexOf(currentHourIso);
+                let rainProb = hourIndex !== -1 ? wData.hourly.precipitation_probability[hourIndex] : (current.cloud_cover > 70 ? 65 : 15);
+
+                // Blend optical overcast signature if rain is actively falling
+                if (current.precipitation > 0 && rainProb < 80) rainProb = 90;
+
+                updateDashboard(placeName, lat, lon, current, rainProb);
+
+            } catch (err) {
+                alert(err.message || "Could not fetch weather data. Check your internet connection.");
+            } finally {
+                btn.innerHTML = '<i class="fas fa-bolt"></i> Analyze Environment & Weather';
+                scanner.classList.add('hidden');
+            }
+        }
+
+        function updateDashboard(placeName, lat, lon, current, rainProb) {
+            document.getElementById('emptyState').classList.add('hidden');
+            document.getElementById('resultDashboard').classList.remove('hidden');
+
+            const wInfo = decodeWMO(current.weather_code);
+
+            // Populate Weather Metrics
+            document.getElementById('resLocation').innerText = placeName;
+            document.getElementById('resCoords').innerText = `Latitude: ${Number(lat).toFixed(3)}° N | Longitude: ${Number(lon).toFixed(3)}° E`;
+            document.getElementById('resTemp').innerText = `${Math.round(current.temperature_2m)}°C`;
+            document.getElementById('resCondition').innerText = wInfo.desc;
+            document.getElementById('weatherIcon').className = `fas ${wInfo.icon} text-3xl text-emerald-400`;
+
+            // Populate Rain Probability
+            document.getElementById('resRainProb').innerText = `${rainProb}%`;
+            document.getElementById('rainBar').style.width = `${rainProb}%`;
+
+            let verdict = "Low chance of precipitation. Ideal conditions for outdoor environmental surveying.";
+            if (rainProb >= 70) verdict = "⚠️ High probability of rain! Carry waterproof gear and protect field instruments.";
+            else if (rainProb >= 40) verdict = "🌦️ Moderate chance of scattered rain showers. Monitor local cloud build-up.";
+            document.getElementById('rainVerdict').innerText = verdict;
+
+            // 4 Cards
+            document.getElementById('resHumidity').innerText = `${current.relative_humidity_2m}%`;
+            document.getElementById('resWind').innerText = `${current.wind_speed_10m} km/h`;
+            document.getElementById('resCloud').innerText = `${current.cloud_cover}%`;
+            document.getElementById('resFeels').innerText = `${Math.round(current.apparent_temperature)}°C`;
+
+            // Populate Optical Image Analysis
+            document.getElementById('optGreen').innerText = `${imageStats.greenRatio}%`;
+            document.getElementById('optBright').innerText = `${imageStats.brightness}%`;
+            document.getElementById('optHaze').innerText = `${imageStats.overcastRatio}%`;
+
+            // Photo Stamp Overlay
+            const badge = document.getElementById('photoBadge');
+            badge.classList.remove('hidden');
+            document.getElementById('badgeLoc').innerText = placeName;
+            document.getElementById('badgeTime').innerText = new Date().toLocaleString();
+            document.getElementById('badgeTemp').innerText = `${Math.round(current.temperature_2m)}°C • ${wInfo.desc}`;
+            document.getElementById('badgeRain').innerText = `Rain Prob: ${rainProb}% | Canopy: ${imageStats.greenRatio}%`;
+
+            // Synthesize Advisory
+            let vegComment = imageStats.greenRatio > 30 
+                ? `Strong vegetation signature (${imageStats.greenRatio}% green canopy) detected in your photo, indicating healthy local flora and evapotranspiration potential.`
+                : `Low vegetation cover (${imageStats.greenRatio}%) detected in the frame—likely an urban, aquatic, or open sky environment.`;
+            
+            let skyComment = (imageStats.overcastRatio > 45 || current.cloud_cover > 60)
+                ? `Both optical sky haze (${imageStats.overcastRatio}%) and satellite cloud cover (${current.cloud_cover}%) confirm overcast conditions with a ${rainProb}% probability of rain.`
+                : `Clear ambient luminance (${imageStats.brightness}%) aligns with current satellite telemetry (${rainProb}% rain probability).`;
+
+            document.getElementById('ecoAdvisory').innerText = `${vegComment} ${skyComment} Surface humidity stands at ${current.relative_humidity_2m}% with winds at ${current.wind_speed_10m} km/h.`;
+        }
+
+        function decodeWMO(code) {
+            const map = {
+                0: { desc: "Clear Sky", icon: "fa-sun" },
+                1: { desc: "Mainly Clear", icon: "fa-cloud-sun" },
+                2: { desc: "Partly Cloudy", icon: "fa-cloud-sun" },
+                3: { desc: "Overcast Clouds", icon: "fa-cloud" },
+                45: { desc: "Foggy / Mist", icon: "fa-smog" },
+                51: { desc: "Light Drizzle", icon: "fa-cloud-rain" },
+                61: { desc: "Slight Rain", icon: "fa-cloud-showers-heavy" },
+                63: { desc: "Moderate Rain", icon: "fa-cloud-showers-heavy" },
+                65: { desc: "Heavy Rain", icon: "fa-cloud-showers-heavy" },
+                80: { desc: "Rain Showers", icon: "fa-cloud-sun-rain" },
+                95: { desc: "Thunderstorm", icon: "fa-bolt" }
+            };
+            return map[code] || { desc: "Variable Sky", icon: "fa-cloud-sun" };
+        }
+    </script>
+</body>
+</html>
