@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JKKNIU & ESE Portal | Md Rokibul Islam Robin</title>
+<meta name="description" content="Official Jatiya Kabi Kazi Nazrul Islam University (JKKNIU) and Environmental Science and Engineering department links in one searchable place.">
+<meta name="theme-color" content="#0E2A2F">
+<link rel="canonical" href="https://mdrokibul.me/portal.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="site.css">
+<style>
+.search{display:flex;gap:10px;align-items:center;margin-top:26px;max-width:640px;background:var(--card);border-radius:999px;padding:6px 8px 6px 20px;border:2px solid transparent;box-shadow:0 8px 30px rgba(0,0,0,.25)}
+.search:focus-within{border-color:var(--silt)}
+.search i{color:var(--river)}
+.search input{flex:1;min-width:0;border:0;background:transparent;font:inherit;font-size:1.05rem;color:var(--ink);padding:10px 4px;outline:none}
+.search kbd{font:600 .8rem var(--display);padding:3px 9px;border-radius:6px;border:1px solid var(--line);color:var(--ink-soft)}
+.search button{border:0;background:var(--mist);color:var(--ink);width:36px;height:36px;border-radius:50%;cursor:pointer}
+.bar-row{position:sticky;top:64px;z-index:20;background:var(--mist);border-bottom:1px solid var(--line);padding:12px 0}
+.chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:thin;padding-bottom:2px}
+.chip{flex:none;font-family:var(--display);font-weight:600;font-size:.92rem;padding:7px 16px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.chip[aria-pressed=true]{background:var(--river);border-color:var(--river);color:#fff}
+.count{font-family:var(--display);font-size:.95rem;color:var(--ink-soft);margin:22px 0 4px}
+.group{margin-top:34px}
+.group h2{font-size:1.5rem;font-weight:800;display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.group h2 small{font:600 .85rem var(--display);color:var(--ink-soft);background:var(--card);border:1px solid var(--line);padding:2px 10px;border-radius:999px}
+.group .note{font-size:.95rem;color:var(--ink-soft);margin-bottom:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.link{position:relative;display:flex;align-items:center;gap:12px;padding:14px 48px 14px 16px;border-radius:14px;background:var(--card);border:1px solid var(--line);text-decoration:none;transition:transform .15s,border-color .15s,box-shadow .15s}
+.link:hover{transform:translateY(-3px);border-color:var(--river);box-shadow:0 10px 24px rgba(0,0,0,.1)}
+.link i.ic{width:38px;height:38px;flex:none;display:grid;place-items:center;border-radius:10px;background:var(--mist);color:var(--river)}
+.link b{display:block;font-family:var(--display);font-weight:600;line-height:1.25;font-size:1rem}
+.link small{display:block;font-size:.82rem;color:var(--ink-soft);margin-top:2px}
+.star{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;border:0;background:transparent;color:var(--ink-soft);cursor:pointer;font-size:1rem}
+.star:hover{background:var(--mist)}
+.star[aria-pressed=true]{color:var(--silt)}
+.empty{margin-top:40px;padding:30px;border:2px dashed var(--line);border-radius:16px;text-align:center;color:var(--ink-soft)}
+.verified{margin-top:46px;font-size:.95rem;color:var(--ink-soft);border-top:1px solid var(--line);padding-top:18px}
+</style>
+</head>
+<body>
+<div class="progress" id="progress" aria-hidden="true"></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav" id="nav" data-solid>
+  <div class="wrap">
+    <a class="brand" href="index.html">Robin<span>.</span>me</a>
+    <nav class="links" id="links" aria-label="Main">
+      <a href="index.html">Home</a>
+      <a class="tool on" href="portal.html" aria-current="page">JKKNIU Portal</a>
+      <a class="tool" href="sound-meter.html">Sound Meter</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <div class="tools">
+      <button class="icon-btn" id="theme" type="button" aria-label="Switch to dark theme"><i class="fa-solid fa-moon"></i></button>
+      <button class="icon-btn burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="links"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</header>
+
+<div class="page-hero">
+  <div class="wrap">
+    <h1>JKKNIU &amp; ESE portal</h1>
+    <p>Links to Jatiya Kabi Kazi Nazrul Islam University and the Department of Environmental Science and Engineering, all in one place. Search, filter, or star the ones you use most.</p>
+    <label class="search">
+      <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+      <span class="sr" style="position:absolute;left:-999px">Search links</span>
+      <input id="q" type="search" placeholder="Search: notice, library, admission, calendar..." autocomplete="off">
+      <kbd title="Press / to search">/</kbd>
+    </label>
+  </div>
+</div>
+
+<div class="bar-row"><div class="wrap"><div class="chips" id="chips" role="group" aria-label="Filter by category"></div></div></div>
+
+<main id="main">
+  <div class="wrap">
+    <p class="count" id="count" aria-live="polite"></p>
+    <div id="results"></div>
+    <p class="verified">All links go to official pages on <a href="https://jkkniu.edu.bd" target="_blank" rel="noopener noreferrer">jkkniu.edu.bd</a> (plus the Ministry of Education), as listed on the university's own site on 15 October 2026. This is an unofficial student-made shortcut page and is not run by the university. If a link is broken or missing, <a href="mailto:rokibul2480@gmail.com">email me</a>.</p>
+  </div>
+</main>
+<footer>&copy; 2026 Md Rokibul Islam Robin &middot; <a href="index.html">Back to home</a></footer>
+
+<script src="site.js"></script>
+<script>
+(function(){
+  var U='https://jkkniu.edu.bd';
+  var DATA=[
+    {c:'Department of ESE',n:'The department says:',items:[
+      ['Department home',U+'/department/ESE','fa-house'],
+      ['Vision and mission',U+'/department/ESE/vision-mission','fa-bullseye'],
+      ['Message from the head',U+'/department/ESE/message-from-head','fa-message'],
+      ['Faculty members',U+'/department/ESE/faculty-members','fa-chalkboard-user'],
+      ['Officers',U+'/department/ESE/officer','fa-user-tie'],
+      ['Staff',U+'/department/ESE/staff','fa-users'],
+      ['Curriculum',U+'/department/ESE/curriculum','fa-book-open'],
+      ['Department notices',U+'/department/ESE/notices','fa-bell'],
+      ['Student notices (ESE)',U+'/department/ESE/notices/student','fa-user-graduate'],
+      ['Research',U+'/department/ESE/research','fa-flask'],
+      ['Publications',U+'/department/ESE/publication','fa-newspaper'],
+      ['Journal',U+'/department/ESE/journal','fa-book'],
+      ['Seminars and workshops',U+'/department/ESE/seminars','fa-people-group'],
+      ['Citizens charter (ESE)',U+'/department/ESE/citizen-charter','fa-file-contract'],
+      ['Department contact',U+'/department/ESE/contact','fa-envelope']
+    ]},
+    {c:'Notices',items:[
+      ['All notices',U+'/notice-board','fa-bell'],
+      ['Student notices',U+'/notice-board/student','fa-user-graduate'],
+      ['Teacher notices',U+'/notice-board/teacher','fa-chalkboard-user'],
+      ['Admission notices',U+'/notice-board/admission','fa-door-open'],
+      ['Office orders',U+'/notice-board/office-order','fa-file-signature'],
+      ['News',U+'/news','fa-newspaper'],
+      ['Events',U+'/events','fa-calendar-days'],
+      ['Workshops and seminars',U+'/seminars','fa-people-group']
+    ]},
+    {c:'Academics',items:[
+      ['Academic calendar',U+'/academic-calender','fa-calendar-check'],
+      ['Academic programs',U+'/academic-program','fa-graduation-cap'],
+      ['Faculties',U+'/faculties','fa-sitemap'],
+      ['Faculty of Science and Engineering',U+'/faculty/faculty-of-science-and-engineering','fa-atom'],
+      ['All departments',U+'/departments','fa-building'],
+      ['Institutes',U+'/institutes','fa-landmark'],
+      ['Central library',U+'/central-library','fa-book-open-reader'],
+      ['Controller of Examinations',U+'/office/controller-of-examinations','fa-pen-to-square'],
+      ['Departmental forms',U+'/departmental-forms','fa-file-lines'],
+      ['Download forms',U+'/download-forms','fa-download'],
+      ['Tuition fees',U+'/tuition-fees','fa-coins'],
+      ['Faculty directory',U+'/faculty-directory','fa-address-book']
+    ]},
+    {c:'Admission',items:[
+      ['Undergraduate admission',U+'/undergraduate','fa-door-open'],
+      ['Postgraduate admission',U+'/postgraduate','fa-user-graduate'],
+      ['Admission notices',U+'/notice-board/admission','fa-bell'],
+      ['Tuition fees',U+'/tuition-fees','fa-coins']
+    ]},
+    {c:'Offices and halls',items:[
+      ['Registrar office',U+'/office/registrar-office','fa-stamp'],
+      ['Proctor office',U+'/office/proctor-office','fa-shield-halved'],
+      ['Student counselling and guidance',U+'/office/student-counselling-and-guidance','fa-hand-holding-heart'],
+      ['Medical center',U+'/office/medical-center','fa-kit-medical'],
+      ['ICT Cell',U+'/office/ict-cell','fa-computer'],
+      ['Accounts and finance',U+'/office/accounts-and-finance','fa-calculator'],
+      ['International affairs',U+'/office/international-affairs','fa-earth-asia'],
+      ['Public relations office',U+'/office/public-relations-office','fa-bullhorn'],
+      ['Physical education',U+'/office/physical-education','fa-futbol'],
+      ['Treasurer office',U+'/office/treasurer-office','fa-vault'],
+      ['Vice Chancellor office',U+'/office/vice-chancellor-office','fa-building-columns'],
+      ['All offices',U+'/offices','fa-sitemap'],
+      ['Bidrohi Hall',U+'/office/bidrohi-hall','fa-hotel'],
+      ['Agnibina Hall',U+'/office/agnibina-hall','fa-hotel'],
+      ['Dolon Chanpa Hall',U+'/office/dolon-chanpa-hall','fa-hotel'],
+      ['Shiulimala Hall',U+'/office/shiulimala-hall','fa-hotel']
+    ]},
+    {c:'Research',items:[
+      ['Research',U+'/research','fa-flask'],
+      ['Research activities',U+'/research-activities','fa-microscope'],
+      ['Research and Extension Center',U+'/institute/research-and-extension-center','fa-flask-vial'],
+      ['Submit a proposal to the R&E Center','https://researchcenter.jkkniu.edu.bd','fa-paper-plane'],
+      ['Institutional Review Board (IRB)','https://www.jkkniu.edu.bd/institute/institutional-review-board-irb','fa-scale-balanced'],
+      ['Articles',U+'/publications/article','fa-newspaper'],
+      ['Books',U+'/publications/book','fa-book'],
+      ['Conference papers',U+'/publications/conference','fa-people-group'],
+      ['Journals',U+'/journal','fa-book-journal-whills']
+    ]},
+    {c:'University',items:[
+      ['University home',U,'fa-house'],
+      ['Overview',U+'/overview','fa-circle-info'],
+      ['JKKNIU at a glance',U+'/at-a-glance','fa-chart-simple'],
+      ['Campus map',U+'/campus','fa-map-location-dot'],
+      ['Gallery',U+'/gallery','fa-images'],
+      ['Organogram',U+'/organogram','fa-sitemap'],
+      ['Vice Chancellor',U+'/vice-chancellor','fa-user-tie'],
+      ['Alumni',U+'/alumni','fa-users'],
+      ['Citizens charter',U+'/citizen-charter','fa-file-contract'],
+      ['Annual performance agreement (APA)',U+'/apa','fa-file-lines'],
+      ['Careers',U+'/career','fa-briefcase'],
+      ['Contact the university',U+'/contact-us','fa-envelope'],
+      ['Login',U+'/login','fa-right-to-bracket'],
+      ['Ministry of Education','https://moedu.gov.bd/','fa-landmark-flag']
+    ]}
+  ];
+  DATA[0].n='Environmental Science and Engineering, Faculty of Science and Engineering.';
+
+  var $=function(id){return document.getElementById(id)};
+  var q=$('q'), res=$('results'), chipsEl=$('chips'), countEl=$('count');
+  var cat='All', favs=[];
+  try{ favs=JSON.parse(localStorage.getItem('portalFavs')||'[]'); }catch(e){}
+  function saveFavs(){ try{ localStorage.setItem('portalFavs',JSON.stringify(favs)); }catch(e){} }
+  function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
+  function host(u){ return u.replace(/^https?:\/\/(www\.)?/,'').split('/')[0]; }
+
+  function chipList(){ return ['All','Starred'].concat(DATA.map(function(d){return d.c;})); }
+  function drawChips(){
+    chipsEl.innerHTML='';
+    chipList().forEach(function(name){
+      var b=document.createElement('button'); b.type='button'; b.className='chip'; b.setAttribute('aria-pressed',String(name===cat));
+      b.textContent = name==='Starred' ? 'Starred ('+favs.length+')' : name;
+      b.addEventListener('click',function(){ cat=name; render(); });
+      chipsEl.appendChild(b);
+    });
+  }
+  function card(it){
+    var starred=favs.indexOf(it[1])>-1;
+    return '<div class="link"><a href="'+esc(it[1])+'" target="_blank" rel="noopener noreferrer" style="display:contents">'+
+      '<i class="fa-solid '+it[2]+' ic" aria-hidden="true"></i><span><b>'+esc(it[0])+'</b><small>'+esc(host(it[1]))+'</small></span></a>'+
+      '<button class="star" type="button" data-u="'+esc(it[1])+'" aria-pressed="'+starred+'" aria-label="'+(starred?'Remove star from ':'Star ')+esc(it[0])+'"><i class="fa-'+(starred?'solid':'regular')+' fa-star"></i></button></div>';
+  }
+  function render(){
+    drawChips();
+    var term=q.value.trim().toLowerCase(), total=0, html='';
+    // build a flat map so Starred can show across categories
+    var seen={};
+    DATA.forEach(function(g){
+      if(cat!=='All' && cat!=='Starred' && cat!==g.c) return;
+      var items=g.items.filter(function(it){
+        if(cat==='Starred' && (favs.indexOf(it[1])<0 || seen[it[1]])) return false;
+        if(term && (it[0]+' '+g.c+' '+it[1]).toLowerCase().indexOf(term)<0) return false;
+        return true;
+      });
+      if(cat==='Starred') items.forEach(function(it){ seen[it[1]]=1; });
+      if(!items.length) return;
+      total+=items.length;
+      html+='<section class="group" style="padding:0"><h2>'+esc(g.c)+' <small>'+items.length+'</small></h2>'+(g.n?'<p class="note">'+esc(g.n)+'</p>':'')+'<div class="grid">'+items.map(card).join('')+'</div></section>';
+    });
+    if(!total){
+      html='<div class="empty"><p><b>'+(cat==='Starred'&&!term?'Nothing starred yet.':'No links match "'+esc(q.value)+'".')+'</b></p><p>'+(cat==='Starred'&&!term?'Tap the star on any link to keep it here for next time.':'Try a shorter word, or choose All.')+'</p></div>';
+    }
+    res.innerHTML=html;
+    countEl.textContent = total ? total+' link'+(total>1?'s':'')+(term?' for "'+q.value.trim()+'"':'') : '';
+  }
+  res.addEventListener('click',function(e){
+    var b=e.target.closest('.star'); if(!b) return;
+    var u=b.getAttribute('data-u'), i=favs.indexOf(u);
+    if(i>-1) favs.splice(i,1); else favs.push(u);
+    saveFavs(); render();
+  });
+  q.addEventListener('input',render);
+  document.addEventListener('keydown',function(e){
+    if(e.key==='/' && document.activeElement!==q && !/input|textarea/i.test(document.activeElement.tagName)){ e.preventDefault(); q.focus(); }
+    if(e.key==='Escape' && document.activeElement===q){ q.value=''; render(); }
+  });
+  render();
+})();
+</script>
+</body>
+</html>

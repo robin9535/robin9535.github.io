@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sound Level Meter | Md Rokibul Islam Robin</title>
+<meta name="description" content="Measure noise in decibels with your phone's microphone. Live level, 10-second measurements, calibration, and a comparison with Bangladesh's noise limits.">
+<meta name="theme-color" content="#0E2A2F">
+<link rel="canonical" href="https://mdrokibul.me/sound-meter.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="site.css">
+<style>
+main section{padding:0}
+.stage{margin-top:-28px;position:relative;z-index:2}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:clamp(20px,4vw,36px);box-shadow:0 14px 40px rgba(0,0,0,.12)}
+.panel + .panel{margin-top:22px}
+.panel h2{font-size:1.5rem;font-weight:800;margin-bottom:6px}
+.panel .sub{font-size:.98rem;color:var(--ink-soft);margin-bottom:16px}
+.status{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;justify-content:space-between}
+.badge2{font-family:var(--display);font-weight:600;font-size:.85rem;padding:4px 12px;border-radius:999px;border:1px solid var(--line);background:var(--mist);color:var(--ink-soft)}
+.badge2.cal{border-color:var(--good);color:var(--good)}
+.badge2.live{border-color:var(--bad);color:var(--bad)}
+.readout{display:flex;align-items:baseline;gap:12px;margin:10px 0 2px;flex-wrap:wrap}
+.readout .num{font-family:var(--display);font-weight:800;font-size:clamp(4rem,16vw,7rem);line-height:1;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.readout .unit{font-family:var(--display);font-weight:600;font-size:1.4rem;color:var(--ink-soft)}
+.readout .cat{font-family:var(--display);font-weight:600;font-size:1.15rem;padding:4px 14px;border-radius:999px;background:var(--mist);border:1px solid var(--line)}
+.lvl-good .num,.lvl-good .cat{color:var(--good)} .lvl-warn .num,.lvl-warn .cat{color:var(--warn)} .lvl-bad .num,.lvl-bad .cat{color:var(--bad)}
+.gauge{position:relative;height:16px;border-radius:999px;background:var(--line);overflow:hidden;margin:18px 0 4px}
+.gauge i{position:absolute;inset:0;background:linear-gradient(90deg,var(--good) 0%,var(--good) 30%,var(--warn) 55%,var(--bad) 100%);clip-path:inset(0 100% 0 0);transition:clip-path .12s linear}
+.ticks{display:flex;justify-content:space-between;font:600 .78rem var(--display);color:var(--ink-soft)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:22px}
+@media (max-width:640px){.stats{grid-template-columns:1fr 1fr}}
+.stat{padding:12px 14px;border-radius:12px;background:var(--mist);border:1px solid var(--line)}
+.stat small{display:block;font:600 .8rem var(--display);color:var(--ink-soft)}
+.stat b{font-family:var(--display);font-weight:800;font-size:1.6rem;font-variant-numeric:tabular-nums}
+canvas#hist{width:100%;height:140px;display:block;margin-top:18px;border-radius:12px;background:var(--mist);border:1px solid var(--line)}
+.controls{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;align-items:center}
+.btn.go{background:var(--river);border-color:var(--river);color:#fff}
+.btn.go:hover{filter:brightness(1.1)}
+.btn.stop{background:var(--bad);border-color:var(--bad);color:#fff}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.btn.dark{color:var(--ink)}
+input[type=text],input[type=number]{font:inherit;font-size:1rem;padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:var(--mist);color:var(--ink);min-width:0}
+.place{flex:1 1 200px}
+.err{display:none;margin-top:16px;padding:14px 16px;border-radius:12px;border:2px solid var(--bad);color:var(--ink);background:color-mix(in srgb,var(--bad) 10%,var(--card));font-size:1rem}
+.err.show{display:block}
+.ten{display:none;margin-top:18px;padding:16px;border-radius:14px;border:2px solid var(--river)}
+.ten.show{display:block}
+.ten .bar{height:8px;border-radius:99px;background:var(--line);overflow:hidden;margin:8px 0}
+.ten .bar i{display:block;height:100%;width:0;background:var(--river)}
+.ten .res{font-family:var(--display);font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:1rem}
+th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:600 .85rem var(--display);color:var(--ink-soft)}
+td b{font-family:var(--display)}
+.chip2{display:inline-block;font:600 .8rem var(--display);padding:2px 10px;border-radius:999px;border:1px solid var(--line);margin-left:6px;color:var(--ink-soft)}
+.chip2.over{border-color:var(--bad);color:var(--bad)} .chip2.ok{border-color:var(--good);color:var(--good)}
+.tablewrap{overflow-x:auto}
+.how{padding-left:1.2em;color:var(--ink-soft);font-size:1rem} .how li+li{margin-top:.4em}
+.warn-note{font-size:.95rem;color:var(--ink-soft);margin-top:12px}
+.cal-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:12px}
+.cal-row input{width:110px}
+.sr{position:absolute;left:-999px}
+.empty-log{color:var(--ink-soft);font-size:1rem;padding:8px 0}
+.pagefoot{height:60px}
+</style>
+</head>
+<body>
+<div class="progress" id="progress" aria-hidden="true"></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav" id="nav" data-solid>
+  <div class="wrap">
+    <a class="brand" href="index.html">Robin<span>.</span>me</a>
+    <nav class="links" id="links" aria-label="Main">
+      <a href="index.html">Home</a>
+      <a class="tool" href="portal.html">JKKNIU Portal</a>
+      <a class="tool on" href="sound-meter.html" aria-current="page">Sound Meter</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <div class="tools">
+      <button class="icon-btn" id="theme" type="button" aria-label="Switch to dark theme"><i class="fa-solid fa-moon"></i></button>
+      <button class="icon-btn burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="links"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</header>
+
+<div class="page-hero">
+  <div class="wrap">
+    <h1>Sound level meter</h1>
+    <p>Use your phone's microphone to estimate noise in decibels. Good for quick field checks and for comparing places. It is not a certified instrument, so calibrate it first if the number matters.</p>
+  </div>
+</div>
+
+<main id="main">
+<div class="wrap stage">
+
+  <section class="panel" aria-labelledby="meter-h">
+    <div class="status">
+      <h2 id="meter-h">Live level</h2>
+      <span><span class="badge2" id="calBadge">Uncalibrated estimate</span> <span class="badge2" id="liveBadge" hidden>Listening</span></span>
+    </div>
+
+    <div id="readout" class="readout lvl-good" aria-hidden="false">
+      <span class="num" id="num">--</span><span class="unit">dB(A)</span><span class="cat" id="cat">Not started</span>
+    </div>
+
+    <div class="gauge" aria-hidden="true"><i id="gaugeFill"></i></div>
+    <div class="ticks" aria-hidden="true"><span>30</span><span>50</span><span>70</span><span>90</span><span>110</span></div>
+
+    <div class="stats">
+      <div class="stat"><small>Average (LAeq)</small><b id="sAvg">--</b></div>
+      <div class="stat"><small>Lowest</small><b id="sMin">--</b></div>
+      <div class="stat"><small>Highest</small><b id="sMax">--</b></div>
+      <div class="stat"><small>Time</small><b id="sTime">0:00</b></div>
+    </div>
+
+    <canvas id="hist" aria-label="Chart of the sound level over the last minute" role="img"></canvas>
+
+    <div class="controls">
+      <button class="btn go" id="startBtn" type="button"><i class="fa-solid fa-microphone"></i> <span id="startTxt">Start listening</span></button>
+      <button class="btn dark" id="tenBtn" type="button"><i class="fa-solid fa-stopwatch"></i> Measure 10 seconds</button>
+      <button class="btn dark" id="resetBtn" type="button"><i class="fa-solid fa-rotate-left"></i> Reset stats</button>
+    </div>
+    <div class="controls" style="margin-top:12px">
+      <input class="place" id="place" type="text" placeholder="Place or note, e.g. Library entrance" maxlength="60" aria-label="Place or note for the measurement">
+      <button class="btn dark" id="logBtn" type="button"><i class="fa-solid fa-plus"></i> Add to log</button>
+    </div>
+
+    <div class="ten" id="ten" role="status" aria-live="polite">
+      <b id="tenTitle">Measuring...</b>
+      <div class="bar"><i id="tenBar"></i></div>
+      <div class="res" id="tenRes"></div>
+    </div>
+    <div class="err" id="err" role="alert"></div>
+    <p class="warn-note"><i class="fa-solid fa-lock" aria-hidden="true"></i> Sound is analysed on your phone only. Nothing is recorded, saved as audio or uploaded.</p>
+  </section>
+
+  <section class="panel" aria-labelledby="cal-h">
+    <h2 id="cal-h">Calibrate for better accuracy</h2>
+    <p class="sub">Every phone microphone is different, and some phones process the sound before the browser sees it. Without calibration the number can be 10 dB or more off.</p>
+    <ol class="how">
+      <li>Place your phone beside a reference sound level meter (or a calibrator) in a steady noise, such as a fan or a speaker playing noise.</li>
+      <li>Start listening here, wait a few seconds, then type the reference meter's reading below.</li>
+      <li>Press <b>Calibrate</b>. The offset is saved on this phone.</li>
+    </ol>
+    <div class="cal-row">
+      <label for="refDb" class="sr">Reference meter reading in decibels</label>
+      <input id="refDb" type="number" inputmode="decimal" min="20" max="130" step="0.1" placeholder="e.g. 70.0">
+      <button class="btn go" id="calBtn" type="button">Calibrate</button>
+      <button class="btn dark" id="calReset" type="button">Reset calibration</button>
+      <span class="badge2" id="offsetTxt"></span>
+    </div>
+  </section>
+
+  <section class="panel" aria-labelledby="cmp-h">
+    <h2 id="cmp-h">How does it compare?</h2>
+    <p class="sub">Bangladesh's Noise Pollution (Control) Rules 2006 set limits by type of area. Your average level is compared with each one live. Daytime is 6 am to 9 pm; the rest is night.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th scope="col">Area</th><th scope="col">Day limit</th><th scope="col">Night limit</th></tr></thead>
+        <tbody>
+          <tr><td><b>Silent areas</b><br><small>Includes hospitals, educational institutions and offices, and the area around them</small></td><td>50 dB <span class="chip2" id="c-s-d">--</span></td><td>40 dB <span class="chip2" id="c-s-n">--</span></td></tr>
+          <tr><td><b>Residential areas</b></td><td>55 dB <span class="chip2" id="c-r-d">--</span></td><td>45 dB <span class="chip2" id="c-r-n">--</span></td></tr>
+          <tr><td><b>Industrial areas</b></td><td>75 dB <span class="chip2" id="c-i-d">--</span></td><td>70 dB <span class="chip2" id="c-i-n">--</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="warn-note">Limits for mixed and commercial areas also exist in the Rules but are not shown here because I could not confirm them from a source. Figures as reported by <a href="https://www.thedailystar.net/law-our-rights/news/looking-the-noise-pollution-control-rules-1847602" target="_blank" rel="noopener noreferrer">The Daily Star</a>. A phone reading is not valid evidence for enforcement.</p>
+    <table style="margin-top:18px">
+      <thead><tr><th scope="col">Typical sound (approximate)</th><th scope="col">Level</th></tr></thead>
+      <tbody>
+        <tr><td>Whisper, very quiet room</td><td>30 to 40 dB</td></tr>
+        <tr><td>Normal conversation</td><td>about 60 dB</td></tr>
+        <tr><td>Busy road</td><td>70 to 85 dB</td></tr>
+        <tr><td>Long exposure at 85 dB or more can damage hearing</td><td>85 dB and above</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="panel" aria-labelledby="log-h">
+    <h2 id="log-h">Measurement log</h2>
+    <p class="sub">Add readings as you walk around a site, then copy or download them as a spreadsheet file. The log stays on this phone.</p>
+    <div id="logBox"></div>
+    <div class="controls">
+      <button class="btn dark" id="copyBtn" type="button"><i class="fa-solid fa-copy"></i> Copy as CSV</button>
+      <button class="btn dark" id="dlBtn" type="button"><i class="fa-solid fa-download"></i> Download CSV</button>
+      <button class="btn dark" id="clrBtn" type="button"><i class="fa-solid fa-trash"></i> Clear log</button>
+      <span id="logMsg" role="status" aria-live="polite" style="font-size:.95rem;color:var(--ink-soft)"></span>
+    </div>
+  </section>
+  <div class="pagefoot"></div>
+</div>
+</main>
+<footer>&copy; 2026 Md Rokibul Islam Robin &middot; <a href="index.html">Back to home</a></footer>
+
+<noscript><p style="padding:20px;text-align:center">The sound meter needs JavaScript.</p></noscript>
+<script src="site.js"></script>
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var N=2048, DEFAULT_OFFSET=120; // typical phone mics: about -26 dBFS at 94 dB SPL, so dB SPL = dBFS + 120 (a rough starting point)
+  var MIN_DB=30, MAX_DB=110, TAU=0.125; // "Fast" time weighting: 125 ms
+  var re=new Float64Array(N), im=new Float64Array(N), win=new Float64Array(N), rev=new Uint16Array(N), sw=0, gains=null;
+  for(var i=0;i<N;i++){ win[i]=0.5*(1-Math.cos(2*Math.PI*i/(N-1))); sw+=win[i]*win[i]; }
+  for(var b=11,j=0;j<N;j++){ rev[j]=(rev[j>>1]>>1)|((j&1)<<(b-1)); }
+
+  function fft(){
+    for(var len=2;len<=N;len<<=1){
+      var ang=-2*Math.PI/len, wr=Math.cos(ang), wi=Math.sin(ang), half=len>>1;
+      for(var i=0;i<N;i+=len){
+        var cr=1,ci=0;
+        for(var k=0;k<half;k++){
+          var a=i+k, c=a+half, vr=re[c]*cr-im[c]*ci, vi=re[c]*ci+im[c]*cr;
+          re[c]=re[a]-vr; im[c]=im[a]-vi; re[a]+=vr; im[a]+=vi;
+          var t=cr*wr-ci*wi; ci=cr*wi+ci*wr; cr=t;
+        }
+      }
+    }
+  }
+  function aWeightGain(f){ // IEC 61672 A-weighting as a linear power gain
+    if(f<=0) return 0;
+    var f2=f*f, ra=(12194*12194*f2*f2)/((f2+20.6*20.6)*Math.sqrt((f2+107.7*107.7)*(f2+737.9*737.9))*(f2+12194*12194));
+    var db=20*Math.log10(ra)+2.0; return Math.pow(10,db/10);
+  }
+  function weightedMs(buf){
+    for(var i=0;i<N;i++){ re[rev[i]]=buf[i]*win[i]; im[rev[i]]=0; }
+    fft();
+    var s=0, h=N>>1;
+    for(var k=1;k<h;k++) s+=2*gains[k]*(re[k]*re[k]+im[k]*im[k]);
+    s+=gains[h]*(re[h]*re[h]+im[h]*im[h]);
+    return s/(N*sw);
+  }
+
+  /* ---------- state ---------- */
+  var ctx=null, stream=null, analyser=null, buf=new Float32Array(N), raf=0, wake=null;
+  var running=false, last=0, fastMs=0, warm=0;
+  var offset=DEFAULT_OFFSET, calibrated=false;
+  try{ var so=localStorage.getItem('soundOffset'); if(so!==null && isFinite(+so)){ offset=+so; calibrated=true; } }catch(e){}
+  var st=null, hist=[], histT=0, ten=null, lastUi=0;
+  function newStats(){ return {sum:0,dur:0,min:Infinity,max:-Infinity,t0:performance.now(),secs:0}; }
+  st=newStats();
+  function db(ms){ return 10*Math.log10(ms+1e-12)+offset; }
+
+  /* ---------- ui helpers ---------- */
+  function fmt(v){ return isFinite(v) ? v.toFixed(0) : '--'; }
+  function lvlClass(v){ return v<55?'lvl-good':(v<75?'lvl-warn':'lvl-bad'); }
+  function cat(v){ return v<40?'Very quiet':(v<55?'Quiet':(v<70?'Moderate':(v<85?'Loud':'Very loud'))); }
+  function showErr(msg){ var e=$('err'); e.textContent=msg||''; e.classList.toggle('show',!!msg); }
+  function mmss(s){ s=Math.floor(s); return Math.floor(s/60)+':'+('0'+(s%60)).slice(-2); }
+  function setOffsetUi(){
+    $('offsetTxt').textContent='Offset '+(offset>=0?'+':'')+offset.toFixed(1)+' dB'+(calibrated?'':' (default)');
+    var cb=$('calBadge'); cb.textContent=calibrated?'Calibrated on this phone':'Uncalibrated estimate'; cb.classList.toggle('cal',calibrated);
+  }
+  setOffsetUi();
+
+  /* ---------- start / stop ---------- */
+  function start(){
+    showErr('');
+    if(!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)){
+      showErr('This browser cannot use the microphone here. Open this page over HTTPS (https://mdrokibul.me) in an up-to-date browser such as Chrome, Edge, Firefox or Safari.');
+      return Promise.reject();
+    }
+    var AC=window.AudioContext||window.webkitAudioContext;
+    if(!AC){ showErr('This browser does not support the Web Audio API.'); return Promise.reject(); }
+    return navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}}).then(function(s){
+      stream=s; ctx=new AC(); if(ctx.state==='suspended') ctx.resume();
+      var src=ctx.createMediaStreamSource(stream);
+      analyser=ctx.createAnalyser(); analyser.fftSize=N; analyser.smoothingTimeConstant=0;
+      src.connect(analyser);
+      gains=new Float64Array((N>>1)+1); for(var k=0;k<gains.length;k++) gains[k]=aWeightGain(k*ctx.sampleRate/N);
+      running=true; last=performance.now(); warm=0; fastMs=0;
+      st=newStats(); hist=[]; histT=0;
+      $('startTxt').textContent='Stop'; $('startBtn').classList.remove('go'); $('startBtn').classList.add('stop');
+      $('liveBadge').hidden=false;
+      if(navigator.wakeLock && navigator.wakeLock.request){ navigator.wakeLock.request('screen').then(function(w){wake=w;}).catch(function(){}); }
+      raf=requestAnimationFrame(loop);
+    }).catch(function(err){
+      var n=err&&err.name;
+      if(n==='NotAllowedError'||n==='SecurityError') showErr('Microphone access was blocked. Allow the microphone for this site in your browser settings, then press Start again.');
+      else if(n==='NotFoundError'||n==='OverconstrainedError') showErr('No microphone was found on this device.');
+      else if(err) showErr('The microphone could not be started'+(n?' ('+n+')':'')+'.');
+      throw err;
+    });
+  }
+  function stop(){
+    running=false; cancelAnimationFrame(raf);
+    if(stream) stream.getTracks().forEach(function(t){t.stop();});
+    if(ctx) ctx.close().catch(function(){});
+    if(wake){ try{wake.release();}catch(e){} wake=null; }
+    stream=null; ctx=null; analyser=null;
+    $('startTxt').textContent='Start listening'; $('startBtn').classList.add('go'); $('startBtn').classList.remove('stop');
+    $('liveBadge').hidden=true; $('cat').textContent='Stopped';
+    if(ten) endTen(true);
+  }
+  $('startBtn').addEventListener('click',function(){ if(running) stop(); else start().catch(function(){}); });
+  document.addEventListener('visibilitychange',function(){ if(document.hidden && running && !ten){ /* keep running only while visible to save battery */ stop(); } });
+
+  /* ---------- measurement loop ---------- */
+  function loop(now){
+    if(!running) return;
+    raf=requestAnimationFrame(loop);
+    analyser.getFloatTimeDomainData(buf);
+    var ms=weightedMs(buf), dt=Math.min(0.25,(now-last)/1000); last=now; warm+=dt;
+    fastMs += (ms-fastMs)*(1-Math.exp(-dt/TAU));
+    var lv=db(fastMs);
+    if(warm>0.6){
+      st.sum+=ms*dt; st.dur+=dt; st.secs=(now-st.t0)/1000;
+      if(lv<st.min) st.min=lv; if(lv>st.max) st.max=lv;
+      if(ten){ ten.sum+=ms*dt; ten.dur+=dt; if(lv<ten.min) ten.min=lv; if(lv>ten.max) ten.max=lv; tenTick(now); }
+      histT+=dt; if(histT>=0.25){ histT=0; hist.push(lv); if(hist.length>240) hist.shift(); drawHist(); }
+    }
+    if(now-lastUi>90){ lastUi=now; paint(lv); }
+  }
+  function paint(lv){
+    var shown = warm>0.6;
+    $('num').textContent = shown ? fmt(lv) : '--';
+    $('cat').textContent = shown ? cat(lv) : 'Listening...';
+    var r=$('readout'); r.className='readout '+(shown?lvlClass(lv):'lvl-good');
+    var p=Math.max(0,Math.min(1,(lv-MIN_DB)/(MAX_DB-MIN_DB)));
+    $('gaugeFill').style.clipPath='inset(0 '+((1-(shown?p:0))*100)+'% 0 0)';
+    var avg = st.dur>0 ? 10*Math.log10(st.sum/st.dur+1e-12)+offset : NaN;
+    $('sAvg').textContent=fmt(avg); $('sMin').textContent=isFinite(st.min)?fmt(st.min):'--'; $('sMax').textContent=isFinite(st.max)?fmt(st.max):'--';
+    $('sTime').textContent=mmss(st.secs);
+    compare(avg);
+  }
+  function chip(id,val,limit){ var el=$(id); if(!isFinite(val)){ el.textContent='--'; el.className='chip2'; return; }
+    var over=val>limit; el.textContent=over?'Over':'Within'; el.className='chip2 '+(over?'over':'ok'); }
+  function compare(avg){
+    chip('c-s-d',avg,50); chip('c-s-n',avg,40); chip('c-r-d',avg,55); chip('c-r-n',avg,45); chip('c-i-d',avg,75); chip('c-i-n',avg,70);
+  }
+
+  /* ---------- history chart ---------- */
+  var cv=$('hist'), cx=cv.getContext('2d');
+  function css(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+  function drawHist(){
+    var dpr=Math.min(window.devicePixelRatio||1,2), w=cv.clientWidth, h=cv.clientHeight;
+    if(cv.width!==Math.round(w*dpr)){ cv.width=Math.round(w*dpr); cv.height=Math.round(h*dpr); }
+    cx.setTransform(dpr,0,0,dpr,0,0); cx.clearRect(0,0,w,h);
+    var Y=function(v){ return h-6-(Math.max(MIN_DB,Math.min(MAX_DB,v))-MIN_DB)/(MAX_DB-MIN_DB)*(h-12); };
+    cx.font='600 11px sans-serif'; cx.textBaseline='bottom'; cx.setLineDash([4,4]); cx.lineWidth=1;
+    [[50,'50'],[75,'75']].forEach(function(l){ cx.strokeStyle=css('--line'); cx.beginPath(); cx.moveTo(0,Y(l[0])); cx.lineTo(w,Y(l[0])); cx.stroke(); cx.fillStyle=css('--ink-soft'); cx.fillText(l[1],4,Y(l[0])-2); });
+    cx.setLineDash([]);
+    if(hist.length<2) return;
+    cx.strokeStyle=css('--river'); cx.lineWidth=2; cx.lineJoin='round'; cx.beginPath();
+    hist.forEach(function(v,i){ var x=w-(hist.length-1-i)/240*w; if(i===0) cx.moveTo(x,Y(v)); else cx.lineTo(x,Y(v)); });
+    cx.stroke();
+  }
+  window.addEventListener('resize',drawHist); drawHist();
+
+  /* ---------- reset ---------- */
+  $('resetBtn').addEventListener('click',function(){ st=newStats(); hist=[]; histT=0; if(!running){ paint(NaN); $('num').textContent='--'; } drawHist(); });
+
+  /* ---------- 10-second measurement ---------- */
+  function tenTick(now){
+    var el=(now-ten.t0)/1000, p=Math.min(1,el/10);
+    $('tenBar').style.width=(p*100)+'%'; $('tenTitle').textContent='Measuring... '+Math.max(0,Math.ceil(10-el))+' s left';
+    if(el>=10) endTen(false);
+  }
+  function endTen(cancelled){
+    var t=ten; ten=null; if(!t) return;
+    if(cancelled || t.dur<=0){ $('ten').classList.remove('show'); return; }
+    var avg=10*Math.log10(t.sum/t.dur+1e-12)+offset;
+    $('tenTitle').textContent='10-second result';
+    $('tenBar').style.width='100%';
+    $('tenRes').textContent='Average '+avg.toFixed(1)+' dB(A)  |  lowest '+t.min.toFixed(1)+'  |  highest '+t.max.toFixed(1);
+    addLog({laeq:avg,min:t.min,max:t.max,secs:t.dur});
+  }
+  $('tenBtn').addEventListener('click',function(){
+    function go(){ ten={t0:performance.now(),sum:0,dur:0,min:Infinity,max:-Infinity}; $('ten').classList.add('show'); $('tenRes').textContent=''; $('tenBar').style.width='0'; }
+    if(running) go(); else start().then(go).catch(function(){});
+  });
+
+  /* ---------- calibration ---------- */
+  $('calBtn').addEventListener('click',function(){
+    var ref=parseFloat($('refDb').value);
+    if(!running||warm<1){ showErr('Start listening first and wait a few seconds, so there is a steady level to calibrate against.'); return; }
+    if(!isFinite(ref)||ref<20||ref>130){ showErr('Type the reference meter reading in dB, between 20 and 130.'); return; }
+    if(fastMs<=1e-12){ showErr('No sound is reaching the microphone. Check that it is not covered or muted.'); return; }
+    showErr('');
+    offset=ref-10*Math.log10(fastMs); calibrated=true;
+    try{ localStorage.setItem('soundOffset',String(offset)); }catch(e){}
+    st=newStats(); hist=[]; setOffsetUi();
+  });
+  $('calReset').addEventListener('click',function(){
+    offset=DEFAULT_OFFSET; calibrated=false; try{ localStorage.removeItem('soundOffset'); }catch(e){}
+    st=newStats(); hist=[]; setOffsetUi();
+  });
+
+  /* ---------- log ---------- */
+  var log=[]; try{ log=JSON.parse(localStorage.getItem('soundLog')||'[]'); if(!Array.isArray(log)) log=[]; }catch(e){ log=[]; }
+  function saveLog(){ try{ localStorage.setItem('soundLog',JSON.stringify(log)); }catch(e){} }
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function pad(n){ return ('0'+n).slice(-2); }
+  function stamp(d){ return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+' '+pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds()); }
+  function addLog(o){
+    log.push({t:stamp(new Date()),place:$('place').value.trim(),laeq:+o.laeq.toFixed(1),min:+o.min.toFixed(1),max:+o.max.toFixed(1),secs:Math.round(o.secs),cal:calibrated});
+    saveLog(); drawLog();
+  }
+  function drawLog(){
+    var box=$('logBox');
+    if(!log.length){ box.innerHTML='<p class="empty-log">No readings yet. Press <b>Measure 10 seconds</b> or <b>Add to log</b>.</p>'; return; }
+    box.innerHTML='<div class="tablewrap"><table><thead><tr><th scope="col">Time</th><th scope="col">Place</th><th scope="col">Average</th><th scope="col">Low</th><th scope="col">High</th><th scope="col">Seconds</th><th scope="col">Calibrated</th></tr></thead><tbody>'+
+      log.slice().reverse().map(function(r){ return '<tr><td>'+esc(r.t)+'</td><td>'+esc(r.place||'-')+'</td><td><b>'+r.laeq+'</b></td><td>'+r.min+'</td><td>'+r.max+'</td><td>'+r.secs+'</td><td>'+(r.cal?'Yes':'No')+'</td></tr>'; }).join('')+'</tbody></table></div>';
+  }
+  drawLog();
+  $('logBtn').addEventListener('click',function(){
+    if(st.dur<=0){ showErr('Start listening and wait a moment, then add a reading.'); return; }
+    showErr(''); addLog({laeq:10*Math.log10(st.sum/st.dur+1e-12)+offset,min:st.min,max:st.max,secs:st.dur});
+  });
+  function csv(){
+    var q=function(s){ s=String(s); return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s; };
+    return ['time,place,average_dBA,low_dBA,high_dBA,seconds,calibrated'].concat(log.map(function(r){ return [r.t,r.place,r.laeq,r.min,r.max,r.secs,r.cal?'yes':'no'].map(q).join(','); })).join('\n');
+  }
+  function msg(t){ $('logMsg').textContent=t; setTimeout(function(){ $('logMsg').textContent=''; },3000); }
+  $('copyBtn').addEventListener('click',function(){
+    if(!log.length){ msg('Nothing to copy yet.'); return; }
+    var text=csv();
+    if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(function(){msg('Copied.');},function(){msg('Copy was blocked. Use Download instead.');}); }
+    else msg('Copy is not available here. Use Download instead.');
+  });
+  $('dlBtn').addEventListener('click',function(){
+    if(!log.length){ msg('Nothing to download yet.'); return; }
+    var a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv()],{type:'text/csv'})); a.download='sound-log.csv'; document.body.appendChild(a); a.click(); a.remove();
+  });
+  $('clrBtn').addEventListener('click',function(){
+    if(!log.length) return;
+    if(window.confirm('Delete all '+log.length+' logged readings from this phone?')){ log=[]; saveLog(); drawLog(); }
+  });
+})();
+</script>
+</body>
+</html>
