@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Three-Cell Atmospheric Circulation Simulator | Md Rokibul Islam Robin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --estuary: #0E2A2F;
+            --estuary-2: #153c43;
+            --river: #237A82;
+            --moss: #4A8B6E;
+            --silt: #E5B869;
+        }
+        body {
+            font-family: 'Source Serif 4', serif;
+            background: radial-gradient(1100px 600px at 80% 10%, #1d5a5f 0%, transparent 65%), linear-gradient(160deg, var(--estuary) 0%, #091c20 100%);
+            color: #eaf3ee;
+        }
+        h1, h2, h3, h4, .font-display {
+            font-family: 'Bricolage Grotesque', sans-serif;
+        }
+        .glass-card {
+            background: rgba(21, 60, 67, 0.65);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        input[type=range] {
+            accent-color: #E5B869;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between pb-12">
+
+    <!-- Top Navigation -->
+    <header class="border-b border-white/10 bg-[#0E2A2F]/80 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
+            <a href="index.html" class="inline-flex items-center gap-2 text-[#E5B869] hover:text-white font-display font-semibold transition">
+                <i class="fas fa-arrow-left"></i> Back to Robin.me
+            </a>
+            <div class="font-display font-bold tracking-tight flex items-center gap-2 text-sm sm:text-base">
+                <i class="fas fa-globe-asia text-[#4A8B6E] animate-spin" style="animation-duration: 14s;"></i>
+                <span>Atmospheric SimLab <span class="hidden sm:inline-block text-xs font-normal bg-[#E5B869]/20 text-[#E5B869] border border-[#E5B869]/40 px-2.5 py-0.5 rounded-full ml-1">Meteorology & Climatology</span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Section -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 w-full">
+        
+        <!-- Title Header -->
+        <div class="text-center max-w-3xl mx-auto mb-8">
+            <span class="font-display text-xs uppercase tracking-widest px-3 py-1 rounded-full border border-white/20 text-[#cfe6dc] bg-white/5">Interactive Global Circulation Model</span>
+            <h1 class="text-3xl sm:text-5xl font-extrabold mt-3 mb-3 tracking-tight">
+                Three-Cell <span class="text-[#E5B869]">Atmospheric Circulation</span>
+            </h1>
+            <p class="text-slate-300 text-sm sm:text-base">
+                Explore how uneven solar radiation and Earth's rotation (Coriolis force) generate the <strong>Hadley, Ferrel, and Polar cells</strong>, jet streams, and the seasonal shift of the <strong>Bangladesh Monsoon</strong>.
+            </p>
+        </div>
+
+        <!-- Dashboard Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+            <!-- Left Column: Interactive Canvas Globe (7 Cols) -->
+            <div class="lg:col-span-7 glass-card rounded-3xl p-4 sm:p-6 shadow-2xl relative">
+                <div class="flex flex-wrap justify-between items-center gap-2 mb-3 px-2">
+                    <div class="flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-full bg-rose-500 inline-block"></span>
+                        <span class="text-xs font-display text-slate-300">Warm Rising Air (Low P)</span>
+                        <span class="w-3 h-3 rounded-full bg-sky-400 inline-block ml-3"></span>
+                        <span class="text-xs font-display text-slate-300">Cool Sinking Air (High P)</span>
+                    </div>
+                    <span class="text-xs font-display text-[#E5B869] bg-black/30 px-3 py-1 rounded-full">
+                        <i class="fas fa-hand-pointer mr-1"></i> Click any latitude zone on globe
+                    </span>
+                </div>
+
+                <!-- Canvas Container -->
+                <div class="w-full flex justify-center bg-[#071619] rounded-2xl border border-white/10 overflow-hidden relative">
+                    <canvas id="atmosCanvas" width="680" height="540" class="w-full max-w-[680px] h-auto cursor-pointer"></canvas>
+                </div>
+
+                <!-- Quick Preset Buttons -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-4">
+                    <button onclick="setPreset(0, 1)" class="font-display text-xs bg-white/10 hover:bg-[#E5B869] hover:text-slate-900 py-2.5 px-3 rounded-xl font-semibold transition">
+                        ⚖️ Equinox (0° Tilt)
+                    </button>
+                    <button onclick="setPreset(23.5, 1)" class="font-display text-xs bg-white/10 hover:bg-[#E5B869] hover:text-slate-900 py-2.5 px-3 rounded-xl font-semibold transition">
+                        🌧️ June (BD Monsoon)
+                    </button>
+                    <button onclick="setPreset(-23.5, 1)" class="font-display text-xs bg-white/10 hover:bg-[#E5B869] hover:text-slate-900 py-2.5 px-3 rounded-xl font-semibold transition">
+                        ❄️ Dec (BD Dry Winter)
+                    </button>
+                    <button onclick="setPreset(0, 0)" class="font-display text-xs bg-white/10 hover:bg-rose-500 hover:text-white py-2.5 px-3 rounded-xl font-semibold transition">
+                        🛑 No Rotation (1-Cell)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Column: Controls & Telemetry (5 Cols) -->
+            <div class="lg:col-span-5 space-y-5">
+
+                <!-- Sliders Control Card -->
+                <div class="glass-card rounded-3xl p-6 shadow-xl">
+                    <h2 class="text-xl font-extrabold mb-4 flex items-center gap-2 text-[#E5B869]">
+                        <i class="fas fa-sliders-h"></i> Simulation Parameters
+                    </h2>
+
+                    <!-- Solar Declination / Season Slider -->
+                    <div class="mb-6">
+                        <div class="flex justify-between items-center font-display text-sm mb-1.5">
+                            <label for="tiltSlider" class="font-semibold text-white">1. Solar Declination (Season / ITCZ Shift)</label>
+                            <span id="tiltLabel" class="text-[#E5B869] font-bold">0.0° (Equinox)</span>
+                        </div>
+                        <input id="tiltSlider" type="range" min="-23.5" max="23.5" step="0.5" value="0" class="w-full h-2 bg-slate-800 rounded-lg cursor-pointer">
+                        <div class="flex justify-between text-[11px] font-display text-slate-400 mt-1">
+                            <span>Dec 21 (-23.5° S)</span>
+                            <span>Equinox (0°)</span>
+                            <span>Jun 21 (+23.5° N)</span>
+                        </div>
+                    </div>
+
+                    <!-- Earth Rotation / Coriolis Slider -->
+                    <div class="mb-5">
+                        <div class="flex justify-between items-center font-display text-sm mb-1.5">
+                            <label for="rotSlider" class="font-semibold text-white">2. Earth Rotation Rate ($\Omega$ / Coriolis)</label>
+                            <span id="rotLabel" class="text-emerald-300 font-bold">1.0x Normal</span>
+                        </div>
+                        <input id="rotSlider" type="range" min="0" max="2" step="0.1" value="1" class="w-full h-2 bg-slate-800 rounded-lg cursor-pointer">
+                        <div class="flex justify-between text-[11px] font-display text-slate-400 mt-1">
+                            <span>0x (Single Hadley Cell)</span>
+                            <span>1.0x (3 Cells)</span>
+                            <span>2.0x (Strong Deflection)</span>
+                        </div>
+                    </div>
+
+                    <!-- Layer Toggles -->
+                    <div class="flex flex-wrap gap-3 pt-2 border-t border-white/10 font-display text-xs">
+                        <label class="inline-flex items-center gap-2 cursor-pointer">
+                            <input type="checkbox" id="showJets" checked class="accent-[#E5B869] rounded">
+                            <span>Show Jet Streams</span>
+                        </label>
+                        <label class="inline-flex items-center gap-2 cursor-pointer">
+                            <input type="checkbox" id="showBD" checked class="accent-[#E5B869] rounded">
+                            <span>Highlight Bangladesh (24°N)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Dynamic South Asia / Bangladesh Impact Box -->
+                <div class="glass-card rounded-3xl p-6 shadow-xl border-l-4 border-l-[#E5B869]">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="font-display text-xs uppercase tracking-wider text-[#E5B869] font-bold">Regional Telemetry • 24°N Latitude</span>
+                        <span id="bdSeasonBadge" class="font-display text-xs bg-emerald-500/20 text-emerald-300 px-2.5 py-0.5 rounded-full border border-emerald-400/30">Transition Season</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-1">Impact on Bangladesh & South Asia</h3>
+                    <p id="bdMonsoonText" class="text-sm text-slate-300 leading-relaxed">
+                        With the sun directly over the Equator (0°), the ITCZ sits near the equatorial Indian Ocean. Bangladesh experiences warm transition weather between winter trades and summer monsoons.
+                    </p>
+                </div>
+
+                <!-- Selected Cell / Latitude Inspector Card -->
+                <div class="glass-card rounded-3xl p-6 shadow-xl">
+                    <div class="flex justify-between items-start mb-3">
+                        <div>
+                            <span id="cellTag" class="font-display text-xs uppercase tracking-wider text-sky-300 font-bold">0° – 30° Latitude</span>
+                            <h3 id="cellTitle" class="text-2xl font-extrabold text-white mt-0.5">Hadley Cell (Thermally Direct)</h3>
+                        </div>
+                        <span id="cellPressure" class="font-display text-xs font-bold bg-white/10 px-3 py-1 rounded-full text-[#E5B869]">ITCZ: ~1008 hPa</span>
+                    </div>
+                    <p id="cellDesc" class="text-sm text-slate-300 leading-relaxed mb-4">
+                        Driven directly by intense solar heating near the Equator. Warm, moist air rises at the Intertropical Convergence Zone (ITCZ), releases heavy convective rainfall, travels poleward at 12–15 km altitude, and sinks around 30° N/S at the Subtropical Highs (Horse Latitudes).
+                    </p>
+                    <div class="grid grid-cols-2 gap-3 font-display text-xs">
+                        <div class="bg-black/25 p-3 rounded-xl border border-white/5">
+                            <span class="text-slate-400 block">Surface Wind Belt</span>
+                            <strong id="cellWind" class="text-white text-sm">NE & SE Trade Winds</strong>
+                        </div>
+                        <div class="bg-black/25 p-3 rounded-xl border border-white/5">
+                            <span class="text-slate-400 block">Dominant Climate</span>
+                            <strong id="cellBiome" class="text-emerald-300 text-sm">Equatorial Rainforest & 30° Deserts</strong>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="max-w-7xl mx-auto px-4 pt-10 text-center text-xs text-slate-400 font-display">
+        Designed for Environmental Science & Engineering Research • <a href="https://mdrokibul.me" class="text-[#E5B869] hover:underline">Md Rokibul Islam Robin</a>
+    </footer>
+
+    <script>
+        const canvas = document.getElementById('atmosCanvas');
+        const ctx = canvas.getContext('2d');
+        const tiltSlider = document.getElementById('tiltSlider');
+        const rotSlider = document.getElementById('rotSlider');
+        const showJets = document.getElementById('showJets');
+        const showBD = document.getElementById('showBD');
+
+        let solarTilt = 0;      // -23.5 to +23.5 degrees
+        let rotRate = 1.0;      // 0.0 to 2.0
+        let animPhase = 0;      // Animation tick
+        let selectedCell = 'hadley';
+
+        const cellData = {
+            hadley: {
+                tag: "0° – 30° N & S Latitude",
+                title: "Hadley Cell (Thermally Direct)",
+                pressure: "Equatorial Low (~1008 hPa) → Subtropical High (~1022 hPa)",
+                desc: "Driven by intense equatorial solar heating. Warm, humid air rises at the ITCZ (creating thunderstorm towers), diverges poleward in the upper troposphere, cools radiatively, and subsides around 30° N/S—creating clear skies and major desert belts.",
+                wind: "Trade Winds (Easterlies)",
+                biome: "Rainforests (0°) & Subtropical Deserts (30°)"
+            },
+            ferrel: {
+                tag: "30° – 60° N & S Latitude",
+                title: "Ferrel Cell (Thermally Indirect / Eddy-Driven)",
+                pressure: "Subtropical High (~1022 hPa) → Subpolar Low (~995 hPa)",
+                desc: "Acts like a mechanical ball-bearing positioned between the Hadley and Polar cells. Sinking air at 30° flows poleward at the surface and is deflected east by the Coriolis force, forming the Prevailing Westerlies and baroclinic mid-latitude cyclones.",
+                wind: "Prevailing Westerlies (SW in NH)",
+                biome: "Temperate Forests, Steppe & Storm Tracks"
+            },
+            polar: {
+                tag: "60° – 90° N & S Latitude",
+                title: "Polar Cell (Thermally Direct)",
+                pressure: "Polar High (~1030 hPa) → Subpolar Low (~995 hPa)",
+                desc: "Frigid, dense air sinks over the North and South Poles, creating persistent high pressure. Surface air flows equatorward toward 60°, where it collides with warmer Ferrel air along the Polar Front, rising to complete the loop.",
+                wind: "Polar Easterlies (NE in NH)",
+                biome: "Tundra, Taiga (60°) & Ice Cap Deserts (90°)"
+            },
+            single: {
+                tag: "0° – 90° N & S (Non-Rotating Earth)",
+                title: "Single-Cell Hadley Model (George Hadley, 1735)",
+                pressure: "Equatorial Low → Polar High",
+                desc: "Without Earth's rotation (Coriolis parameter f = 0), air experiences no east-west deflection. Warm air rises at the Equator, travels all the way to the Poles aloft, sinks at 90°, and returns directly southward/northward along the surface.",
+                wind: "Direct Meridional Winds (N → S / S → N)",
+                biome: "Wet Equator & Frozen Arid Poles"
+            }
+        };
+
+        function setPreset(tilt, rot) {
+            tiltSlider.value = tilt;
+            rotSlider.value = rot;
+            updateControls();
+        }
+
+        function updateControls() {
+            solarTilt = parseFloat(tiltSlider.value);
+            rotRate = parseFloat(rotSlider.value);
+
+            // Update Labels
+            let seasonName = "Equinox";
+            if (solarTilt > 12) seasonName = "NH Summer / Monsoon";
+            else if (solarTilt > 3) seasonName = "NH Spring";
+            else if (solarTilt < -12) seasonName = "NH Winter / Dry";
+            else if (solarTilt < -3) seasonName = "NH Autumn";
+            document.getElementById('tiltLabel').innerText = `${solarTilt > 0 ? '+' : ''}${solarTilt.toFixed(1)}° (${seasonName})`;
+
+            let rotText = `${rotRate.toFixed(1)}x Normal`;
+            if (rotRate === 0) rotText = "0.0x (No Coriolis)";
+            else if (rotRate > 1.3) rotText = `${rotRate.toFixed(1)}x Fast Spin`;
+            document.getElementById('rotLabel').innerText = rotText;
+
+            // Update Bangladesh / 24°N Telemetry
+            const bdBadge = document.getElementById('bdSeasonBadge');
+            const bdText = document.getElementById('bdMonsoonText');
+            if (rotRate < 0.2) {
+                bdBadge.innerText = "Hypothetical Non-Rotating";
+                bdBadge.className = "font-display text-xs bg-rose-500/20 text-rose-300 px-2.5 py-0.5 rounded-full border border-rose-400/30";
+                bdText.innerText = "With zero Coriolis force, trade winds and monsoons vanish. Air flows strictly north-to-south at the surface toward the thermal equator.";
+            } else if (solarTilt >= 10) {
+                bdBadge.innerText = "🌧️ Active SW Monsoon (Jun–Sep)";
+                bdBadge.className = "font-display text-xs bg-sky-500/20 text-sky-300 px-2.5 py-0.5 rounded-full border border-sky-400/30";
+                bdText.innerText = "The ITCZ shifts north toward the Tibetan Plateau & Bengal Delta (~20°N–25°N). Southern Hemisphere SE Trade Winds cross the Equator, deflect right (Coriolis), and surge into Bangladesh as moisture-laden Southwest Monsoon winds.";
+            } else if (solarTilt <= -10) {
+                bdBadge.innerText = "☀️ Cool Dry Winter (Dec–Feb)";
+                bdBadge.className = "font-display text-xs bg-amber-500/20 text-amber-300 px-2.5 py-0.5 rounded-full border border-amber-400/30";
+                bdText.innerText = "The ITCZ retreats south of the Equator. Bangladesh lies under the sinking branch of the northern Hadley Cell, experiencing dry Northeast Trade Winds (Northeast Monsoon) blowing from continental Asia toward the Bay of Bengal.";
+            } else {
+                bdBadge.innerText = "⚡ Pre/Post-Monsoon Transition";
+                bdBadge.className = "font-display text-xs bg-emerald-500/20 text-emerald-300 px-2.5 py-0.5 rounded-full border border-emerald-400/30";
+                bdText.innerText = "The ITCZ sits near the Equator. Strong solar heating over Bengal combined with upper-level westerlies frequently triggers convective Nor'westers (Kalbaishakhi thunderstorms).";
+            }
+
+            // Update Inspector if rotation = 0
+            if (rotRate < 0.15) {
+                populateInspector('single');
+            } else if (selectedCell === 'single') {
+                populateInspector('hadley');
+            } else {
+                populateInspector(selectedCell);
+            }
+        }
+
+        function populateInspector(key) {
+            selectedCell = key;
+            const info = cellData[key];
+            document.getElementById('cellTag').innerText = info.tag;
+            document.getElementById('cellTitle').innerText = info.title;
+            document.getElementById('cellPressure').innerText = info.pressure;
+            document.getElementById('cellDesc').innerText = info.desc;
+            document.getElementById('cellWind').innerText = info.wind;
+            document.getElementById('cellBiome').innerText = info.biome;
+        }
+
+        tiltSlider.addEventListener('input', updateControls);
+        rotSlider.addEventListener('input', updateControls);
+
+        // Click on Canvas to select cell
+        canvas.addEventListener('click', function(e) {
+            const rect = canvas.getBoundingClientRect();
+            const scaleY = canvas.height / rect.height;
+            const clickY = (e.clientY - rect.top) * scaleY;
+            const cy = canvas.height / 2;
+            const R = 185;
+
+            const normY = (cy - clickY) / R; // -1 to +1
+            if (Math.abs(normY) <= 1.15) {
+                if (rotRate < 0.15) {
+                    populateInspector('single');
+                    return;
+                }
+                const lat = Math.abs(Math.asin(Math.max(-1, Math.min(1, normY))) * (180 / Math.PI));
+                if (lat < 30) populateInspector('hadley');
+                else if (lat < 60) populateInspector('ferrel');
+                else populateInspector('polar');
+            }
+        });
+
+        // Convert Latitude (deg) to Canvas Angle (radians, where 0 is right equator, -PI/2 is North Pole)
+        function latToRad(latDeg) {
+            return -(latDeg * Math.PI) / 180;
+        }
+
+        // Draw curved arrow helper
+        function drawCurvedWindArrow(x1, y1, cx, cy, x2, y2, color) {
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.quadraticCurveTo(cx, cy, x2, y2);
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 2.2;
+            ctx.stroke();
+
+            // Arrowhead at x2, y2
+            const angle = Math.atan2(y2 - cy, x2 - cx);
+            ctx.beginPath();
+            ctx.moveTo(x2, y2);
+            ctx.lineTo(x2 - 8 * Math.cos(angle - 0.45), y2 - 8 * Math.sin(angle - 0.45));
+            ctx.lineTo(x2 - 8 * Math.cos(angle + 0.45), y2 - 8 * Math.sin(angle + 0.45));
+            ctx.closePath();
+            ctx.fillStyle = color;
+            ctx.fill();
+        }
+
+        // Draw an external atmospheric circulation cell loop on the right or left side of the globe
+        function drawCellLoop(cx, cy, R, latStart, latEnd, isDirect, side, label) {
+            const rInner = R + 12;
+            const rOuter = R + 58;
+            const a1 = latToRad(latStart);
+            const a2 = latToRad(latEnd);
+            const aMid = (a1 + a2) / 2;
+
+            // Draw faint cell track
+            ctx.save();
+            ctx.beginPath();
+            if (side === 'right') {
+                ctx.arc(cx, cy, rInner, a1, a2, latEnd > latStart);
+                ctx.arc(cx, cy, rOuter, a2, a1, latEnd <= latStart);
+            } else {
+                const la1 = Math.PI - a1;
+                const la2 = Math.PI - a2;
+                ctx.arc(cx, cy, rInner, la1, la2, latEnd <= latStart);
+                ctx.arc(cx, cy, rOuter, la2, la1, latEnd > latStart);
+            }
+            ctx.closePath();
+            ctx.fillStyle = isDirect ? 'rgba(229, 184, 105, 0.08)' : 'rgba(56, 189, 248, 0.08)';
+            ctx.fill();
+            ctx.strokeStyle = 'rgba(255,255,255,0.18)';
+            ctx.lineWidth = 1.2;
+            ctx.stroke();
+
+            // Animate 6 particles around the loop
+            const numDots = 6;
+            for (let i = 0; i < numDots; i++) {
+                let t = ((animPhase * 0.008) + (i / numDots)) % 1;
+                if (!isDirect) t = 1 - t; // Reverse for indirect cell
+
+                let px, py, isWarm;
+                // 4 segments: 0-0.15 rising at latStart, 0.15-0.5 aloft to latEnd, 0.5-0.65 sinking at latEnd, 0.65-1.0 surface back to latStart
+                if (t < 0.15) {
+                    const p = t / 0.15;
+                    const rad = rInner + p * (rOuter - rInner);
+                    const ang = side === 'right' ? a1 : (Math.PI - a1);
+                    px = cx + rad * Math.cos(ang);
+                    py = cy + rad * Math.sin(ang);
+                    isWarm = true;
+                } else if (t < 0.5) {
+                    const p = (t - 0.15) / 0.35;
+                    const lat = latStart + p * (latEnd - latStart);
+                    const ang = side === 'right' ? latToRad(lat) : (Math.PI - latToRad(lat));
+                    px = cx + rOuter * Math.cos(ang);
+                    py = cy + rOuter * Math.sin(ang);
+                    isWarm = p < 0.5;
+                } else if (t < 0.65) {
+                    const p = (t - 0.5) / 0.15;
+                    const rad = rOuter - p * (rOuter - rInner);
+                    const ang = side === 'right' ? a2 : (Math.PI - a2);
+                    px = cx + rad * Math.cos(ang);
+                    py = cy + rad * Math.sin(ang);
+                    isWarm = false;
+                } else {
+                    const p = (t - 0.65) / 0.35;
+                    const lat = latEnd - p * (latEnd - latStart);
+                    const ang = side === 'right' ? latToRad(lat) : (Math.PI - latToRad(lat));
+                    px = cx + rInner * Math.cos(ang);
+                    py = cy + rInner * Math.sin(ang);
+                    isWarm = p > 0.6;
+                }
+
+                ctx.beginPath();
+                ctx.arc(px, py, 3.5, 0, Math.PI * 2);
+                ctx.fillStyle = isWarm ? '#f43f5e' : '#38bdf8';
+                ctx.fill();
+            }
+
+            // Label on right side cells
+            if (side === 'right' && label) {
+                const labelRad = rOuter + 18;
+                const lx = cx + labelRad * Math.cos(aMid);
+                const ly = cy + labelRad * Math.sin(aMid);
+                ctx.font = "600 11px 'Bricolage Grotesque', sans-serif";
+                ctx.fillStyle = "#eaf3ee";
+                ctx.textAlign = "left";
+                ctx.fillText(label, lx, ly + 4);
+            }
+            ctx.restore();
+        }
+
+        function renderSimulation() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const cx = canvas.width / 2 - 15;
+            const cy = canvas.height / 2;
+            const R = 175;
+
+            // Seasonal shift in degrees (ITCZ shifts ~0.55x of solar declination)
+            const shift = solarTilt * 0.55;
+
+            // 1. Draw Sun Rays from Left/Right or Top indicator
+            const sunLatRad = latToRad(solarTilt);
+            const sunX = 38;
+            const sunY = cy + R * Math.sin(sunLatRad);
+            ctx.save();
+            ctx.fillStyle = "#E5B869";
+            ctx.beginPath();
+            ctx.arc(sunX, sunY, 14, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.font = "700 10px 'Bricolage Grotesque', sans-serif";
+            ctx.fillStyle = "#E5B869";
+            ctx.textAlign = "center";
+            ctx.fillText("SUN", sunX, sunY + 26);
+            // Dashed solar ray to ITCZ
+            ctx.setLineDash([4, 4]);
+            ctx.strokeStyle = "rgba(229, 184, 105, 0.45)";
+            ctx.beginPath();
+            ctx.moveTo(sunX + 16, sunY);
+            ctx.lineTo(cx - R, sunY);
+            ctx.stroke();
+            ctx.restore();
+
+            // 2. Draw Earth Sphere Gradient
+            const earthGrad = ctx.createRadialGradient(cx - 35, cy - 35, 20, cx, cy, R);
+            earthGrad.addColorStop(0, "#1d5a5f");
+            earthGrad.addColorStop(0.7, "#11353b");
+            earthGrad.addColorStop(1, "#091e22");
+            ctx.beginPath();
+            ctx.arc(cx, cy, R, 0, Math.PI * 2);
+            ctx.fillStyle = earthGrad;
+            ctx.fill();
+            ctx.strokeStyle = "rgba(255,255,255,0.25)";
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // 3. Draw Latitude Lines & Pressure Belts Clipped Inside Globe
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(cx, cy, R, 0, Math.PI * 2);
+            ctx.clip();
+
+            const lats = [-60, -30, 0, 30, 60];
+            lats.forEach(lat => {
+                const y = cy - R * Math.sin((lat * Math.PI) / 180);
+                ctx.beginPath();
+                ctx.moveTo(cx - R, y);
+                ctx.lineTo(cx + R, y);
+                ctx.strokeStyle = lat === 0 ? "rgba(255,255,255,0.35)" : "rgba(255,255,255,0.13)";
+                ctx.lineWidth = lat === 0 ? 1.5 : 1;
+                ctx.stroke();
+
+                ctx.font = "600 10px 'Bricolage Grotesque', sans-serif";
+                ctx.fillStyle = "rgba(255,255,255,0.45)";
+                ctx.fillText(`${Math.abs(lat)}°${lat > 0 ? 'N' : lat < 0 ? 'S' : ''}`, cx - R + 18, y - 4);
+            });
+
+            // Highlight Bangladesh Latitude (24°N) if enabled
+            if (showBD.checked) {
+                const bdY = cy - R * Math.sin((24 * Math.PI) / 180);
+                ctx.fillStyle = "rgba(74, 139, 110, 0.28)";
+                ctx.fillRect(cx - R, bdY - 6, R * 2, 12);
+                ctx.font = "700 10px 'Bricolage Grotesque', sans-serif";
+                ctx.fillStyle = "#6ee7b7";
+                ctx.textAlign = "right";
+                ctx.fillText("🇧🇩 Bangladesh (24°N)", cx + R - 14, bdY + 3);
+            }
+
+            // Draw Shifted ITCZ Red Glow Band
+            const itczLat = shift;
+            const itczY = cy - R * Math.sin((itczLat * Math.PI) / 180);
+            const itczGrad = ctx.createLinearGradient(0, itczY - 14, 0, itczY + 14);
+            itczGrad.addColorStop(0, "transparent");
+            itczGrad.addColorStop(0.5, "rgba(244, 63, 94, 0.45)");
+            itczGrad.addColorStop(1, "transparent");
+            ctx.fillStyle = itczGrad;
+            ctx.fillRect(cx - R, itczY - 14, R * 2, 28);
+
+            ctx.font = "700 11px 'Bricolage Grotesque', sans-serif";
+            ctx.fillStyle = "#fda4af";
+            ctx.textAlign = "center";
+            ctx.fillText(`ITCZ / Equatorial Low (${itczLat.toFixed(0)}°)`, cx, itczY + 4);
+
+            // Draw Surface Wind Arrows inside the globe
+            const deflection = rotRate * 28; // Horizontal curve based on rotation rate
+            const cols = [-95, -35, 25, 85];
+
+            if (rotRate < 0.15) {
+                // Single-Cell Straight Meridional Surface Winds (Poles -> ITCZ)
+                cols.forEach(xOff => {
+                    drawCurvedWindArrow(cx + xOff, cy - R * 0.8, cx + xOff, cy - R * 0.4, cx + xOff, itczY - 12, "#93c5fd");
+                    drawCurvedWindArrow(cx + xOff, cy + R * 0.8, cx + xOff, cy + R * 0.4, cx + xOff, itczY + 12, "#93c5fd");
+                });
+            } else {
+                const subHighN = cy - R * Math.sin(((30 + shift * 0.5) * Math.PI) / 180);
+                const subHighS = cy - R * Math.sin(((-30 + shift * 0.5) * Math.PI) / 180);
+                const subLowN = cy - R * Math.sin(((60 + shift * 0.25) * Math.PI) / 180);
+                const subLowS = cy - R * Math.sin(((-60 + shift * 0.25) * Math.PI) / 180);
+
+                cols.forEach(xOff => {
+                    // NH Trade Winds (30°N -> ITCZ, deflected right/west)
+                    drawCurvedWindArrow(
+                        cx + xOff + 12, subHighN + 8,
+                        cx + xOff + 6, (subHighN + itczY) / 2,
+                        cx + xOff - deflection, itczY - 10,
+                        "#fde047"
+                    );
+
+                    // SH Trade Winds (30°S -> ITCZ, deflected left/west)
+                    // If ITCZ is far north (June Monsoon), show SE trades crossing Equator & hooking NE into Bangladesh!
+                    if (solarTilt > 10) {
+                        const eqY = cy;
+                        drawCurvedWindArrow(
+                            cx + xOff + 12, subHighS - 8,
+                            cx + xOff - deflection * 0.7, eqY,
+                            cx + xOff + deflection * 0.6, itczY + 8,
+                            "#38bdf8"
+                        );
+                    } else {
+                        drawCurvedWindArrow(
+                            cx + xOff + 12, subHighS - 8,
+                            cx + xOff + 6, (subHighS + itczY) / 2,
+                            cx + xOff - deflection, itczY + 10,
+                            "#fde047"
+                        );
+                    }
+
+                    // NH Westerlies (30°N -> 60°N, deflected right/east)
+                    drawCurvedWindArrow(
+                        cx + xOff - 12, subHighN - 8,
+                        cx + xOff - 4, (subHighN + subLowN) / 2,
+                        cx + xOff + deflection, subLowN + 8,
+                        "#6ee7b7"
+                    );
+
+                    // SH Westerlies (30°S -> 60°S, deflected left/east)
+                    drawCurvedWindArrow(
+                        cx + xOff - 12, subHighS + 8,
+                        cx + xOff - 4, (subHighS + subLowS) / 2,
+                        cx + xOff + deflection, subLowS - 8,
+                        "#6ee7b7"
+                    );
+
+                    // NH Polar Easterlies (90°N -> 60°N)
+                    drawCurvedWindArrow(
+                        cx + xOff + 10, cy - R + 16,
+                        cx + xOff + 4, (cy - R + subLowN) / 2,
+                        cx + xOff - deflection * 0.7, subLowN - 6,
+                        "#bae6fd"
+                    );
+
+                    // SH Polar Easterlies (90°S -> 60°S)
+                    drawCurvedWindArrow(
+                        cx + xOff + 10, cy + R - 16,
+                        cx + xOff + 4, (cy + R + subLowS) / 2,
+                        cx + xOff - deflection * 0.7, subLowS + 6,
+                        "#bae6fd"
+                    );
+                });
+            }
+            ctx.restore();
+
+            // 4. Draw Atmospheric Circulation Cells Around the Globe Perimeter
+            if (rotRate < 0.15) {
+                // Single Giant Hadley Cell on non-rotating Earth
+                drawCellLoop(cx, cy, R, shift, 88, true, 'right', "Single Hadley Cell (NH)");
+                drawCellLoop(cx, cy, R, shift, -88, true, 'right', "Single Hadley Cell (SH)");
+                drawCellLoop(cx, cy, R, shift, 88, true, 'left', null);
+                drawCellLoop(cx, cy, R, shift, -88, true, 'left', null);
+            } else {
+                const n30 = 30 + shift * 0.5;
+                const n60 = 60 + shift * 0.25;
+                const s30 = -30 + shift * 0.5;
+                const s60 = -60 + shift * 0.25;
+
+                // Northern Hemisphere 3 Cells
+                drawCellLoop(cx, cy, R, shift, n30, true, 'right', "Hadley Cell");
+                drawCellLoop(cx, cy, R, n60, n30, true, 'right', "Ferrel Cell");
+                drawCellLoop(cx, cy, R, n60, 88, true, 'right', "Polar Cell");
+
+                // Southern Hemisphere 3 Cells
+                drawCellLoop(cx, cy, R, shift, s30, true, 'right', "Hadley Cell");
+                drawCellLoop(cx, cy, R, s60, s30, true, 'right', "Ferrel Cell");
+                drawCellLoop(cx, cy, R, s60, -88, true, 'right', "Polar Cell");
+
+                // Mirror loops on the left side
+                drawCellLoop(cx, cy, R, shift, n30, true, 'left', null);
+                drawCellLoop(cx, cy, R, n60, n30, true, 'left', null);
+                drawCellLoop(cx, cy, R, n60, 88, true, 'left', null);
+                drawCellLoop(cx, cy, R, shift, s30, true, 'left', null);
+                drawCellLoop(cx, cy, R, s60, s30, true, 'left', null);
+                drawCellLoop(cx, cy, R, s60, -88, true, 'left', null);
+
+                // 5. Draw Jet Streams if enabled
+                if (showJets.checked) {
+                    const jetLats = [
+                        { lat: n30, name: "STJ", color: "#fbbf24" },
+                        { lat: n60, name: "PFJ", color: "#38bdf8" },
+                        { lat: s30, name: "STJ", color: "#fbbf24" },
+                        { lat: s60, name: "PFJ", color: "#38bdf8" }
+                    ];
+                    jetLats.forEach(j => {
+                        const ang = latToRad(j.lat);
+                        const jx = cx + (R + 54) * Math.cos(ang);
+                        const jy = cy + (R + 54) * Math.sin(ang);
+
+                        ctx.save();
+                        ctx.beginPath();
+                        ctx.arc(jx, jy, 8, 0, Math.PI * 2);
+                        ctx.fillStyle = "#091e22";
+                        ctx.fill();
+                        ctx.lineWidth = 2;
+                        ctx.strokeStyle = j.color;
+                        ctx.stroke();
+
+                        ctx.font = "800 8px 'Bricolage Grotesque', sans-serif";
+                        ctx.fillStyle = j.color;
+                        ctx.textAlign = "center";
+                        ctx.fillText(j.name, jx, jy + 3);
+                        ctx.restore();
+                    });
+                }
+            }
+
+            animPhase += 1 + rotRate * 0.5;
+            requestAnimationFrame(renderSimulation);
+        }
+
+        // Initialize
+        updateControls();
+        renderSimulation();
+    </script>
+</body>
+</html>
