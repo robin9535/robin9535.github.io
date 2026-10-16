@@ -12,15 +12,21 @@
 <meta property="og:title" content="Md Rokibul Islam Robin | Environmental Science & Engineering">
 <meta property="og:description" content="Undergraduate researcher, youth policy advocate, and environmental enthusiast at JKKNIU.">
 <meta property="og:url" content="https://mdrokibul.me/">
-<meta property="og:image" content="https://mdrokibul.me/website1.jpeg">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="https://mdrokibul.me/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Md Rokibul Islam Robin">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Md Rokibul Islam Robin | Environmental Science &amp; Engineering">
+<meta name="twitter:description" content="Undergraduate researcher, youth policy advocate, and environmental enthusiast at JKKNIU.">
+<meta name="twitter:image" content="https://mdrokibul.me/og-image.jpg">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Person",
   "name": "Md Rokibul Islam Robin",
   "url": "https://mdrokibul.me/",
-  "image": "https://mdrokibul.me/website1.jpeg",
+  "image": "https://mdrokibul.me/og-image.jpg",
   "jobTitle": "Undergraduate Student, Environmental Science and Engineering",
   "affiliation": { "@type": "CollegeOrUniversity", "name": "Jatiya Kabi Kazi Nazrul Islam University" },
   "sameAs": [
@@ -33,6 +39,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="nav.css">
 <link rel="stylesheet" href="site.css">
 <style>
 /* hero */
@@ -121,6 +129,8 @@
 .contact p{max-width:52ch;margin:0 auto;color:#bcd0c9}
 .social{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:30px}
 .social a{display:inline-flex;gap:10px;align-items:center;font-family:var(--display);font-weight:600;padding:12px 22px;border-radius:999px;border:1.5px solid rgba(255,255,255,.35);text-decoration:none;transition:background .2s,transform .2s}
+.social .copy{display:inline-flex;gap:10px;align-items:center;font-family:var(--display);font-weight:600;font-size:1rem;padding:12px 22px;border-radius:999px;border:1.5px solid rgba(255,255,255,.35);background:transparent;color:inherit;cursor:pointer}
+.social .copy:hover{background:var(--silt);border-color:var(--silt);color:#1a1205}
 .social a:hover{background:var(--silt);border-color:var(--silt);color:#1a1205;transform:translateY(-3px)}
 
 /* side dots */
@@ -147,15 +157,9 @@
 <header class="nav" id="nav">
   <div class="wrap">
     <a class="brand" href="#top">Robin<span>.</span>me</a>
-  <nav class="links" id="links" aria-label="Main">
-      <a href="#about">About</a>
-      <a href="#skills">Skills</a>
-      <a href="#projects">Research &amp; Projects</a>
-      <a href="#leadership">Leadership</a>
-      <a class="tool" href="portal.html">JKKNIU Portal</a>
-      <a class="tool" href="sound-meter.html">Sound Meter</a>
-      <a class="tool" href="weather.html">EcoLens</a>
-      <a class="tool" href="atmosphere-sim.html">Atmosphere Sim</a>
+    <nav class="links" id="links" aria-label="Main">
+      <a href="#about">About</a><a href="#skills">Skills</a><a href="#projects">Research</a><a href="#leadership">Leadership</a>
+      <div class="dd"><button class="dd-btn" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="toolsMenu">Tools <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="dd-menu" id="toolsMenu"><a href="portal.html"><i class="fa-solid fa-building-columns" aria-hidden="true"></i><span><b>JKKNIU &amp; ESE Portal</b><small>Official links in one place</small></span></a><a href="sound-meter.html"><i class="fa-solid fa-ear-listen" aria-hidden="true"></i><span><b>Sound Level Meter</b><small>Measure noise with your phone</small></span></a><a href="weather.html"><i class="fa-solid fa-cloud-sun-rain" aria-hidden="true"></i><span><b>EcoLens Weather</b><small>Your photo plus live weather and rain chance</small></span></a><a href="atmosphere-sim.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Atmosphere Simulator</b><small>Three-cell circulation model</small></span></a></div></div>
       <a href="#contact">Contact</a>
     </nav>
     <div class="tools">
@@ -261,14 +265,14 @@
       </a>
       <a class="tool slide" href="weather.html" style="--d:.24s">
         <i class="fa-solid fa-cloud-sun-rain"></i>
-        <h3>EcoLens Weather Analyzer</h3>
-        <p>Upload field photos with location data to integrate real-time satellite weather, rain probability, and optical vegetation canopy analysis.</p>
-        <b>Open the analyzer</b>
+        <h3>EcoLens Weather</h3>
+        <p>Add a photo and a place to see live weather, the chance of rain over the next 24 hours, and the rain and cloud drawn over your picture. Your photo never leaves your device.</p>
+        <b>Open EcoLens</b>
       </a>
       <a class="tool slide" href="atmosphere-sim.html" style="--d:.36s">
         <i class="fa-solid fa-earth-asia"></i>
-        <h3>3-Cell Atmospheric Simulator</h3>
-        <p>Interactive meteorology model showing Hadley, Ferrel, and Polar cells, Coriolis wind deflection, and the ITCZ Bangladesh Monsoon shift.</p>
+        <h3>Atmosphere Simulator</h3>
+        <p>Interactive model of the Hadley, Ferrel and Polar cells, with Coriolis deflection and the seasonal shift of the ITCZ that drives the monsoon.</p>
         <b>Launch simulator</b>
       </a>
     </div>
@@ -294,6 +298,7 @@
     <p>Interested in collaborating on environmental research, youth initiatives, or academic projects? Feel free to reach out!</p>
     <div class="social">
       <a href="mailto:rokibul2480@gmail.com"><i class="fa-solid fa-envelope"></i> Email</a>
+      <button class="copy" id="copyMail" type="button" data-mail="rokibul2480@gmail.com"><i class="fa-regular fa-copy"></i> <span>Copy email</span></button>
       <a href="https://www.linkedin.com/in/rokibul-islam-robin-923a03385" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</a>
       <a href="https://www.facebook.com/rokibulislamrobin123" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook-f"></i> Facebook</a>
       <a href="https://github.com/robin9535" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i> GitHub</a>
@@ -400,6 +405,14 @@
     });
   }
 })();
+
+  /* copy email */
+  var cm=document.getElementById('copyMail');
+  if(cm){ cm.addEventListener('click',function(){
+    var m=cm.getAttribute('data-mail'), label=cm.querySelector('span');
+    var done=function(t){ label.textContent=t; setTimeout(function(){label.textContent='Copy email';},2200); };
+    if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(m).then(function(){done('Copied');},function(){done(m);}); } else { done(m); }
+  }); }
 </script>
 </body>
 </html>

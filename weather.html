@@ -1,439 +1,581 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoLens | Field Weather & Image Analyzer - Md Rokibul Islam Robin</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        .glass { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); }
-        @keyframes scan {
-            0% { top: 0%; opacity: 0.8; }
-            50% { top: 96%; opacity: 1; }
-            100% { top: 0%; opacity: 0.8; }
-        }
-        .scanner-line {
-            position: absolute; left: 0; width: 100%; height: 4px;
-            background: linear-gradient(90deg, transparent, #10b981, #34d399, transparent);
-            box-shadow: 0 0 15px #10b981;
-            animation: scan 2.2s infinite ease-in-out;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoLens Weather | Md Rokibul Islam Robin</title>
+<meta name="description" content="Add a photo and a place. See live weather there, the chance of rain over the next 24 hours, and how the rain and clouds would look over your picture.">
+<meta name="theme-color" content="#0E2A2F">
+<link rel="canonical" href="https://mdrokibul.me/weather.html">
+<meta property="og:title" content="EcoLens Weather">
+<meta property="og:description" content="Your photo plus live weather and the chance of rain for the next 24 hours.">
+<meta property="og:image" content="https://mdrokibul.me/og-image.jpg">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="nav.css">
+<link rel="stylesheet" href="site.css">
+<style>
+main{padding-bottom:40px}
+.row{display:grid;gap:22px;margin-top:22px}
+.row>*{min-width:0}
+.top{grid-template-columns:1.3fr 1fr;margin-top:-26px;position:relative;z-index:2}
+@media (max-width:900px){.top{grid-template-columns:1fr}}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:clamp(18px,3vw,28px);box-shadow:0 12px 36px rgba(0,0,0,.1)}
+.panel h2{font-size:1.35rem;font-weight:800;margin-bottom:4px}
+.sub{font-size:.95rem;color:var(--ink-soft);margin-bottom:14px}
+/* stage */
+.stage{position:relative;border-radius:22px;overflow:hidden;background:linear-gradient(180deg,#6aa6c9 0%,#bcd8e6 60%,#dfeadf 100%);min-height:280px;aspect-ratio:4/3;width:100%;box-shadow:0 12px 36px rgba(0,0,0,.18);isolation:isolate}
+.stage.drag{outline:3px dashed var(--silt);outline-offset:-10px}
+.stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
+.stage.has img{display:block}
+#fx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.empty{position:absolute;inset:0;display:grid;place-content:center;justify-items:center;gap:12px;text-align:center;padding:20px;color:#0f2f36}
+.stage.has .empty{display:none}
+.empty i{font-size:2.4rem;opacity:.8}
+.empty p{font-size:1rem;max-width:34ch}
+.stage .btn{border-color:currentColor}
+.stage-card{position:absolute;left:12px;right:12px;bottom:12px;display:none;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between;padding:12px 16px;border-radius:16px;background:rgba(10,32,37,.62);backdrop-filter:blur(8px);color:#f2f8f5}
+.stage.show-card .stage-card{display:flex}
+.stage-card b{font:800 1.9rem var(--display);line-height:1}
+.stage-card .where{font:600 1rem var(--display)}
+.stage-card .when{font-size:.85rem;opacity:.85}
+.pill2{font:600 .9rem var(--display);padding:5px 12px;border-radius:999px;background:rgba(255,255,255,.16)}
+.stage-tools{position:absolute;top:12px;right:12px;display:none;gap:8px}
+.stage.has .stage-tools{display:flex}
+.stage-tools button{width:40px;height:40px;border-radius:50%;border:0;background:rgba(10,32,37,.62);color:#fff;cursor:pointer;backdrop-filter:blur(6px)}
+.stage-tools button:hover{background:rgba(10,32,37,.85)}
+/* place */
+.search{position:relative}
+.search input{width:100%;font:inherit;font-size:1.05rem;padding:13px 16px 13px 44px;border-radius:14px;border:2px solid var(--line);background:var(--mist);color:var(--ink)}
+.search input:focus{outline:none;border-color:var(--river)}
+.search>i{position:absolute;left:16px;top:16px;color:var(--ink-soft)}
+.sugg{position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:15;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 18px 40px rgba(0,0,0,.2);list-style:none;overflow:hidden;display:none}
+.sugg.open{display:block}
+.sugg li{padding:11px 16px;cursor:pointer;font-size:1rem;border-bottom:1px solid var(--line)}
+.sugg li:last-child{border:0}
+.sugg li[aria-selected=true],.sugg li:hover{background:var(--mist)}
+.sugg small{display:block;color:var(--ink-soft);font-size:.85rem}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chip{font:600 .9rem var(--display);padding:6px 14px;border-radius:999px;border:1px solid var(--line);background:var(--mist);color:var(--ink);cursor:pointer}
+.chip:hover{border-color:var(--river)}
+.chip.tag{background:color-mix(in srgb,var(--river) 14%,var(--card));border-color:var(--river)}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.btn.dk{color:var(--ink);border-color:var(--line);background:var(--card)}
+.btn.dk:hover{background:var(--mist)}
+.btn.go{background:var(--river);border-color:var(--river);color:#fff}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.msg{margin-top:14px;font-size:.98rem;min-height:1.4em}
+.msg.err{color:var(--bad);font-weight:600}
+.meta{margin-top:12px;font-size:.92rem;color:var(--ink-soft);display:grid;gap:4px}
+/* results */
+#results{display:none}
+#results.on{display:block}
+.rain-grid{grid-template-columns:1fr 1.5fr}
+@media (max-width:900px){.rain-grid{grid-template-columns:1fr}}
+.big{font:800 clamp(3.4rem,10vw,5.2rem)/1 var(--display);letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.desc{font:700 1.3rem var(--display);margin:4px 0 8px}
+.lvl-lo{color:var(--good)} .lvl-mid{color:var(--warn)} .lvl-hi{color:var(--bad)}
+.facts{list-style:none;display:grid;gap:8px;margin-top:14px;font-size:1rem}
+.facts li{display:flex;gap:10px;align-items:flex-start}
+.facts i{color:var(--river);margin-top:5px;width:18px;text-align:center}
+.tip{margin-top:14px;padding:12px 14px;border-radius:12px;background:var(--mist);border:1px solid var(--line);font-size:1rem}
+.scrub{margin-top:6px}
+.scrub label{font:600 1rem var(--display);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.scrub output{color:var(--river)}
+input[type=range]{width:100%;accent-color:var(--river);height:30px;cursor:pointer}
+.mode{display:flex;gap:8px;margin:0 0 10px;flex-wrap:wrap}
+.mode button{font:600 .9rem var(--display);padding:6px 14px;border-radius:999px;border:1px solid var(--line);background:var(--mist);color:var(--ink);cursor:pointer}
+.mode button[aria-pressed=true]{background:var(--river);border-color:var(--river);color:#fff}
+#chart{width:100%;height:190px;display:block;margin-top:8px;touch-action:none;cursor:pointer}
+#chart .bar{fill:var(--river);opacity:.55}
+#chart .bar.sel{opacity:1;fill:var(--silt)}
+#chart .mm{fill:none;stroke:var(--moss);stroke-width:2.5;stroke-linejoin:round}
+#chart text{font:600 11px var(--display);fill:var(--ink-soft)}
+#chart .grid{stroke:var(--line);stroke-dasharray:3 4}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.88rem;color:var(--ink-soft);margin-top:6px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.cond{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:14px}
+.cell{padding:14px;border-radius:14px;background:var(--mist);border:1px solid var(--line)}
+.cell small{display:block;font:600 .82rem var(--display);color:var(--ink-soft)}
+.cell b{font:800 1.5rem var(--display);font-variant-numeric:tabular-nums}
+.cell span{display:block;font-size:.85rem;color:var(--ink-soft)}
+.checks{list-style:none;display:grid;gap:10px;margin-top:14px}
+.checks li{display:grid;grid-template-columns:auto 1fr;gap:2px 14px;align-items:center;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--mist)}
+.checks i.st{grid-row:1/3;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:#fff;font-style:normal;font:800 1rem var(--display)}
+.checks .ok i.st{background:var(--good)} .checks .caution i.st{background:var(--warn)} .checks .avoid i.st{background:var(--bad)}
+.checks b{font-family:var(--display)} .checks span{font-size:.92rem;color:var(--ink-soft)}
+.overall{margin-top:6px;padding:14px 16px;border-radius:14px;font:700 1.1rem var(--display);border:2px solid var(--line)}
+.overall.ok{border-color:var(--good)} .overall.caution{border-color:var(--warn)} .overall.avoid{border-color:var(--bad)}
+.how{font-size:1rem;color:var(--ink-soft)} .how li+li{margin-top:.5em} .how{padding-left:1.2em}
+.attr{font-size:.9rem;color:var(--ink-soft);margin-top:14px}
+.sr{position:absolute;left:-999px}
+@media (prefers-reduced-motion:reduce){.stage-card{backdrop-filter:none}}
+</style>
 </head>
-<body class="bg-gradient-to-br from-emerald-950 via-teal-900 to-slate-900 min-h-screen text-slate-800 pb-16">
-
-    <!-- Top Navigation -->
-    <nav class="border-b border-white/10 bg-slate-900/50 backdrop-blur-md sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
-            <a href="index.html" class="inline-flex items-center gap-2 text-emerald-400 hover:text-emerald-300 font-semibold transition">
-                <i class="fas fa-arrow-left"></i> Back to Portfolio
-            </a>
-            <div class="text-white font-bold tracking-tight flex items-center gap-2">
-                <i class="fas fa-satellite-dish text-emerald-400 animate-pulse"></i>
-                <span>EcoLens <span class="text-xs font-normal bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 px-2 py-0.5 rounded-full ml-1">Live AI & Meteo</span></span>
-            </div>
-        </div>
+<body>
+<div class="progress" id="progress" aria-hidden="true"></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav" id="nav" data-solid>
+  <div class="wrap">
+    <a class="brand" href="index.html">Robin<span>.</span>me</a>
+    <nav class="links" id="links" aria-label="Main">
+      <a href="index.html">Home</a>
+      <div class="dd cur"><button class="dd-btn" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="toolsMenu">Tools <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="dd-menu" id="toolsMenu"><a href="portal.html"><i class="fa-solid fa-building-columns" aria-hidden="true"></i><span><b>JKKNIU &amp; ESE Portal</b><small>Official links in one place</small></span></a><a href="sound-meter.html"><i class="fa-solid fa-ear-listen" aria-hidden="true"></i><span><b>Sound Level Meter</b><small>Measure noise with your phone</small></span></a><a href="weather.html" class="on" aria-current="page"><i class="fa-solid fa-cloud-sun-rain" aria-hidden="true"></i><span><b>EcoLens Weather</b><small>Your photo plus live weather and rain chance</small></span></a><a href="atmosphere-sim.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Atmosphere Simulator</b><small>Three-cell circulation model</small></span></a></div></div>
+      <a href="index.html#contact">Contact</a>
     </nav>
+    <div class="tools">
+      <button class="icon-btn" id="theme" type="button" aria-label="Switch to dark theme"><i class="fa-solid fa-moon"></i></button>
+      <button class="icon-btn burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="links"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</header>
 
-    <!-- Header -->
-    <header class="max-w-4xl mx-auto px-4 pt-10 pb-8 text-center text-white">
-        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight mb-3">
-            Environmental <span class="text-emerald-400">Field & Weather</span> Analyzer
-        </h1>
-        <p class="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto">
-            Upload an environmental photo and enter your location. This tool combines <strong>real-time satellite meteorology</strong> with <strong>optical pixel analysis</strong> to evaluate rain probability, atmospheric state, and vegetation cover.
-        </p>
-    </header>
+<div class="page-hero">
+  <div class="wrap">
+    <h1>EcoLens weather</h1>
+    <p>Add a photo and say where it is. You get the live weather there, the chance of rain over the next 24 hours, and the rain and cloud drawn over your own picture. Drag the time slider to see how the same spot looks later.</p>
+  </div>
+</div>
 
-    <!-- Main Content Grid -->
-    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+<main id="main">
+<div class="wrap">
 
-        <!-- Left Column: Upload & Location Input (5 cols) -->
-        <div class="lg:col-span-5 space-y-6">
-            <div class="glass rounded-3xl p-6 sm:p-8 shadow-2xl border border-white/20">
-                <h2 class="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
-                    <i class="fas fa-camera-retro text-emerald-600"></i> 1. Field Data Input
-                </h2>
-
-                <!-- Image Upload Dropzone -->
-                <div class="mb-6">
-                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">Upload Environment Photo</label>
-                    <label for="imageInput" id="dropzone" class="border-2 border-dashed border-emerald-500/50 hover:border-emerald-600 bg-emerald-50/50 hover:bg-emerald-50 rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer transition relative overflow-hidden min-h-[220px]">
-                        <div id="uploadPrompt" class="text-center">
-                            <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-2xl mx-auto mb-3 shadow-sm">
-                                <i class="fas fa-cloud-upload-alt"></i>
-                            </div>
-                            <p class="text-sm font-semibold text-slate-700">Click to upload photo or take a picture</p>
-                            <p class="text-xs text-slate-500 mt-1">Sky, river, forest, or local surroundings (JPG, PNG)</p>
-                        </div>
-                        <img id="previewImg" class="hidden w-full h-56 object-cover rounded-xl shadow-md" alt="Environment Preview">
-                        <div id="scannerLine" class="scanner-line hidden"></div>
-                        <!-- Live Overlay Badge on Photo -->
-                        <div id="photoBadge" class="hidden absolute bottom-3 left-3 right-3 bg-slate-900/80 backdrop-blur-md text-white p-3 rounded-xl text-xs flex justify-between items-center">
-                            <div>
-                                <p id="badgeLoc" class="font-bold text-emerald-400">Location</p>
-                                <p id="badgeTime" class="text-[10px] text-slate-300">Timestamp</p>
-                            </div>
-                            <div class="text-right">
-                                <p id="badgeTemp" class="text-sm font-extrabold">--°C</p>
-                                <p id="badgeRain" class="text-[10px] text-sky-300">Rain: --%</p>
-                            </div>
-                        </div>
-                    </label>
-                    <input type="file" id="imageInput" accept="image/*" class="hidden">
-                </div>
-
-                <!-- Location Input -->
-                <div class="mb-6">
-                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">Location Name or GPS</label>
-                    <div class="flex gap-2">
-                        <div class="relative flex-1">
-                            <i class="fas fa-map-marker-alt absolute left-3.5 top-3.5 text-slate-400"></i>
-                            <input type="text" id="locationInput" placeholder="e.g., Trishal, Mymensingh, Dhaka..." class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm bg-white">
-                        </div>
-                        <button onclick="useMyGPS()" title="Use My Current GPS Location" class="bg-slate-800 hover:bg-slate-900 text-white px-4 py-3 rounded-xl transition flex items-center justify-center shadow-sm">
-                            <i class="fas fa-crosshairs"></i>
-                        </button>
-                    </div>
-                    <p id="gpsStatus" class="text-xs text-emerald-700 font-medium mt-1.5 hidden"></p>
-                </div>
-
-                <!-- Submit Button -->
-                <button onclick="analyzeEnvironment()" id="analyzeBtn" class="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold py-4 px-6 rounded-xl shadow-lg transition transform active:scale-95 flex items-center justify-center gap-2">
-                    <i class="fas fa-bolt"></i> Analyze Environment & Weather
-                </button>
-            </div>
+  <div class="row top">
+    <div class="stage" id="stage" aria-label="Photo preview with weather effects">
+      <img id="photo" alt="Your photo">
+      <canvas id="fx" aria-hidden="true"></canvas>
+      <div class="empty">
+        <i class="fa-regular fa-image" aria-hidden="true"></i>
+        <p><b>Drop a photo here</b>, or choose one. It stays on your device.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+          <button class="btn go" type="button" id="pickBtn"><i class="fa-solid fa-upload"></i> Choose photo</button>
+          <button class="btn dk" type="button" id="camBtn"><i class="fa-solid fa-camera"></i> Take photo</button>
         </div>
+      </div>
+      <div class="stage-tools">
+        <button type="button" id="swapBtn" aria-label="Change photo" title="Change photo"><i class="fa-solid fa-image"></i></button>
+        <button type="button" id="saveBtn" aria-label="Save as picture" title="Save as picture" disabled><i class="fa-solid fa-download"></i></button>
+        <button type="button" id="shareBtn" aria-label="Share picture" title="Share" hidden><i class="fa-solid fa-share-nodes"></i></button>
+      </div>
+      <div class="stage-card" id="stageCard" aria-hidden="true">
+        <div><div class="where" id="cardWhere"></div><div class="when" id="cardWhen"></div></div>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><b id="cardTemp"></b><span class="pill2" id="cardCond"></span><span class="pill2" id="cardRain"></span></div>
+      </div>
+      <input type="file" id="file" accept="image/*" hidden>
+      <input type="file" id="cam" accept="image/*" capture="environment" hidden>
+    </div>
 
-        <!-- Right Column: Live Weather & Optical Analysis Output (7 cols) -->
-        <div class="lg:col-span-7">
-            
-            <!-- Placeholder State before Analysis -->
-            <div id="emptyState" class="glass rounded-3xl p-10 text-center border border-white/20 h-full flex flex-col justify-center items-center min-h-[420px]">
-                <div class="w-20 h-20 bg-emerald-100/80 text-emerald-600 rounded-2xl flex items-center justify-center text-4xl mb-4 shadow-inner">
-                    <i class="fas fa-cloud-sun-rain"></i>
-                </div>
-                <h3 class="text-2xl font-bold text-slate-800 mb-2">Awaiting Field Input</h3>
-                <p class="text-slate-600 text-sm max-w-md">
-                    Upload an environmental photo and enter a location on the left to generate a real-time meteorological and optical eco-report.
-                </p>
-            </div>
+    <div class="panel">
+      <h2>Where is it?</h2>
+      <p class="sub">Search for a place, or use your location. Only the place text or coordinates are sent to the weather service, never your photo.</p>
+      <div class="search">
+        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+        <label for="q" class="sr">Search for a place</label>
+        <input id="q" type="text" autocomplete="off" placeholder="e.g. Trishal, Mymensingh" role="combobox" aria-expanded="false" aria-controls="sugg" aria-autocomplete="list">
+        <ul class="sugg" id="sugg" role="listbox"></ul>
+      </div>
+      <div class="chips" id="quick" aria-label="Quick places">
+        <button class="chip" type="button" data-q="Trishal">Trishal</button>
+        <button class="chip" type="button" data-q="Mymensingh">Mymensingh</button>
+        <button class="chip" type="button" data-q="Dhaka">Dhaka</button>
+        <button class="chip" type="button" data-q="Cox's Bazar">Cox's Bazar</button>
+      </div>
+      <div class="actions">
+        <button class="btn dk" type="button" id="gpsBtn"><i class="fa-solid fa-location-crosshairs"></i> Use my location</button>
+        <button class="chip tag" type="button" id="exifBtn" hidden></button>
+      </div>
+      <div class="msg" id="msg" role="status" aria-live="polite"></div>
+      <div class="meta" id="photoMeta"></div>
+    </div>
+  </div>
 
-            <!-- Results Dashboard (Hidden Initially) -->
-            <div id="resultDashboard" class="hidden space-y-6">
-                
-                <!-- Primary Weather & Rain Probability Card -->
-                <div class="glass rounded-3xl p-6 sm:p-8 shadow-2xl border border-white/20">
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-200/80 pb-5 mb-6">
-                        <div>
-                            <span class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full">Live Satellite Telemetry</span>
-                            <h2 id="resLocation" class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">Mymensingh, BD</h2>
-                            <p id="resCoords" class="text-xs text-slate-500 mt-0.5">Lat: -- | Lon: --</p>
-                        </div>
-                        <div class="flex items-center gap-3 bg-slate-900 text-white px-5 py-3 rounded-2xl shadow-lg">
-                            <i id="weatherIcon" class="fas fa-cloud-showers-heavy text-3xl text-emerald-400"></i>
-                            <div>
-                                <div id="resTemp" class="text-3xl font-extrabold">--°C</div>
-                                <div id="resCondition" class="text-xs text-emerald-300 font-medium">Checking...</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Highlighted Probability of Rain Gauge -->
-                    <div class="bg-gradient-to-r from-sky-50 to-indigo-50 p-5 rounded-2xl border border-sky-200/70 mb-6">
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="text-sm font-bold text-slate-800 flex items-center gap-2">
-                                <i class="fas fa-umbrella text-sky-600 text-lg"></i> Probability of Rain (Next Hour / Current)
-                            </span>
-                            <span id="resRainProb" class="text-2xl font-extrabold text-sky-700">--%</span>
-                        </div>
-                        <div class="w-full bg-slate-200 h-3.5 rounded-full overflow-hidden">
-                            <div id="rainBar" class="bg-gradient-to-r from-sky-500 to-blue-600 h-full rounded-full transition-all duration-700" style="width: 0%"></div>
-                        </div>
-                        <p id="rainVerdict" class="text-xs text-slate-600 mt-2.5 font-medium">--</p>
-                    </div>
-
-                    <!-- 4 Key Meteorological Metrics -->
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                        <div class="bg-white/80 p-4 rounded-2xl border border-slate-100 text-center">
-                            <i class="fas fa-tint text-sky-500 text-lg mb-1"></i>
-                            <p class="text-xs text-slate-500">Humidity</p>
-                            <p id="resHumidity" class="text-lg font-bold text-slate-800">--%</p>
-                        </div>
-                        <div class="bg-white/80 p-4 rounded-2xl border border-slate-100 text-center">
-                            <i class="fas fa-wind text-teal-500 text-lg mb-1"></i>
-                            <p class="text-xs text-slate-500">Wind Speed</p>
-                            <p id="resWind" class="text-lg font-bold text-slate-800">-- km/h</p>
-                        </div>
-                        <div class="bg-white/80 p-4 rounded-2xl border border-slate-100 text-center">
-                            <i class="fas fa-cloud text-slate-500 text-lg mb-1"></i>
-                            <p class="text-xs text-slate-500">Cloud Cover</p>
-                            <p id="resCloud" class="text-lg font-bold text-slate-800">--%</p>
-                        </div>
-                        <div class="bg-white/80 p-4 rounded-2xl border border-slate-100 text-center">
-                            <i class="fas fa-sun text-amber-500 text-lg mb-1"></i>
-                            <p class="text-xs text-slate-500">Feels Like</p>
-                            <p id="resFeels" class="text-lg font-bold text-slate-800">--°C</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Magic Touch: Optical Photo & Eco-Informatics Card -->
-                <div class="glass rounded-3xl p-6 sm:p-8 shadow-2xl border border-white/20">
-                    <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
-                        <i class="fas fa-microscope text-emerald-600"></i> 2. Optical Image & Environmental Synthesis
-                    </h3>
-                    
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5">
-                        <div class="bg-emerald-50/90 p-4 rounded-2xl border border-emerald-200/60">
-                            <p class="text-xs text-emerald-800 font-semibold">Green Canopy Index</p>
-                            <p id="optGreen" class="text-2xl font-extrabold text-emerald-700 mt-1">--%</p>
-                            <p class="text-[11px] text-slate-500 mt-0.5">Detected foliage/vegetation</p>
-                        </div>
-                        <div class="bg-slate-100 p-4 rounded-2xl border border-slate-200">
-                            <p class="text-xs text-slate-700 font-semibold">Atmospheric Luminance</p>
-                            <p id="optBright" class="text-2xl font-extrabold text-slate-800 mt-1">--%</p>
-                            <p class="text-[11px] text-slate-500 mt-0.5">Sky/ambient light level</p>
-                        </div>
-                        <div class="bg-sky-50/90 p-4 rounded-2xl border border-sky-200/60">
-                            <p class="text-xs text-sky-800 font-semibold">Optical Overcast Index</p>
-                            <p id="optHaze" class="text-2xl font-extrabold text-sky-700 mt-1">--%</p>
-                            <p class="text-[11px] text-slate-500 mt-0.5">Visual cloud/mist signature</p>
-                        </div>
-                    </div>
-
-                    <!-- Combined AI Field Recommendation -->
-                    <div class="bg-slate-900 text-slate-200 p-5 rounded-2xl text-sm leading-relaxed border border-slate-700">
-                        <p class="font-bold text-emerald-400 mb-1 flex items-center gap-2">
-                            <i class="fas fa-clipboard-check"></i> Environmental Field Advisory:
-                        </p>
-                        <p id="ecoAdvisory">Upload a photo to see combined visual and meteorological analysis.</p>
-                    </div>
-                </div>
-
-            </div>
+  <div id="results">
+    <div class="row rain-grid">
+      <div class="panel">
+        <h2 id="rainHead">Chance of rain</h2>
+        <p class="sub" id="rainSub"></p>
+        <div class="big" id="rainBig">--</div>
+        <div class="desc" id="rainDesc"></div>
+        <ul class="facts" id="rainFacts"></ul>
+        <div class="tip" id="rainTip"></div>
+      </div>
+      <div class="panel">
+        <h2>Next 24 hours</h2>
+        <p class="sub">Drag across the chart or use the slider. The picture above changes to match the hour you pick.</p>
+        <div class="mode" id="mode" role="group" aria-label="Which time to look at"></div>
+        <div class="scrub">
+          <label for="hour">Time <output id="hourOut"></output></label>
+          <input type="range" id="hour" min="0" max="24" step="1" value="0">
         </div>
-    </main>
+        <svg id="chart" role="img" aria-label="Chart of the hourly chance of rain"></svg>
+        <div class="legend"><span><i style="background:var(--river);opacity:.6"></i>Chance of rain (%)</span><span><i style="background:var(--moss)"></i>Expected rain (mm per hour)</span><span><i style="background:var(--silt)"></i>Selected hour</span></div>
+      </div>
+    </div>
 
-    <!-- Hidden Canvas for Image Pixel Processing -->
-    <canvas id="imgCanvas" class="hidden"></canvas>
+    <div class="row">
+      <div class="panel">
+        <h2 id="condHead">Conditions</h2>
+        <p class="sub" id="condSub"></p>
+        <div class="cond" id="cond"></div>
+      </div>
+    </div>
 
-    <script>
-        let userCoords = null;
-        let imageStats = { uploaded: false, greenRatio: 0, brightness: 0, overcastRatio: 0 };
+    <div class="row">
+      <div class="panel">
+        <h2>Field work check</h2>
+        <p class="sub">Simple rule-of-thumb checks for being outdoors over the next three hours. They are not safety advice.</p>
+        <div class="overall" id="overall"></div>
+        <ul class="checks" id="checks"></ul>
+      </div>
+    </div>
+  </div>
 
-        const imageInput = document.getElementById('imageInput');
-        const previewImg = document.getElementById('previewImg');
-        const uploadPrompt = document.getElementById('uploadPrompt');
+  <div class="row">
+    <div class="panel">
+      <h2>How this works</h2>
+      <ol class="how">
+        <li><b>Your photo</b> is shown and drawn on in your browser. It is never uploaded. If the photo has a location tag or a time, they are read on your device, and the location is only used if you press the button to use it.</li>
+        <li><b>The weather</b> comes from <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a>, which blends several national weather models. Air quality comes from the CAMS atmospheric model through the same service. Both are forecasts, not measurements at your exact spot.</li>
+        <li><b>The rain chance</b> is the model's chance of measurable rain in that hour. The rain you see on the picture reflects the <i>expected amount</i> of rain, so a 40% chance with almost no expected rain shows little or none.</li>
+        <li><b>The picture effects</b> are drawn from the weather numbers (rain amount, cloud cover, wind, day or night). The tool does not analyse what is in your photo.</li>
+        <li><b>Saved pictures</b> contain the photo, the effects and the card text only. Saving removes any hidden location data from the original file.</li>
+      </ol>
+      <p class="attr">Weather data by <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo.com</a> (CC BY 4.0). Air quality: Copernicus Atmosphere Monitoring Service via Open-Meteo.</p>
+    </div>
+  </div>
+</div>
+</main>
+<footer>&copy; 2026 Md Rokibul Islam Robin &middot; <a href="index.html">Back to home</a></footer>
 
-        // 1. Handle Photo Upload & Optical Pixel Scanning
-        imageInput.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (!file) return;
+<script src="site.js"></script>
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var API='https://api.open-meteo.com/v1/forecast', AQ='https://air-quality-api.open-meteo.com/v1/air-quality', GEO='https://geocoding-api.open-meteo.com/v1/search';
 
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                previewImg.src = event.target.result;
-                previewImg.classList.remove('hidden');
-                uploadPrompt.classList.add('hidden');
-                
-                // Analyze pixels once image loads
-                const img = new Image();
-                img.onload = function() {
-                    scanImagePixels(img);
-                };
-                img.src = event.target.result;
-            };
-            reader.readAsDataURL(file);
-        });
+  /* ---------- weather codes (WMO) ---------- */
+  var WMO={0:['Clear sky','sun'],1:['Mainly clear','cloud-sun'],2:['Partly cloudy','cloud-sun'],3:['Overcast','cloud'],45:['Fog','smog'],48:['Freezing fog','smog'],
+    51:['Light drizzle','cloud-rain'],53:['Drizzle','cloud-rain'],55:['Heavy drizzle','cloud-rain'],56:['Freezing drizzle','cloud-rain'],57:['Heavy freezing drizzle','cloud-rain'],
+    61:['Light rain','cloud-rain'],63:['Rain','cloud-showers-heavy'],65:['Heavy rain','cloud-showers-heavy'],66:['Freezing rain','cloud-rain'],67:['Heavy freezing rain','cloud-showers-heavy'],
+    71:['Light snow','snowflake'],73:['Snow','snowflake'],75:['Heavy snow','snowflake'],77:['Snow grains','snowflake'],
+    80:['Light rain showers','cloud-sun-rain'],81:['Rain showers','cloud-showers-heavy'],82:['Violent rain showers','cloud-showers-heavy'],85:['Light snow showers','snowflake'],86:['Heavy snow showers','snowflake'],
+    95:['Thunderstorm','bolt'],96:['Thunderstorm with hail','bolt'],99:['Thunderstorm with heavy hail','bolt']};
+  function wmo(code,day){ var w=WMO[code]||['Mixed conditions','cloud-sun']; var ic=w[1]; if(day===0){ if(ic==='sun') ic='moon'; else if(ic==='cloud-sun') ic='cloud-moon'; } return {t:w[0],i:ic}; }
+  function kindOf(c){ if(c>=95) return 'thunder'; if((c>=51&&c<=67)||(c>=80&&c<=82)) return 'rain'; if((c>=71&&c<=77)||c===85||c===86) return 'snow'; if(c===45||c===48) return 'fog'; return 'dry'; }
 
-        function scanImagePixels(img) {
-            const canvas = document.getElementById('imgCanvas');
-            const ctx = canvas.getContext('2d');
-            canvas.width = 100;
-            canvas.height = 100;
-            ctx.drawImage(img, 0, 0, 100, 100);
+  /* ---------- time helpers (strings are the place's local time, so never pass them through the browser's time zone) ---------- */
+  var MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'], DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  function parts(t){ return {y:+t.slice(0,4),m:+t.slice(5,7),d:+t.slice(8,10),h:+t.slice(11,13)}; }
+  function h12(h){ return (h%12||12)+(h<12?' am':' pm'); }
+  function lab(t,withDay){ var p=parts(t), dt=new Date(Date.UTC(p.y,p.m-1,p.d)); return (withDay?DOW[dt.getUTCDay()]+' ':'')+h12(p.h); }
+  function dayLab(t){ var p=parts(t), dt=new Date(Date.UTC(p.y,p.m-1,p.d)); return DOW[dt.getUTCDay()]+' '+p.d+' '+MON[p.m-1]; }
+  function num(v,d){ return (v===null||v===undefined||isNaN(v))?'n/a':(+v).toFixed(d||0); }
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
-            const data = ctx.getImageData(0, 0, 100, 100).data;
-            let greenPixels = 0, grayCloudPixels = 0, totalBrightness = 0;
-            const totalPixels = 100 * 100;
+  /* ---------- state ---------- */
+  var S={photoUrl:null,photoDate:null,photoLat:null,photoLon:null,place:null,data:null,aq:null,nowIdx:0,photoIdx:-1,mode:'now',start:0,sel:0};
 
-            for (let i = 0; i < data.length; i += 4) {
-                const r = data[i], g = data[i+1], b = data[i+2];
-                const lum = (0.299 * r + 0.587 * g + 0.114 * b);
-                totalBrightness += lum;
+  /* ---------- EXIF (location tag and time), read locally ---------- */
+  function readExif(buf){
+    var v=new DataView(buf), out={};
+    try{
+      if(v.getUint16(0)!==0xFFD8) return out;
+      var o=2;
+      while(o<v.byteLength-4){
+        var mk=v.getUint16(o), len=v.getUint16(o+2);
+        if(mk===0xFFE1 && v.getUint32(o+4)===0x45786966){ parseTiff(v,o+10,out); break; }
+        if((mk&0xFF00)!==0xFF00) break; o+=2+len;
+      }
+    }catch(e){}
+    return out;
+  }
+  function parseTiff(v,base,out){
+    var le=v.getUint16(base)===0x4949, u16=function(p){return v.getUint16(p,le)}, u32=function(p){return v.getUint32(p,le)};
+    function ascii(p,n){ var s=''; for(var i=0;i<n-1;i++) s+=String.fromCharCode(v.getUint8(p+i)); return s; }
+    function ifd(off,cb){ var n=u16(base+off); for(var i=0;i<n;i++){ var e=base+off+2+i*12; cb(u16(e),u16(e+2),u32(e+4),e+8); } }
+    var exifOff=0,gpsOff=0;
+    ifd(u32(base+4),function(tag,type,cnt,vp){ if(tag===0x8769) exifOff=u32(vp); if(tag===0x8825) gpsOff=u32(vp); });
+    if(exifOff) ifd(exifOff,function(tag,type,cnt,vp){ if(tag===0x9003||tag===0x9004){ var p=cnt>4?base+u32(vp):vp; var s=ascii(p,cnt); var m=/^(\d{4}):(\d{2}):(\d{2}) (\d{2}):/.exec(s); if(m&&!out.date) out.date=m[1]+'-'+m[2]+'-'+m[3]+'T'+m[4]+':00'; } });
+    if(gpsOff){
+      var g={};
+      ifd(gpsOff,function(tag,type,cnt,vp){
+        if(tag===1||tag===3) g[tag]=String.fromCharCode(v.getUint8(vp));
+        if(tag===2||tag===4){ var p=base+u32(vp), d=[]; for(var i=0;i<3;i++){ var a=u32(p+i*8),b=u32(p+i*8+4); d.push(b?a/b:0); } g[tag]=d[0]+d[1]/60+d[2]/3600; }
+      });
+      if(g[2]!==undefined&&g[4]!==undefined){ out.lat=(g[1]==='S'?-1:1)*g[2]; out.lon=(g[3]==='W'?-1:1)*g[4]; }
+    }
+  }
 
-                // Detect Vegetation/Foliage (Green dominant)
-                if (g > r * 1.08 && g > b * 1.08 && g > 40) {
-                    greenPixels++;
-                }
-                // Detect Overcast/Cloudy/Hazy pixels (High brightness, low saturation)
-                if (lum > 130 && Math.abs(r - g) < 22 && Math.abs(g - b) < 22) {
-                    grayCloudPixels++;
-                }
-            }
+  /* ---------- photo handling ---------- */
+  var stage=$('stage'), img=$('photo');
+  function setPhoto(file){
+    if(!file||!/^image\//.test(file.type)){ say('That file is not an image. Choose a JPG or PNG photo.',true); return; }
+    if(S.photoUrl) URL.revokeObjectURL(S.photoUrl);
+    S.photoUrl=URL.createObjectURL(file); img.src=S.photoUrl; stage.classList.add('has'); $('saveBtn').disabled=false;
+    S.photoDate=S.photoLat=S.photoLon=null; $('exifBtn').hidden=true; $('photoMeta').innerHTML='';
+    file.slice(0,262144).arrayBuffer().then(function(buf){
+      var ex=readExif(buf), meta=[];
+      if(ex.date){ S.photoDate=ex.date; var p=parts(ex.date); meta.push('<span><i class="fa-regular fa-clock"></i> Photo taken '+dayLab(ex.date)+', '+h12(p.h)+'</span>'); }
+      if(ex.lat!==undefined){ S.photoLat=ex.lat; S.photoLon=ex.lon; var b=$('exifBtn'); b.hidden=false; b.innerHTML='<i class="fa-solid fa-location-dot"></i> Use the photo’s location ('+ex.lat.toFixed(3)+', '+ex.lon.toFixed(3)+')'; }
+      $('photoMeta').innerHTML=meta.join('');
+      if(S.place && S.data && S.photoDate) loadWeather(S.place); // refetch so the photo's time falls inside the data range
+      else if(S.data) draw();
+    }).catch(function(){});
+    if(S.data) draw();
+  }
+  $('pickBtn').addEventListener('click',function(){ $('file').click(); });
+  $('swapBtn').addEventListener('click',function(){ $('file').click(); });
+  $('camBtn').addEventListener('click',function(){ $('cam').click(); });
+  $('file').addEventListener('change',function(e){ setPhoto(e.target.files[0]); e.target.value=''; });
+  $('cam').addEventListener('change',function(e){ setPhoto(e.target.files[0]); e.target.value=''; });
+  ['dragenter','dragover'].forEach(function(ev){ stage.addEventListener(ev,function(e){ e.preventDefault(); stage.classList.add('drag'); }); });
+  ['dragleave','drop'].forEach(function(ev){ stage.addEventListener(ev,function(e){ e.preventDefault(); stage.classList.remove('drag'); }); });
+  stage.addEventListener('drop',function(e){ var f=e.dataTransfer&&e.dataTransfer.files[0]; if(f) setPhoto(f); });
+  document.addEventListener('paste',function(e){ var it=[].slice.call((e.clipboardData&&e.clipboardData.items)||[]).filter(function(i){return /^image\//.test(i.type)})[0]; if(it) setPhoto(it.getAsFile()); });
 
-            imageStats.uploaded = true;
-            imageStats.greenRatio = Math.min(100, Math.round((greenPixels / totalPixels) * 140));
-            imageStats.brightness = Math.round((totalBrightness / (totalPixels * 255)) * 100);
-            imageStats.overcastRatio = Math.min(100, Math.round((grayCloudPixels / totalPixels) * 130));
-        }
+  /* ---------- messages ---------- */
+  function say(t,err){ var m=$('msg'); m.textContent=t||''; m.className='msg'+(err?' err':''); }
 
-        // 2. Get User GPS Coordinates
-        function useMyGPS() {
-            const status = document.getElementById('gpsStatus');
-            status.classList.remove('hidden');
-            status.innerText = "📍 Acquiring satellite GPS lock...";
+  /* ---------- place search ---------- */
+  var q=$('q'), sg=$('sugg'), results=[], active=-1, tmr=0, seq=0;
+  function placeLabel(r){ return [r.name,r.admin1,r.country].filter(Boolean).filter(function(x,i,a){return a.indexOf(x)===i}).join(', '); }
+  function closeSugg(){ sg.classList.remove('open'); q.setAttribute('aria-expanded','false'); active=-1; }
+  function renderSugg(){
+    sg.innerHTML=results.map(function(r,i){ return '<li role="option" id="s'+i+'" data-i="'+i+'" aria-selected="'+(i===active)+'">'+esc(r.name)+'<small>'+esc([r.admin2,r.admin1,r.country].filter(Boolean).join(', '))+'</small></li>'; }).join('');
+    sg.classList.toggle('open',results.length>0); q.setAttribute('aria-expanded',results.length>0?'true':'false');
+  }
+  function geocode(text){
+    var my=++seq;
+    return fetchJson(GEO+'?name='+encodeURIComponent(text)+'&count=6&language=en&format=json').then(function(j){ if(my!==seq) return null; return j.results||[]; });
+  }
+  q.addEventListener('input',function(){
+    clearTimeout(tmr); var t=q.value.trim(); if(t.length<2){ results=[]; closeSugg(); return; }
+    tmr=setTimeout(function(){ geocode(t).then(function(r){ if(r===null) return; results=r; active=-1; renderSugg(); if(!r.length) say('No place found for “'+t+'”. Try a nearby town or add the country.',true); else say(''); }).catch(function(){ say('Could not search for places. Check your connection and try again.',true); }); },280);
+  });
+  q.addEventListener('keydown',function(e){
+    if(!results.length) { if(e.key==='Enter'){ e.preventDefault(); var t=q.value.trim(); if(t) pickByText(t); } return; }
+    if(e.key==='ArrowDown'){ e.preventDefault(); active=(active+1)%results.length; renderSugg(); }
+    else if(e.key==='ArrowUp'){ e.preventDefault(); active=(active-1+results.length)%results.length; renderSugg(); }
+    else if(e.key==='Enter'){ e.preventDefault(); choose(results[Math.max(0,active)]); }
+    else if(e.key==='Escape'){ closeSugg(); }
+  });
+  sg.addEventListener('mousedown',function(e){ var li=e.target.closest('li'); if(li){ e.preventDefault(); choose(results[+li.getAttribute('data-i')]); } });
+  document.addEventListener('click',function(e){ if(!e.target.closest('.search')) closeSugg(); });
+  function pickByText(t){ say('Searching…'); geocode(t).then(function(r){ if(!r||!r.length){ say('No place found for “'+t+'”. Try a nearby town or add the country.',true); return; } choose(r[0]); }).catch(function(){ say('Could not search for places. Check your connection and try again.',true); }); }
+  function choose(r){ if(!r) return; closeSugg(); results=[]; q.value=placeLabel(r); loadWeather({name:placeLabel(r),lat:r.latitude,lon:r.longitude}); }
+  $('quick').addEventListener('click',function(e){ var b=e.target.closest('.chip'); if(!b) return; q.value=b.getAttribute('data-q'); pickByText(b.getAttribute('data-q')); });
+  $('exifBtn').addEventListener('click',function(){ q.value=''; loadWeather({name:'Photo location ('+S.photoLat.toFixed(3)+', '+S.photoLon.toFixed(3)+')',lat:S.photoLat,lon:S.photoLon}); });
+  $('gpsBtn').addEventListener('click',function(){
+    if(!navigator.geolocation){ say('Your browser cannot share its location. Search for a place instead.',true); return; }
+    say('Waiting for your location…');
+    navigator.geolocation.getCurrentPosition(function(p){ q.value=''; loadWeather({name:'My location ('+p.coords.latitude.toFixed(3)+', '+p.coords.longitude.toFixed(3)+')',lat:p.coords.latitude,lon:p.coords.longitude}); },
+      function(){ say('Location was blocked. Allow it in your browser settings, or search for a place.',true); },{timeout:12000,maximumAge:300000});
+  });
 
-            if (!navigator.geolocation) {
-                status.innerText = "❌ GPS not supported by your browser.";
-                return;
-            }
+  /* ---------- network ---------- */
+  function fetchJson(url){
+    var ctl=('AbortController' in window)?new AbortController():null, to=setTimeout(function(){ if(ctl) ctl.abort(); },12000);
+    return fetch(url,ctl?{signal:ctl.signal}:{}).then(function(r){ clearTimeout(to); if(!r.ok) throw new Error('http '+r.status); return r.json(); },function(e){ clearTimeout(to); throw e; });
+  }
+  function loadWeather(place){
+    S.place=place; say('Loading weather for '+place.name+'…');
+    var past=2;
+    if(S.photoDate){ var p=parts(S.photoDate), age=(Date.now()-Date.UTC(p.y,p.m-1,p.d,p.h))/864e5; past=Math.max(2,Math.min(92,Math.ceil(age)+1)); }
+    var lat=(+place.lat).toFixed(4), lon=(+place.lon).toFixed(4);
+    var fUrl=API+'?latitude='+lat+'&longitude='+lon+'&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,cloud_cover,wind_speed_10m,wind_direction_10m,wind_gusts_10m,is_day'+
+      '&hourly=temperature_2m,precipitation_probability,precipitation,weather_code,cloud_cover,wind_speed_10m,wind_direction_10m,is_day'+
+      '&daily=sunrise,sunset,uv_index_max&timezone=auto&past_days='+past+'&forecast_days=3';
+    var aUrl=AQ+'?latitude='+lat+'&longitude='+lon+'&current=us_aqi,pm2_5,pm10&timezone=auto';
+    return Promise.all([fetchJson(fUrl), fetchJson(aUrl).catch(function(){return null;})]).then(function(r){
+      S.data=r[0]; S.aq=r[1]&&r[1].current?r[1].current:null;
+      var h=S.data.hourly.time, cur=S.data.current.time.slice(0,13)+':00';
+      S.nowIdx=Math.max(0,h.indexOf(cur));
+      S.photoIdx=S.photoDate?h.indexOf(S.photoDate):-1;
+      S.mode='now'; setStart(); say('');
+      try{ localStorage.setItem('ecolensPlace',JSON.stringify(place)); }catch(e){}
+      $('results').classList.add('on'); draw();
+      if(history.replaceState) try{ history.replaceState(null,'',location.pathname+'?q='+encodeURIComponent(place.name.replace(/ \(.*/,''))); }catch(e){}
+    }).catch(function(){ say('Could not load the weather. Check your connection and try again.',true); });
+  }
+  function setStart(){ var h=S.data.hourly.time; S.start=(S.mode==='photo'&&S.photoIdx>=0)?S.photoIdx:S.nowIdx; S.start=Math.min(S.start,Math.max(0,h.length-25)); S.sel=S.start; $('hour').value=0; }
 
-            navigator.geolocation.getCurrentPosition(async (pos) => {
-                userCoords = {
-                    lat: pos.coords.latitude.toFixed(4),
-                    lon: pos.coords.longitude.toFixed(4),
-                    name: "Current GPS Location"
-                };
-                document.getElementById('locationInput').value = `GPS (${userCoords.lat}, ${userCoords.lon})`;
-                status.innerText = "✅ GPS coordinates locked!";
-            }, () => {
-                status.innerText = "⚠️ Permission denied. Please type location name.";
-            });
-        }
+  /* ---------- helpers on the selected hour ---------- */
+  function at(i){ var H=S.data.hourly; return {t:H.time[i],temp:H.temperature_2m[i],prob:H.precipitation_probability[i],mm:H.precipitation[i],code:H.weather_code[i],cloud:H.cloud_cover[i],wind:H.wind_speed_10m[i],dir:H.wind_direction_10m[i],day:H.is_day[i]}; }
+  function descr(p){ return p===null||p===undefined?'No forecast':(p<20?'Unlikely':(p<50?'Possible':(p<80?'Likely':'Very likely'))); }
+  function lvl(p){ return p===null||p===undefined?'':(p<20?'lvl-lo':(p<50?'lvl-mid':'lvl-hi')); }
+  function win(from,n){ var out=[]; for(var k=0;k<n;k++){ var i=from+k; if(i<S.data.hourly.time.length) out.push(at(i)); } return out; }
+  function maxProb(a){ var v=a.map(function(x){return x.prob}).filter(function(x){return x!==null&&x!==undefined}); return v.length?Math.max.apply(null,v):null; }
 
-        // 3. Fetch Weather & Combine Data
-        async function analyzeEnvironment() {
-            const locText = document.getElementById('locationInput').value.trim();
-            if (!imageStats.uploaded) {
-                alert("Please upload an environmental photo first!");
-                return;
-            }
-            if (!locText && !userCoords) {
-                alert("Please enter a location name (e.g., Trishal, Dhaka) or click the GPS button!");
-                return;
-            }
+  /* ---------- draw everything ---------- */
+  function draw(){
+    if(!S.data) return;
+    var w=win(S.start,25), cur=S.data.current, isNowSel=(S.sel===S.nowIdx&&S.mode==='now');
+    // mode buttons
+    var m=$('mode'); m.innerHTML='<button type="button" data-m="now" aria-pressed="'+(S.mode==='now')+'">From now</button>'+(S.photoIdx>=0?'<button type="button" data-m="photo" aria-pressed="'+(S.mode==='photo')+'">When the photo was taken</button>':'');
+    var hr=$('hour'); hr.max=Math.max(0,w.length-1);
+    var sel=at(S.sel), rel=S.sel-S.start;
+    $('hourOut').textContent=(isNowSel?'Now · ':'')+lab(sel.t,true);
+    // rain card
+    var near=win(S.start,3), p3=maxProb(near), p24=maxProb(w), mm24=w.reduce(function(a,x){return a+(x.mm||0)},0), photoMode=S.mode==='photo';
+    $('rainHead').textContent=photoMode?'Rain around the photo time':'Chance of rain';
+    $('rainSub').textContent=(photoMode?'From '+lab(w[0].t,true)+' for the next 3 hours':'Next 3 hours')+' · '+S.place.name;
+    $('rainBig').textContent=p3===null?'--':p3+'%'; $('rainBig').className='big '+lvl(p3);
+    $('rainDesc').textContent=descr(p3)+(p3!==null?' that it rains':''); $('rainDesc').className='desc '+lvl(p3);
+    var facts=[], first=null; for(var k=0;k<w.length;k++){ if(w[k].prob!==null&&w[k].prob>=50){ first=w[k]; break; } }
+    if(!photoMode && cur.precipitation>0) facts.push('<i class="fa-solid fa-droplet"></i><span>Rain is falling at this spot right now ('+num(cur.precipitation,1)+' mm in the last hour).</span>');
+    facts.push('<i class="fa-regular fa-clock"></i><span>'+(p24===null?'No 24-hour forecast available.':'Highest chance in the next 24 hours: <b>'+p24+'%</b>.')+'</span>');
+    facts.push('<i class="fa-solid fa-cloud-showers-heavy"></i><span>Expected rain over 24 hours: <b>'+num(mm24,1)+' mm</b>'+(mm24>=10?' (a lot)':(mm24<0.5?' (almost none)':''))+'.</span>');
+    if(first) facts.push('<i class="fa-solid fa-hourglass-start"></i><span>Rain is likely (50% or more) from about <b>'+lab(first.t,true)+'</b>.</span>');
+    $('rainFacts').innerHTML=facts.map(function(f){return '<li>'+f+'</li>'}).join('');
+    $('rainTip').textContent=p3===null?'The model gave no rain probability for these hours.':(p3>=50?'Carry waterproof cover and keep instruments and notes dry.':(p3>=20?'Pack a light rain cover, just in case.':'Rain is unlikely in this window.'))+' Forecasts are never a guarantee.';
+    // chart
+    chart(w);
+    // conditions
+    var d=S.data, di=Math.max(0,d.daily.time.indexOf(sel.t.slice(0,10))), ww=wmo(sel.code,sel.day);
+    $('condHead').textContent='Conditions · '+(isNowSel?'now':lab(sel.t,true));
+    $('condSub').textContent=ww.t+' at '+S.place.name+(S.data.timezone?' ('+S.data.timezone.replace(/_/g,' ')+')':'');
+    var cells=[['Temperature',num(isNowSel?cur.temperature_2m:sel.temp,0)+'°C',isNowSel?'Feels like '+num(cur.apparent_temperature,0)+'°C':''],
+      ['Cloud cover',num(isNowSel?cur.cloud_cover:sel.cloud)+'%',''],
+      ['Wind',num(isNowSel?cur.wind_speed_10m:sel.wind)+' km/h',isNowSel?'Gusts '+num(cur.wind_gusts_10m)+' km/h':''],
+      ['Humidity',isNowSel?num(cur.relative_humidity_2m)+'%':'n/a','Current hour only'],
+      ['UV index (peak)',num(d.daily.uv_index_max[di],0),uvTxt(d.daily.uv_index_max[di])],
+      ['Sunrise / sunset',d.daily.sunrise[di]?d.daily.sunrise[di].slice(11,16)+' / '+d.daily.sunset[di].slice(11,16):'n/a','Local time']];
+    if(S.aq&&S.aq.us_aqi!==undefined&&S.aq.us_aqi!==null){ cells.push(['Air quality (US AQI)',num(S.aq.us_aqi),aqiTxt(S.aq.us_aqi)+' · PM2.5 '+num(S.aq.pm2_5,0)+' µg/m³']); }
+    $('cond').innerHTML=cells.map(function(c){ return '<div class="cell"><small>'+c[0]+'</small><b>'+c[1]+'</b><span>'+c[2]+'</span></div>'; }).join('');
+    // stage card
+    var stg=$('stage'); stg.classList.add('show-card');
+    $('cardWhere').textContent=S.place.name; $('cardWhen').textContent=(isNowSel?'Now':lab(sel.t,true))+' · '+dayLab(sel.t);
+    $('cardTemp').textContent=num(isNowSel?cur.temperature_2m:sel.temp,0)+'°C'; $('cardCond').textContent=ww.t;
+    $('cardRain').textContent=sel.prob===null||sel.prob===undefined?'Rain n/a':'Rain '+sel.prob+'%';
+    stg.setAttribute('aria-label','Photo preview. '+ww.t+', '+$('cardTemp').textContent+', chance of rain '+$('cardRain').textContent.replace('Rain ','')+' at '+S.place.name+'.');
+    // field checks (always relative to now, or the photo time in photo mode)
+    checks(near,di);
+    fxSet(sel,isNowSel?cur:null);
+  }
+  function uvTxt(u){ return u===null||u===undefined?'':(u<3?'Low':(u<6?'Moderate':(u<8?'High':(u<11?'Very high':'Extreme')))); }
+  function aqiTxt(a){ return a<=50?'Good':(a<=100?'Moderate':(a<=150?'Unhealthy for sensitive groups':(a<=200?'Unhealthy':(a<=300?'Very unhealthy':'Hazardous')))); }
 
-            const btn = document.getElementById('analyzeBtn');
-            const scanner = document.getElementById('scannerLine');
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Scanning & Fetching Satellite Data...';
-            scanner.classList.remove('hidden');
+  /* ---------- chart ---------- */
+  function chart(w){
+    var svg=$('chart'), W=svg.clientWidth||600, H=190, padL=8,padR=8,padT=14,padB=26, n=w.length, bw=(W-padL-padR)/n;
+    var maxMm=Math.max(2,Math.max.apply(null,w.map(function(x){return x.mm||0}))), out='';
+    [0,50,100].forEach(function(g){ var y=padT+(100-g)/100*(H-padT-padB); out+='<line class="grid" x1="'+padL+'" x2="'+(W-padR)+'" y1="'+y+'" y2="'+y+'"/><text x="'+(W-padR)+'" y="'+(y-3)+'" text-anchor="end">'+g+'%</text>'; });
+    w.forEach(function(x,i){
+      var p=x.prob===null||x.prob===undefined?0:x.prob, h=p/100*(H-padT-padB), y=padT+(H-padT-padB)-h;
+      out+='<rect class="bar'+(S.start+i===S.sel?' sel':'')+'" x="'+(padL+i*bw+1)+'" y="'+y+'" width="'+Math.max(2,bw-2)+'" height="'+Math.max(1,h)+'" rx="2"/>';
+      if(i%3===0) out+='<text x="'+(padL+i*bw+bw/2)+'" y="'+(H-8)+'" text-anchor="middle">'+lab(x.t,false).replace(' ','')+'</text>';
+    });
+    var pts=w.map(function(x,i){ var y=padT+(H-padT-padB)-Math.min(1,(x.mm||0)/maxMm)*(H-padT-padB); return (padL+i*bw+bw/2).toFixed(1)+','+y.toFixed(1); }).join(' ');
+    out+='<polyline class="mm" points="'+pts+'"/>';
+    svg.setAttribute('viewBox','0 0 '+W+' '+H); svg.innerHTML=out;
+    svg.setAttribute('aria-label','Chart of the hourly chance of rain. Highest: '+(maxProb(w)===null?'unknown':maxProb(w)+'%')+'.');
+  }
+  function idxFromX(e){ var svg=$('chart'), r=svg.getBoundingClientRect(), n=Math.min(25,S.data.hourly.time.length-S.start), f=(e.clientX-r.left-8*(r.width/(svg.clientWidth||r.width)))/(r.width-16); return Math.max(0,Math.min(n-1,Math.floor(f*n))); }
+  var dragging=false;
+  $('chart').addEventListener('pointerdown',function(e){ dragging=true; $('chart').setPointerCapture(e.pointerId); pick(idxFromX(e)); });
+  $('chart').addEventListener('pointermove',function(e){ if(dragging) pick(idxFromX(e)); });
+  $('chart').addEventListener('pointerup',function(){ dragging=false; });
+  function pick(i){ $('hour').value=i; S.sel=S.start+i; draw(); }
+  $('hour').addEventListener('input',function(){ pick(+$('hour').value); });
+  $('mode').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; S.mode=b.getAttribute('data-m'); setStart(); draw(); });
+  window.addEventListener('resize',function(){ if(S.data) chart(win(S.start,25)); fxResize(); });
 
-            try {
-                let lat, lon, placeName;
+  /* ---------- field work checks ---------- */
+  function checks(near,di){
+    var cur=S.data.current, rows=[], p3=maxProb(near), maxApp=(near.length?Math.max.apply(null,near.map(function(x){return x.temp})):cur.temperature_2m);
+    var app=Math.max(cur.apparent_temperature, S.mode==='now'?-99:-99), heat=S.mode==='now'?cur.apparent_temperature:maxApp;
+    var thunder=near.some(function(x){return x.code>=95}), wind=S.mode==='now'?Math.max(cur.wind_speed_10m,cur.wind_gusts_10m*0.6):Math.max.apply(null,near.map(function(x){return x.wind}));
+    var uv=S.data.daily.uv_index_max[di], aqi=S.aq&&S.aq.us_aqi!==undefined&&S.aq.us_aqi!==null?S.aq.us_aqi:null;
+    rows.push(thunder?['avoid','Thunderstorm','Storms are in the forecast. Do not work in the open or near water.']:['ok','Thunderstorms','None in the forecast for this window.']);
+    rows.push(p3===null?['caution','Rain','No rain forecast available.']:(p3>=50?['avoid','Rain','Rain is likely ('+p3+'%). Plan around it or protect people and equipment.']:(p3>=20?['caution','Rain','Rain is possible ('+p3+'%). Bring a cover.']:['ok','Rain','Unlikely ('+p3+'%).'])));
+    rows.push(heat>=39?['avoid','Heat','Feels like '+num(heat,0)+'°C. Dangerous for long work outdoors.']:(heat>=32?['caution','Heat','Feels like '+num(heat,0)+'°C. Take water, shade and regular breaks.']:['ok','Heat','Feels like '+num(heat,0)+'°C. Comfortable.']));
+    if(uv!==null&&uv!==undefined) rows.push(uv>=6?['caution','Sun (UV '+num(uv,0)+')','UV is '+uvTxt(uv).toLowerCase()+' today. Use sunscreen, a hat and shade around midday.']:['ok','Sun (UV '+num(uv,0)+')','UV is '+uvTxt(uv).toLowerCase()+' today.']);
+    if(aqi!==null) rows.push(aqi>150?['avoid','Air quality','US AQI '+num(aqi)+' ('+aqiTxt(aqi)+'). Limit time outdoors and wear a mask.']:(aqi>100?['caution','Air quality','US AQI '+num(aqi)+' ('+aqiTxt(aqi)+'). Sensitive people should limit time outdoors.']:['ok','Air quality','US AQI '+num(aqi)+' ('+aqiTxt(aqi)+').']));
+    rows.push(wind>15?['caution','Wind and noise readings','About '+num(wind,0)+' km/h. As a rule of thumb, wind above ~15 km/h disturbs microphone readings; shield the phone when using the Sound Meter.']:['ok','Wind and noise readings','About '+num(wind,0)+' km/h. Fine for sound level checks.']);
+    var worst=rows.some(function(r){return r[0]==='avoid'})?'avoid':(rows.some(function(r){return r[0]==='caution'})?'caution':'ok');
+    var ov=$('overall'); ov.className='overall '+worst; ov.textContent=worst==='ok'?'Good conditions for field work.':(worst==='caution'?'Workable, with precautions.':'Not recommended right now.');
+    $('checks').innerHTML=rows.map(function(r){ return '<li class="'+r[0]+'"><i class="st" aria-hidden="true">'+(r[0]==='ok'?'✓':(r[0]==='caution'?'!':'✕'))+'</i><b>'+r[1]+' <span class="sr">'+(r[0]==='ok'?'ok':(r[0]==='caution'?'caution':'avoid'))+'</span></b><span>'+r[2]+'</span></li>'; }).join('');
+  }
 
-                if (userCoords && locText.startsWith('GPS')) {
-                    lat = userCoords.lat;
-                    lon = userCoords.lon;
-                    placeName = "Live GPS Field Site";
-                } else {
-                    // Geocode Location Name via Open-Meteo Free API
-                    const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(locText)}&count=1&language=en&format=json`);
-                    const geoData = await geoRes.json();
-                    if (!geoData.results || geoData.results.length === 0) {
-                        throw new Error("Location not found. Try a nearby district or city name.");
-                    }
-                    lat = geoData.results[0].latitude;
-                    lon = geoData.results[0].longitude;
-                    placeName = `${geoData.results[0].name}, ${geoData.results[0].country || ''}`;
-                }
+  /* ---------- weather effects drawn over the photo ---------- */
+  var cv=$('fx'), cx=cv.getContext('2d'), FW=0, FH=0, P={kind:'dry',mm:0,cloud:0,day:1,slant:0,thunder:false}, drops=[], clouds=[], flash=0, running=false, last=0, vis=true;
+  function fxResize(){ var dpr=Math.min(window.devicePixelRatio||1,2), r=stage.getBoundingClientRect(); FW=Math.max(1,r.width); FH=Math.max(1,r.height); cv.width=FW*dpr; cv.height=FH*dpr; cx.setTransform(dpr,0,0,dpr,0,0); fxStatic(); }
+  function fxSet(sel,cur){
+    var mm=sel.mm||0, kind=kindOf(sel.code);
+    if(cur&&cur.precipitation>mm) mm=cur.precipitation;
+    var blowTo=((sel.dir||0)+180)*Math.PI/180, spd=Math.min(40,sel.wind||0);
+    P={kind:kind,mm:mm,cloud:(sel.cloud||0)/100,day:sel.day===0?0:1,slant:Math.sin(blowTo)*Math.min(0.55,spd/60),thunder:kind==='thunder'};
+    var density=(kind==='rain'||kind==='thunder'||kind==='snow')?Math.min(1,0.15+mm/6):(mm>0.1?Math.min(0.6,mm/4):0);
+    var count=reduce?0:Math.round(density*(kind==='snow'?160:420)*Math.max(.6,FW/700));
+    drops=[]; for(var i=0;i<count;i++) drops.push({x:Math.random()*FW,y:Math.random()*FH,l:8+Math.random()*(kind==='snow'?3:16),s:(kind==='snow'?30:520)+Math.random()*(kind==='snow'?40:340),r:1+Math.random()*2});
+    var nC=Math.round(P.cloud*7); clouds=[]; for(var j=0;j<nC;j++) clouds.push({x:Math.random()*FW,y:Math.random()*FH*0.5,r:FW*(0.12+Math.random()*0.16),s:6+Math.random()*10,a:0.18+Math.random()*0.2});
+    fxStatic(); if(!running&&!reduce&&vis&&(drops.length||clouds.length||P.thunder)){ running=true; last=performance.now(); requestAnimationFrame(tick); }
+  }
+  function layerBase(){
+    cx.clearRect(0,0,FW,FH);
+    var cl=P.cloud;
+    if(!P.day){ cx.fillStyle='rgba(8,18,44,'+(0.5+0.1*cl)+')'; cx.fillRect(0,0,FW,FH); }
+    else if(cl>0.05){ cx.fillStyle='rgba(90,100,110,'+(cl*0.38)+')'; cx.fillRect(0,0,FW,FH); }
+    if(P.kind==='fog'){ var g=cx.createLinearGradient(0,0,0,FH); g.addColorStop(0,'rgba(235,240,240,.55)'); g.addColorStop(1,'rgba(235,240,240,.8)'); cx.fillStyle=g; cx.fillRect(0,0,FW,FH); }
+    clouds.forEach(function(c){ var g=cx.createRadialGradient(c.x,c.y,0,c.x,c.y,c.r); var col=P.day?'255,255,255':'160,170,190'; g.addColorStop(0,'rgba('+col+','+c.a+')'); g.addColorStop(1,'rgba('+col+',0)'); cx.fillStyle=g; cx.fillRect(c.x-c.r,c.y-c.r,c.r*2,c.r*2); });
+  }
+  function fxStatic(){ if(!FW) return; layerBase(); drawDrops(0); }
+  function drawDrops(dt){
+    if(P.kind==='snow'){ cx.fillStyle='rgba(255,255,255,.9)'; drops.forEach(function(d){ d.y+=d.s*dt; d.x+=Math.sin((d.y+d.x)/40)*0.4+P.slant*30*dt; if(d.y>FH){ d.y=-5; d.x=Math.random()*FW; } cx.beginPath(); cx.arc(d.x,d.y,d.r,0,6.3); cx.fill(); }); return; }
+    cx.strokeStyle=P.day?'rgba(215,232,245,.7)':'rgba(190,210,235,.6)'; cx.lineWidth=1.2; cx.beginPath();
+    drops.forEach(function(d){ d.y+=d.s*dt; d.x+=d.s*dt*P.slant; if(d.y>FH){ d.y=-d.l; d.x=Math.random()*FW; } if(d.x>FW) d.x=0; if(d.x<0) d.x=FW; cx.moveTo(d.x,d.y); cx.lineTo(d.x-P.slant*d.l,d.y-d.l); }); cx.stroke();
+  }
+  function tick(now){
+    if(!vis||document.hidden){ running=false; return; }
+    var dt=Math.min(0.05,(now-last)/1000); last=now;
+    clouds.forEach(function(c){ c.x+=c.s*dt; if(c.x-c.r>FW) c.x=-c.r; });
+    if(P.thunder){ if(flash<=0&&Math.random()<0.006) flash=1; flash=Math.max(0,flash-dt*4); }
+    layerBase(); drawDrops(dt);
+    if(flash>0){ cx.fillStyle='rgba(255,255,255,'+(flash*0.55)+')'; cx.fillRect(0,0,FW,FH); }
+    if(drops.length||clouds.length||P.thunder) requestAnimationFrame(tick); else running=false;
+  }
+  if('IntersectionObserver' in window) new IntersectionObserver(function(es){ vis=es[0].isIntersecting; if(vis&&!running&&!reduce&&(drops.length||clouds.length||P.thunder)){ running=true; last=performance.now(); requestAnimationFrame(tick); } }).observe(stage);
+  document.addEventListener('visibilitychange',function(){ if(!document.hidden&&!running&&!reduce&&vis&&(drops.length||clouds.length)){ running=true; last=performance.now(); requestAnimationFrame(tick); } });
+  fxResize();
 
-                // Fetch Real-Time Weather & Rain Probability from Open-Meteo
-                const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,rain,cloud_cover,wind_speed_10m,weather_code&hourly=precipitation_probability&timezone=auto`;
-                const wRes = await fetch(weatherUrl);
-                const wData = await wRes.json();
+  /* ---------- save / share the picture ---------- */
+  function compose(){
+    return new Promise(function(res){
+      var iw=img.naturalWidth||1200, ih=img.naturalHeight||800, sc=Math.min(1,1600/Math.max(iw,ih)), W=Math.round(iw*sc), H=Math.round(ih*sc);
+      var c=document.createElement('canvas'); c.width=W; c.height=H; var x=c.getContext('2d');
+      if(S.photoUrl&&img.complete) x.drawImage(img,0,0,W,H); else { var g=x.createLinearGradient(0,0,0,H); g.addColorStop(0,'#6aa6c9'); g.addColorStop(1,'#dfeadf'); x.fillStyle=g; x.fillRect(0,0,W,H); }
+      // cover-fit the effects layer the way the stage shows the photo
+      x.drawImage(cv,0,0,cv.width,cv.height,0,0,W,H);
+      var pad=Math.round(W*0.03), bh=Math.round(H*0.17), by=H-bh-pad, f=Math.max(14,Math.round(W/48));
+      x.fillStyle='rgba(10,32,37,.7)'; rr(x,pad,by,W-pad*2,bh,Math.round(f*0.9)); x.fill();
+      x.fillStyle='#f2f8f5'; x.textBaseline='top';
+      x.font='700 '+Math.round(f*1.25)+'px "Bricolage Grotesque",sans-serif'; x.fillText($('cardWhere').textContent,pad*2,by+bh*0.14,W*0.55);
+      x.font='400 '+Math.round(f*0.9)+'px "Source Serif 4",serif'; x.fillText($('cardWhen').textContent,pad*2,by+bh*0.14+f*1.6);
+      x.textAlign='right'; x.font='800 '+Math.round(f*2.2)+'px "Bricolage Grotesque",sans-serif'; x.fillText($('cardTemp').textContent,W-pad*2,by+bh*0.1);
+      x.font='600 '+Math.round(f*0.95)+'px "Bricolage Grotesque",sans-serif'; x.fillText($('cardCond').textContent+' · '+$('cardRain').textContent,W-pad*2,by+bh*0.1+f*2.6);
+      x.textAlign='left'; x.font='600 '+Math.round(f*0.7)+'px "Bricolage Grotesque",sans-serif'; x.fillStyle='rgba(255,255,255,.8)'; x.fillText('EcoLens · mdrokibul.me · Weather: Open-Meteo.com',pad*2,by+bh-f*1.2);
+      c.toBlob(function(b){ res(b); },'image/jpeg',0.9);
+    });
+  }
+  function rr(x,a,b,w,h,r){ x.beginPath(); x.moveTo(a+r,b); x.arcTo(a+w,b,a+w,b+h,r); x.arcTo(a+w,b+h,a,b+h,r); x.arcTo(a,b+h,a,b,r); x.arcTo(a,b,a+w,b,r); x.closePath(); }
+  $('saveBtn').addEventListener('click',function(){
+    if(!S.data){ say('Choose a place first, then save the picture.',true); return; }
+    compose().then(function(b){ var a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='ecolens-'+Date.now()+'.jpg'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(function(){URL.revokeObjectURL(a.href)},4000); });
+  });
+  if(navigator.canShare&&navigator.share){ $('shareBtn').hidden=false; $('shareBtn').addEventListener('click',function(){
+    if(!S.data){ say('Choose a place first, then share the picture.',true); return; }
+    compose().then(function(b){ var f=new File([b],'ecolens.jpg',{type:'image/jpeg'}); if(navigator.canShare({files:[f]})) navigator.share({files:[f],title:'EcoLens weather'}).catch(function(){}); else say('Sharing is not available here. Use Save instead.',true); });
+  }); }
 
-                const current = wData.current;
-                const currentHourIso = current.time.slice(0, 13) + ":00";
-                const hourIndex = wData.hourly.time.indexOf(currentHourIso);
-                let rainProb = hourIndex !== -1 ? wData.hourly.precipitation_probability[hourIndex] : (current.cloud_cover > 70 ? 65 : 15);
-
-                // Blend optical overcast signature if rain is actively falling
-                if (current.precipitation > 0 && rainProb < 80) rainProb = 90;
-
-                updateDashboard(placeName, lat, lon, current, rainProb);
-
-            } catch (err) {
-                alert(err.message || "Could not fetch weather data. Check your internet connection.");
-            } finally {
-                btn.innerHTML = '<i class="fas fa-bolt"></i> Analyze Environment & Weather';
-                scanner.classList.add('hidden');
-            }
-        }
-
-        function updateDashboard(placeName, lat, lon, current, rainProb) {
-            document.getElementById('emptyState').classList.add('hidden');
-            document.getElementById('resultDashboard').classList.remove('hidden');
-
-            const wInfo = decodeWMO(current.weather_code);
-
-            // Populate Weather Metrics
-            document.getElementById('resLocation').innerText = placeName;
-            document.getElementById('resCoords').innerText = `Latitude: ${Number(lat).toFixed(3)}° N | Longitude: ${Number(lon).toFixed(3)}° E`;
-            document.getElementById('resTemp').innerText = `${Math.round(current.temperature_2m)}°C`;
-            document.getElementById('resCondition').innerText = wInfo.desc;
-            document.getElementById('weatherIcon').className = `fas ${wInfo.icon} text-3xl text-emerald-400`;
-
-            // Populate Rain Probability
-            document.getElementById('resRainProb').innerText = `${rainProb}%`;
-            document.getElementById('rainBar').style.width = `${rainProb}%`;
-
-            let verdict = "Low chance of precipitation. Ideal conditions for outdoor environmental surveying.";
-            if (rainProb >= 70) verdict = "⚠️ High probability of rain! Carry waterproof gear and protect field instruments.";
-            else if (rainProb >= 40) verdict = "🌦️ Moderate chance of scattered rain showers. Monitor local cloud build-up.";
-            document.getElementById('rainVerdict').innerText = verdict;
-
-            // 4 Cards
-            document.getElementById('resHumidity').innerText = `${current.relative_humidity_2m}%`;
-            document.getElementById('resWind').innerText = `${current.wind_speed_10m} km/h`;
-            document.getElementById('resCloud').innerText = `${current.cloud_cover}%`;
-            document.getElementById('resFeels').innerText = `${Math.round(current.apparent_temperature)}°C`;
-
-            // Populate Optical Image Analysis
-            document.getElementById('optGreen').innerText = `${imageStats.greenRatio}%`;
-            document.getElementById('optBright').innerText = `${imageStats.brightness}%`;
-            document.getElementById('optHaze').innerText = `${imageStats.overcastRatio}%`;
-
-            // Photo Stamp Overlay
-            const badge = document.getElementById('photoBadge');
-            badge.classList.remove('hidden');
-            document.getElementById('badgeLoc').innerText = placeName;
-            document.getElementById('badgeTime').innerText = new Date().toLocaleString();
-            document.getElementById('badgeTemp').innerText = `${Math.round(current.temperature_2m)}°C • ${wInfo.desc}`;
-            document.getElementById('badgeRain').innerText = `Rain Prob: ${rainProb}% | Canopy: ${imageStats.greenRatio}%`;
-
-            // Synthesize Advisory
-            let vegComment = imageStats.greenRatio > 30 
-                ? `Strong vegetation signature (${imageStats.greenRatio}% green canopy) detected in your photo, indicating healthy local flora and evapotranspiration potential.`
-                : `Low vegetation cover (${imageStats.greenRatio}%) detected in the frame—likely an urban, aquatic, or open sky environment.`;
-            
-            let skyComment = (imageStats.overcastRatio > 45 || current.cloud_cover > 60)
-                ? `Both optical sky haze (${imageStats.overcastRatio}%) and satellite cloud cover (${current.cloud_cover}%) confirm overcast conditions with a ${rainProb}% probability of rain.`
-                : `Clear ambient luminance (${imageStats.brightness}%) aligns with current satellite telemetry (${rainProb}% rain probability).`;
-
-            document.getElementById('ecoAdvisory').innerText = `${vegComment} ${skyComment} Surface humidity stands at ${current.relative_humidity_2m}% with winds at ${current.wind_speed_10m} km/h.`;
-        }
-
-        function decodeWMO(code) {
-            const map = {
-                0: { desc: "Clear Sky", icon: "fa-sun" },
-                1: { desc: "Mainly Clear", icon: "fa-cloud-sun" },
-                2: { desc: "Partly Cloudy", icon: "fa-cloud-sun" },
-                3: { desc: "Overcast Clouds", icon: "fa-cloud" },
-                45: { desc: "Foggy / Mist", icon: "fa-smog" },
-                51: { desc: "Light Drizzle", icon: "fa-cloud-rain" },
-                61: { desc: "Slight Rain", icon: "fa-cloud-showers-heavy" },
-                63: { desc: "Moderate Rain", icon: "fa-cloud-showers-heavy" },
-                65: { desc: "Heavy Rain", icon: "fa-cloud-showers-heavy" },
-                80: { desc: "Rain Showers", icon: "fa-cloud-sun-rain" },
-                95: { desc: "Thunderstorm", icon: "fa-bolt" }
-            };
-            return map[code] || { desc: "Variable Sky", icon: "fa-cloud-sun" };
-        }
-    </script>
+  /* ---------- start: ?q=place in the address, or the last place used ---------- */
+  var qp=null; try{ qp=new URLSearchParams(location.search).get('q'); }catch(e){}
+  if(qp){ q.value=qp; pickByText(qp); }
+  else { try{ var lp=JSON.parse(localStorage.getItem('ecolensPlace')||'null'); if(lp&&isFinite(lp.lat)&&isFinite(lp.lon)){ q.value=lp.name.replace(/ \(.*/,''); loadWeather(lp); } }catch(e){} }
+})();
+</script>
 </body>
 </html>
