@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soil Texture Triangle & Sieve Analyzer | Md Rokibul Islam Robin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --estuary: #0E2A2F;
+            --estuary-2: #153c43;
+            --river: #237A82;
+            --moss: #4A8B6E;
+            --silt: #E5B869;
+        }
+        body {
+            font-family: 'Source Serif 4', serif;
+            background: radial-gradient(1100px 600px at 80% 10%, #1d5a5f 0%, transparent 65%), linear-gradient(160deg, var(--estuary) 0%, #091c20 100%);
+            color: #eaf3ee;
+        }
+        h1, h2, h3, h4, .font-display {
+            font-family: 'Bricolage Grotesque', sans-serif;
+        }
+        .glass-card {
+            background: rgba(21, 60, 67, 0.65);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        input[type=range] {
+            accent-color: #E5B869;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between pb-12">
+
+    <!-- Top Navigation -->
+    <header class="border-b border-white/10 bg-[#0E2A2F]/80 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
+            <a href="index.html" class="inline-flex items-center gap-2 text-[#E5B869] hover:text-white font-display font-semibold transition">
+                <i class="fas fa-arrow-left"></i> Back to Robin.me
+            </a>
+            <div class="font-display font-bold tracking-tight flex items-center gap-2 text-sm sm:text-base">
+                <i class="fas fa-mound text-[#E5B869]"></i>
+                <span>GeoSoil Lab <span class="hidden sm:inline-block text-xs font-normal bg-[#E5B869]/20 text-[#E5B869] border border-[#E5B869]/40 px-2.5 py-0.5 rounded-full ml-1">Soil Mechanics & Pedology</span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 w-full">
+
+        <!-- Title Header -->
+        <div class="text-center max-w-3xl mx-auto mb-8">
+            <span class="font-display text-xs uppercase tracking-widest px-3 py-1 rounded-full border border-white/20 text-[#cfe6dc] bg-white/5">USDA Particle Size Classification</span>
+            <h1 class="text-3xl sm:text-5xl font-extrabold mt-3 mb-3 tracking-tight">
+                Interactive <span class="text-[#E5B869]">Soil Texture Triangle</span>
+            </h1>
+            <p class="text-slate-300 text-sm sm:text-base">
+                Input your <strong>sieve &amp; hydrometer analysis weights</strong> or adjust particle percentages to trace directional axis lines and classify soil texture in real time.
+            </p>
+        </div>
+
+        <!-- Main Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+            <!-- Left Column: Interactive Soil Triangle Canvas (7 Cols) -->
+            <div class="lg:col-span-7 glass-card rounded-3xl p-4 sm:p-6 shadow-2xl">
+                <div class="flex flex-wrap justify-between items-center gap-2 mb-3 px-2 font-display text-xs">
+                    <div class="flex flex-wrap items-center gap-3">
+                        <span class="inline-flex items-center gap-1.5 text-[#f97316] font-bold">
+                            <span class="w-3 h-0.5 bg-[#f97316] inline-block"></span> Sand Line
+                        </span>
+                        <span class="inline-flex items-center gap-1.5 text-[#a855f7] font-bold">
+                            <span class="w-3 h-0.5 bg-[#a855f7] inline-block"></span> Clay Line
+                        </span>
+                        <span class="inline-flex items-center gap-1.5 text-[#38bdf8] font-bold">
+                            <span class="w-3 h-0.5 bg-[#38bdf8] inline-block"></span> Silt Line
+                        </span>
+                    </div>
+                    <span class="text-[#E5B869] bg-black/30 px-3 py-1 rounded-full">
+                        <i class="fas fa-crosshairs mr-1"></i> Click or drag anywhere inside triangle
+                    </span>
+                </div>
+
+                <!-- White / Light Card for Crisp Diagram Visibility -->
+                <div class="w-full flex justify-center bg-[#f8fafc] rounded-2xl border border-white/20 overflow-hidden shadow-inner">
+                    <canvas id="triangleCanvas" width="700" height="620" class="w-full max-w-[700px] h-auto cursor-crosshair"></canvas>
+                </div>
+
+                <!-- Quick Soil Sample Presets -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-4 font-display text-xs">
+                    <button onclick="setSoil(40, 40, 20)" class="bg-white/10 hover:bg-[#E5B869] hover:text-slate-900 py-2.5 px-3 rounded-xl font-semibold transition">
+                        🌱 Ideal Loam (40/40/20)
+                    </button>
+                    <button onclick="setSoil(75, 15, 10)" class="bg-white/10 hover:bg-[#E5B869] hover:text-slate-900 py-2.5 px-3 rounded-xl font-semibold transition">
+                        🏖️ River Bank (75/15/10)
+                    </button>
+                    <button onclick="setSoil(20, 65, 15)" class="bg-white/10 hover:bg-[#E5B869] hover:text-slate-900 py-2.5 px-3 rounded-xl font-semibold transition">
+                        🌾 Floodplain Silt (20/65/15)
+                    </button>
+                    <button onclick="setSoil(20, 25, 55)" class="bg-white/10 hover:bg-[#E5B869] hover:text-slate-900 py-2.5 px-3 rounded-xl font-semibold transition">
+                        🏺 Heavy Clay (20/25/55)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Column: Sieve Input & Soil Report (5 Cols) -->
+            <div class="lg:col-span-5 space-y-5">
+
+                <!-- Input Card with Tabs -->
+                <div class="glass-card rounded-3xl p-6 shadow-xl">
+                    <!-- Mode Switcher Tabs -->
+                    <div class="grid grid-cols-2 gap-2 bg-black/30 p-1.5 rounded-2xl font-display text-xs font-bold mb-5">
+                        <button id="tabPct" onclick="switchMode('pct')" class="py-2.5 px-3 rounded-xl bg-[#E5B869] text-slate-900 transition">
+                            <i class="fas fa-sliders-h mr-1"></i> % Particle Sliders
+                        </button>
+                        <button id="tabSieve" onclick="switchMode('sieve')" class="py-2.5 px-3 rounded-xl text-slate-300 hover:text-white transition">
+                            <i class="fas fa-balance-scale mr-1"></i> Lab Sieve Weights (g)
+                        </button>
+                    </div>
+
+                    <!-- MODE 1: Percentage Sliders -->
+                    <div id="pctPanel" class="space-y-4">
+                        <div>
+                            <div class="flex justify-between font-display text-sm mb-1">
+                                <label class="font-bold text-orange-400">Sand % (2.0 – 0.05 mm)</label>
+                                <span id="sandValText" class="font-extrabold text-white">40.0%</span>
+                            </div>
+                            <input id="sandSlider" type="range" min="0" max="100" step="1" value="40" oninput="onSliderChange('sand')" class="w-full h-2 bg-slate-800 rounded-lg cursor-pointer">
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between font-display text-sm mb-1">
+                                <label class="font-bold text-sky-400">Silt % (0.05 – 0.002 mm)</label>
+                                <span id="siltValText" class="font-extrabold text-white">40.0%</span>
+                            </div>
+                            <input id="siltSlider" type="range" min="0" max="100" step="1" value="40" oninput="onSliderChange('silt')" class="w-full h-2 bg-slate-800 rounded-lg cursor-pointer">
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between font-display text-sm mb-1">
+                                <label class="font-bold text-purple-400">Clay % (&lt; 0.002 mm)</label>
+                                <span id="clayValText" class="font-extrabold text-white">20.0%</span>
+                            </div>
+                            <input id="claySlider" type="range" min="0" max="100" step="1" value="20" oninput="onSliderChange('clay')" class="w-full h-2 bg-slate-800 rounded-lg cursor-pointer">
+                        </div>
+
+                        <p class="text-xs text-slate-300 font-display pt-1 flex items-center justify-between">
+                            <span><i class="fas fa-check-circle text-emerald-400 mr-1"></i> Auto-balanced to 100%</span>
+                            <span id="sumBadge" class="bg-emerald-500/20 text-emerald-300 px-2.5 py-0.5 rounded-full font-bold">Total: 100%</span>
+                        </p>
+                    </div>
+
+                    <!-- MODE 2: Raw Sieve & Hydrometer Weight Calculator -->
+                    <div id="sievePanel" class="hidden space-y-3.5 font-display">
+                        <p class="text-xs text-slate-300 leading-relaxed mb-2">
+                            Enter oven-dry mass retained (grams) from your lab sieve &amp; hydrometer analysis. Gravel (&gt;2 mm) is excluded from USDA fine-earth texture calculation.
+                        </p>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="text-xs text-slate-300 block mb-1">Gravel (&gt; 2.0 mm, Sieve #10)</label>
+                                <input id="wtGravel" type="number" min="0" step="0.1" value="15" oninput="calcFromSieve()" class="w-full bg-black/30 border border-white/15 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-[#E5B869]">
+                            </div>
+                            <div>
+                                <label class="text-xs text-orange-300 block mb-1 font-semibold">Sand (2.0 – 0.05 mm, #200)</label>
+                                <input id="wtSand" type="number" min="0" step="0.1" value="194" oninput="calcFromSieve()" class="w-full bg-black/30 border border-orange-400/40 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-orange-400">
+                            </div>
+                            <div>
+                                <label class="text-xs text-sky-300 block mb-1 font-semibold">Silt (0.05 – 0.002 mm)</label>
+                                <input id="wtSilt" type="number" min="0" step="0.1" value="194" oninput="calcFromSieve()" class="w-full bg-black/30 border border-sky-400/40 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-sky-400">
+                            </div>
+                            <div>
+                                <label class="text-xs text-purple-300 block mb-1 font-semibold">Clay (&lt; 0.002 mm, Pan/Hyd.)</label>
+                                <input id="wtClay" type="number" min="0" step="0.1" value="97" oninput="calcFromSieve()" class="w-full bg-black/30 border border-purple-400/40 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-400">
+                            </div>
+                        </div>
+
+                        <div id="sieveSummary" class="bg-black/30 p-3 rounded-xl border border-white/10 text-xs text-slate-300 flex justify-between items-center">
+                            <span>Total Sample: <strong id="totMassText" class="text-white">500.0 g</strong></span>
+                            <span>Gravel Content: <strong id="gravelPctText" class="text-[#E5B869]">3.0%</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Classification Output Result Card -->
+                <div class="glass-card rounded-3xl p-6 shadow-xl border-l-4 border-l-[#E5B869]">
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <span class="font-display text-xs uppercase tracking-wider text-[#E5B869] font-bold">USDA Texture Classification</span>
+                            <h2 id="resClass" class="text-3xl font-extrabold text-white mt-0.5">LOAM</h2>
+                        </div>
+                        <span id="resSwatch" class="w-10 h-10 rounded-2xl border-2 border-white/30 shadow-md inline-block" style="background: #7e5c6e;"></span>
+                    </div>
+
+                    <!-- Exact Coordinates Pill -->
+                    <div class="grid grid-cols-3 gap-2 my-4 font-display text-center">
+                        <div class="bg-orange-500/15 border border-orange-400/30 rounded-xl py-2">
+                            <span class="text-[11px] text-orange-300 block font-semibold">SAND</span>
+                            <strong id="pillSand" class="text-lg text-white">40.0%</strong>
+                        </div>
+                        <div class="bg-sky-500/15 border border-sky-400/30 rounded-xl py-2">
+                            <span class="text-[11px] text-sky-300 block font-semibold">SILT</span>
+                            <strong id="pillSilt" class="text-lg text-white">40.0%</strong>
+                        </div>
+                        <div class="bg-purple-500/15 border border-purple-400/30 rounded-xl py-2">
+                            <span class="text-[11px] text-purple-300 block font-semibold">CLAY</span>
+                            <strong id="pillClay" class="text-lg text-white">20.0%</strong>
+                        </div>
+                    </div>
+
+                    <p id="resDesc" class="text-sm text-slate-200 leading-relaxed mb-4">
+                        Balanced mixture of sand, silt, and clay. Considered the ideal agricultural soil with optimal aeration, nutrient retention, and water infiltration.
+                    </p>
+
+                    <!-- Engineering & Hydrological Metrics -->
+                    <div class="grid grid-cols-2 gap-3 font-display text-xs border-t border-white/10 pt-4">
+                        <div class="bg-black/25 p-3 rounded-xl">
+                            <span class="text-slate-400 block">Infiltration &amp; Drainage</span>
+                            <strong id="resDrain" class="text-emerald-300 text-sm">Moderate (Well-Drained)</strong>
+                        </div>
+                        <div class="bg-black/25 p-3 rounded-xl">
+                            <span class="text-slate-400 block">Water Holding Capacity</span>
+                            <strong id="resWater" class="text-[#E5B869] text-sm">High (Optimal Available Water)</strong>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="max-w-7xl mx-auto px-4 pt-10 text-center text-xs text-slate-400 font-display">
+        Built for Soil Mechanics &amp; Environmental Engineering Lab • <a href="https://mdrokibul.me" class="text-[#E5B869] hover:underline">Md Rokibul Islam Robin</a>
+    </footer>
+
+    <script>
+        const canvas = document.getElementById('triangleCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Triangle Vertices in Canvas Coordinates
+        const side = 450;
+        const triH = side * Math.sqrt(3) / 2; // ~389.71 px
+        const xLeft = 125;
+        const xRight = xLeft + side;          // 575
+        const yBot = 520;
+        const yTop = yBot - triH;             // ~130.29
+
+        let sand = 40;
+        let silt = 40;
+        let clay = 20;
+        let isDragging = false;
+
+        // Exact USDA Soil Texture Polygons (Vertices in [sand, clay] where silt = 100 - sand - clay)
+        const usdaZones = [
+            {
+                name: "CLAY", color: "#6d4e3d", textColor: "#ffffff",
+                labelPos: [20, 62],
+                poly: [[0,100], [0,60], [20,40], [45,40], [45,55]]
+            },
+            {
+                name: "SILTY CLAY", color: "#87614a", textColor: "#ffffff",
+                labelPos: [7, 46],
+                poly: [[0,60], [0,40], [20,40]]
+            },
+            {
+                name: "SANDY CLAY", color: "#c2996b", textColor: "#ffffff",
+                labelPos: [52, 41],
+                poly: [[45,55], [45,35], [65,35]]
+            },
+            {
+                name: "CLAY LOAM", color: "#96797b", textColor: "#ffffff",
+                labelPos: [32, 33.5],
+                poly: [[20,40], [20,27], [45,27], [45,40]]
+            },
+            {
+                name: "SILTY CLAY LOAM", color: "#8c8c8c", textColor: "#ffffff",
+                labelPos: [10, 33.5],
+                poly: [[0,40], [0,27], [20,27], [20,40]]
+            },
+            {
+                name: "SANDY CLAY LOAM", color: "#c39b4b", textColor: "#ffffff",
+                labelPos: [58, 27],
+                poly: [[45,35], [45,27], [52,20], [80,20], [65,35]]
+            },
+            {
+                name: "LOAM", color: "#7e5c6e", textColor: "#ffffff",
+                labelPos: [40, 18],
+                poly: [[45,27], [23,27], [28,7], [52,7], [52,20]]
+            },
+            {
+                name: "SILT LOAM", color: "#828585", textColor: "#ffffff",
+                labelPos: [20, 15],
+                poly: [[23,27], [0,27], [0,12], [8,12], [20,0], [50,0], [28,7]]
+            },
+            {
+                name: "SILT", color: "#6e7171", textColor: "#ffffff",
+                labelPos: [7, 5],
+                poly: [[0,12], [0,0], [20,0], [8,12]]
+            },
+            {
+                name: "SANDY LOAM", color: "#c69244", textColor: "#ffffff",
+                labelPos: [64, 12],
+                poly: [[80,20], [52,20], [52,7], [28,7], [50,0], [70,0], [85,15]]
+            },
+            {
+                name: "LOAMY SAND", color: "#f3aa46", textColor: "#ffffff",
+                labelPos: [82, 6],
+                poly: [[85,15], [70,0], [85,0], [90,10]]
+            },
+            {
+                name: "SAND", color: "#eb7943", textColor: "#ffffff",
+                labelPos: [92, 3],
+                poly: [[90,10], [85,0], [100,0]]
+            }
+        ];
+
+        const soilMetadata = {
+            "CLAY": {
+                desc: "Fine-textured soil dominated by colloidal clay minerals. Exhibits high plasticity, swelling-shrinkage potential, and strong nutrient adsorption.",
+                drain: "Very Slow (Poorly Drained)", water: "Very High (High Wilting Point)"
+            },
+            "SILTY CLAY": {
+                desc: "Heavy flood-basin soil rich in both clay and silt. Retains abundant moisture but compacts easily when wet.",
+                drain: "Slow (Impeded Drainage)", water: "Very High"
+            },
+            "SANDY CLAY": {
+                desc: "High clay matrix mixed with coarse sand grains. Resistant to wind erosion with firm dry strength.",
+                drain: "Slow to Moderate", water: "Moderate to High"
+            },
+            "CLAY LOAM": {
+                desc: "Fine-textured loamy soil common in alluvial terraces. Strong aggregation with high fertility and cation exchange capacity.",
+                drain: "Moderate to Slow", water: "High"
+            },
+            "SILTY CLAY LOAM": {
+                desc: "Smooth, fertile soil typical of Bangladesh floodplain ridges and basins. Ideal for transplanted Aman and Boro rice cultivation.",
+                drain: "Moderate to Slow", water: "Very High"
+            },
+            "SANDY CLAY LOAM": {
+                desc: "Contains enough sand to improve aeration while maintaining significant clay cohesion for structural stability.",
+                drain: "Moderate", water: "Moderate to High"
+            },
+            "LOAM": {
+                desc: "Balanced mixture of sand, silt, and clay. Considered the textbook ideal agricultural soil with optimal tilth, aeration, and root penetration.",
+                drain: "Moderate (Well-Drained)", water: "High (Optimal Available Water)"
+            },
+            "SILT LOAM": {
+                desc: "Dominant soil texture across the Brahmaputra and Ganges floodplains in Bangladesh. Silky feel, high plant-available water, and excellent crop yield potential.",
+                drain: "Moderate", water: "Very High (Best Plant-Available)"
+            },
+            "SILT": {
+                desc: "Composed almost entirely of silt-sized quartz and feldspar particles. Floury when dry and susceptible to surface crusting and river bank erosion.",
+                drain: "Moderate to Slow", water: "High"
+            },
+            "SANDY LOAM": {
+                desc: "Coarse-grained feel with enough silt and clay to bind particles together. Warms up quickly and is ideal for vegetables, tubers, and orchards.",
+                drain: "Moderately Rapid", water: "Moderate"
+            },
+            "LOAMY SAND": {
+                desc: "Very coarse soil with minimal clay binding. Prone to nutrient leaching and requires frequent irrigation.",
+                drain: "Rapid (Excessively Drained)", water: "Low"
+            },
+            "SAND": {
+                desc: "Loose, single-grained quartz sand typical of river chars (sandbars) and coastal beaches. High permeability and negligible cohesion.",
+                drain: "Very Rapid (High Hydraulic Cond.)", water: "Very Low (Drought Prone)"
+            }
+        };
+
+        // Convert (sand %, clay %) to Canvas (x, y)
+        function toXY(s, c) {
+            const x = xLeft + side * (1 - s / 100 - c / 200);
+            const y = yBot - triH * (c / 100);
+            return [x, y];
+        }
+
+        // Convert Canvas (x, y) back to (sand %, silt %, clay %)
+        function fromXY(x, y) {
+            let c = ((yBot - y) / triH) * 100;
+            let s = (1 - (x - xLeft) / side - c / 200) * 100;
+            let si = 100 - s - c;
+            return [s, si, c];
+        }
+
+        // Official USDA Mathematical Classification Rules
+        function classifyUSDA(s, si, c) {
+            if (si + 1.5 * c < 15) return "SAND";
+            if (si + 1.5 * c >= 15 && si + 2 * c < 30) return "LOAMY SAND";
+            if ((c >= 7 && c < 20 && s > 52 && (si + 2 * c) >= 30) || (c < 7 && si < 50 && (si + 2 * c) >= 30)) return "SANDY LOAM";
+            if (c >= 7 && c < 27 && si >= 28 && si < 50 && s <= 52) return "LOAM";
+            if ((si >= 50 && (c >= 12 && c < 27)) || (si >= 50 && si < 80 && c < 12)) return "SILT LOAM";
+            if (si >= 80 && c < 12) return "SILT";
+            if (c >= 20 && c < 35 && si < 28 && s > 45) return "SANDY CLAY LOAM";
+            if (c >= 27 && c < 40 && s > 20 && s <= 45) return "CLAY LOAM";
+            if (c >= 27 && c < 40 && s <= 20) return "SILTY CLAY LOAM";
+            if (c >= 35 && s > 45) return "SANDY CLAY";
+            if (c >= 40 && si >= 40) return "SILTY CLAY";
+            return "CLAY";
+        }
+
+        function drawThickArrow(x1, y1, x2, y2, color) {
+            const angle = Math.atan2(y2 - y1, x2 - x1);
+            ctx.save();
+            ctx.strokeStyle = color;
+            ctx.fillStyle = color;
+            ctx.lineWidth = 14;
+            ctx.lineCap = "butt";
+
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2 - 14 * Math.cos(angle), y2 - 14 * Math.sin(angle));
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(x2, y2);
+            ctx.lineTo(x2 - 22 * Math.cos(angle - 0.55), y2 - 22 * Math.sin(angle - 0.55));
+            ctx.lineTo(x2 - 22 * Math.cos(angle + 0.55), y2 - 22 * Math.sin(angle + 0.55));
+            ctx.closePath();
+            ctx.fill();
+            ctx.restore();
+        }
+
+        function drawTriangle() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Title inside canvas
+            ctx.font = "800 24px 'Bricolage Grotesque', sans-serif";
+            ctx.fillStyle = "#0f172a";
+            ctx.textAlign = "center";
+            ctx.fillText("USDA Soil Texture Triangle", canvas.width / 2, 42);
+
+            const currentClass = classifyUSDA(sand, silt, clay);
+
+            // 1. Draw the 12 Filled USDA Texture Polygons
+            usdaZones.forEach(zone => {
+                ctx.beginPath();
+                zone.poly.forEach((pt, idx) => {
+                    const [px, py] = toXY(pt[0], pt[1]);
+                    if (idx === 0) ctx.moveTo(px, py);
+                    else ctx.lineTo(px, py);
+                });
+                ctx.closePath();
+                ctx.fillStyle = zone.color;
+                ctx.fill();
+
+                // Highlight active zone slightly
+                if (zone.name === currentClass) {
+                    ctx.save();
+                    ctx.strokeStyle = "#fde047";
+                    ctx.lineWidth = 3;
+                    ctx.stroke();
+                    ctx.restore();
+                }
+            });
+
+            // 2. Draw Internal Grid Lines (Every 10%)
+            ctx.lineWidth = 0.8;
+            ctx.strokeStyle = "rgba(15, 23, 42, 0.28)";
+            for (let v = 10; v <= 90; v += 10) {
+                // Constant Clay (horizontal)
+                let [cx1, cy1] = toXY(100 - v, v);
+                let [cx2, cy2] = toXY(0, v);
+                ctx.beginPath(); ctx.moveTo(cx1, cy1); ctx.lineTo(cx2, cy2); ctx.stroke();
+
+                // Constant Sand (up-left parallel to right edge)
+                let [sx1, sy1] = toXY(v, 0);
+                let [sx2, sy2] = toXY(v, 100 - v);
+                ctx.beginPath(); ctx.moveTo(sx1, sy1); ctx.lineTo(sx2, sy2); ctx.stroke();
+
+                // Constant Silt (down-left parallel to left edge)
+                let [six1, siy1] = toXY(0, 100 - v);
+                let [six2, siy2] = toXY(100 - v, 0);
+                ctx.beginPath(); ctx.moveTo(six1, siy1); ctx.lineTo(six2, siy2); ctx.stroke();
+            }
+
+            // 3. Re-stroke thick black zone boundaries on top of grid
+            ctx.lineWidth = 2.2;
+            ctx.strokeStyle = "#0f172a";
+            usdaZones.forEach(zone => {
+                ctx.beginPath();
+                zone.poly.forEach((pt, idx) => {
+                    const [px, py] = toXY(pt[0], pt[1]);
+                    if (idx === 0) ctx.moveTo(px, py);
+                    else ctx.lineTo(px, py);
+                });
+                ctx.closePath();
+                ctx.stroke();
+            });
+
+            // 4. Draw Zone Labels
+            usdaZones.forEach(zone => {
+                const [lx, ly] = toXY(zone.labelPos[0], zone.labelPos[1]);
+                ctx.save();
+                ctx.fillStyle = zone.textColor;
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+
+                if (zone.name === "LOAMY SAND") {
+                    ctx.translate(lx, ly);
+                    ctx.rotate(0.52);
+                    ctx.font = "700 10px 'Bricolage Grotesque', sans-serif";
+                    ctx.fillText(zone.name, 0, 0);
+                } else {
+                    const words = zone.name.split(" ");
+                    ctx.font = zone.name === "CLAY" ? "800 22px 'Bricolage Grotesque', sans-serif" : "700 12px 'Bricolage Grotesque', sans-serif";
+                    if (words.length === 3) {
+                        ctx.fillText(words[0] + " " + words[1], lx, ly - 7);
+                        ctx.fillText(words[2], lx, ly + 7);
+                    } else if (words.length === 2 && zone.name !== "CLAY LOAM" && zone.name !== "SILT LOAM" && zone.name !== "SANDY LOAM") {
+                        ctx.fillText(words[0], lx, ly - 6);
+                        ctx.fillText(words[1], lx, ly + 7);
+                    } else {
+                        ctx.fillText(zone.name, lx, ly);
+                    }
+                }
+                ctx.restore();
+            });
+
+            // 5. Draw Axis Numbers & Directional Ticks (10 to 100)
+            ctx.font = "700 13px 'Bricolage Grotesque', sans-serif";
+            ctx.fillStyle = "#0f172a";
+            for (let v = 10; v <= 100; v += 10) {
+                // Bottom Axis: Sand % (Right to Left)
+                let [bx, by] = toXY(v, 0);
+                ctx.textAlign = "center";
+                ctx.fillText(v, bx, by + 22);
+
+                // Left Axis: Clay % (Bottom to Top)
+                let [lx, ly] = toXY(100 - v, v);
+                ctx.textAlign = "right";
+                ctx.fillText(v, lx - 10, ly + 4);
+
+                // Right Axis: Silt % (Top to Bottom)
+                let [rx, ry] = toXY(0, 100 - v);
+                ctx.textAlign = "left";
+                ctx.fillText(v, rx + 10, ry + 4);
+            }
+
+            // 6. Draw Outer Directional Arrows & Axis Titles (Matching Reference Image)
+            // Bottom Arrow: SAND PERCENT (Right -> Left)
+            drawThickArrow(450, 575, 250, 575, "#eb7943");
+            ctx.font = "800 14px 'Bricolage Grotesque', sans-serif";
+            ctx.fillStyle = "#0f172a";
+            ctx.textAlign = "center";
+            ctx.fillText("SAND PERCENT", 350, 602);
+
+            // Left Arrow: CLAY PERCENT (Bottom-Left -> Top-Right)
+            drawThickArrow(102, 395, 198, 228, "#7c4d25");
+            ctx.save();
+            ctx.translate(125, 295);
+            ctx.rotate(-Math.PI / 3);
+            ctx.textAlign = "center";
+            ctx.fillText("CLAY PERCENT", 0, 0);
+            ctx.restore();
+
+            // Right Arrow: SILT PERCENT (Top-Left -> Bottom-Right)
+            drawThickArrow(505, 228, 600, 395, "#787c7e");
+            ctx.save();
+            ctx.translate(575, 295);
+            ctx.rotate(Math.PI / 3);
+            ctx.textAlign = "center";
+            ctx.fillText("SILT PERCENT", 0, 0);
+            ctx.restore();
+
+            // 7. Draw Active Sample Intersection Lines & Marker
+            const [px, py] = toXY(sand, clay);
+            const [sandAxisX, sandAxisY] = toXY(sand, 0);         // Point on Bottom Sand Axis
+            const [clayAxisX, clayAxisY] = toXY(100 - clay, clay);// Point on Left Clay Axis
+            const [siltAxisX, siltAxisY] = toXY(0, 100 - silt);   // Point on Right Silt Axis
+
+            ctx.save();
+            ctx.setLineDash([6, 4]);
+            ctx.lineWidth = 2.8;
+
+            // Sand Line (Orange: From bottom axis up-left to sample point)
+            ctx.strokeStyle = "#f97316";
+            ctx.beginPath(); ctx.moveTo(sandAxisX, sandAxisY); ctx.lineTo(px, py); ctx.stroke();
+
+            // Clay Line (Purple: From left axis horizontally right to sample point)
+            ctx.strokeStyle = "#c084fc";
+            ctx.beginPath(); ctx.moveTo(clayAxisX, clayAxisY); ctx.lineTo(px, py); ctx.stroke();
+
+            // Silt Line (Cyan: From right axis down-left to sample point)
+            ctx.strokeStyle = "#38bdf8";
+            ctx.beginPath(); ctx.moveTo(siltAxisX, siltAxisY); ctx.lineTo(px, py); ctx.stroke();
+            ctx.restore();
+
+            // Draw Axis Entry Dots
+            [[sandAxisX, sandAxisY, "#f97316"], [clayAxisX, clayAxisY, "#c084fc"], [siltAxisX, siltAxisY, "#38bdf8"]].forEach(d => {
+                ctx.beginPath();
+                ctx.arc(d[0], d[1], 5, 0, Math.PI * 2);
+                ctx.fillStyle = d[2];
+                ctx.fill();
+                ctx.strokeStyle = "#ffffff";
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+            });
+
+            // Draw Target Bullseye at Intersection
+            ctx.beginPath();
+            ctx.arc(px, py, 11, 0, Math.PI * 2);
+            ctx.fillStyle = "rgba(253, 224, 71, 0.35)";
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.arc(px, py, 6, 0, Math.PI * 2);
+            ctx.fillStyle = "#ef4444";
+            ctx.fill();
+            ctx.lineWidth = 2.5;
+            ctx.strokeStyle = "#ffffff";
+            ctx.stroke();
+        }
+
+        function updateUI() {
+            // Sync Sliders
+            document.getElementById('sandSlider').value = Math.round(sand);
+            document.getElementById('siltSlider').value = Math.round(silt);
+            document.getElementById('claySlider').value = Math.round(clay);
+
+            document.getElementById('sandValText').innerText = `${sand.toFixed(1)}%`;
+            document.getElementById('siltValText').innerText = `${silt.toFixed(1)}%`;
+            document.getElementById('clayValText').innerText = `${clay.toFixed(1)}%`;
+
+            document.getElementById('pillSand').innerText = `${sand.toFixed(1)}%`;
+            document.getElementById('pillSilt').innerText = `${silt.toFixed(1)}%`;
+            document.getElementById('pillClay').innerText = `${clay.toFixed(1)}%`;
+
+            const soilClass = classifyUSDA(sand, silt, clay);
+            const zoneObj = usdaZones.find(z => z.name === soilClass);
+            const meta = soilMetadata[soilClass];
+
+            document.getElementById('resClass').innerText = soilClass;
+            if (zoneObj) document.getElementById('resSwatch').style.background = zoneObj.color;
+            if (meta) {
+                document.getElementById('resDesc').innerText = meta.desc;
+                document.getElementById('resDrain').innerText = meta.drain;
+                document.getElementById('resWater').innerText = meta.water;
+            }
+
+            drawTriangle();
+        }
+
+        // Auto-balance sliders so Sand + Silt + Clay = 100%
+        function onSliderChange(changed) {
+            let s = parseFloat(document.getElementById('sandSlider').value);
+            let si = parseFloat(document.getElementById('siltSlider').value);
+            let c = parseFloat(document.getElementById('claySlider').value);
+
+            const rem = 100 - (changed === 'sand' ? s : changed === 'silt' ? si : c);
+            if (changed === 'sand') {
+                const otherSum = si + c;
+                if (otherSum === 0) { si = rem / 2; c = rem / 2; }
+                else { si = (si / otherSum) * rem; c = (c / otherSum) * rem; }
+            } else if (changed === 'silt') {
+                const otherSum = s + c;
+                if (otherSum === 0) { s = rem / 2; c = rem / 2; }
+                else { s = (s / otherSum) * rem; c = (c / otherSum) * rem; }
+            } else {
+                const otherSum = s + si;
+                if (otherSum === 0) { s = rem / 2; si = rem / 2; }
+                else { s = (s / otherSum) * rem; si = (si / otherSum) * rem; }
+            }
+
+            sand = Math.max(0, Math.min(100, s));
+            silt = Math.max(0, Math.min(100, si));
+            clay = Math.max(0, Math.min(100, 100 - sand - silt));
+            updateUI();
+        }
+
+        // Calculate percentages from raw lab sieve weights (grams)
+        function calcFromSieve() {
+            const g = Math.max(0, parseFloat(document.getElementById('wtGravel').value) || 0);
+            const s = Math.max(0, parseFloat(document.getElementById('wtSand').value) || 0);
+            const si = Math.max(0, parseFloat(document.getElementById('wtSilt').value) || 0);
+            const c = Math.max(0, parseFloat(document.getElementById('wtClay').value) || 0);
+
+            const fineTotal = s + si + c;
+            const totalSample = g + fineTotal;
+
+            document.getElementById('totMassText').innerText = `${totalSample.toFixed(1)} g`;
+            document.getElementById('gravelPctText').innerText = totalSample > 0 ? `${((g / totalSample) * 100).toFixed(1)}%` : "0.0%";
+
+            if (fineTotal > 0) {
+                sand = (s / fineTotal) * 100;
+                silt = (si / fineTotal) * 100;
+                clay = (c / fineTotal) * 100;
+                updateUI();
+            }
+        }
+
+        function setSoil(s, si, c) {
+            sand = s; silt = si; clay = c;
+            updateUI();
+        }
+
+        function switchMode(mode) {
+            const pctPanel = document.getElementById('pctPanel');
+            const sievePanel = document.getElementById('sievePanel');
+            const tabPct = document.getElementById('tabPct');
+            const tabSieve = document.getElementById('tabSieve');
+
+            if (mode === 'pct') {
+                pctPanel.classList.remove('hidden');
+                sievePanel.classList.add('hidden');
+                tabPct.className = "py-2.5 px-3 rounded-xl bg-[#E5B869] text-slate-900 transition";
+                tabSieve.className = "py-2.5 px-3 rounded-xl text-slate-300 hover:text-white transition";
+            } else {
+                pctPanel.classList.add('hidden');
+                sievePanel.classList.remove('hidden');
+                tabSieve.className = "py-2.5 px-3 rounded-xl bg-[#E5B869] text-slate-900 transition";
+                tabPct.className = "py-2.5 px-3 rounded-xl text-slate-300 hover:text-white transition";
+                calcFromSieve();
+            }
+        }
+
+        // Interactive Click & Drag inside the Triangle Canvas
+        function handleCanvasPointer(e) {
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+            const x = (clientX - rect.left) * scaleX;
+            const y = (clientY - rect.top) * scaleY;
+
+            let [s, si, c] = fromXY(x, y);
+            if (s >= -2 && si >= -2 && c >= -2) {
+                s = Math.max(0, s);
+                si = Math.max(0, si);
+                c = Math.max(0, c);
+                const sum = s + si + c;
+                if (sum > 0) {
+                    sand = (s / sum) * 100;
+                    silt = (si / sum) * 100;
+                    clay = (c / sum) * 100;
+                    updateUI();
+                }
+            }
+        }
+
+        canvas.addEventListener('mousedown', (e) => { isDragging = true; handleCanvasPointer(e); });
+        window.addEventListener('mousemove', (e) => { if (isDragging) handleCanvasPointer(e); });
+        window.addEventListener('mouseup', () => { isDragging = false; });
+
+        canvas.addEventListener('touchstart', (e) => { isDragging = true; handleCanvasPointer(e); }, { passive: true });
+        canvas.addEventListener('touchmove', (e) => { if (isDragging) handleCanvasPointer(e); }, { passive: true });
+        window.addEventListener('touchend', () => { isDragging = false; });
+
+        // Initialize on load
+        updateUI();
+    </script>
+</body>
+</html>
