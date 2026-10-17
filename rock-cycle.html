@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Rock Cycle & Petrology Simulator | Md Rokibul Islam Robin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --estuary: #0E2A2F;
+            --estuary-2: #153c43;
+            --river: #237A82;
+            --moss: #4A8B6E;
+            --silt: #E5B869;
+        }
+        body {
+            font-family: 'Source Serif 4', serif;
+            background: radial-gradient(1100px 600px at 80% 10%, #1d5a5f 0%, transparent 65%), linear-gradient(160deg, var(--estuary) 0%, #091c20 100%);
+            color: #eaf3ee;
+        }
+        h1, h2, h3, h4, .font-display {
+            font-family: 'Bricolage Grotesque', sans-serif;
+        }
+        .glass-card {
+            background: rgba(21, 60, 67, 0.65);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        input[type=range] {
+            accent-color: #E5B869;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between pb-12">
+
+    <!-- Top Navigation -->
+    <header class="border-b border-white/10 bg-[#0E2A2F]/80 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
+            <a href="index.html" class="inline-flex items-center gap-2 text-[#E5B869] hover:text-white font-display font-semibold transition">
+                <i class="fas fa-arrow-left"></i> Back to Robin.me
+            </a>
+            <div class="font-display font-bold tracking-tight flex items-center gap-2 text-sm sm:text-base">
+                <i class="fas fa-gem text-[#E5B869]"></i>
+                <span>GeoCycle SimLab <span class="hidden sm:inline-block text-xs font-normal bg-[#E5B869]/20 text-[#E5B869] border border-[#E5B869]/40 px-2.5 py-0.5 rounded-full ml-1">Geology & Earth Processes</span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Section -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 w-full">
+
+        <!-- Title Header -->
+        <div class="text-center max-w-3xl mx-auto mb-8">
+            <span class="font-display text-xs uppercase tracking-widest px-3 py-1 rounded-full border border-white/20 text-[#cfe6dc] bg-white/5">Interactive Lithosphere & Petrology Model</span>
+            <h1 class="text-3xl sm:text-5xl font-extrabold mt-3 mb-3 tracking-tight">
+                The <span class="text-[#E5B869]">Rock Cycle</span> &amp; Earth Processes
+            </h1>
+            <p class="text-slate-300 text-sm sm:text-base">
+                Simulate <strong>weathering, erosion, sedimentation, lithification, metamorphism, and crystallization</strong>. Click any geological node or trigger real-time tectonic and surface transformations.
+            </p>
+        </div>
+
+        <!-- Dashboard Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+            <!-- Left Column: Interactive Rock Cycle Canvas (7 Cols) -->
+            <div class="lg:col-span-7 glass-card rounded-3xl p-4 sm:p-6 shadow-2xl">
+                <div class="flex flex-wrap justify-between items-center gap-2 mb-3 px-2 font-display text-xs">
+                    <div class="flex flex-wrap items-center gap-3">
+                        <span class="inline-flex items-center gap-1.5 text-sky-300">
+                            <span class="w-2.5 h-2.5 rounded-full bg-sky-400"></span> Weathering &amp; Transport
+                        </span>
+                        <span class="inline-flex items-center gap-1.5 text-amber-300">
+                            <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span> Compaction &amp; Burial
+                        </span>
+                        <span class="inline-flex items-center gap-1.5 text-purple-300">
+                            <span class="w-2.5 h-2.5 rounded-full bg-purple-400"></span> Heat &amp; Pressure
+                        </span>
+                        <span class="inline-flex items-center gap-1.5 text-rose-400">
+                            <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span> Magma &amp; Cooling
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Main Cycle Canvas -->
+                <div class="w-full flex justify-center bg-[#071518] rounded-2xl border border-white/15 overflow-hidden relative">
+                    <canvas id="cycleCanvas" width="700" height="540" class="w-full max-w-[700px] h-auto cursor-pointer"></canvas>
+                </div>
+
+                <!-- Interactive Action Triggers ("Magic Touch" Transformation Buttons) -->
+                <div class="mt-4">
+                    <p class="font-display text-xs uppercase tracking-wider text-slate-400 mb-2 text-center">
+                        ⚡ Trigger Geological Process on Current State:
+                    </p>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 font-display text-xs">
+                        <button onclick="triggerProcess('weather')" class="bg-sky-500/20 hover:bg-sky-500 hover:text-slate-950 border border-sky-400/40 text-sky-200 py-2.5 px-3 rounded-xl font-bold transition flex items-center justify-center gap-1.5">
+                            <i class="fas fa-cloud-showers-heavy"></i> Weather &amp; Erode
+                        </button>
+                        <button onclick="triggerProcess('compact')" class="bg-amber-500/20 hover:bg-amber-400 hover:text-slate-950 border border-amber-400/40 text-amber-200 py-2.5 px-3 rounded-xl font-bold transition flex items-center justify-center gap-1.5">
+                            <i class="fas fa-layer-group"></i> Bury &amp; Lithify
+                        </button>
+                        <button onclick="triggerProcess('metamorphose')" class="bg-purple-500/20 hover:bg-purple-400 hover:text-slate-950 border border-purple-400/40 text-purple-200 py-2.5 px-3 rounded-xl font-bold transition flex items-center justify-center gap-1.5">
+                            <i class="fas fa-compress-arrows-alt"></i> Heat &amp; Deform
+                        </button>
+                        <button onclick="triggerProcess('melt')" class="bg-rose-500/20 hover:bg-rose-500 hover:text-white border border-rose-400/40 text-rose-200 py-2.5 px-3 rounded-xl font-bold transition flex items-center justify-center gap-1.5">
+                            <i class="fas fa-fire"></i> Melt &amp; Cool
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Petrology Microscope, Sliders & Rock Telemetry (5 Cols) -->
+            <div class="lg:col-span-5 space-y-5">
+
+                <!-- Live Petrographic Microscope & Specimen Card -->
+                <div class="glass-card rounded-3xl p-6 shadow-xl border-l-4 border-l-[#E5B869]">
+                    <div class="flex flex-col sm:flex-row items-center gap-5">
+                        <!-- Circular Thin-Section Microscope Canvas -->
+                        <div class="relative flex-shrink-0">
+                            <div class="w-28 h-28 rounded-full p-1 bg-gradient-to-tr from-[#E5B869] via-teal-500 to-slate-700 shadow-xl">
+                                <canvas id="microCanvas" width="110" height="110" class="w-full h-full rounded-full bg-slate-950 block"></canvas>
+                            </div>
+                            <span class="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-black/80 text-[#E5B869] font-display text-[10px] font-bold px-2.5 py-0.5 rounded-full border border-[#E5B869]/40 whitespace-nowrap">
+                                <i class="fas fa-microscope mr-1"></i> Thin Section 40x
+                            </span>
+                        </div>
+
+                        <!-- Active Stage Info -->
+                        <div class="text-center sm:text-left flex-1">
+                            <span id="stageCategory" class="font-display text-xs uppercase tracking-wider text-[#E5B869] font-bold">Sedimentary Stage</span>
+                            <h2 id="stageTitle" class="text-2xl sm:text-3xl font-extrabold text-white mt-0.5">Sedimentary Rock</h2>
+                            <p id="specimenName" class="font-display text-xs text-emerald-300 font-semibold mt-0.5">
+                                Specimen: Sandstone / Shale / Limestone
+                            </p>
+                            <p id="stageProcessTag" class="text-xs text-slate-300 mt-2 bg-black/25 px-3 py-1.5 rounded-xl border border-white/10 inline-block">
+                                Formed via: Compaction &amp; Cementation (Diagenesis)
+                            </p>
+                        </div>
+                    </div>
+
+                    <p id="stageDesc" class="text-sm text-slate-200 leading-relaxed mt-5 pt-4 border-t border-white/10">
+                        Formed over millions of years as weathered clastic sediments (sand, silt, clay) or chemical precipitates accumulate in river deltas and ocean basins, becoming compacted by overlying weight and cemented by silica or calcite.
+                    </p>
+
+                    <!-- Bangladesh Geological Field Example -->
+                    <div class="mt-4 bg-emerald-950/60 border border-emerald-500/30 rounded-2xl p-3.5 text-xs">
+                        <span class="font-display font-bold text-emerald-300 block mb-0.5">
+                            <i class="fas fa-map-pin mr-1"></i> Bangladesh Field Geology Connection:
+                        </span>
+                        <span id="bdGeoText" class="text-slate-200">
+                            Dupitila Sandstone &amp; Bijoypur White Clay (Kaolinite) formations in Durgapur, Netrokona, and Eocene Sylhet Limestone.
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Crustal Environment Sliders (P-T-W Laboratory) -->
+                <div class="glass-card rounded-3xl p-6 shadow-xl">
+                    <h3 class="text-lg font-extrabold text-[#E5B869] mb-4 flex items-center gap-2">
+                        <i class="fas fa-sliders-h"></i> Crustal P–T–W Environment Simulator
+                    </h3>
+
+                    <!-- Temperature Slider -->
+                    <div class="mb-4">
+                        <div class="flex justify-between font-display text-xs mb-1">
+                            <label class="font-semibold text-rose-300">1. Crustal Temperature ($T$)</label>
+                            <span id="tempLabel" class="font-bold text-white">120 °C (Diagenesis)</span>
+                        </div>
+                        <input id="tempSlider" type="range" min="20" max="1200" step="10" value="120" oninput="onEnvSlider()" class="w-full h-2 bg-slate-800 rounded-lg cursor-pointer">
+                        <div class="flex justify-between text-[10px] font-display text-slate-400 mt-0.5">
+                            <span>20°C (Surface)</span>
+                            <span>450°C (Metamorphic)</span>
+                            <span>1200°C (Magma Melt)</span>
+                        </div>
+                    </div>
+
+                    <!-- Pressure / Burial Depth Slider -->
+                    <div class="mb-4">
+                        <div class="flex justify-between font-display text-xs mb-1">
+                            <label class="font-semibold text-purple-300">2. Lithostatic Pressure &amp; Depth ($P$)</label>
+                            <span id="pressLabel" class="font-bold text-white">1.5 kbar (~5 km)</span>
+                        </div>
+                        <input id="pressSlider" type="range" min="0.1" max="12" step="0.1" value="1.5" oninput="onEnvSlider()" class="w-full h-2 bg-slate-800 rounded-lg cursor-pointer">
+                        <div class="flex justify-between text-[10px] font-display text-slate-400 mt-0.5">
+                            <span>0.1 kbar (Surface)</span>
+                            <span>4 kbar (15 km)</span>
+                            <span>12 kbar (40 km Crust)</span>
+                        </div>
+                    </div>
+
+                    <!-- Weathering & Rainfall Intensity Slider -->
+                    <div>
+                        <div class="flex justify-between font-display text-xs mb-1">
+                            <label class="font-semibold text-sky-300">3. Surface Weathering &amp; Rainfall Rate</label>
+                            <span id="weathLabel" class="font-bold text-white">65% (Monsoon Erosion)</span>
+                        </div>
+                        <input id="weathSlider" type="range" min="10" max="100" step="5" value="65" oninput="onEnvSlider()" class="w-full h-2 bg-slate-800 rounded-lg cursor-pointer">
+                    </div>
+                </div>
+
+                <!-- Process Breakdown Mini-Cards -->
+                <div class="grid grid-cols-3 gap-2.5 font-display text-xs">
+                    <div class="glass-card p-3.5 rounded-2xl text-center">
+                        <i class="fas fa-water text-sky-400 text-base mb-1"></i>
+                        <span class="block text-slate-400 text-[10px]">Weathering</span>
+                        <strong class="text-white">Physical &amp; Chem.</strong>
+                    </div>
+                    <div class="glass-card p-3.5 rounded-2xl text-center">
+                        <i class="fas fa-layer-group text-amber-400 text-base mb-1"></i>
+                        <span class="block text-slate-400 text-[10px]">Sedimentation</span>
+                        <strong class="text-white">Deposition &amp; Cement</strong>
+                    </div>
+                    <div class="glass-card p-3.5 rounded-2xl text-center">
+                        <i class="fas fa-mountain text-purple-400 text-base mb-1"></i>
+                        <span class="block text-slate-400 text-[10px]">Metamorphism</span>
+                        <strong class="text-white">Foliation &amp; Recryst.</strong>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="max-w-7xl mx-auto px-4 pt-10 text-center text-xs text-slate-400 font-display">
+        Designed for Environmental Science &amp; Engineering Geology Lab • <a href="https://mdrokibul.me" class="text-[#E5B869] hover:underline">Md Rokibul Islam Robin</a>
+    </footer>
+
+    <script>
+        const canvas = document.getElementById('cycleCanvas');
+        const ctx = canvas.getContext('2d');
+        const microCanvas = document.getElementById('microCanvas');
+        const mCtx = microCanvas.getContext('2d');
+
+        let activeNode = 'sedimentary';
+        let tick = 0;
+
+        // Animated Transition Orb when user clicks a Process Trigger button
+        let transitionOrb = { active: false, fromX: 0, fromY: 0, toX: 0, toY: 0, progress: 0, color: '#E5B869', label: '', targetNode: '' };
+
+        // 5 Core Nodes of the Rock Cycle on the 700x540 Canvas
+        const nodes = {
+            igneous: {
+                id: 'igneous', x: 165, y: 120, r: 48,
+                color: '#f43f5e', border: '#fda4af', icon: '🌋',
+                shortTitle: 'IGNEOUS ROCK',
+                sub: 'Basalt / Granite',
+                category: 'Igneous Petrology (Plutonic & Volcanic)',
+                title: 'Igneous Rock',
+                specimen: 'Intrusive Granite & Extrusive Basalt',
+                processTag: 'Formed via: Magma Cooling & Crystallization',
+                desc: 'Formed when molten magma cools slowly beneath the crust (forming coarse interlocking crystals like Granite) or erupts as lava and cools rapidly at the surface (forming fine-grained Basalt or Obsidian).',
+                bdGeo: 'Maddhapara Hard Rock Mine (Archean Granodiorite & Quartz Diorite basement at ~130m depth in Dinajpur) and Rajmahal Basalt Traps.',
+                temp: 850, press: 3.0
+            },
+            sediment: {
+                id: 'sediment', x: 525, y: 120, r: 48,
+                color: '#38bdf8', border: '#bae6fd', icon: '🌊',
+                shortTitle: 'SEDIMENTS',
+                sub: 'Sand, Silt, Clay',
+                category: 'Surface Geomorphology & Pedology',
+                title: 'Unconsolidated Sediments',
+                specimen: 'Alluvial Sand, Silt, Gravel & Kaolin Clay',
+                processTag: 'Formed via: Weathering, Erosion & River Transport',
+                desc: 'Physical frost/thermal wedging and chemical hydrolysis break down exposed rocks into loose detritus (clasts). Rivers, wind, and glaciers transport and deposit these sorted grains across floodplains and deltas.',
+                bdGeo: 'Active braided sandbars (Chars) and alluvial floodplain deposits of the Someshwari, Brahmaputra, Padma, and Meghna rivers.',
+                temp: 28, press: 0.2
+            },
+            sedimentary: {
+                id: 'sedimentary', x: 565, y: 345, r: 50,
+                color: '#eab308', border: '#fef08a', icon: '🪨',
+                shortTitle: 'SEDIMENTARY',
+                sub: 'Sandstone / Shale',
+                category: 'Stratigraphy & Diagenesis',
+                title: 'Sedimentary Rock',
+                specimen: 'Sandstone, Shale, Conglomerate & Limestone',
+                processTag: 'Formed via: Burial, Compaction & Cementation',
+                desc: 'As thick layers of sediment accumulate in basins, overburden pressure squeezes out pore water (compaction) and dissolved minerals like silica, calcite, or iron oxide precipitate between grains (cementation/lithification).',
+                bdGeo: 'Dupitila Sandstone & Bijoypur White Clay beds in Durgapur (Netrokona), Surma Group shales, and St. Martin\'s Island shelly limestone.',
+                temp: 120, press: 1.8
+            },
+            metamorphic: {
+                id: 'metamorphic', x: 350, y: 455, r: 50,
+                color: '#a855f7', border: '#e9d5ff', icon: '💎',
+                shortTitle: 'METAMORPHIC',
+                sub: 'Slate / Schist / Gneiss',
+                category: 'Metamorphic Petrology & Tectonics',
+                title: 'Metamorphic Rock',
+                specimen: 'Slate, Phyllite, Mica Schist, Gneiss & Marble',
+                processTag: 'Formed via: High Heat & Directed Tectonic Pressure',
+                desc: 'Subjected to intense crustal temperatures (300°C–800°C) and tectonic compression without reaching complete melting. Minerals recrystallize in the solid state and align perpendicular to stress, creating banded foliation.',
+                bdGeo: 'Precambrian Gneiss and Schist basement complex underlying the Rangpur Saddle and adjacent Meghalaya/Shillong Plateau.',
+                temp: 550, press: 6.5
+            },
+            magma: {
+                id: 'magma', x: 135, y: 360, r: 48,
+                color: '#ea580c', border: '#fdba74', icon: '🔥',
+                shortTitle: 'MAGMA / LAVA',
+                sub: 'Molten Silicate Melt',
+                category: ' Deep Crust & Upper Mantle',
+                title: 'Magma Chamber',
+                specimen: 'Molten Silicate Melt (800°C – 1200°C)',
+                processTag: 'Formed via: Partial Melting at Subduction / Hotspots',
+                desc: 'When metamorphic or igneous rocks are pushed deep into the asthenosphere or subduction zones (>700°C–1200°C), mineral bonds break down into a buoyant molten silicate liquid rich in dissolved gases.',
+                bdGeo: 'Deep mantle partial melting associated with the Indo-Burman subduction zone east of Chittagong and ancient Gondwana rift volcanism.',
+                temp: 1100, press: 9.5
+            }
+        };
+
+        // Directed Pathways (Outer Cycle + Cross-Shortcuts showing any rock can weather or melt)
+        const pathways = [
+            // Main clockwise outer loop
+            { from: 'igneous', to: 'sediment', cpX: 345, cpY: 45, color: '#38bdf8', label: 'Weathering & Erosion' },
+            { from: 'sediment', to: 'sedimentary', cpX: 615, cpY: 230, color: '#eab308', label: 'Compaction & Cementation' },
+            { from: 'sedimentary', to: 'metamorphic', cpX: 495, cpY: 445, color: '#a855f7', label: 'Heat & Pressure' },
+            { from: 'metamorphic', to: 'magma', cpX: 215, cpY: 450, color: '#f97316', label: 'Melting' },
+            { from: 'magma', to: 'igneous', cpX: 85, cpY: 240, color: '#f43f5e', label: 'Cooling & Crystallization' },
+
+            // Inner Geological Shortcuts (Inner web of the rock cycle)
+            { from: 'igneous', to: 'metamorphic', cpX: 245, cpY: 300, color: 'rgba(168, 85, 247, 0.55)', label: 'Heat & Pressure', dashed: true },
+            { from: 'sedimentary', to: 'sediment', cpX: 465, cpY: 235, color: 'rgba(56, 189, 248, 0.55)', label: 'Uplift & Weathering', dashed: true },
+            { from: 'metamorphic', to: 'sediment', cpX: 390, cpY: 260, color: 'rgba(56, 189, 248, 0.55)', label: 'Uplift & Weathering', dashed: true }
+        ];
+
+        function selectNode(key, syncSliders = true) {
+            activeNode = key;
+            const n = nodes[key];
+
+            document.getElementById('stageCategory').innerText = n.category;
+            document.getElementById('stageTitle').innerText = n.title;
+            document.getElementById('specimenName').innerText = `Specimen: ${n.specimen}`;
+            document.getElementById('stageProcessTag').innerText = n.processTag;
+            document.getElementById('stageDesc').innerText = n.desc;
+            document.getElementById('bdGeoText').innerText = n.bdGeo;
+
+            if (syncSliders) {
+                document.getElementById('tempSlider').value = n.temp;
+                document.getElementById('pressSlider').value = n.press;
+                updateSliderLabels();
+            }
+            drawMicroscope(key);
+        }
+
+        function updateSliderLabels() {
+            const t = parseFloat(document.getElementById('tempSlider').value);
+            const p = parseFloat(document.getElementById('pressSlider').value);
+            const w = parseFloat(document.getElementById('weathSlider').value);
+
+            let tZone = "Surface";
+            if (t >= 800) tZone = "Magmatic Melting";
+            else if (t >= 300) tZone = "Metamorphic Grade";
+            else if (t >= 80) tZone = "Burial Diagenesis";
+
+            document.getElementById('tempLabel').innerText = `${t} °C (${tZone})`;
+            document.getElementById('pressLabel').innerText = `${p.toFixed(1)} kbar (~${Math.round(p * 3.5)} km)`;
+            document.getElementById('weathLabel').innerText = `${w}% (${w > 70 ? 'Intense Monsoon' : w > 40 ? 'Moderate' : 'Arid'})`;
+        }
+
+        // When user drags Temperature or Pressure sliders, automatically infer the rock stage!
+        function onEnvSlider() {
+            updateSliderLabels();
+            const t = parseFloat(document.getElementById('tempSlider').value);
+            const p = parseFloat(document.getElementById('pressSlider').value);
+
+            if (t >= 850) {
+                selectNode('magma', false);
+            } else if (t >= 320 || p >= 4.0) {
+                selectNode('metamorphic', false);
+            } else if (t >= 70 || p >= 1.0) {
+                selectNode('sedimentary', false);
+            } else {
+                selectNode('sediment', false);
+            }
+        }
+
+        // Trigger animated process transformation
+        function triggerProcess(action) {
+            let target = activeNode;
+            let color = '#E5B869';
+            let label = '';
+
+            if (action === 'weather') {
+                target = 'sediment';
+                color = '#38bdf8';
+                label = 'Weathering & Erosion ➔ Sediments';
+            } else if (action === 'compact') {
+                target = 'sedimentary';
+                color = '#eab308';
+                label = 'Compaction & Cementation ➔ Sedimentary Rock';
+            } else if (action === 'metamorphose') {
+                target = 'metamorphic';
+                color = '#a855f7';
+                label = 'Heat & Tectonic Pressure ➔ Metamorphic Rock';
+            } else if (action === 'melt') {
+                target = activeNode === 'magma' ? 'igneous' : 'magma';
+                color = '#f43f5e';
+                label = activeNode === 'magma' ? 'Cooling & Crystallization ➔ Igneous Rock' : 'Crustal Melting ➔ Magma';
+            }
+
+            const startNode = nodes[activeNode];
+            const endNode = nodes[target];
+
+            transitionOrb = {
+                active: true,
+                fromX: startNode.x, fromY: startNode.y,
+                toX: endNode.x, toY: endNode.y,
+                progress: 0,
+                color: color,
+                label: label,
+                targetNode: target
+            };
+        }
+
+        // Draw Live Petrographic Thin-Section Microscope Texture
+        function drawMicroscope(type) {
+            const w = microCanvas.width;
+            const h = microCanvas.height;
+            mCtx.clearRect(0, 0, w, h);
+
+            if (type === 'igneous') {
+                // Interlocking angular granite/plagioclase crystals
+                mCtx.fillStyle = "#1e293b";
+                mCtx.fillRect(0, 0, w, h);
+                const colors = ["#f43f5e", "#cbd5e1", "#64748b", "#fda4af", "#0f172a"];
+                for (let i = 0; i < 28; i++) {
+                    mCtx.fillStyle = colors[i % colors.length];
+                    mCtx.beginPath();
+                    const cx = (i * 29) % w;
+                    const cy = (i * 43) % h;
+                    mCtx.moveTo(cx, cy);
+                    mCtx.lineTo(cx + 18, cy + 5);
+                    mCtx.lineTo(cx + 12, cy + 22);
+                    mCtx.lineTo(cx - 6, cy + 16);
+                    mCtx.closePath();
+                    mCtx.fill();
+                    mCtx.strokeStyle = "#090d16";
+                    mCtx.lineWidth = 1;
+                    mCtx.stroke();
+                }
+            } else if (type === 'sediment') {
+                // Loose, unconsolidated sand, silt, and pebbles in water
+                mCtx.fillStyle = "#082f49";
+                mCtx.fillRect(0, 0, w, h);
+                const colors = ["#fde047", "#f59e0b", "#cbd5e1", "#d97706"];
+                for (let i = 0; i < 36; i++) {
+                    const rx = 12 + (i * 23) % (w - 24);
+                    const ry = 12 + (i * 31) % (h - 24);
+                    const rad = 3 + (i % 5);
+                    mCtx.beginPath();
+                    mCtx.arc(rx, ry, rad, 0, Math.PI * 2);
+                    mCtx.fillStyle = colors[i % colors.length];
+                    mCtx.fill();
+                }
+            } else if (type === 'sedimentary') {
+                // Rounded quartz sand grains embedded in stratified silica/calcite cement
+                mCtx.fillStyle = "#78350f";
+                mCtx.fillRect(0, 0, w, h);
+                // Horizontal bedding strata lines
+                mCtx.fillStyle = "rgba(251, 191, 36, 0.25)";
+                for (let y = 10; y < h; y += 22) {
+                    mCtx.fillRect(0, y, w, 10);
+                }
+                // Cemented rounded clasts
+                for (let y = 12; y < h; y += 14) {
+                    for (let x = 10; x < w; x += 14) {
+                        mCtx.beginPath();
+                        mCtx.arc(x + (y % 5), y, 5, 0, Math.PI * 2);
+                        mCtx.fillStyle = (x + y) % 3 === 0 ? "#fde68a" : "#f59e0b";
+                        mCtx.fill();
+                        mCtx.strokeStyle = "#fef3c7";
+                        mCtx.lineWidth = 0.8;
+                        mCtx.stroke();
+                    }
+                }
+            } else if (type === 'metamorphic') {
+                // Foliated gneissic/schistose wavy mineral bands under directed stress
+                mCtx.fillStyle = "#2e1065";
+                mCtx.fillRect(0, 0, w, h);
+                for (let y = -10; y < h + 10; y += 9) {
+                    mCtx.beginPath();
+                    for (let x = 0; x <= w; x += 10) {
+                        const wy = y + Math.sin(x * 0.08 + y * 0.1) * 4;
+                        if (x === 0) mCtx.moveTo(x, wy);
+                        else mCtx.lineTo(x, wy);
+                    }
+                    mCtx.strokeStyle = y % 18 === 0 ? "#e9d5ff" : "#a855f7";
+                    mCtx.lineWidth = 4;
+                    mCtx.stroke();
+                }
+            } else if (type === 'magma') {
+                // Glowing incandescent silicate melt with gas bubbles
+                const grad = mCtx.createRadialGradient(w/2, h/2, 5, w/2, h/2, w/2);
+                grad.addColorStop(0, "#fef08a");
+                grad.addColorStop(0.5, "#f97316");
+                grad.addColorStop(1, "#991b1b");
+                mCtx.fillStyle = grad;
+                mCtx.fillRect(0, 0, w, h);
+            }
+
+            // Microscope Crosshair Overlay
+            mCtx.strokeStyle = "rgba(255,255,255,0.25)";
+            mCtx.lineWidth = 1;
+            mCtx.beginPath();
+            mCtx.moveTo(w/2, 0); mCtx.lineTo(w/2, h);
+            mCtx.moveTo(0, h/2); mCtx.lineTo(w, h/2);
+            mCtx.stroke();
+        }
+
+        // Helper to evaluate point on Quadratic Bezier curve at parameter t (0..1)
+        function getQuadPoint(x0, y0, cx, cy, x1, y1, t) {
+            const u = 1 - t;
+            const x = u * u * x0 + 2 * u * t * cx + t * t * x1;
+            const y = u * u * y0 + 2 * u * t * cy + t * t * y1;
+            return [x, y];
+        }
+
+        function drawCurvedPathway(p) {
+            const n1 = nodes[p.from];
+            const n2 = nodes[p.to];
+
+            ctx.save();
+            ctx.beginPath();
+            if (p.dashed) ctx.setLineDash([6, 5]);
+            ctx.moveTo(n1.x, n1.y);
+            ctx.quadraticCurveTo(p.cpX, p.cpY, n2.x, n2.y);
+            ctx.strokeStyle = p.color;
+            ctx.lineWidth = p.dashed ? 1.8 : 3.2;
+            ctx.stroke();
+            ctx.restore();
+
+            // Draw animated flowing particles along each pathway
+            const numParticles = p.dashed ? 2 : 4;
+            for (let i = 0; i < numParticles; i++) {
+                const t = ((tick * 0.005) + (i / numParticles)) % 1;
+                // Keep particles between node borders (0.15 to 0.85)
+                const clampedT = 0.14 + t * 0.72;
+                const [px, py] = getQuadPoint(n1.x, n1.y, p.cpX, p.cpY, n2.x, n2.y, clampedT);
+
+                ctx.beginPath();
+                ctx.arc(px, py, p.dashed ? 2.5 : 4, 0, Math.PI * 2);
+                ctx.fillStyle = p.color;
+                ctx.fill();
+            }
+
+            // Pathway Label at Midpoint (t = 0.5)
+            const [mx, my] = getQuadPoint(n1.x, n1.y, p.cpX, p.cpY, n2.x, n2.y, 0.5);
+            ctx.save();
+            ctx.font = "700 10.5px 'Bricolage Grotesque', sans-serif";
+            const textW = ctx.measureText(p.label).width + 14;
+            ctx.fillStyle = "rgba(7, 21, 24, 0.88)";
+            ctx.beginPath();
+            ctx.roundRect(mx - textW / 2, my - 10, textW, 20, 6);
+            ctx.fill();
+            ctx.strokeStyle = "rgba(255,255,255,0.12)";
+            ctx.stroke();
+
+            ctx.fillStyle = p.dashed ? "#cbd5e1" : "#ffffff";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText(p.label, mx, my);
+            ctx.restore();
+        }
+
+        function renderCycle() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // 1. Subtle Geological Cross-Section Background Zones
+            // Sky / Surface Zone (Top)
+            const skyGrad = ctx.createLinearGradient(0, 0, 0, 220);
+            skyGrad.addColorStop(0, "rgba(56, 189, 248, 0.08)");
+            skyGrad.addColorStop(1, "transparent");
+            ctx.fillStyle = skyGrad;
+            ctx.fillRect(0, 0, canvas.width, 220);
+
+            // Deep Crust / Mantle Glow (Bottom)
+            const mantleGrad = ctx.createLinearGradient(0, 320, 0, canvas.height);
+            mantleGrad.addColorStop(0, "transparent");
+            mantleGrad.addColorStop(1, "rgba(234, 88, 12, 0.14)");
+            ctx.fillStyle = mantleGrad;
+            ctx.fillRect(0, 320, canvas.width, 220);
+
+            // Surface Horizon Divider Line
+            ctx.save();
+            ctx.setLineDash([4, 6]);
+            ctx.strokeStyle = "rgba(255,255,255,0.12)";
+            ctx.beginPath();
+            ctx.moveTo(20, 215);
+            ctx.lineTo(canvas.width - 20, 215);
+            ctx.stroke();
+            ctx.font = "600 10px 'Bricolage Grotesque', sans-serif";
+            ctx.fillStyle = "rgba(255,255,255,0.35)";
+            ctx.fillText("▲ EARTH SURFACE (EXOGENIC: WEATHERING & EROSION)", 28, 206);
+            ctx.fillText("▼ SUBSURFACE CRUST (ENDOGENIC: BURIAL, HEAT & MELTING)", 28, 230);
+            ctx.restore();
+
+            // 2. Draw All Pathways & Flowing Particles
+            pathways.forEach(drawCurvedPathway);
+
+            // 3. Draw the 5 Geological Stage Nodes
+            Object.values(nodes).forEach(n => {
+                const isSelected = n.id === activeNode;
+
+                ctx.save();
+                // Outer Pulse Halo if active
+                if (isSelected) {
+                    const pulseR = n.r + 10 + Math.sin(tick * 0.08) * 4;
+                    ctx.beginPath();
+                    ctx.arc(n.x, n.y, pulseR, 0, Math.PI * 2);
+                    ctx.fillStyle = "rgba(229, 184, 105, 0.22)";
+                    ctx.fill();
+                    ctx.strokeStyle = "#E5B869";
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                }
+
+                // Node Circle
+                ctx.beginPath();
+                ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+                ctx.fillStyle = "#0e292e";
+                ctx.fill();
+                ctx.lineWidth = isSelected ? 4 : 2.5;
+                ctx.strokeStyle = isSelected ? "#E5B869" : n.color;
+                ctx.stroke();
+
+                // Node Icon & Titles
+                ctx.font = "22px sans-serif";
+                ctx.textAlign = "center";
+                ctx.fillText(n.icon, n.x, n.y - 12);
+
+                ctx.font = "800 11px 'Bricolage Grotesque', sans-serif";
+                ctx.fillStyle = "#ffffff";
+                ctx.fillText(n.shortTitle, n.x, n.y + 10);
+
+                ctx.font = "600 9.5px 'Bricolage Grotesque', sans-serif";
+                ctx.fillStyle = n.border;
+                ctx.fillText(n.sub, n.x, n.y + 24);
+                ctx.restore();
+            });
+
+            // 4. Draw Animated Transformation Orb if user clicked an Action Button
+            if (transitionOrb.active) {
+                transitionOrb.progress += 0.025;
+                const p = Math.min(1, transitionOrb.progress);
+                const ox = transitionOrb.fromX + (transitionOrb.toX - transitionOrb.fromX) * p;
+                const oy = transitionOrb.fromY + (transitionOrb.toY - transitionOrb.fromY) * p;
+
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(ox, oy, 14, 0, Math.PI * 2);
+                ctx.fillStyle = transitionOrb.color;
+                ctx.shadowColor = transitionOrb.color;
+                ctx.shadowBlur = 18;
+                ctx.fill();
+
+                ctx.font = "800 12px 'Bricolage Grotesque', sans-serif";
+                ctx.fillStyle = "#ffffff";
+                ctx.textAlign = "center";
+                ctx.fillText(transitionOrb.label, canvas.width / 2, 30);
+                ctx.restore();
+
+                if (transitionOrb.progress >= 1) {
+                    transitionOrb.active = false;
+                    selectNode(transitionOrb.targetNode, true);
+                }
+            }
+
+            tick++;
+            requestAnimationFrame(renderCycle);
+        }
+
+        // Click on Canvas Nodes
+        canvas.addEventListener('click', function(e) {
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            const cx = (e.clientX - rect.left) * scaleX;
+            const cy = (e.clientY - rect.top) * scaleY;
+
+            Object.values(nodes).forEach(n => {
+                const dist = Math.hypot(cx - n.x, cy - n.y);
+                if (dist <= n.r + 8) {
+                    selectNode(n.id, true);
+                }
+            });
+        });
+
+        // Initialize
+        selectNode('sedimentary', true);
+        renderCycle();
+    </script>
+</body>
+</html>
