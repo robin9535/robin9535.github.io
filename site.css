@@ -23,7 +23,7 @@ section{padding:clamp(64px,9vw,104px) 0}
 .alt{background:var(--paper);border-block:1px solid var(--line)}
 
 /* page header for tool pages */
-.page-hero{background:linear-gradient(160deg,var(--estuary) 0%,#12373d 100%);color:#eaf3ee;padding:112px 0 44px}
+.page-hero{background:radial-gradient(900px 380px at 90% -10%,rgba(79,179,190,.28),transparent 60%),radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.3px) 0 0/22px 22px,linear-gradient(160deg,var(--estuary) 0%,#12373d 100%);color:#eaf3ee;padding:120px 0 52px}
 .page-hero h1{font-size:clamp(2rem,5vw,3.4rem);font-weight:800;margin-bottom:12px}
 .page-hero p{max-width:62ch;color:#cfe0da}
 
