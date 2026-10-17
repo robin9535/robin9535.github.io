@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soil Texture Triangle | ESE Research Hub</title>
+<meta name="description" content="Enter sand, silt and clay results and see your soil plotted on the USDA texture triangle, with guide lines to each axis, the soil class, and the sand sub-fractions from your sieve analysis.">
+<meta name="theme-color" content="#0E2A2F">
+<link rel="canonical" href="https://mdrokibul.me/soil-texture.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ESE Research Hub">
+<meta property="og:url" content="https://mdrokibul.me/soil-texture.html">
+<meta property="og:title" content="Soil Texture Triangle">
+<meta property="og:description" content="Plot sand, silt and clay on the USDA texture triangle and get the soil class.">
+<meta property="og:image" content="https://mdrokibul.me/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Soil Texture Triangle">
+<meta name="twitter:description" content="Plot sand, silt and clay on the USDA texture triangle and get the soil class.">
+<meta name="twitter:image" content="https://mdrokibul.me/og-image.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":["WebPage","WebApplication"],"name":"Soil Texture Triangle","url":"https://mdrokibul.me/soil-texture.html","description":"Plot sand, silt and clay on the USDA soil texture triangle and get the soil class.","applicationCategory":"EducationalApplication","operatingSystem":"Any","inLanguage":"en","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"isPartOf":{"@type":"WebSite","name":"ESE Research Hub","url":"https://mdrokibul.me/"},"author":{"@type":"Person","name":"Md Rokibul Islam Robin","url":"https://mdrokibul.me/about.html"}}</script>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="nav.css">
+<link rel="stylesheet" href="site.css">
+<style>
+main{padding:0 0 56px}
+.layout{display:grid;gap:22px;grid-template-columns:minmax(0,420px) minmax(0,1fr);margin-top:-26px;position:relative;z-index:2;align-items:start}
+@media (max-width:980px){.layout{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:clamp(18px,3vw,28px);box-shadow:0 12px 36px rgba(0,0,0,.1)}
+.panel+.panel{margin-top:22px}
+.panel h2{font-size:1.3rem;font-weight:800;margin-bottom:6px}
+.sub{font-size:.95rem;color:var(--ink-soft);margin-bottom:14px}
+.tabs{display:flex;gap:6px;margin-bottom:16px;background:var(--mist);border:1px solid var(--line);border-radius:999px;padding:4px}
+.tabs button{flex:1;font:600 .95rem var(--display);padding:9px 12px;border-radius:999px;border:0;background:transparent;color:var(--ink);cursor:pointer}
+.tabs button[aria-selected=true]{background:var(--river);color:#fff}
+.fld{display:grid;grid-template-columns:1fr 120px;gap:10px;align-items:center;margin-bottom:10px}
+.fld label{font:600 1rem var(--display);line-height:1.25}
+.fld label small{display:block;font:400 .82rem var(--body);color:var(--ink-soft)}
+.fld input,.name input{font:inherit;font-size:1.05rem;width:100%;padding:10px 12px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink);font-variant-numeric:tabular-nums}
+.fld input:focus,.name input:focus{outline:none;border-color:var(--river)}
+.grp{font:800 .8rem var(--display);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin:16px 0 8px}
+.name{margin-bottom:14px}.name label{font:600 .95rem var(--display);display:block;margin-bottom:6px}
+.sum{font:600 .95rem var(--display);margin:6px 0 2px;color:var(--ink-soft)}
+.msg{min-height:1.4em;font-size:.95rem;margin-top:8px}.msg.err{color:var(--bad);font-weight:600}.msg.warn{color:var(--warn);font-weight:600}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.btn.go{background:var(--river);border-color:var(--river);color:#fff}.btn.go:hover{background:#27818b}
+.btn.dk{color:var(--ink);border-color:var(--line);background:var(--card)}.btn.dk:hover{background:var(--mist)}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.chartbox{background:#fffdf8;border-radius:16px;border:1px solid var(--line);padding:6px}
+#tri{width:100%;height:auto;display:block;touch-action:none;cursor:crosshair}
+.read{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:10px;font:600 .95rem var(--display);color:var(--ink-soft);min-height:1.6em}
+.res{display:none}.res.on{display:block}
+.cls{font:800 clamp(1.8rem,5vw,2.6rem)/1.1 var(--display);letter-spacing:-.02em;margin:2px 0 10px}
+.vals{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0}
+.vals div{padding:12px;border-radius:14px;background:var(--mist);border:1px solid var(--line)}
+.vals small{display:block;font:600 .82rem var(--display);color:var(--ink-soft)}
+.vals b{font:800 1.5rem var(--display);font-variant-numeric:tabular-nums}
+.bar{display:flex;height:22px;border-radius:8px;overflow:hidden;border:1px solid var(--line);margin:8px 0 6px}
+.bar i{display:block;height:100%}
+.bl{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:.88rem;color:var(--ink-soft)}
+.bl span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;background:var(--c);vertical-align:-1px}
+.hint{margin-top:12px;padding:12px 14px;border-radius:12px;background:var(--mist);border:1px solid var(--line);font-size:.98rem}
+table{width:100%;border-collapse:collapse;font-size:.98rem}
+th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--line)}
+th{font:700 .82rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em}
+td.n{font-variant-numeric:tabular-nums}
+td button{border:0;background:transparent;color:var(--bad);cursor:pointer;font-size:1rem}
+.scroll{overflow-x:auto}
+.how{padding-left:1.2em;color:var(--ink-soft)}.how li+li{margin-top:.55em}
+.sr{position:absolute;left:-999px}
+</style>
+</head>
+<body>
+<div class="progress" id="progress" aria-hidden="true"></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav" id="nav" data-solid>
+  <div class="wrap">
+    <a class="brand" href="index.html">ESE Research<span> Hub</span></a>
+    <nav class="links" id="links" aria-label="Main">
+      <div class="dd cur"><button class="dd-btn" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="toolsMenu">Tools <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="dd-menu" id="toolsMenu"><a href="portal.html"><i class="fa-solid fa-building-columns" aria-hidden="true"></i><span><b>JKKNIU &amp; ESE Portal</b><small>Official links in one place</small></span></a><a href="library.html"><i class="fa-solid fa-folder-open" aria-hidden="true"></i><span><b>Batch Library</b><small>Shared ESE study materials</small></span></a><a href="sound-meter.html"><i class="fa-solid fa-ear-listen" aria-hidden="true"></i><span><b>Sound Level Meter</b><small>Measure noise with your phone</small></span></a><a href="soil-texture.html" class="on" aria-current="page"><i class="fa-solid fa-layer-group" aria-hidden="true"></i><span><b>Soil Texture Triangle</b><small>Plot sand, silt and clay</small></span></a><a href="weather.html"><i class="fa-solid fa-cloud-sun-rain" aria-hidden="true"></i><span><b>EcoLens Weather</b><small>Your photo plus live weather and rain chance</small></span></a><a href="atmosphere-sim.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Atmosphere Simulator</b><small>Three-cell circulation model</small></span></a></div></div>
+      <a href="about.html">About</a>
+      <a href="about.html#contact">Contact</a>
+    </nav>
+    <div class="tools">
+      <button class="icon-btn" id="theme" type="button" aria-label="Switch to dark theme"><i class="fa-solid fa-moon"></i></button>
+      <button class="icon-btn burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="links"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</header>
+<div class="page-hero">
+  <div class="wrap">
+    <h1>Soil texture triangle</h1>
+    <p>Enter your sand, silt and clay results. The tool plots the soil on the USDA texture triangle, draws guide lines to each axis, and names the soil class. Add several samples to compare them on one chart.</p>
+  </div>
+</div>
+
+<main id="main">
+<div class="wrap">
+  <div class="layout">
+    <div>
+      <div class="panel">
+        <h2>Your results</h2>
+        <p class="sub">Sieves alone only separate sand. Silt and clay come from a hydrometer or pipette test, so the triangle needs all three.</p>
+        <div class="tabs" role="tablist" aria-label="Input type">
+          <button type="button" role="tab" id="tabMass" aria-selected="true" aria-controls="paneMass">Sieve masses (g)</button>
+          <button type="button" role="tab" id="tabPct" aria-selected="false" aria-controls="panePct">Percentages</button>
+        </div>
+        <div class="name"><label for="sname">Sample name (optional)</label><input id="sname" type="text" maxlength="40" placeholder="e.g. Site A, 0&ndash;15 cm"></div>
+
+        <div id="paneMass" role="tabpanel" aria-labelledby="tabMass">
+          <div class="grp">Sand, retained on each sieve</div>
+          <div class="fld"><label for="m1">Very coarse sand<small>2 &ndash; 1 mm</small></label><input id="m1" type="number" inputmode="decimal" min="0" step="any" placeholder="g"></div>
+          <div class="fld"><label for="m2">Coarse sand<small>1 &ndash; 0.5 mm</small></label><input id="m2" type="number" inputmode="decimal" min="0" step="any" placeholder="g"></div>
+          <div class="fld"><label for="m3">Medium sand<small>0.5 &ndash; 0.25 mm</small></label><input id="m3" type="number" inputmode="decimal" min="0" step="any" placeholder="g"></div>
+          <div class="fld"><label for="m4">Fine sand<small>0.25 &ndash; 0.1 mm</small></label><input id="m4" type="number" inputmode="decimal" min="0" step="any" placeholder="g"></div>
+          <div class="fld"><label for="m5">Very fine sand<small>0.1 &ndash; 0.05 mm</small></label><input id="m5" type="number" inputmode="decimal" min="0" step="any" placeholder="g"></div>
+          <div class="grp">From hydrometer or pipette</div>
+          <div class="fld"><label for="msilt">Silt<small>0.05 &ndash; 0.002 mm</small></label><input id="msilt" type="number" inputmode="decimal" min="0" step="any" placeholder="g"></div>
+          <div class="fld"><label for="mclay">Clay<small>below 0.002 mm</small></label><input id="mclay" type="number" inputmode="decimal" min="0" step="any" placeholder="g"></div>
+          <div class="grp">Not used in the triangle</div>
+          <div class="fld"><label for="mgravel">Gravel<small>larger than 2 mm</small></label><input id="mgravel" type="number" inputmode="decimal" min="0" step="any" placeholder="g"></div>
+        </div>
+
+        <div id="panePct" role="tabpanel" aria-labelledby="tabPct" hidden>
+          <div class="grp">Percent of the soil finer than 2 mm</div>
+          <div class="fld"><label for="pclay">Clay %</label><input id="pclay" type="number" inputmode="decimal" min="0" max="100" step="any"></div>
+          <div class="fld"><label for="psilt">Silt %</label><input id="psilt" type="number" inputmode="decimal" min="0" max="100" step="any"></div>
+          <div class="fld"><label for="psand">Sand %</label><input id="psand" type="number" inputmode="decimal" min="0" max="100" step="any"></div>
+        </div>
+
+        <div class="sum" id="sum"></div>
+        <div class="msg" id="msg" role="status" aria-live="polite"></div>
+        <div class="actions">
+          <button class="btn go" type="button" id="addBtn" disabled><i class="fa-solid fa-plus"></i> Add to chart</button>
+          <button class="btn dk" type="button" id="resetBtn"><i class="fa-solid fa-rotate-left"></i> Clear inputs</button>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="panel">
+        <div class="chartbox"><svg id="tri" viewBox="0 0 640 610" role="img" aria-label="USDA soil texture triangle"></svg></div>
+        <div class="read" id="read" aria-live="off">Move over the triangle or tap it to read a point. Your guide lines appear after you enter results.</div>
+        <div class="actions">
+          <button class="btn dk" type="button" id="pngBtn"><i class="fa-solid fa-image"></i> Save chart as PNG</button>
+        </div>
+      </div>
+
+      <div class="panel res" id="res">
+        <h2>Result</h2>
+        <div class="cls" id="cls"></div>
+        <div class="vals"><div><small>Clay</small><b id="vClay"></b></div><div><small>Silt</small><b id="vSilt"></b></div><div><small>Sand</small><b id="vSand"></b></div></div>
+        <div id="sandWrap" hidden>
+          <small style="font:600 .85rem var(--display);color:var(--ink-soft)">Sand sub-fractions, as a share of all sand</small>
+          <div class="bar" id="sandBar"></div><div class="bl" id="sandLeg"></div>
+        </div>
+        <div class="hint" id="hint"></div>
+      </div>
+
+      <div class="panel" id="samplesPanel" hidden>
+        <h2>Samples on the chart</h2>
+        <div class="scroll"><table><thead><tr><th>#</th><th>Sample</th><th>Clay</th><th>Silt</th><th>Sand</th><th>Class</th><th><span class="sr">Remove</span></th></tr></thead><tbody id="rows"></tbody></table></div>
+        <div class="actions">
+          <button class="btn dk" type="button" id="csvBtn"><i class="fa-solid fa-file-csv"></i> Download CSV</button>
+          <button class="btn dk" type="button" id="clearBtn"><i class="fa-solid fa-trash"></i> Remove all</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" style="margin-top:22px">
+    <h2>How this works</h2>
+    <ol class="how">
+      <li><b>Texture uses the fine earth only.</b> Gravel (larger than 2 mm) is left out. Sand, silt and clay are re-scaled so they add up to 100%.</li>
+      <li><b>Size limits follow the USDA system:</b> sand 2 to 0.05 mm, silt 0.05 to 0.002 mm, clay below 0.002 mm. A lab that uses a 0.075 mm sieve, as in engineering soil tests, will find slightly less sand than this system expects.</li>
+      <li><b>Reading the chart:</b> clay is read on the left edge, silt on the right edge and sand on the bottom edge. The dashed guide lines run from your point to each axis, so you can see where each value sits.</li>
+      <li><b>The class</b> is calculated from the standard USDA boundaries. Points close to a boundary are flagged, because a small lab error can change the class.</li>
+      <li>Everything runs in your browser. Nothing you enter is sent anywhere.</li>
+    </ol>
+  </div>
+</div>
+</main>
+<footer>&copy; 2026 Md Rokibul Islam Robin &middot; <a href="index.html">Back to home</a></footer>
+
+<script src="site.js"></script>
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var NS='http://www.w3.org/2000/svg';
+
+  /* ---------- USDA classification (percent of the <2 mm fraction) ---------- */
+  function classify(c,s,a){
+    if(s+1.5*c<15) return 'Sand';
+    if(s+2*c<30) return 'Loamy sand';
+    if(c>=40&&s>=40) return 'Silty clay';
+    if(c>=40&&a<=45) return 'Clay';
+    if(c>=35&&a>45) return 'Sandy clay';
+    if(c>=27&&a>20&&a<=45) return 'Clay loam';
+    if(c>=27&&a<=20) return 'Silty clay loam';
+    if(c>=20&&c<35&&s<28&&a>45) return 'Sandy clay loam';
+    if(s>=80&&c<12) return 'Silt';
+    if((s>=50&&c>=12&&c<27)||(s>=50&&s<80&&c<12)) return 'Silt loam';
+    if(c>=7&&c<27&&s>=28&&s<50&&a<=52) return 'Loam';
+    return 'Sandy loam';
+  }
+
+  /* ---------- geometry ---------- */
+  var BLx=40,BRx=600,BY=540,H=0.8660254*(BRx-BLx),Tx=320,Ty=BY-H;
+  function P(c,s,a){ var t=c+s+a; c/=t; s/=t; a/=t; return [c*Tx+s*BRx+a*BLx, c*Ty+s*BY+a*BY]; }
+  function inv(x,y){ var c=(BY-y)/H, s=(x-BLx-(Tx-BLx)*c)/(BRx-BLx); return [c*100,s*100,(1-c-s)*100]; }
+
+  var REG=[ // vertices as [clay,silt,sand]
+   {n:'Sand',f:'#e7a35b',v:[[0,0,100],[0,15,85],[10,0,90]]},
+   {n:'Loamy sand',f:'#efb768',v:[[10,0,90],[15,0,85],[0,30,70],[0,15,85]],rot:1},
+   {n:'Sandy loam',f:'#d79a47',v:[[0,30,70],[0,50,50],[7,50,43],[7,41,52],[20,28,52],[20,0,80],[15,0,85]]},
+   {n:'Loam',f:'#a07a8b',v:[[7,41,52],[7,50,43],[27,50,23],[27,28,45],[20,28,52]]},
+   {n:'Silt loam',f:'#a9a9a2',v:[[0,50,50],[0,80,20],[12,88,0],[27,73,0],[27,50,23],[7,50,43]],dx:20},
+   {n:'Silt',f:'#8c8c86',v:[[0,80,20],[0,100,0],[12,88,0],[12,80,8]]},
+   {n:'Sandy clay loam',f:'#c8a24f',v:[[20,0,80],[20,28,52],[27,28,45],[35,20,45],[35,0,65]]},
+   {n:'Clay loam',f:'#b58f95',v:[[27,28,45],[27,53,20],[40,40,20],[40,15,45]]},
+   {n:'Silty clay loam',f:'#a8a2a9',v:[[27,53,20],[27,73,0],[40,60,0],[40,40,20]]},
+   {n:'Sandy clay',f:'#c99d70',v:[[35,0,65],[35,20,45],[55,0,45]]},
+   {n:'Silty clay',f:'#9c7b72',v:[[40,40,20],[40,60,0],[60,40,0]]},
+   {n:'Clay',f:'#8a6a50',v:[[40,15,45],[40,40,20],[60,40,0],[100,0,0],[55,0,45]]}
+  ];
+  var tri=$('tri');
+  function el(n,a,p){ var e=document.createElementNS(NS,n); for(var k in a) e.setAttribute(k,a[k]); if(p) p.appendChild(e); return e; }
+  function pts(arr){ return arr.map(function(v){ var p=P(v[0],v[1],v[2]); return p[0].toFixed(1)+','+p[1].toFixed(1); }).join(' '); }
+
+  var gStatic=el('g',{},tri), gSamples=el('g',{},tri), gLive=el('g',{},tri);
+  el('rect',{x:0,y:0,width:640,height:610,fill:'#fffdf8'},gStatic);
+  REG.forEach(function(r){
+    el('polygon',{points:pts(r.v),fill:r.f,'fill-opacity':.85,stroke:'#2b2118','stroke-width':1.6,'stroke-linejoin':'round'},gStatic);
+  });
+  for(var k=10;k<=90;k+=10){
+    var ln={stroke:'#2b2118','stroke-opacity':.16,'stroke-width':1};
+    var a1=P(k,0,100-k),a2=P(k,100-k,0); el('line',Object.assign({x1:a1[0],y1:a1[1],x2:a2[0],y2:a2[1]},ln),gStatic);
+    a1=P(0,k,100-k);a2=P(100-k,k,0); el('line',Object.assign({x1:a1[0],y1:a1[1],x2:a2[0],y2:a2[1]},ln),gStatic);
+    a1=P(0,100-k,k);a2=P(100-k,0,k); el('line',Object.assign({x1:a1[0],y1:a1[1],x2:a2[0],y2:a2[1]},ln),gStatic);
+  }
+  el('polygon',{points:pts([[100,0,0],[0,100,0],[0,0,100]]),fill:'none',stroke:'#2b2118','stroke-width':2.6,'stroke-linejoin':'round'},gStatic);
+  REG.forEach(function(r){
+    var cx=0,cy=0; r.v.forEach(function(v){ var p=P(v[0],v[1],v[2]); cx+=p[0]; cy+=p[1]; }); cx/=r.v.length; cy/=r.v.length; cx+=(r.dx||0);
+    var small=(r.n==='Sand'||r.n==='Loamy sand'), fs=small?9.5:(r.n.length>11?11.5:13.5);
+    var t=el('text',{x:cx,y:cy+4,'text-anchor':'middle','font-size':fs,'font-weight':700,'font-family':'Bricolage Grotesque,Arial,sans-serif',fill:'#1b130c','paint-order':'stroke',stroke:'rgba(255,253,248,.55)','stroke-width':2.5},gStatic);
+    if(r.rot){ var p1=P(15,0,85),p2=P(0,30,70), ang=Math.atan2(p2[1]-p1[1],p2[0]-p1[0])*180/Math.PI; t.setAttribute('transform','rotate('+ang.toFixed(1)+' '+cx+' '+cy+')'); }
+    var words=r.n.split(' ');
+    if(!small&&words.length>1&&r.n.length>11){ t.textContent=''; var t1=el('tspan',{x:cx,dy:'-0.2em'},t); t1.textContent=words.slice(0,-1).join(' '); var t2=el('tspan',{x:cx,dy:'1.15em'},t); t2.textContent=words[words.length-1]; }
+    else t.textContent=r.n;
+  });
+  var AX={'font-family':'Bricolage Grotesque,Arial,sans-serif','font-size':12,fill:'#3a2c20','font-weight':600};
+  for(k=10;k<=90;k+=10){
+    var p=P(k,0,100-k); el('text',Object.assign({x:p[0]-9,y:p[1]+4,'text-anchor':'end'},AX),gStatic).textContent=k;   // clay, left edge
+    p=P(100-k,k,0); el('text',Object.assign({x:p[0]+9,y:p[1]+4,'text-anchor':'start'},AX),gStatic).textContent=k;    // silt, right edge
+    p=P(0,100-k,k); el('text',Object.assign({x:p[0],y:p[1]+19,'text-anchor':'middle'},AX),gStatic).textContent=k;    // sand, bottom
+  }
+  var T1=Object.assign({'font-size':13,'font-weight':800,'letter-spacing':'.04em'},AX);
+  var mid=P(50,0,50); el('text',Object.assign({x:mid[0]-66,y:mid[1]-4,'text-anchor':'middle',transform:'rotate(-60 '+(mid[0]-66)+' '+(mid[1]-4)+')'},T1),gStatic).textContent='CLAY %';
+  mid=P(50,50,0); el('text',Object.assign({x:mid[0]+66,y:mid[1]-4,'text-anchor':'middle',transform:'rotate(60 '+(mid[0]+66)+' '+(mid[1]-4)+')'},T1),gStatic).textContent='SILT %';
+  el('text',Object.assign({x:320,y:BY+46,'text-anchor':'middle'},T1),gStatic).textContent='← SAND %';
+
+  /* ---------- state ---------- */
+  var samples=[], cur=null, mode='mass';
+  var SAND_NAMES=['Very coarse','Coarse','Medium','Fine','Very fine'], SAND_COL=['#7a4b1e','#a8692c','#d79a47','#efc27a','#f6dfae'];
+  function num(v){ if(v===''||v===null) return null; var n=parseFloat(v); return isFinite(n)?n:NaN; }
+  function r1(x){ return Math.round(x*10)/10; }
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  /* ---------- read inputs ---------- */
+  function read(){
+    var out={ok:false,msg:'',warn:'',sum:''};
+    if(mode==='mass'){
+      var ids=['m1','m2','m3','m4','m5'], sand=[], sandSum=0, any=false, bad=false;
+      ids.forEach(function(i){ var v=num($(i).value); if(v!==null) any=true; if(v!==null&&(isNaN(v)||v<0)) bad=true; v=v||0; sand.push(v); sandSum+=v; });
+      var si=num($('msilt').value), cl=num($('mclay').value);
+      if(si!==null||cl!==null) any=true;
+      if((si!==null&&(isNaN(si)||si<0))||(cl!==null&&(isNaN(cl)||cl<0))) bad=true;
+      var g=num($('mgravel').value); if(g!==null&&(isNaN(g)||g<0)) bad=true;
+      if(bad){ out.msg='Use zero or positive numbers only.'; return out; }
+      if(!any){ return out; }
+      si=si||0; cl=cl||0; var tot=sandSum+si+cl;
+      if(tot<=0){ out.msg='Enter at least one mass above zero.'; return out; }
+      if(si===0&&cl===0&&sandSum>0) out.warn='Silt and clay are zero, so this plots as pure sand. Add your hydrometer or pipette results if you have them.';
+      out.ok=true; out.c=cl/tot*100; out.s=si/tot*100; out.a=sandSum/tot*100; out.sand=sand; out.sandSum=sandSum;
+      out.sum='Fine earth total: '+r1(tot)+' g'+(g?' (gravel '+r1(g)+' g left out)':'');
+    } else {
+      var c=num($('pclay').value), s=num($('psilt').value), a=num($('psand').value);
+      var vals=[c,s,a], given=vals.filter(function(v){return v!==null}).length;
+      if(!given) return out;
+      if(vals.some(function(v){return v!==null&&(isNaN(v)||v<0||v>100)})){ out.msg='Each value must be between 0 and 100.'; return out; }
+      if(given===2){ var miss=100-(c||0)-(s||0)-(a||0); if(miss<-0.05){ out.msg='Those two already add up to more than 100.'; return out; } if(c===null) c=miss; else if(s===null) s=miss; else a=miss; out.sum='Third value filled in as '+r1(miss)+'% so the total is 100.'; }
+      else if(given===3){
+        var t=c+s+a; if(t<=0){ out.msg='Values add up to zero.'; return out; }
+        if(Math.abs(t-100)>5){ out.msg='These add up to '+r1(t)+'%, not 100%. Check the numbers before plotting.'; return out; }
+        if(Math.abs(t-100)>0.05) out.warn='Added up to '+r1(t)+'%. Scaled to 100% for plotting.';
+        c=c/t*100; s=s/t*100; a=a/t*100; out.sum='Total '+r1(t)+'%';
+      } else { out.msg='Enter at least two of the three values.'; return out; }
+      out.ok=true; out.c=c; out.s=s; out.a=a;
+    }
+    return out;
+  }
+
+  /* ---------- near-boundary check ---------- */
+  function neighbours(c,s,a,name){
+    var seen={}, d=2;
+    [[d,0],[-d,0],[0,d],[0,-d],[d,-d],[-d,d]].forEach(function(o){
+      var nc=c+o[0], ns=s+o[1], na=100-nc-ns; if(nc<0||ns<0||na<0) return;
+      var n=classify(nc,ns,na); if(n!==name) seen[n]=1;
+    });
+    return Object.keys(seen);
+  }
+
+  /* ---------- draw live point + guides ---------- */
+  function clearG(g){ while(g.firstChild) g.removeChild(g.firstChild); }
+  function guide(g,from,to,label,col){
+    el('line',{x1:from[0],y1:from[1],x2:to[0],y2:to[1],stroke:col,'stroke-width':2,'stroke-dasharray':'7 5'},g);
+    var ang=Math.atan2(to[1]-from[1],to[0]-from[0]), ah=9;
+    el('polygon',{points:[to[0],to[1],to[0]-ah*Math.cos(ang-.4),to[1]-ah*Math.sin(ang-.4),to[0]-ah*Math.cos(ang+.4),to[1]-ah*Math.sin(ang+.4)].join(','),fill:col},g);
+    var lx=to[0]+(label.side*22), ly=to[1]+label.dy;
+    el('rect',{x:lx-19,y:ly-10,width:38,height:20,rx:10,fill:col},g);
+    el('text',{x:lx,y:ly+4.5,'text-anchor':'middle','font-size':12,'font-weight':800,'font-family':'Bricolage Grotesque,Arial,sans-serif',fill:'#fff'},g).textContent=label.t;
+  }
+  function drawLive(){
+    clearG(gLive); if(!cur) return;
+    var c=cur.c,s=cur.s,a=cur.a, p=P(c,s,a);
+    guide(gLive,p,P(c,0,100-c),{t:r1(c)+'%',side:-1,dy:0},'#1F6F78');       // clay: horizontal to left edge
+    guide(gLive,p,P(100-s,s,0),{t:r1(s)+'%',side:1,dy:0},'#8a5a12');        // silt: parallel to left edge, to right edge
+    guide(gLive,p,P(0,100-a,a),{t:r1(a)+'%',side:0,dy:32},'#5B7F3A');       // sand: parallel to right edge, to bottom
+    el('circle',{cx:p[0],cy:p[1],r:9,fill:'#fff',stroke:'#c0392b','stroke-width':3.5},gLive);
+    el('circle',{cx:p[0],cy:p[1],r:3.2,fill:'#c0392b'},gLive);
+  }
+  function drawSamples(){
+    clearG(gSamples);
+    samples.forEach(function(m,i){
+      var p=P(m.c,m.s,m.a);
+      el('circle',{cx:p[0],cy:p[1],r:10,fill:'#1b3a40',stroke:'#fff','stroke-width':2},gSamples);
+      el('text',{x:p[0],y:p[1]+4,'text-anchor':'middle','font-size':11,'font-weight':800,'font-family':'Arial,sans-serif',fill:'#fff'},gSamples).textContent=i+1;
+    });
+  }
+
+  /* ---------- update everything ---------- */
+  function update(){
+    var r=read(), msg=$('msg');
+    $('sum').textContent=r.sum||'';
+    msg.className='msg'+(r.msg?' err':(r.warn?' warn':'')); msg.textContent=r.msg||r.warn||'';
+    $('addBtn').disabled=!r.ok;
+    if(!r.ok){ cur=null; $('res').classList.remove('on'); drawLive(); return; }
+    cur={c:r.c,s:r.s,a:r.a,sand:r.sand,sandSum:r.sandSum};
+    var name=classify(cur.c,cur.s,cur.a); cur.name=name;
+    $('cls').textContent=name;
+    $('vClay').textContent=r1(cur.c)+'%'; $('vSilt').textContent=r1(cur.s)+'%'; $('vSand').textContent=r1(cur.a)+'%';
+    var sw=$('sandWrap');
+    if(mode==='mass'&&r.sandSum>0){
+      sw.hidden=false;
+      $('sandBar').innerHTML=r.sand.map(function(v,i){ return '<i style="width:'+(v/r.sandSum*100)+'%;background:'+SAND_COL[i]+'" title="'+SAND_NAMES[i]+' '+r1(v/r.sandSum*100)+'%"></i>'; }).join('');
+      $('sandLeg').innerHTML=r.sand.map(function(v,i){ return '<span style="--c:'+SAND_COL[i]+'">'+SAND_NAMES[i]+' '+r1(v/r.sandSum*100)+'%</span>'; }).join('');
+    } else sw.hidden=true;
+    var nb=neighbours(cur.c,cur.s,cur.a,name);
+    $('hint').innerHTML=nb.length?'<b>Close to a boundary.</b> Within about 2% of: '+nb.map(esc).join(', ')+'. A small measurement error could change the class, so report the percentages as well as the name.':'<b>Well inside the '+esc(name)+' area.</b> A small measurement error is unlikely to change the class.';
+    $('res').classList.add('on'); drawLive();
+  }
+
+  /* ---------- events ---------- */
+  ['m1','m2','m3','m4','m5','msilt','mclay','mgravel','pclay','psilt','psand'].forEach(function(i){ $(i).addEventListener('input',update); });
+  function setMode(m){
+    mode=m; $('tabMass').setAttribute('aria-selected',m==='mass'); $('tabPct').setAttribute('aria-selected',m==='pct');
+    $('paneMass').hidden=m!=='mass'; $('panePct').hidden=m!=='pct'; update();
+  }
+  $('tabMass').addEventListener('click',function(){ setMode('mass'); });
+  $('tabPct').addEventListener('click',function(){ setMode('pct'); });
+  $('resetBtn').addEventListener('click',function(){ document.querySelectorAll('#paneMass input,#panePct input,#sname').forEach(function(i){ i.value=''; }); update(); });
+
+  function renderRows(){
+    $('samplesPanel').hidden=!samples.length;
+    $('rows').innerHTML=samples.map(function(m,i){ return '<tr><td class="n">'+(i+1)+'</td><td>'+esc(m.label)+'</td><td class="n">'+r1(m.c)+'</td><td class="n">'+r1(m.s)+'</td><td class="n">'+r1(m.a)+'</td><td>'+esc(m.name)+'</td><td><button type="button" data-i="'+i+'" aria-label="Remove sample '+(i+1)+'"><i class="fa-solid fa-xmark"></i></button></td></tr>'; }).join('');
+    drawSamples();
+  }
+  $('addBtn').addEventListener('click',function(){
+    if(!cur) return; var label=$('sname').value.trim()||('Sample '+(samples.length+1));
+    samples.push({label:label,c:cur.c,s:cur.s,a:cur.a,name:cur.name}); renderRows();
+  });
+  $('rows').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; samples.splice(+b.getAttribute('data-i'),1); renderRows(); });
+  $('clearBtn').addEventListener('click',function(){ samples=[]; renderRows(); });
+  $('csvBtn').addEventListener('click',function(){
+    var q=function(s){ return '"'+String(s).replace(/"/g,'""')+'"'; };
+    var csv='Sample,Clay %,Silt %,Sand %,USDA class\r\n'+samples.map(function(m){ return [q(m.label),r1(m.c),r1(m.s),r1(m.a),q(m.name)].join(','); }).join('\r\n');
+    var a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'})); a.download='soil-texture.csv'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(function(){ URL.revokeObjectURL(a.href); },3000);
+  });
+
+  /* explore: hover or tap the triangle */
+  function pointer(e){
+    var pt=tri.createSVGPoint(); pt.x=e.clientX; pt.y=e.clientY; var m=tri.getScreenCTM(); if(!m) return;
+    var q=pt.matrixTransform(m.inverse()), v=inv(q.x,q.y), rd=$('read');
+    if(v[0]<0||v[1]<0||v[2]<0){ return; }
+    rd.innerHTML='<span>Clay '+r1(v[0])+'%</span><span>Silt '+r1(v[1])+'%</span><span>Sand '+r1(v[2])+'%</span><span style="color:var(--river)">'+classify(v[0],v[1],v[2])+'</span>';
+    return v;
+  }
+  tri.addEventListener('pointermove',pointer);
+  tri.addEventListener('pointerdown',function(e){
+    var v=pointer(e); if(!v) return;
+    setMode('pct'); $('pclay').value=r1(v[0]); $('psilt').value=r1(v[1]); $('psand').value=r1(100-r1(v[0])-r1(v[1])); update();
+  });
+
+  /* save PNG */
+  $('pngBtn').addEventListener('click',function(){
+    var clone=tri.cloneNode(true); clone.setAttribute('xmlns',NS); clone.setAttribute('width',1280); clone.setAttribute('height',1220);
+    var title=el('text',{x:320,y:30,'text-anchor':'middle','font-size':20,'font-weight':800,'font-family':'Arial,sans-serif',fill:'#1b130c'}); title.textContent='Soil texture triangle (USDA)'+(cur?' – '+cur.name:''); clone.appendChild(title);
+    var img=new Image(), url=URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(clone)],{type:'image/svg+xml'}));
+    img.onload=function(){ var c=document.createElement('canvas'); c.width=1280; c.height=1220; var x=c.getContext('2d'); x.fillStyle='#fffdf8'; x.fillRect(0,0,1280,1220); x.drawImage(img,0,0,1280,1220); URL.revokeObjectURL(url);
+      c.toBlob(function(b){ var a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='soil-texture-triangle.png'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(function(){ URL.revokeObjectURL(a.href); },3000); }); };
+    img.src=url;
+  });
+  update();
+})();
+</script>
+</body>
+</html>
