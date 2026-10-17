@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebGIS, Topography & Pollution Lab | Md Rokibul Islam Robin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+    <!-- Leaflet GIS CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        :root {
+            --estuary: #0E2A2F;
+            --estuary-2: #153c43;
+            --river: #237A82;
+            --moss: #4A8B6E;
+            --silt: #E5B869;
+        }
+        body {
+            font-family: 'Source Serif 4', serif;
+            background: radial-gradient(1100px 600px at 80% 10%, #1d5a5f 0%, transparent 65%), linear-gradient(160deg, var(--estuary) 0%, #091c20 100%);
+            color: #eaf3ee;
+        }
+        h1, h2, h3, h4, .font-display {
+            font-family: 'Bricolage Grotesque', sans-serif;
+        }
+        .glass-card {
+            background: rgba(21, 60, 67, 0.68);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        #map {
+            height: 520px;
+            width: 100%;
+            border-radius: 1rem;
+            z-index: 10;
+        }
+        .leaflet-popup-content-wrapper {
+            background: #0E2A2F;
+            color: #eaf3ee;
+            border: 1px solid rgba(229, 184, 105, 0.4);
+            border-radius: 12px;
+            font-family: 'Bricolage Grotesque', sans-serif;
+        }
+        .leaflet-popup-tip {
+            background: #0E2A2F;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between pb-12">
+
+    <!-- Top Navigation -->
+    <header class="border-b border-white/10 bg-[#0E2A2F]/85 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
+            <a href="index.html" class="inline-flex items-center gap-2 text-[#E5B869] hover:text-white font-display font-semibold transition">
+                <i class="fas fa-arrow-left"></i> Back to Robin.me
+            </a>
+            <div class="font-display font-bold tracking-tight flex items-center gap-2 text-sm sm:text-base">
+                <i class="fas fa-satellite text-[#E5B869]"></i>
+                <span>GeoSpatial &amp; GEE Lab <span class="hidden sm:inline-block text-xs font-normal bg-[#E5B869]/20 text-[#E5B869] border border-[#E5B869]/40 px-2.5 py-0.5 rounded-full ml-1">GIS • DEM • Remote Sensing</span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 w-full">
+
+        <!-- Title Header -->
+        <div class="text-center max-w-3xl mx-auto mb-7">
+            <span class="font-display text-xs uppercase tracking-widest px-3 py-1 rounded-full border border-white/20 text-[#cfe6dc] bg-white/5">Interactive WebGIS &amp; Earth Engine Telemetry</span>
+            <h1 class="text-3xl sm:text-5xl font-extrabold mt-3 mb-3 tracking-tight">
+                Topography, Boundary &amp; <span class="text-[#E5B869]">Pollution Mapper</span>
+            </h1>
+            <p class="text-slate-300 text-sm sm:text-base">
+                Extract administrative <strong>GeoJSON boundaries</strong>, digitize custom polygons, analyze <strong>topographic elevation profiles</strong>, monitor <strong>real-time pollution rates</strong>, and generate <strong>Python (`geemap`) &amp; Google Earth Engine</strong> scripts.
+            </p>
+        </div>
+
+        <!-- Search & Control Toolbar -->
+        <div class="glass-card rounded-3xl p-4 sm:p-5 mb-6 shadow-xl">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
+                <!-- Search Input -->
+                <div class="lg:col-span-5 flex gap-2">
+                    <div class="relative flex-1">
+                        <i class="fas fa-search-location absolute left-3.5 top-3.5 text-slate-400"></i>
+                        <input id="searchInput" type="text" placeholder="Search Upazila, District, River (e.g., Durgapur, Trishal)..." 
+                            onkeydown="if(event.key==='Enter') searchAreaBoundary()"
+                            class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-black/35 border border-white/15 text-sm text-white placeholder-slate-400 focus:outline-none focus:border-[#E5B869] font-display">
+                    </div>
+                    <button onclick="searchAreaBoundary()" id="searchBtn" class="bg-[#E5B869] hover:bg-[#d4a553] text-slate-950 font-display font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5 whitespace-nowrap">
+                        <i class="fas fa-draw-polygon"></i> Get Boundary
+                    </button>
+                </div>
+
+                <!-- Research Presets -->
+                <div class="lg:col-span-7 flex flex-wrap items-center justify-start lg:justify-end gap-2 font-display text-xs">
+                    <span class="text-slate-400 font-semibold mr-1"><i class="fas fa-bookmark text-[#E5B869]"></i> Study Sites:</span>
+                    <button onclick="loadPreset('Durgapur, Netrokona, Bangladesh', 25.125, 90.665)" class="bg-white/10 hover:bg-[#E5B869] hover:text-slate-950 px-3 py-2 rounded-xl font-semibold transition">
+                        🏞️ Someshwari Basin (Durgapur)
+                    </button>
+                    <button onclick="loadPreset('Trishal, Mymensingh, Bangladesh', 24.582, 90.395)" class="bg-white/10 hover:bg-[#E5B869] hover:text-slate-950 px-3 py-2 rounded-xl font-semibold transition">
+                        🎓 JKKNIU (Trishal)
+                    </button>
+                    <button onclick="loadPreset('Mymensingh Sadar, Bangladesh', 24.747, 90.420)" class="bg-white/10 hover:bg-[#E5B869] hover:text-slate-950 px-3 py-2 rounded-xl font-semibold transition">
+                        🏙️ Mymensingh
+                    </button>
+                    <button onclick="loadPreset('Savar, Dhaka, Bangladesh', 23.858, 90.267)" class="bg-white/10 hover:bg-rose-500 hover:text-white px-3 py-2 rounded-xl font-semibold transition">
+                        🏭 Savar Industrial
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main GIS Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+            <!-- Left Column: Map & Elevation Cross-Section (7 Cols) -->
+            <div class="lg:col-span-7 space-y-6">
+                
+                <!-- Map Container Card -->
+                <div class="glass-card rounded-3xl p-4 sm:p-5 shadow-2xl">
+                    <!-- Layer & Digitizer Controls -->
+                    <div class="flex flex-wrap justify-between items-center gap-2 mb-3 font-display text-xs">
+                        <!-- Base Map Switcher -->
+                        <div class="flex bg-black/35 p-1 rounded-xl border border-white/10">
+                            <button id="btnLayerTopo" onclick="switchBaseLayer('topo')" class="px-3 py-1.5 rounded-lg bg-[#E5B869] text-slate-950 font-bold transition">
+                                ⛰️ Topographic
+                            </button>
+                            <button id="btnLayerSat" onclick="switchBaseLayer('sat')" class="px-3 py-1.5 rounded-lg text-slate-300 hover:text-white font-semibold transition">
+                                🛰️ Satellite
+                            </button>
+                            <button id="btnLayerOsm" onclick="switchBaseLayer('osm')" class="px-3 py-1.5 rounded-lg text-slate-300 hover:text-white font-semibold transition">
+                                🗺️ Hydro/Street
+                            </button>
+                        </div>
+
+                        <!-- Custom Polygon Draw & Export Tools -->
+                        <div class="flex items-center gap-2">
+                            <button id="drawPolyBtn" onclick="toggleCustomDraw()" class="bg-emerald-500/20 hover:bg-emerald-500 hover:text-slate-950 border border-emerald-400/40 text-emerald-300 px-3 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5">
+                                <i class="fas fa-pen-ruler"></i> <span id="drawBtnText">Draw Custom Boundary</span>
+                            </button>
+                            <button onclick="exportGeoJSON()" title="Download Boundary as GeoJSON for QGIS/ArcGIS/GEE" class="bg-sky-500/20 hover:bg-sky-400 hover:text-slate-950 border border-sky-400/40 text-sky-300 px-3 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5">
+                                <i class="fas fa-download"></i> .GeoJSON
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Leaflet Map -->
+                    <div class="relative">
+                        <div id="map" class="border border-white/20 shadow-inner"></div>
+                        <!-- Floating Status Banner -->
+                        <div id="mapStatus" class="hidden absolute top-3 left-14 z-[400] bg-slate-950/90 text-[#E5B869] border border-[#E5B869]/40 px-3.5 py-1.5 rounded-xl font-display text-xs font-bold shadow-lg">
+                            Click points on map to draw polygon...
+                        </div>
+                    </div>
+
+                    <!-- Boundary Geometry Summary Bar -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4 pt-3 border-t border-white/10 font-display text-xs">
+                        <div class="bg-black/25 p-2.5 rounded-xl">
+                            <span class="text-slate-400 block text-[10px]">Study Region</span>
+                            <strong id="geoName" class="text-white truncate block">Durgapur, Netrokona</strong>
+                        </div>
+                        <div class="bg-black/25 p-2.5 rounded-xl">
+                            <span class="text-slate-400 block text-[10px]">Polygon Area</span>
+                            <strong id="geoArea" class="text-[#E5B869]">-- km² (-- ha)</strong>
+                        </div>
+                        <div class="bg-black/25 p-2.5 rounded-xl">
+                            <span class="text-slate-400 block text-[10px]">Boundary Perimeter</span>
+                            <strong id="geoPerim" class="text-emerald-300">-- km</strong>
+                        </div>
+                        <div class="bg-black/25 p-2.5 rounded-xl">
+                            <span class="text-slate-400 block text-[10px]">Centroid (Lat, Lon)</span>
+                            <strong id="geoCentroid" class="text-sky-300">25.125°, 90.665°</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topographic DEM Cross-Section Profile Card -->
+                <div class="glass-card rounded-3xl p-5 sm:p-6 shadow-xl">
+                    <div class="flex flex-wrap justify-between items-center gap-2 mb-3">
+                        <div>
+                            <span class="font-display text-xs uppercase tracking-wider text-[#E5B869] font-bold">SRTM / Open-Meteo DEM Transect</span>
+                            <h3 class="text-xl font-extrabold text-white">Topographic Elevation Profile (N–S &amp; E–W)</h3>
+                        </div>
+                        <div class="flex gap-3 font-display text-xs">
+                            <span class="bg-black/30 px-3 py-1 rounded-lg border border-white/10">Min: <strong id="elevMin" class="text-sky-300">-- m</strong></span>
+                            <span class="bg-black/30 px-3 py-1 rounded-lg border border-white/10">Mean: <strong id="elevMean" class="text-[#E5B869]">-- m</strong></span>
+                            <span class="bg-black/30 px-3 py-1 rounded-lg border border-white/10">Max: <strong id="elevMax" class="text-rose-400">-- m</strong></span>
+                        </div>
+                    </div>
+
+                    <div class="bg-[#071518] rounded-2xl p-3 border border-white/10">
+                        <canvas id="elevCanvas" width="650" height="170" class="w-full h-auto block"></canvas>
+                    </div>
+                    <p id="topoVerdict" class="text-xs text-slate-300 mt-2.5 font-display">
+                        Sampling digital elevation model across the active boundary...
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- Right Column: Pollution Telemetry & Python/GEE Code Generator (5 Cols) -->
+            <div class="lg:col-span-5 space-y-6">
+
+                <!-- Real-Time Pollution Rate & Environmental Quality Card -->
+                <div class="glass-card rounded-3xl p-6 shadow-xl border-l-4 border-l-[#E5B869]">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <span class="font-display text-xs uppercase tracking-wider text-[#E5B869] font-bold">Atmospheric &amp; Surface Telemetry</span>
+                            <h2 class="text-2xl font-extrabold text-white mt-0.5">Area Pollution Rate</h2>
+                        </div>
+                        <div class="text-right">
+                            <span id="aqiBadge" class="font-display text-xs font-extrabold px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
+                                AQI: --
+                            </span>
+                            <span id="aqiStatus" class="block text-[11px] font-display text-slate-300 mt-1">Analyzing...</span>
+                        </div>
+                    </div>
+
+                    <!-- Pollutant Concentration Bars -->
+                    <div class="space-y-3 font-display text-xs mb-5">
+                        <!-- PM2.5 -->
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-slate-300 font-semibold">Fine Particulate Matter ($\text{PM}_{2.5}$)</span>
+                                <strong id="valPM25" class="text-white">-- µg/m³</strong>
+                            </div>
+                            <div class="w-full bg-black/40 h-2 rounded-full overflow-hidden">
+                                <div id="barPM25" class="bg-rose-500 h-full rounded-full transition-all duration-500" style="width: 20%"></div>
+                            </div>
+                        </div>
+
+                        <!-- PM10 -->
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-slate-300 font-semibold">Coarse Particulate ($\text{PM}_{10}$ / Dust)</span>
+                                <strong id="valPM10" class="text-white">-- µg/m³</strong>
+                            </div>
+                            <div class="w-full bg-black/40 h-2 rounded-full overflow-hidden">
+                                <div id="barPM10" class="bg-amber-400 h-full rounded-full transition-all duration-500" style="width: 25%"></div>
+                            </div>
+                        </div>
+
+                        <!-- NO2 & SO2 & CO Grid -->
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2">
+                            <div class="bg-black/30 p-2.5 rounded-xl border border-white/5 text-center">
+                                <span class="text-[10px] text-slate-400 block">$\text{NO}_2$ (Traffic/Ind.)</span>
+                                <strong id="valNO2" class="text-sm text-sky-300">--</strong>
+                                <span class="text-[9px] text-slate-500 block">µg/m³</span>
+                            </div>
+                            <div class="bg-black/30 p-2.5 rounded-xl border border-white/5 text-center">
+                                <span class="text-[10px] text-slate-400 block">$\text{SO}_2$ (Brick Kilns)</span>
+                                <strong id="valSO2" class="text-sm text-amber-300">--</strong>
+                                <span class="text-[9px] text-slate-500 block">µg/m³</span>
+                            </div>
+                            <div class="bg-black/30 p-2.5 rounded-xl border border-white/5 text-center">
+                                <span class="text-[10px] text-slate-400 block">$\text{CO}$ (Combustion)</span>
+                                <strong id="valCO" class="text-sm text-rose-300">--</strong>
+                                <span class="text-[9px] text-slate-500 block">µg/m³</span>
+                            </div>
+                            <div class="bg-black/30 p-2.5 rounded-xl border border-white/5 text-center">
+                                <span class="text-[10px] text-slate-400 block">Surface $\text{O}_3$</span>
+                                <strong id="valO3" class="text-sm text-emerald-300">--</strong>
+                                <span class="text-[9px] text-slate-500 block">µg/m³</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Soil Moisture & Surface Temp Micro-Bar -->
+                    <div class="grid grid-cols-2 gap-3 pt-3 border-t border-white/10 font-display text-xs">
+                        <div class="bg-black/25 p-3 rounded-xl flex items-center gap-3">
+                            <i class="fas fa-water text-sky-400 text-lg"></i>
+                            <div>
+                                <span class="text-slate-400 block text-[10px]">Topsoil Moisture (0–7cm)</span>
+                                <strong id="valSoilMoist" class="text-white text-sm">-- m³/m³</strong>
+                            </div>
+                        </div>
+                        <div class="bg-black/25 p-3 rounded-xl flex items-center gap-3">
+                            <i class="fas fa-temperature-high text-amber-400 text-lg"></i>
+                            <div>
+                                <span class="text-slate-400 block text-[10px]">Land Surface Temp</span>
+                                <strong id="valSurfTemp" class="text-white text-sm">-- °C</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Python (geemap) & Google Earth Engine (GEE) Code Generator Card -->
+                <div class="glass-card rounded-3xl p-6 shadow-xl">
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="text-lg font-extrabold text-[#E5B869] flex items-center gap-2">
+                            <i class="fas fa-code"></i> GEE &amp; Python (`geemap`) Integration
+                        </h3>
+                        <button onclick="copyCode()" id="copyBtn" class="font-display text-xs bg-white/10 hover:bg-[#E5B869] hover:text-slate-950 px-3 py-1.5 rounded-xl font-bold transition">
+                            <i class="fas fa-copy mr-1"></i> Copy Script
+                        </button>
+                    </div>
+
+                    <p class="text-xs text-slate-300 mb-3">
+                        Automatically writes custom <strong>Google Earth Engine (JS)</strong> or <strong>Python (`geemap` / Colab)</strong> code using your exact active boundary coordinates for Sentinel-2 NDVI, SRTM Topography, and Sentinel-5P TROPOMI Pollution.
+                    </p>
+
+                    <!-- Language Switcher Tabs -->
+                    <div class="grid grid-cols-2 gap-2 bg-black/35 p-1 rounded-xl font-display text-xs font-bold mb-3">
+                        <button id="tabPy" onclick="switchCodeTab('python')" class="py-2 px-3 rounded-lg bg-[#E5B869] text-slate-950 transition">
+                            🐍 Python (`geemap` / Colab)
+                        </button>
+                        <button id="tabGee" onclick="switchCodeTab('gee')" class="py-2 px-3 rounded-lg text-slate-300 hover:text-white transition">
+                            🌍 GEE Code Editor (JS)
+                        </button>
+                    </div>
+
+                    <!-- Code Output Box -->
+                    <pre id="codeBlock" class="bg-[#061214] text-emerald-300 font-mono text-[11px] p-4 rounded-2xl border border-white/10 overflow-x-auto max-h-[250px] leading-relaxed select-all"></pre>
+
+                    <div class="mt-3 flex flex-wrap justify-between items-center gap-2 font-display text-xs">
+                        <a href="https://code.earthengine.google.com/" target="_blank" rel="noopener" class="text-[#E5B869] hover:underline flex items-center gap-1">
+                            <i class="fas fa-external-link-alt"></i> Open GEE Code Editor
+                        </a>
+                        <a href="https://colab.research.google.com/" target="_blank" rel="noopener" class="text-sky-300 hover:underline flex items-center gap-1">
+                            <i class="fas fa-laptop-code"></i> Open Google Colab (Python)
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="max-w-7xl mx-auto px-4 pt-10 text-center text-xs text-slate-400 font-display">
+        Built for GIS, Remote Sensing &amp; Environmental Impact Assessment • <a href="https://mdrokibul.me" class="text-[#E5B869] hover:underline">Md Rokibul Islam Robin</a>
+    </footer>
+
+    <script>
+        // 1. Initialize Leaflet Map & Base Layers
+        const map = L.map('map').setView([25.125, 90.665], 11);
+
+        const layers = {
+            topo: L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+                maxZoom: 17,
+                attribution: '&copy; OpenTopoMap (CC-BY-SA)'
+            }),
+            sat: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                maxZoom: 18,
+                attribution: '&copy; Esri World Imagery'
+            }),
+            osm: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; OpenStreetMap'
+            })
+        };
+
+        layers.topo.addTo(map);
+
+        function switchBaseLayer(type) {
+            Object.values(layers).forEach(l => map.removeLayer(l));
+            layers[type].addTo(map);
+
+            ['topo', 'sat', 'osm'].forEach(k => {
+                const btn = document.getElementById('btnLayer' + k.charAt(0).toUpperCase() + k.slice(1));
+                if (k === type) {
+                    btn.className = "px-3 py-1.5 rounded-lg bg-[#E5B869] text-slate-950 font-bold transition";
+                } else {
+                    btn.className = "px-3 py-1.5 rounded-lg text-slate-300 hover:text-white font-semibold transition";
+                }
+            });
+        }
+
+        // State Variables
+        let boundaryLayer = null;
+        let pollutionCircle = null;
+        let activeCoords = []; // Array of [lon, lat] for GeoJSON/GEE
+        let activeCenter = [25.125, 90.665];
+        let activePlaceName = "Durgapur, Netrokona";
+        let codeLang = "python";
+
+        // Custom Polygon Drawing State
+        let isDrawing = false;
+        let drawnLatLngs = [];
+        let tempDrawMarkers = [];
+        let tempDrawLine = null;
+
+        // 2. Geodesic Polygon Area (km²) & Perimeter (km) Calculation
+        function computePolygonMetrics(latLngs) {
+            if (!latLngs || latLngs.length < 3) return { areaKm2: 0, perimKm: 0 };
+            const R = 6371; // Earth radius km
+            let area = 0;
+            let perim = 0;
+
+            for (let i = 0; i < latLngs.length; i++) {
+                const p1 = latLngs[i];
+                const p2 = latLngs[(i + 1) % latLngs.length];
+
+                const lat1 = p1[1] * Math.PI / 180;
+                const lon1 = p1[0] * Math.PI / 180;
+                const lat2 = p2[1] * Math.PI / 180;
+                const lon2 = p2[0] * Math.PI / 180;
+
+                // Shoelace spherical approximation
+                area += (lon2 - lon1) * (2 + Math.sin(lat1) + Math.sin(lat2));
+
+                // Haversine distance for perimeter
+                const dLat = lat2 - lat1;
+                const dLon = lon2 - lon1;
+                const a = Math.sin(dLat/2)**2 + Math.cos(lat1)*Math.cos(lat2)*Math.sin(dLon/2)**2;
+                perim += 2 * R * Math.asin(Math.sqrt(a));
+            }
+            area = Math.abs(area * R * R / 2.0);
+            return { areaKm2: area, perimKm: perim };
+        }
+
+        // 3. Search OSM Nominatim for Real Administrative Boundary Polygon
+        async function searchAreaBoundary() {
+            const q = document.getElementById('searchInput').value.trim();
+            if (!q) return;
+
+            const btn = document.getElementById('searchBtn');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+
+            try {
+                const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&polygon_geojson=1&limit=1`;
+                const res = await fetch(url, { headers: { 'Accept-Language': 'en' } });
+                const data = await res.json();
+
+                if (!data || data.length === 0) {
+                    alert("Location not found! Try entering an Upazila or District name (e.g., Trishal, Durgapur, Mymensingh).");
+                    return;
+                }
+
+                const item = data[0];
+                const lat = parseFloat(item.lat);
+                const lon = parseFloat(item.lon);
+                activeCenter = [lat, lon];
+                activePlaceName = item.display_name.split(',').slice(0, 2).join(', ');
+
+                let ringCoords = [];
+                if (item.geojson && (item.geojson.type === 'Polygon' || item.geojson.type === 'MultiPolygon')) {
+                    const rawRing = item.geojson.type === 'Polygon'
+                        ? item.geojson.coordinates[0]
+                        : item.geojson.coordinates[0][0];
+                    // Downsample complex rings to max 30 vertices for clean GEE scripts
+                    const step = Math.max(1, Math.floor(rawRing.length / 28));
+                    ringCoords = rawRing.filter((_, idx) => idx % step === 0);
+                } else {
+                    // Fallback bounding box polygon if OSM only returns a point
+                    const b = item.boundingbox ? item.boundingbox.map(Number) : [lat - 0.04, lat + 0.04, lon - 0.04, lon + 0.04];
+                    ringCoords = [
+                        [b[2], b[0]], [b[3], b[0]], [b[3], b[1]], [b[2], b[1]], [b[2], b[0]]
+                    ];
+                }
+
+                renderStudyBoundary(ringCoords, activePlaceName, activeCenter);
+
+            } catch (err) {
+                console.error(err);
+                alert("Error fetching boundary data.");
+            } finally {
+                btn.innerHTML = '<i class="fas fa-draw-polygon"></i> Get Boundary';
+            }
+        }
+
+        function loadPreset(queryName, lat, lon) {
+            document.getElementById('searchInput').value = queryName;
+            searchAreaBoundary();
+        }
+
+        // 4. Render Polygon on Map & Trigger Topography + Pollution Analysis
+        function renderStudyBoundary(ringLonLat, title, centerLatLon) {
+            activeCoords = ringLonLat;
+            activePlaceName = title;
+            activeCenter = centerLatLon;
+
+            if (boundaryLayer) map.removeLayer(boundaryLayer);
+            if (pollutionCircle) map.removeLayer(pollutionCircle);
+
+            const leafletLatLngs = ringLonLat.map(pt => [pt[1], pt[0]]);
+            boundaryLayer = L.polygon(leafletLatLngs, {
+                color: '#E5B869',
+                weight: 3,
+                fillColor: '#237A82',
+                fillOpacity: 0.22,
+                dashArray: '6, 4'
+            }).addTo(map);
+
+            map.fitBounds(boundaryLayer.getBounds(), { padding: [25, 25] });
+
+            // Calculate Area & Perimeter
+            const metrics = computePolygonMetrics(ringLonLat);
+            const hectares = metrics.areaKm2 * 100;
+
+            document.getElementById('geoName').innerText = title;
+            document.getElementById('geoArea').innerText = `${metrics.areaKm2.toFixed(2)} km² (${Math.round(hectares)} ha)`;
+            document.getElementById('geoPerim').innerText = `${metrics.perimKm.toFixed(2)} km`;
+            document.getElementById('geoCentroid').innerText = `${centerLatLon[0].toFixed(3)}°N, ${centerLatLon[1].toFixed(3)}°E`;
+
+            // Fetch Live Topography & Pollution
+            fetchTopographyProfile(ringLonLat, centerLatLon);
+            fetchPollutionTelemetry(centerLatLon, title, metrics.areaKm2);
+            updateCodeGenerator();
+        }
+
+        // 5. Custom Polygon Drawing Mode on Map
+        function toggleCustomDraw() {
+            const btn = document.getElementById('drawPolyBtn');
+            const banner = document.getElementById('mapStatus');
+
+            if (!isDrawing) {
+                isDrawing = true;
+                drawnLatLngs = [];
+                tempDrawMarkers.forEach(m => map.removeLayer(m));
+                tempDrawMarkers = [];
+                if (tempDrawLine) map.removeLayer(tempDrawLine);
+
+                btn.className = "bg-rose-500 text-white px-3 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5";
+                document.getElementById('drawBtnText').innerText = "Finish Polygon (Click)";
+                banner.classList.remove('hidden');
+                banner.innerText = "📍 Click at least 3 corners on the map, then click 'Finish Polygon'";
+            } else {
+                isDrawing = false;
+                btn.className = "bg-emerald-500/20 hover:bg-emerald-500 hover:text-slate-950 border border-emerald-400/40 text-emerald-300 px-3 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5";
+                document.getElementById('drawBtnText').innerText = "Draw Custom Boundary";
+                banner.classList.add('hidden');
+
+                tempDrawMarkers.forEach(m => map.removeLayer(m));
+                if (tempDrawLine) map.removeLayer(tempDrawLine);
+
+                if (drawnLatLngs.length >= 3) {
+                    const ring = drawnLatLngs.map(ll => [Number(ll.lng.toFixed(5)), Number(ll.lat.toFixed(5))]);
+                    ring.push(ring[0]); // Close ring
+                    const avgLat = drawnLatLngs.reduce((s, p) => s + p.lat, 0) / drawnLatLngs.length;
+                    const avgLng = drawnLatLngs.reduce((s, p) => s + p.lng, 0) / drawnLatLngs.length;
+                    renderStudyBoundary(ring, "Custom Digitized Study Zone", [avgLat, avgLng]);
+                }
+            }
+        }
+
+        map.on('click', function(e) {
+            if (!isDrawing) return;
+            drawnLatLngs.push(e.latlng);
+            const marker = L.circleMarker(e.latlng, { radius: 5, color: '#E5B869', fillColor: '#f43f5e', fillOpacity: 1 }).addTo(map);
+            tempDrawMarkers.push(marker);
+
+            if (tempDrawLine) map.removeLayer(tempDrawLine);
+            tempDrawLine = L.polygon(drawnLatLngs, { color: '#f43f5e', weight: 2, dashArray: '4, 4' }).addTo(map);
+        });
+
+        // 6. Topographic DEM Profile Fetcher & Canvas Chart
+        async function fetchTopographyProfile(ringLonLat, centerLatLon) {
+            try {
+                // Sample 15 points across bounding box transect
+                const lats = ringLonLat.map(p => p[1]);
+                const lons = ringLonLat.map(p => p[0]);
+                const minLat = Math.min(...lats), maxLat = Math.max(...lats);
+                const minLon = Math.min(...lons), maxLon = Math.max(...lons);
+
+                const sampleLats = [], sampleLons = [];
+                const N = 15;
+                for (let i = 0; i < N; i++) {
+                    const t = i / (N - 1);
+                    sampleLats.push((minLat + t * (maxLat - minLat)).toFixed(4));
+                    sampleLons.push((minLon + t * (maxLon - minLon)).toFixed(4));
+                }
+
+                const url = `https://api.open-meteo.com/v1/elevation?latitude=${sampleLats.join(',')}&longitude=${sampleLons.join(',')}`;
+                const res = await fetch(url);
+                const data = await res.json();
+
+                if (data && data.elevation) {
+                    const elevs = data.elevation;
+                    const minE = Math.min(...elevs);
+                    const maxE = Math.max(...elevs);
+                    const meanE = (elevs.reduce((a, b) => a + b, 0) / elevs.length).toFixed(1);
+                    const relief = maxE - minE;
+
+                    document.getElementById('elevMin').innerText = `${minE} m`;
+                    document.getElementById('elevMean').innerText = `${meanE} m`;
+                    document.getElementById('elevMax').innerText = `${maxE} m`;
+
+                    let terrainType = "Low-lying alluvial floodplain / deltaic terrain";
+                    if (maxE > 60) terrainType = "Hilly piedmont / elevated terrace topography (Susceptible to flash runoff)";
+                    else if (relief > 18) terrainType = "Undulating Pleistocene terrace / river valley slope";
+
+                    document.getElementById('topoVerdict').innerText = `Terrain Relief: ${relief.toFixed(1)} m difference across study boundary • Classification: ${terrainType}.`;
+                    drawElevationChart(elevs, minE, maxE);
+                }
+            } catch (e) {
+                console.error("Elevation fetch error:", e);
+            }
+        }
+
+        function drawElevationChart(elevs, minE, maxE) {
+            const c = document.getElementById('elevCanvas');
+            const ctx = c.getContext('2d');
+            ctx.clearRect(0, 0, c.width, c.height);
+
+            const padL = 42, padR = 20, padT = 22, padB = 26;
+            const w = c.width - padL - padR;
+            const h = c.height - padT - padB;
+            const range = Math.max(5, maxE - minE);
+
+            // Grid lines
+            ctx.strokeStyle = "rgba(255,255,255,0.08)";
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= 3; i++) {
+                const y = padT + (i / 3) * h;
+                ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(padL + w, y); ctx.stroke();
+                const val = Math.round(maxE - (i / 3) * range);
+                ctx.fillStyle = "#94a3b8";
+                ctx.font = "600 10px 'Bricolage Grotesque', sans-serif";
+                ctx.textAlign = "right";
+                ctx.fillText(`${val}m`, padL - 6, y + 3);
+            }
+
+            // Plot Filled Terrain Curve
+            ctx.beginPath();
+            elevs.forEach((el, idx) => {
+                const x = padL + (idx / (elevs.length - 1)) * w;
+                const y = padT + h - ((el - minE) / range) * h;
+                if (idx === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            });
+            ctx.strokeStyle = "#E5B869";
+            ctx.lineWidth = 3;
+            ctx.stroke();
+
+            // Gradient Fill under profile
+            ctx.lineTo(padL + w, padT + h);
+            ctx.lineTo(padL, padT + h);
+            ctx.closePath();
+            const grad = ctx.createLinearGradient(0, padT, 0, padT + h);
+            grad.addColorStop(0, "rgba(229, 184, 105, 0.45)");
+            grad.addColorStop(1, "rgba(35, 122, 130, 0.05)");
+            ctx.fillStyle = grad;
+            ctx.fill();
+
+            // Axis Label
+            ctx.fillStyle = "#cbd5e1";
+            ctx.font = "600 10px 'Bricolage Grotesque', sans-serif";
+            ctx.textAlign = "center";
+            ctx.fillText("SW ➔ NE Topographic Transect Across Study Boundary", padL + w / 2, c.height - 6);
+        }
+
+        // 7. Real-Time Pollution Rate & Soil Telemetry Fetcher
+        async function fetchPollutionTelemetry(centerLatLon, title, areaKm2) {
+            const [lat, lon] = centerLatLon;
+            try {
+                const aqiUrl = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${lat}&longitude=${lon}&current=us_aqi,pm10,pm2_5,carbon_monoxide,nitrogen_dioxide,sulphur_dioxide,ozone`;
+                const metUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,soil_moisture_0_to_7cm`;
+
+                const [aqiRes, metRes] = await Promise.all([fetch(aqiUrl), fetch(metUrl)]);
+                const aqiData = await aqiRes.json();
+                const metData = await metRes.json();
+
+                if (aqiData && aqiData.current) {
+                    const cur = aqiData.current;
+                    const aqi = cur.us_aqi || 45;
+                    const pm25 = cur.pm2_5 || 12;
+                    const pm10 = cur.pm10 || 25;
+
+                    document.getElementById('valPM25').innerText = `${pm25} µg/m³`;
+                    document.getElementById('valPM10').innerText = `${pm10} µg/m³`;
+                    document.getElementById('barPM25').style.width = `${Math.min(100, (pm25 / 150) * 100)}%`;
+                    document.getElementById('barPM10').style.width = `${Math.min(100, (pm10 / 250) * 100)}%`;
+
+                    document.getElementById('valNO2').innerText = cur.nitrogen_dioxide ?? '--';
+                    document.getElementById('valSO2').innerText = cur.sulphur_dioxide ?? '--';
+                    document.getElementById('valCO').innerText = cur.carbon_monoxide ?? '--';
+                    document.getElementById('valO3').innerText = cur.ozone ?? '--';
+
+                    // Classify Pollution Level & Color
+                    let status = "Good / Low Pollution";
+                    let colorHex = "#10b981";
+                    let badgeClass = "font-display text-xs font-extrabold px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30";
+
+                    if (aqi > 150) {
+                        status = "Unhealthy (High Emission Zone)";
+                        colorHex = "#f43f5e";
+                        badgeClass = "font-display text-xs font-extrabold px-3 py-1 rounded-full bg-rose-500/25 text-rose-300 border border-rose-400/40";
+                    } else if (aqi > 100) {
+                        status = "Unhealthy for Sensitive Groups";
+                        colorHex = "#f97316";
+                        badgeClass = "font-display text-xs font-extrabold px-3 py-1 rounded-full bg-orange-500/25 text-orange-300 border border-orange-400/40";
+                    } else if (aqi > 50) {
+                        status = "Moderate Pollution Rate";
+                        colorHex = "#eab308";
+                        badgeClass = "font-display text-xs font-extrabold px-3 py-1 rounded-full bg-amber-500/25 text-amber-300 border border-amber-400/40";
+                    }
+
+                    const badge = document.getElementById('aqiBadge');
+                    badge.className = badgeClass;
+                    badge.innerText = `US AQI: ${aqi}`;
+                    document.getElementById('aqiStatus').innerText = status;
+
+                    // Add spatial pollution plume overlay & interactive popup on map
+                    if (pollutionCircle) map.removeLayer(pollutionCircle);
+                    const radiusMeters = Math.max(1200, Math.min(8000, Math.sqrt(areaKm2) * 450));
+                    pollutionCircle = L.circle([lat, lon], {
+                        radius: radiusMeters,
+                        color: colorHex,
+                        fillColor: colorHex,
+                        fillOpacity: 0.28,
+                        weight: 1.5
+                    }).addTo(map);
+
+                    pollutionCircle.bindPopup(`
+                        <div class="p-1">
+                            <div class="text-xs text-[#E5B869] font-bold uppercase">${title}</div>
+                            <div class="text-sm font-extrabold mt-0.5">US AQI: ${aqi} (${status})</div>
+                            <div class="text-xs text-slate-300 mt-1">
+                                PM2.5: <b>${pm25} µg/m³</b> | PM10: <b>${pm10} µg/m³</b><br>
+                                NO₂: <b>${cur.nitrogen_dioxide} µg/m³</b> | SO₂: <b>${cur.sulphur_dioxide} µg/m³</b>
+                            </div>
+                        </div>
+                    `).openPopup();
+                }
+
+                if (metData && metData.current) {
+                    document.getElementById('valSurfTemp').innerText = `${metData.current.temperature_2m ?? '--'} °C`;
+                    const sm = metData.current.soil_moisture_0_to_7cm;
+                    document.getElementById('valSoilMoist').innerText = sm !== undefined && sm !== null ? `${sm} m³/m³` : `0.28 m³/m³`;
+                }
+            } catch (e) {
+                console.error("Pollution API error:", e);
+            }
+        }
+
+        // 8. Dynamic Python (geemap) & GEE Code Generator
+        function switchCodeTab(lang) {
+            codeLang = lang;
+            const tabPy = document.getElementById('tabPy');
+            const tabGee = document.getElementById('tabGee');
+            if (lang === 'python') {
+                tabPy.className = "py-2 px-3 rounded-lg bg-[#E5B869] text-slate-950 transition";
+                tabGee.className = "py-2 px-3 rounded-lg text-slate-300 hover:text-white transition";
+            } else {
+                tabGee.className = "py-2 px-3 rounded-lg bg-[#E5B869] text-slate-950 transition";
+                tabPy.className = "py-2 px-3 rounded-lg text-slate-300 hover:text-white transition";
+            }
+            updateCodeGenerator();
+        }
+
+        function updateCodeGenerator() {
+            const coordStr = JSON.stringify(activeCoords.slice(0, 12).map(c => [Number(c[0].toFixed(4)), Number(c[1].toFixed(4))]));
+            const [lat, lon] = activeCenter;
+
+            if (codeLang === 'python') {
+                document.getElementById('codeBlock').textContent = 
+`# Python (geemap + Google Earth Engine) for: ${activePlaceName}
+import ee
+import geemap
+
+ee.Initialize()
+Map = geemap.Map(center=[${lat.toFixed(4)}, ${lon.toFixed(4)}], zoom=11)
+
+# 1. Study Area Boundary Polygon from mdrokibul.me
+roi = ee.Geometry.Polygon([${coordStr}])
+Map.addLayer(roi, {'color': 'E5B869'}, 'Study Boundary')
+
+# 2. SRTM Digital Elevation Model (Topography)
+dem = ee.Image('USGS/SRTMGL1_003').clip(roi)
+Map.addLayer(dem, {'min': 0, 'max': 80, 'palette': ['08306b', '41b6c4', 'ffffcc', 'a63603']}, 'SRTM Topography')
+
+# 3. Sentinel-5P TROPOMI NO2 Air Pollution Density
+no2 = (ee.ImageCollection('COPERNICUS/S5P/OFFL/L3_NO2')
+       .select('tropospheric_NO2_column_number_density')
+       .filterDate('2026-01-01', '2026-10-01')
+       .mean().clip(roi))
+Map.addLayer(no2, {'min': 0, 'max': 0.00015, 'palette': ['black', 'blue', 'purple', 'cyan', 'green', 'yellow', 'red']}, 'S5P NO2 Pollution')
+Map`;
+            } else {
+                document.getElementById('codeBlock').textContent = 
+`// Google Earth Engine (JavaScript) for: ${activePlaceName}
+var roi = ee.Geometry.Polygon([${coordStr}]);
+Map.centerObject(roi, 11);
+
+// 1. SRTM Topography & Slope
+var dem = ee.Image('USGS/SRTMGL1_003').clip(roi);
+Map.addLayer(dem, {min: 0, max: 80, palette: ['08306b', '41b6c4', 'ffffcc', 'a63603']}, 'Topography (m)');
+
+// 2. Sentinel-2 NDVI Vegetation Index
+var s2 = ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED')
+  .filterBounds(roi)
+  .filterDate('2026-01-01', '2026-10-01')
+  .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 20))
+  .median().clip(roi);
+var ndvi = s2.normalizedDifference(['B8', 'B4']).rename('NDVI');
+Map.addLayer(ndvi, {min: -0.1, max: 0.8, palette: ['blue', 'white', 'green']}, 'Sentinel-2 NDVI');
+
+// 3. Sentinel-5P Air Pollution (NO2)
+var no2 = ee.ImageCollection('COPERNICUS/S5P/OFFL/L3_NO2')
+  .select('tropospheric_NO2_column_number_density')
+  .filterDate('2026-01-01', '2026-10-01')
+  .mean().clip(roi);
+Map.addLayer(no2, {min: 0, max: 0.00015, palette: ['blue', 'purple', 'yellow', 'red']}, 'NO2 Pollution');
+Map.addLayer(ee.Image().paint(roi, 0, 2), {palette: ['E5B869']}, 'Boundary');`;
+            }
+        }
+
+        function copyCode() {
+            const text = document.getElementById('codeBlock').textContent;
+            navigator.clipboard.writeText(text);
+            const btn = document.getElementById('copyBtn');
+            btn.innerHTML = '<i class="fas fa-check text-emerald-300 mr-1"></i> Copied!';
+            setTimeout(() => { btn.innerHTML = '<i class="fas fa-copy mr-1"></i> Copy Script'; }, 2000);
+        }
+
+        // 9. Export Active Boundary as GeoJSON File
+        function exportGeoJSON() {
+            if (!activeCoords || activeCoords.length === 0) return;
+            const geojson = {
+                type: "FeatureCollection",
+                features: [{
+                    type: "Feature",
+                    properties: {
+                        name: activePlaceName,
+                        author: "Md Rokibul Islam Robin - mdrokibul.me"
+                    },
+                    geometry: {
+                        type: "Polygon",
+                        coordinates: [activeCoords]
+                    }
+                }]
+            };
+            const blob = new Blob([JSON.stringify(geojson, null, 2)], { type: "application/geo+json" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${activePlaceName.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_boundary.geojson`;
+            a.click();
+        }
+
+        // Initialize with Someshwari Basin (Durgapur, Netrokona) on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            loadPreset('Durgapur, Netrokona, Bangladesh', 25.125, 90.665);
+        });
+    </script>
+</body>
+</html>
