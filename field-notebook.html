@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Field Notebook | ESE Research Hub</title>
+<meta name="description" content="Collect field data with just a phone: measure tree or building height with a clinometer, measure strike and dip like a geological compass, save records with GPS, and analyse them with summary statistics. Import and export CSV or GeoJSON.">
+<meta name="theme-color" content="#0E2A2F">
+<link rel="canonical" href="https://mdrokibul.me/field-notebook.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ESE Research Hub">
+<meta property="og:url" content="https://mdrokibul.me/field-notebook.html">
+<meta property="og:title" content="Field Notebook">
+<meta property="og:description" content="Height clinometer and strike and dip compass on your phone, with a field dataset you can analyse and export.">
+<meta property="og:image" content="https://mdrokibul.me/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Field Notebook">
+<meta name="twitter:description" content="Height clinometer and strike and dip compass on your phone, with a field dataset you can analyse and export.">
+<meta name="twitter:image" content="https://mdrokibul.me/og-image.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":["WebPage","WebApplication"],"name":"Field Notebook","url":"https://mdrokibul.me/field-notebook.html","description":"Phone-based field data collection: height clinometer, strike and dip compass, summary statistics and CSV/GeoJSON export.","applicationCategory":"EducationalApplication","operatingSystem":"Any","inLanguage":"en","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"isPartOf":{"@type":"WebSite","name":"ESE Research Hub","url":"https://mdrokibul.me/"},"author":{"@type":"Person","name":"Md Rokibul Islam Robin","url":"https://mdrokibul.me/about.html"}}</script>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="nav.css">
+<link rel="stylesheet" href="site.css">
+<style>
+main{padding:0 0 56px}
+[hidden]{display:none!important}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:clamp(18px,3vw,28px);box-shadow:0 10px 30px rgba(0,0,0,.09);margin-top:18px}
+.panel h2{font-size:1.25rem;font-weight:800;margin-bottom:6px;display:flex;gap:10px;align-items:center}
+.panel h2 i{color:var(--river)}
+.sub{font-size:.97rem;color:var(--ink-soft);margin-bottom:14px}
+.tabs{display:flex;gap:6px;margin-top:-24px;position:relative;z-index:2;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px;box-shadow:0 10px 30px rgba(0,0,0,.1)}
+.tabs button{flex:1;font:700 .95rem var(--display);padding:11px 8px;border-radius:999px;border:0;background:transparent;color:var(--ink);cursor:pointer;display:inline-flex;gap:8px;align-items:center;justify-content:center}
+.tabs button[aria-selected=true]{background:var(--river);color:#fff}
+.tabs .cnt{font-size:.75rem;background:rgba(255,255,255,.22);padding:1px 8px;border-radius:999px}
+.tabs button:not([aria-selected=true]) .cnt{background:var(--mist);color:var(--ink-soft)}
+@media (max-width:520px){.tabs button span.t{display:none}.tabs button{font-size:.85rem}}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:860px){.grid2{grid-template-columns:1fr}}
+.grid2>*{min-width:0}
+.fld{display:grid;gap:5px;margin-bottom:12px}
+.fld label{font:700 .8rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em}
+.fld input,.fld select,.fld textarea{font:inherit;font-size:1.05rem;width:100%;padding:11px 13px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink);font-variant-numeric:tabular-nums}
+.fld input:focus,.fld select:focus,.fld textarea:focus{outline:none;border-color:var(--river)}
+.fld small{font-size:.85rem;color:var(--ink-soft)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.b{font:700 .95rem var(--display);padding:11px 18px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;display:inline-flex;gap:8px;align-items:center;justify-content:center}
+.b:hover{background:var(--mist)}.b.pri{background:var(--river);border-color:var(--river);color:#fff}.b.pri:hover{background:#27818b}
+.b.bad{color:var(--bad)}.b[disabled]{opacity:.45;cursor:not-allowed}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.big{font:800 clamp(2.6rem,9vw,3.8rem)/1 var(--display);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.live{padding:16px;border-radius:18px;background:var(--mist);border:2px solid var(--line);text-align:center}
+.live small{display:block;font:700 .8rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.live.hit{border-color:var(--good);background:color-mix(in srgb,var(--good) 14%,var(--mist))}
+.stat{font-size:.92rem;color:var(--ink-soft);margin:10px 0;display:flex;gap:8px;align-items:center}
+.stat::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--line);flex:none}
+.stat.ok::before{background:var(--good)}.stat.run::before{background:var(--warn)}.stat.bad::before{background:var(--bad)}
+.cam{position:relative;border-radius:16px;overflow:hidden;background:#000;aspect-ratio:3/4;max-height:420px;margin:12px auto 0;max-width:340px}
+.cam video{width:100%;height:100%;object-fit:cover}
+.cam::before,.cam::after{content:"";position:absolute;background:rgba(255,255,255,.85);z-index:2}
+.cam::before{left:50%;top:0;bottom:0;width:2px;margin-left:-1px}.cam::after{top:50%;left:0;right:0;height:2px;margin-top:-1px}
+.res{margin-top:14px;padding:16px;border-radius:16px;border:2px solid var(--river);background:color-mix(in srgb,var(--river) 8%,var(--card))}
+.res .big{color:var(--river)}
+.res p{margin-top:6px;font-size:.95rem;color:var(--ink-soft)}
+.steps{padding-left:1.2em;color:var(--ink-soft);font-size:.98rem}.steps li+li{margin-top:.5em}
+.msg{min-height:1.3em;font-size:.95rem;margin-top:8px}.msg.err{color:var(--bad);font-weight:600}.msg.ok{color:var(--good);font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th,td{text-align:left;padding:8px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:700 .74rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.scroll{overflow-x:auto}
+.tag{display:inline-block;padding:2px 9px;border-radius:999px;font:700 .75rem var(--display);background:var(--mist);border:1px solid var(--line)}
+.sec{font:800 .85rem var(--display);text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);margin:20px 0 8px}
+.empty{padding:26px;text-align:center;color:var(--ink-soft);border:2px dashed var(--line);border-radius:16px}
+.chk{display:flex;gap:9px;align-items:center;margin:6px 0;font-size:.98rem}.chk input{width:18px;height:18px;accent-color:var(--river)}
+.note{font-size:.88rem;color:var(--ink-soft);margin-top:10px;line-height:1.45}
+.sr{position:absolute;left:-999px}
+</style>
+</head>
+<body>
+<div class="progress" id="progress" aria-hidden="true"></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav" id="nav" data-solid>
+  <div class="wrap">
+    <a class="brand" href="index.html">ESE Research<span> Hub</span></a>
+    <nav class="links" id="links" aria-label="Main">
+      <div class="dd cur"><button class="dd-btn" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="toolsMenu">Tools <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="dd-menu" id="toolsMenu"><a href="portal.html"><i class="fa-solid fa-building-columns" aria-hidden="true"></i><span><b>JKKNIU &amp; ESE Portal</b><small>Official links in one place</small></span></a><a href="library.html"><i class="fa-solid fa-folder-open" aria-hidden="true"></i><span><b>Batch Library</b><small>Shared ESE study materials</small></span></a><a href="sound-meter.html"><i class="fa-solid fa-ear-listen" aria-hidden="true"></i><span><b>Sound Level Meter</b><small>Measure noise with your phone</small></span></a><a href="soil-texture.html"><i class="fa-solid fa-layer-group" aria-hidden="true"></i><span><b>Soil Texture Triangle</b><small>Plot sand, silt and clay</small></span></a><a href="rock-cycle.html"><i class="fa-solid fa-gem" aria-hidden="true"></i><span><b>Rock Cycle Simulator</b><small>Weathering to metamorphism</small></span></a><a href="gis-map.html"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i><span><b>GIS Area Explorer</b><small>Boundary, topography, pollution</small></span></a><a href="field-notebook.html" class="on" aria-current="page"><i class="fa-solid fa-person-hiking" aria-hidden="true"></i><span><b>Field Notebook</b><small>Phone-only field measurements</small></span></a><a href="weather.html"><i class="fa-solid fa-cloud-sun-rain" aria-hidden="true"></i><span><b>EcoLens Weather</b><small>Your photo plus live weather and rain chance</small></span></a><a href="atmosphere-sim.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Atmosphere Simulator</b><small>Three-cell circulation model</small></span></a></div></div>
+      <a href="about.html">About</a>
+      <a href="about.html#contact">Contact</a>
+    </nav>
+    <div class="tools">
+      <button class="icon-btn" id="theme" type="button" aria-label="Switch to dark theme"><i class="fa-solid fa-moon"></i></button>
+      <button class="icon-btn burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="links"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</header>
+<div class="page-hero">
+  <div class="wrap">
+    <h1>Field notebook</h1>
+    <p>Measure with just your phone, save each reading with its location and time, then analyse the dataset here. Works on a phone in the field, and your records stay on that phone until you export them.</p>
+  </div>
+</div>
+
+<main id="main">
+<div class="wrap">
+  <div class="tabs" role="tablist" aria-label="Field tools">
+    <button type="button" role="tab" id="tabH" aria-selected="true" aria-controls="pH"><i class="fa-solid fa-tree"></i><span class="t">Height</span></button>
+    <button type="button" role="tab" id="tabS" aria-selected="false" aria-controls="pS"><i class="fa-solid fa-compass"></i><span class="t">Strike &amp; dip</span></button>
+    <button type="button" role="tab" id="tabD" aria-selected="false" aria-controls="pD"><i class="fa-solid fa-table"></i><span class="t">Data</span> <span class="cnt" id="cnt">0</span></button>
+  </div>
+
+  <!-- ============ HEIGHT ============ -->
+  <section id="pH" role="tabpanel" aria-labelledby="tabH">
+    <div class="panel">
+      <h2><i class="fa-solid fa-tree"></i> Tree or building height</h2>
+      <p class="sub">Stand a known distance away, aim the phone at the top, and the angle gives the height. No tape up the tree needed.</p>
+      <div class="grid2">
+        <div>
+          <div class="stat" id="sensH">Motion sensor not started</div>
+          <div class="btns" style="margin:0 0 12px"><button class="b pri" type="button" id="enH"><i class="fa-solid fa-power-off"></i> Start motion sensor</button><button class="b" type="button" id="camBtn"><i class="fa-solid fa-camera"></i> Camera view</button></div>
+          <div class="fld"><label for="aim">How you aim the phone</label>
+            <select id="aim"><option value="cam">Back camera (look through the screen)</option><option value="edge">Top edge (sight along the top of the phone)</option></select></div>
+          <div class="live" id="liveH"><small>Angle above the horizon</small><div class="big" id="angLive">--</div><div class="note" id="angHint" style="margin-top:4px">Aim at the top of the object</div></div>
+          <div class="cam" id="camBox" hidden><video id="vid" playsinline muted></video></div>
+        </div>
+        <div>
+          <div class="row">
+            <div class="fld"><label for="dist">Distance to the object (m)</label><input id="dist" type="number" inputmode="decimal" min="0" step="any" placeholder="e.g. 20"></div>
+            <div class="fld"><label for="eye">Your eye height (m)</label><input id="eye" type="number" inputmode="decimal" min="0" step="any" value="1.5"></div>
+          </div>
+          <div class="row">
+            <div class="fld"><label for="paces">Or: number of paces</label><input id="paces" type="number" inputmode="decimal" min="0" step="any" placeholder="paces"></div>
+            <div class="fld"><label for="pace">Your pace length (m)</label><input id="pace" type="number" inputmode="decimal" min="0" step="any" placeholder="e.g. 0.7"></div>
+          </div>
+          <div class="note" style="margin:-4px 0 12px">Paces fill the distance for you. Measure your pace once by walking 10 paces on a tape and dividing by 10.</div>
+          <div class="row">
+            <div class="fld"><label for="top">Top angle (&deg;)</label><input id="top" type="number" inputmode="decimal" step="any"></div>
+            <div class="fld"><label for="base">Base angle (&deg;)</label><input id="base" type="number" inputmode="decimal" step="any" placeholder="optional"></div>
+          </div>
+          <div class="btns" style="margin:-4px 0 12px"><button class="b pri" type="button" id="capTop"><i class="fa-solid fa-crosshairs"></i> Capture top (2 s)</button><button class="b" type="button" id="capBase">Capture base</button></div>
+          <label class="chk"><input type="checkbox" id="useBase"> The base is not at my eye level on flat ground (use the base angle)</label>
+        </div>
+      </div>
+      <div class="res" id="resH" hidden>
+        <div class="big" id="hOut"></div>
+        <p id="hDet"></p>
+      </div>
+      <div class="row" style="margin-top:14px">
+        <div class="fld"><label for="lblH">Label (species, building, site)</label><input id="lblH" type="text" maxlength="60" placeholder="e.g. Mahogany, Plot 2"></div>
+        <div class="fld"><label for="noteH">Notes</label><input id="noteH" type="text" maxlength="120"></div>
+      </div>
+      <label class="chk"><input type="checkbox" id="gpsH" checked> Save my GPS location with the record</label>
+      <div class="btns"><button class="b pri" type="button" id="saveH" disabled><i class="fa-solid fa-floppy-disk"></i> Save record</button></div>
+      <div class="msg" id="msgH" role="status" aria-live="polite"></div>
+    </div>
+    <div class="panel">
+      <h2><i class="fa-solid fa-list-check"></i> How to measure</h2>
+      <ol class="steps">
+        <li>Stand on level ground and measure the distance to the foot of the tree or wall, or count paces.</li>
+        <li>Press <b>Start motion sensor</b> and allow access. Hold the phone steady with both hands.</li>
+        <li>Aim at the <b>top</b>, then press <b>Capture top</b> and keep still for two seconds.</li>
+        <li>Check the result and save it. If the ground slopes, tick the box and capture the <b>base</b> angle too.</li>
+        <li><b>45&deg; shortcut:</b> walk backwards until the angle reads 45&deg; (the box turns green). The height is then the distance to the object plus your eye height.</li>
+      </ol>
+      <p class="note">Phone angle sensors are rarely better than about a degree or two, and the stated &plusmn; assumes that. A tree leaning toward or away from you, or a top you cannot see clearly, adds error. Measure from two sides and average for better results.</p>
+    </div>
+  </section>
+
+  <!-- ============ STRIKE & DIP ============ -->
+  <section id="pS" role="tabpanel" aria-labelledby="tabS" hidden>
+    <div class="panel">
+      <h2><i class="fa-solid fa-compass"></i> Strike and dip</h2>
+      <p class="sub">Lay the phone flat, screen up, on a planar surface such as a bedding plane, joint or fault. The phone reads the surface&rsquo;s tilt and the direction it faces.</p>
+      <div class="grid2">
+        <div>
+          <div class="stat" id="sensS">Motion sensor not started</div>
+          <div class="btns" style="margin:0 0 12px"><button class="b pri" type="button" id="enS"><i class="fa-solid fa-power-off"></i> Start motion sensor</button></div>
+          <div class="live"><small>Live reading</small><div class="big" id="sdLive">--</div><div class="note" id="sdHint" style="margin-top:4px">Place the phone flat on the surface</div></div>
+          <div class="fld" style="margin-top:12px"><label for="decl">Magnetic declination (&deg;, east positive)</label><input id="decl" type="number" inputmode="decimal" step="any" value="0"><small>Phones point to magnetic north. Look up the declination for your site and enter it to get true bearings. Leave 0 for magnetic.</small></div>
+        </div>
+        <div>
+          <div class="btns" style="margin-top:0"><button class="b pri" type="button" id="capSD"><i class="fa-solid fa-crosshairs"></i> Capture (3 s)</button></div>
+          <div class="sec">Or enter by hand</div>
+          <div class="row">
+            <div class="fld"><label for="mDD">Dip direction (&deg;)</label><input id="mDD" type="number" inputmode="decimal" min="0" max="360" step="any"></div>
+            <div class="fld"><label for="mDip">Dip (&deg;)</label><input id="mDip" type="number" inputmode="decimal" min="0" max="90" step="any"></div>
+          </div>
+          <div class="btns" style="margin:-4px 0 0"><button class="b" type="button" id="useManual">Use these values</button></div>
+        </div>
+      </div>
+      <div class="res" id="resS" hidden>
+        <div class="big" id="sOut"></div>
+        <p id="sDet"></p>
+      </div>
+      <div class="row" style="margin-top:14px">
+        <div class="fld"><label for="lblS">Label (unit, outcrop, site)</label><input id="lblS" type="text" maxlength="60" placeholder="e.g. Outcrop 3, bedding"></div>
+        <div class="fld"><label for="noteS">Notes</label><input id="noteS" type="text" maxlength="120"></div>
+      </div>
+      <label class="chk"><input type="checkbox" id="gpsS" checked> Save my GPS location with the record</label>
+      <div class="btns"><button class="b pri" type="button" id="saveS" disabled><i class="fa-solid fa-floppy-disk"></i> Save record</button></div>
+      <div class="msg" id="msgS" role="status" aria-live="polite"></div>
+    </div>
+    <div class="panel">
+      <h2><i class="fa-solid fa-list-check"></i> How to measure</h2>
+      <ol class="steps">
+        <li>Press <b>Start motion sensor</b>. Keep the phone away from steel, rebar, magnets and phone-case clasps, which bend the compass.</li>
+        <li>Lay the phone flat on the rock surface with the screen facing up. The surface should be a smooth plane, not a rough bump.</li>
+        <li>Wait for the numbers to settle, then press <b>Capture</b> and keep the phone still for three seconds.</li>
+        <li>The result is shown as <b>strike/dip</b> with the dip direction, for example 045/30 SE, using the right-hand rule: looking along the strike, the surface dips to your right.</li>
+      </ol>
+      <p class="note">Compass readings on phones can be off by several degrees, and more near magnetic rocks or metal. Take several readings on the same surface and compare them in the Data tab. On iPhone the direction is less exact than on many Android phones.</p>
+    </div>
+  </section>
+
+  <!-- ============ DATA ============ -->
+  <section id="pD" role="tabpanel" aria-labelledby="tabD" hidden>
+    <div class="panel">
+      <h2><i class="fa-solid fa-table"></i> Your records</h2>
+      <p class="sub">Saved on this device only. Export to keep a copy or to share with your group.</p>
+      <div class="btns" style="margin:0 0 14px">
+        <button class="b pri" type="button" id="exCsv"><i class="fa-solid fa-file-csv"></i> Export CSV</button>
+        <button class="b" type="button" id="exGeo"><i class="fa-solid fa-map-location-dot"></i> Export GeoJSON</button>
+        <button class="b" type="button" id="imp"><i class="fa-solid fa-file-import"></i> Import CSV</button>
+        <button class="b bad" type="button" id="clr"><i class="fa-solid fa-trash"></i> Delete all</button>
+        <input type="file" id="impFile" accept=".csv,text/csv" hidden>
+      </div>
+      <div class="msg" id="msgD" role="status" aria-live="polite"></div>
+      <div class="fld" style="max-width:240px"><label for="flt">Show</label><select id="flt"><option value="all">All records</option><option value="height">Heights</option><option value="strike_dip">Strike and dip</option></select></div>
+      <div id="tbl"></div>
+    </div>
+    <div class="panel">
+      <h2><i class="fa-solid fa-chart-simple"></i> Summary statistics</h2>
+      <p class="sub">Grouped by type and label. Heights use the usual statistics. Orientations use circular statistics, because 359&deg; and 1&deg; are close together.</p>
+      <div id="stats"></div>
+    </div>
+  </section>
+</div>
+</main>
+<footer>&copy; 2026 Md Rokibul Islam Robin &middot; <a href="index.html">Back to home</a></footer>
+
+<script src="site.js"></script>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  var D2R=Math.PI/180, R2D=180/Math.PI;
+  function esc(s){ return String(s===undefined||s===null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  function num(v){ if(v===''||v===null||v===undefined) return null; var n=parseFloat(v); return isFinite(n)?n:null; }
+  function fx(x,d){ return (x===null||x===undefined||!isFinite(x))?'n/a':Number(x).toLocaleString('en',{maximumFractionDigits:d===undefined?1:d,minimumFractionDigits:0}); }
+  function mod(a,n){ return ((a%n)+n)%n; }
+  function pad3(x){ x=Math.round(mod(x,360)); if(x===360) x=0; return ('00'+x).slice(-3); }
+  var QUAD=['N','NE','E','SE','S','SW','W','NW'];
+  function quad(az){ return QUAD[Math.round(mod(az,360)/45)%8]; }
+
+  /* ---------- tabs ---------- */
+  var tabs={tabH:'pH',tabS:'pS',tabD:'pD'};
+  function showTab(id){ Object.keys(tabs).forEach(function(t){ var on=t===id; $(t).setAttribute('aria-selected',on); $(tabs[t]).hidden=!on; }); if(id==='tabD') renderData(); if(id!=='tabH') stopCam(); try{ history.replaceState(null,'','#'+({tabH:'height',tabS:'strike',tabD:'data'})[id]); }catch(e){} }
+  Object.keys(tabs).forEach(function(t){ $(t).addEventListener('click',function(){ showTab(t); }); });
+
+  /* ---------- device orientation ---------- */
+  var O={alpha:null,beta:null,gamma:null,absolute:false,have:false,compass:false,t:0}, started=false, listeners=[];
+  function onOri(e){
+    if(e.beta===null||e.beta===undefined) return;
+    var a=e.alpha;
+    if(typeof e.webkitCompassHeading==='number'&&isFinite(e.webkitCompassHeading)){ a=360-e.webkitCompassHeading; O.compass=true; }
+    else if(e.absolute===true&&a!==null&&a!==undefined) O.compass=true;
+    O.alpha=(a===null||a===undefined)?0:a; O.beta=e.beta; O.gamma=e.gamma===null?0:e.gamma; O.have=true; O.t=Date.now();
+    listeners.forEach(function(f){ f(); });
+  }
+  function startSensor(btnStatus){
+    function begin(){
+      if(!started){ started=true;
+        if('ondeviceorientationabsolute' in window) window.addEventListener('deviceorientationabsolute',function(e){ O.abs=true; onOri(e); },true);
+        window.addEventListener('deviceorientation',function(e){ if(O.abs) return; onOri(e); },true);
+      }
+      setStat('run','Waiting for the motion sensor…');
+      setTimeout(function(){ if(!O.have) setStat('bad','No motion sensor found. Use a phone, allow motion access in the browser, or type values by hand.'); else setStat('ok','Motion sensor running'+(O.compass?'':' (compass direction not available)')); },1600);
+    }
+    function setStat(c,t){ ['sensH','sensS'].forEach(function(i){ $(i).className='stat '+c; $(i).textContent=t; }); }
+    if(typeof DeviceOrientationEvent!=='undefined'&&typeof DeviceOrientationEvent.requestPermission==='function'){
+      DeviceOrientationEvent.requestPermission().then(function(r){ if(r==='granted') begin(); else setStat('bad','Motion access was refused. Allow it in Safari settings for this site.'); }).catch(function(){ setStat('bad','Could not ask for motion access.'); });
+    } else begin();
+  }
+  $('enH').addEventListener('click',startSensor); $('enS').addEventListener('click',startSensor);
+
+  /* geometry: third row of the W3C rotation matrix R = Rz(alpha) Rx(beta) Ry(gamma) gives the "up" component of each device axis */
+  function elevCam(b,g){ return Math.asin(Math.max(-1,Math.min(1,-Math.cos(b*D2R)*Math.cos(g*D2R))))*R2D; }   // back camera looks along -z
+  function elevEdge(b){ return Math.asin(Math.max(-1,Math.min(1,Math.sin(b*D2R))))*R2D; }                    // top edge is +y
+  function normal(a,b,g){ a*=D2R; b*=D2R; g*=D2R; return [Math.cos(a)*Math.sin(g)+Math.sin(a)*Math.sin(b)*Math.cos(g), Math.sin(a)*Math.sin(g)-Math.cos(a)*Math.sin(b)*Math.cos(g), Math.cos(b)*Math.cos(g)]; } // [east, north, up] of the screen normal
+  function dipFromNormal(n){ var L=Math.sqrt(n[0]*n[0]+n[1]*n[1]+n[2]*n[2]); if(!L) return null; var up=n[2]/L; if(up<0){ n=[-n[0],-n[1],-n[2]]; up=-up; } var dip=Math.acos(Math.min(1,up))*R2D, dd=mod(Math.atan2(n[0],n[1])*R2D,360); return {dip:dip,dd:dd}; }
+  function theta(){ if(!O.have) return null; return $('aim').value==='cam'?elevCam(O.beta,O.gamma):elevEdge(O.beta); }
+
+  /* ---------- clinometer ---------- */
+  var store={}; try{ store=JSON.parse(localStorage.getItem('fieldPrefs')||'{}'); }catch(e){}
+  function savePref(){ try{ localStorage.setItem('fieldPrefs',JSON.stringify(store)); }catch(e){} }
+  if(store.pace) $('pace').value=store.pace; if(store.eye) $('eye').value=store.eye; if(store.decl!==undefined) $('decl').value=store.decl;
+  $('pace').addEventListener('input',function(){ store.pace=$('pace').value; savePref(); calcDist(); });
+  $('eye').addEventListener('input',function(){ store.eye=$('eye').value; savePref(); calcH(); });
+  $('decl').addEventListener('input',function(){ store.decl=$('decl').value; savePref(); showSD(); });
+  function calcDist(){ var p=num($('paces').value), l=num($('pace').value); if(p!==null&&l!==null&&p>0&&l>0){ $('dist').value=Math.round(p*l*100)/100; calcH(); } }
+  $('paces').addEventListener('input',calcDist);
+  var angLive=$('angLive');
+  function liveH(){
+    var t=theta(); if(t===null) return; angLive.textContent=(t>=0?'+':'')+t.toFixed(1)+'°';
+    var hit=Math.abs(t-45)<=1; $('liveH').classList.toggle('hit',hit); $('angHint').textContent=hit?'45°: height = distance + eye height':'Aim at the top of the object';
+  }
+  listeners.push(liveH); $('aim').addEventListener('change',liveH);
+  function sampleFor(ms,fn){ return new Promise(function(res){ var s=[], f=function(){ var v=fn(); if(v!==null&&v!==undefined) s.push(v); }; listeners.push(f); f(); setTimeout(function(){ listeners.splice(listeners.indexOf(f),1); res(s); },ms); }); }
+  function meanSd(a){ var n=a.length, m=a.reduce(function(x,y){return x+y},0)/n, v=n>1?a.reduce(function(x,y){return x+(y-m)*(y-m)},0)/(n-1):0; return {mean:m,sd:Math.sqrt(v),n:n}; }
+  function capture(btn,target,label){
+    if(!O.have){ $('msgH').className='msg err'; $('msgH').textContent='Start the motion sensor first, or type the angle in the box.'; return; }
+    var old=btn.innerHTML; btn.disabled=true; btn.textContent='Hold still…'; $('msgH').textContent='';
+    sampleFor(2000,theta).then(function(s){ btn.disabled=false; btn.innerHTML=old; if(s.length<3){ $('msgH').className='msg err'; $('msgH').textContent='Too few readings. Check the sensor is running and try again.'; return; } var m=meanSd(s); $(target).value=m.mean.toFixed(1); $('msgH').className='msg'+(m.sd>1?' err':' ok'); $('msgH').textContent=label+' angle '+m.mean.toFixed(1)+'°, steadiness ±'+m.sd.toFixed(2)+'°'+(m.sd>1?' (the phone moved; try again for a better reading)':''); calcH(); });
+  }
+  $('capTop').addEventListener('click',function(){ capture($('capTop'),'top','Top'); });
+  $('capBase').addEventListener('click',function(){ $('useBase').checked=true; capture($('capBase'),'base','Base'); });
+  ['dist','top','base','useBase'].forEach(function(i){ $(i).addEventListener('input',calcH); $(i).addEventListener('change',calcH); });
+  var curH=null;
+  function calcH(){
+    var d=num($('dist').value), t=num($('top').value), b=num($('base').value), he=num($('eye').value), useB=$('useBase').checked;
+    curH=null; $('saveH').disabled=true; $('resH').hidden=true;
+    if(d===null||d<=0||t===null||he===null) return;
+    if(Math.abs(t)>=89){ $('resH').hidden=false; $('hOut').textContent='--'; $('hDet').textContent='The angle is too steep to give a reliable height. Move farther back.'; return; }
+    var H, dth=1.5*D2R, dd=0.05*d, dHe=0.1, sec2=function(a){ var c=Math.cos(a*D2R); return 1/(c*c); };
+    if(useB){ if(b===null||Math.abs(b)>=89) return; H=d*(Math.tan(t*D2R)-Math.tan(b*D2R)); var u=Math.sqrt(Math.pow(d*sec2(t)*dth,2)+Math.pow(d*sec2(b)*dth,2)+Math.pow((Math.tan(t*D2R)-Math.tan(b*D2R))*dd,2)); curH={H:H,u:u,mode:'base'}; }
+    else { H=d*Math.tan(t*D2R)+he; var u2=Math.sqrt(Math.pow(d*sec2(t)*dth,2)+Math.pow(Math.tan(t*D2R)*dd,2)+dHe*dHe); curH={H:H,u:u2,mode:'eye'}; }
+    if(!(H>0)){ $('resH').hidden=false; $('hOut').textContent='--'; $('hDet').textContent='The result is not positive. Check that the top angle is above the horizon and the distance is right.'; return; }
+    $('resH').hidden=false; $('hOut').textContent=fx(H,1)+' m';
+    $('hDet').textContent='± about '+fx(curH.u,1)+' m. '+(useB?'Height = distance × (tan top angle − tan base angle).':'Height = distance × tan(top angle) + eye height.')+' Assumes the angle is within 1.5°, the distance within 5% and eye height within 0.1 m.';
+    $('saveH').disabled=false;
+  }
+
+  /* ---------- camera preview ---------- */
+  var stream=null;
+  function stopCam(){ if(stream){ stream.getTracks().forEach(function(t){ t.stop(); }); stream=null; } $('vid').srcObject=null; $('camBox').hidden=true; }
+  $('camBtn').addEventListener('click',function(){
+    if(stream){ stopCam(); return; }
+    if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){ $('msgH').className='msg err'; $('msgH').textContent='This browser cannot show the camera. Sight along the top edge instead.'; return; }
+    navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false}).then(function(s){ stream=s; $('vid').srcObject=s; $('vid').play(); $('camBox').hidden=false; $('aim').value='cam'; }).catch(function(){ $('msgH').className='msg err'; $('msgH').textContent='Camera access was refused. You can still sight along the top edge of the phone.'; });
+  });
+  document.addEventListener('visibilitychange',function(){ if(document.hidden) stopCam(); });
+
+  /* ---------- strike and dip ---------- */
+  var curS=null, nbuf=null;
+  function decl(){ var d=num($('decl').value); return d===null?0:d; }
+  function sdFrom(dd,dip){ var d=decl(), ddT=mod(dd+d,360), st=mod(ddT-90,360); return {dd:ddT,dip:dip,strike:st,quad:quad(ddT)}; }
+  function showSD(){
+    if(!O.have){ return; }
+    var r=dipFromNormal(normal(O.alpha,O.beta,O.gamma)); if(!r) return;
+    if(r.dip<2){ $('sdLive').textContent='flat'; $('sdHint').textContent='Dip is almost zero, so the direction is not defined'; return; }
+    var s=sdFrom(r.dd,r.dip); $('sdLive').textContent=pad3(s.strike)+'/'+Math.round(s.dip)+' '+s.quad; $('sdHint').textContent=O.compass?'Strike/dip and dip direction '+pad3(s.dd)+'°':'No compass on this device: the dip angle is valid, the direction is not';
+  }
+  listeners.push(showSD);
+  function setS(s,extra){ curS=s; $('resS').hidden=false; $('saveS').disabled=false; $('sOut').textContent=pad3(s.strike)+'/'+Math.round(s.dip)+' '+s.quad;
+    $('sDet').textContent='Strike '+pad3(s.strike)+'°, dip '+fx(s.dip,0)+'° toward '+s.quad+' (dip direction '+pad3(s.dd)+'°). '+(decl()?'Declination '+fx(decl(),1)+'° applied. ':'Magnetic bearings (no declination applied). ')+(extra||''); }
+  $('capSD').addEventListener('click',function(){
+    if(!O.have){ $('msgS').className='msg err'; $('msgS').textContent='Start the motion sensor first, or enter the values by hand.'; return; }
+    var b=$('capSD'), old=b.innerHTML; b.disabled=true; b.textContent='Hold still…'; $('msgS').textContent='';
+    sampleFor(3000,function(){ return normal(O.alpha,O.beta,O.gamma); }).then(function(s){
+      b.disabled=false; b.innerHTML=old; if(s.length<3){ $('msgS').className='msg err'; $('msgS').textContent='Too few readings. Check the sensor is running and try again.'; return; }
+      var sum=[0,0,0]; s.forEach(function(n){ var L=Math.sqrt(n[0]*n[0]+n[1]*n[1]+n[2]*n[2]); if(n[2]<0) L=-L; sum[0]+=n[0]/L; sum[1]+=n[1]/L; sum[2]+=n[2]/L; });
+      var r=dipFromNormal(sum); if(!r||r.dip<2){ $('msgS').className='msg err'; $('msgS').textContent='The surface is almost flat (dip under 2°), so strike is not defined.'; return; }
+      var spread=Math.max.apply(null,s.map(function(n){ var q=dipFromNormal(n); return q?Math.abs(q.dip-r.dip):0; }));
+      var o=sdFrom(r.dd,r.dip); setS(o,'Dip varied by ±'+spread.toFixed(1)+'° while capturing.'+(O.compass?'':' No compass found, so the direction is unreliable.'));
+      $('msgS').className='msg'+(spread>2?' err':' ok'); $('msgS').textContent=spread>2?'The phone moved. Hold it still and capture again.':'Captured.';
+    });
+  });
+  $('useManual').addEventListener('click',function(){ var dd=num($('mDD').value), dip=num($('mDip').value); if(dd===null||dip===null||dip<0||dip>90||dd<0||dd>360){ $('msgS').className='msg err'; $('msgS').textContent='Enter a dip direction from 0 to 360 and a dip from 0 to 90.'; return; } var s={dd:mod(dd,360),dip:dip,strike:mod(dd-90,360),quad:quad(dd)}; setS(s,'Entered by hand, no declination applied.'); $('msgS').textContent=''; });
+
+  /* ---------- records ---------- */
+  var COLS=['id','time','type','label','latitude','longitude','gps_accuracy_m','height_m','height_uncertainty_m','distance_m','eye_height_m','angle_top_deg','angle_base_deg','strike_deg','dip_deg','dip_direction_deg','dip_quadrant','declination_deg','notes'];
+  var recs=[]; try{ recs=JSON.parse(localStorage.getItem('fieldRecords')||'[]'); if(!Array.isArray(recs)) recs=[]; }catch(e){ recs=[]; }
+  function persist(){ try{ localStorage.setItem('fieldRecords',JSON.stringify(recs)); }catch(e){ return false; } return true; }
+  function uid(){ return 'r'+Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
+  function updCnt(){ $('cnt').textContent=recs.length; }
+  function getGps(use){
+    return new Promise(function(res){ if(!use||!navigator.geolocation){ res({}); return; }
+      navigator.geolocation.getCurrentPosition(function(p){ res({latitude:+p.coords.latitude.toFixed(6),longitude:+p.coords.longitude.toFixed(6),gps_accuracy_m:Math.round(p.coords.accuracy)}); },function(){ res({}); },{enableHighAccuracy:true,timeout:9000,maximumAge:15000}); });
+  }
+  function addRec(base,msgEl,btn){
+    var old=btn.innerHTML; btn.disabled=true; btn.textContent='Saving…';
+    return getGps(base._gps).then(function(g){
+      delete base._gps; var r=Object.assign({id:uid(),time:new Date().toISOString()},base,g); recs.push(r); var ok=persist(); updCnt();
+      msgEl.className='msg '+(ok?'ok':'err'); msgEl.textContent=ok?('Saved. '+recs.length+' record'+(recs.length>1?'s':'')+' on this device'+(g.latitude!==undefined?', with location.':(base._noGps?'.':'. No GPS fix, so it was saved without a location.'))):'Saved for now, but this browser would not store it. Export your data soon.';
+      btn.innerHTML=old; btn.disabled=false;
+    });
+  }
+  $('saveH').addEventListener('click',function(){
+    if(!curH) return; var t=num($('top').value), b=num($('base').value);
+    addRec({_gps:$('gpsH').checked,type:'height',label:$('lblH').value.trim(),height_m:+curH.H.toFixed(2),height_uncertainty_m:+curH.u.toFixed(2),distance_m:num($('dist').value),eye_height_m:num($('eye').value),angle_top_deg:t,angle_base_deg:$('useBase').checked?b:null,notes:$('noteH').value.trim()},$('msgH'),$('saveH'));
+  });
+  $('saveS').addEventListener('click',function(){
+    if(!curS) return; addRec({_gps:$('gpsS').checked,type:'strike_dip',label:$('lblS').value.trim(),strike_deg:+curS.strike.toFixed(1),dip_deg:+curS.dip.toFixed(1),dip_direction_deg:+curS.dd.toFixed(1),dip_quadrant:curS.quad,declination_deg:decl(),notes:$('noteS').value.trim()},$('msgS'),$('saveS'));
+  });
+
+  /* ---------- table ---------- */
+  function resultText(r){ if(r.type==='height') return fx(r.height_m,1)+' m'+(r.height_uncertainty_m!==null&&r.height_uncertainty_m!==undefined?' (±'+fx(r.height_uncertainty_m,1)+')':''); return pad3(r.strike_deg)+'/'+Math.round(r.dip_deg)+' '+(r.dip_quadrant||''); }
+  function renderData(){
+    updCnt(); var f=$('flt').value, rows=recs.filter(function(r){ return f==='all'||r.type===f; });
+    if(!recs.length){ $('tbl').innerHTML='<div class="empty">No records yet. Take a measurement in the Height or Strike &amp; dip tab and press Save, or import a CSV.</div>'; $('stats').innerHTML='<div class="empty">Statistics appear when you have records.</div>'; return; }
+    $('tbl').innerHTML='<div class="scroll"><table><thead><tr><th>#</th><th>Time</th><th>Type</th><th>Label</th><th>Result</th><th>Location</th><th><span class="sr">Delete</span></th></tr></thead><tbody>'+rows.slice().reverse().map(function(r){ var i=recs.indexOf(r);
+      return '<tr><td class="n">'+(i+1)+'</td><td>'+esc((r.time||'').slice(0,16).replace('T',' '))+'</td><td><span class="tag">'+(r.type==='height'?'Height':'Strike/dip')+'</span></td><td>'+esc(r.label)+'</td><td>'+esc(resultText(r))+'</td><td>'+(r.latitude!==undefined&&r.latitude!==null&&r.latitude!==''?esc(fx(r.latitude,5)+', '+fx(r.longitude,5)):'–')+'</td><td><button class="b bad" style="padding:4px 10px" type="button" data-id="'+esc(r.id)+'" aria-label="Delete record '+(i+1)+'"><i class="fa-solid fa-xmark"></i></button></td></tr>'; }).join('')+'</tbody></table></div>';
+    renderStats();
+  }
+  $('tbl').addEventListener('click',function(e){ var b=e.target.closest('button[data-id]'); if(!b) return; recs=recs.filter(function(r){ return r.id!==b.getAttribute('data-id'); }); persist(); renderData(); });
+  $('flt').addEventListener('change',renderData);
+  $('clr').addEventListener('click',function(){ if(!recs.length) return; if(window.confirm('Delete all '+recs.length+' records from this device? Export first if you need them.')){ recs=[]; persist(); renderData(); $('msgD').textContent=''; } });
+
+  /* ---------- statistics ---------- */
+  function median(a){ var s=a.slice().sort(function(x,y){return x-y}), m=Math.floor(s.length/2); return s.length%2?s[m]:(s[m-1]+s[m])/2; }
+  function circ(a){ var s=0,c=0; a.forEach(function(x){ s+=Math.sin(x*D2R); c+=Math.cos(x*D2R); }); var n=a.length, R=Math.sqrt(s*s+c*c)/n; return {mean:mod(Math.atan2(s,c)*R2D,360),R:R,sd:R>0?Math.sqrt(-2*Math.log(R))*R2D:null}; }
+  function renderStats(){
+    var groups={}; recs.forEach(function(r){ var k=r.type+'||'+(r.label||'(no label)'); (groups[k]=groups[k]||[]).push(r); });
+    var hKeys=Object.keys(groups).filter(function(k){ return k.indexOf('height')===0; }).sort(), sKeys=Object.keys(groups).filter(function(k){ return k.indexOf('strike_dip')===0; }).sort(), html='';
+    if(hKeys.length){ html+='<div class="sec">Heights (m)</div><div class="scroll"><table><thead><tr><th>Label</th><th class="n">n</th><th class="n">Mean</th><th class="n">Median</th><th class="n">Std dev</th><th class="n">Min</th><th class="n">Max</th></tr></thead><tbody>'+hKeys.map(function(k){ var v=groups[k].map(function(r){return +r.height_m}).filter(isFinite), m=v.length?meanSd(v):null; if(!m) return ''; return '<tr><td>'+esc(k.split('||')[1])+'</td><td class="n">'+m.n+'</td><td class="n">'+fx(m.mean,2)+'</td><td class="n">'+fx(median(v),2)+'</td><td class="n">'+(m.n>1?fx(m.sd,2):'n/a')+'</td><td class="n">'+fx(Math.min.apply(null,v),2)+'</td><td class="n">'+fx(Math.max.apply(null,v),2)+'</td></tr>'; }).join('')+'</tbody></table></div>'; }
+    if(sKeys.length){ html+='<div class="sec">Strike and dip</div><div class="scroll"><table><thead><tr><th>Label</th><th class="n">n</th><th class="n">Mean dip dir.</th><th class="n">Mean strike</th><th class="n">Mean dip</th><th class="n">Dip std dev</th><th class="n">Direction spread (R)</th></tr></thead><tbody>'+sKeys.map(function(k){ var g=groups[k], dd=g.map(function(r){return +r.dip_direction_deg}).filter(isFinite), dp=g.map(function(r){return +r.dip_deg}).filter(isFinite); if(!dd.length||!dp.length) return ''; var c=circ(dd), m=meanSd(dp);
+      return '<tr><td>'+esc(k.split('||')[1])+'</td><td class="n">'+g.length+'</td><td class="n">'+pad3(c.mean)+'° '+quad(c.mean)+'</td><td class="n">'+pad3(c.mean-90)+'°</td><td class="n">'+fx(m.mean,1)+'°</td><td class="n">'+(m.n>1?fx(m.sd,1)+'°':'n/a')+'</td><td class="n">'+fx(c.R,2)+'</td></tr>'; }).join('')+'</tbody></table></div><p class="note">R runs from 0 to 1. Close to 1 means the directions agree; near 0 means they are scattered. The mean direction is only meaningful when the planes dip the same general way.</p>'; }
+    $('stats').innerHTML=html||'<div class="empty">No complete records to summarise.</div>';
+  }
+
+  /* ---------- import / export ---------- */
+  function dl(name,text,type){ var a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([text],{type:type})); a.download=name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(function(){ URL.revokeObjectURL(a.href); },4000); }
+  function csvq(v){ if(v===null||v===undefined) return ''; var s=String(v); if(/^[=+\-@\t\r]/.test(s)&&isNaN(Number(s))) s="'"+s; return /[",\r\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s; }
+  function stamp(){ return new Date().toISOString().slice(0,10); }
+  $('exCsv').addEventListener('click',function(){ if(!recs.length){ say('Nothing to export yet.',true); return; } dl('field-records-'+stamp()+'.csv','﻿'+COLS.join(',')+'\r\n'+recs.map(function(r){ return COLS.map(function(c){ return csvq(r[c]); }).join(','); }).join('\r\n'),'text/csv'); say('CSV exported.'); });
+  $('exGeo').addEventListener('click',function(){
+    var pts=recs.filter(function(r){ return isFinite(parseFloat(r.latitude))&&isFinite(parseFloat(r.longitude)); });
+    if(!pts.length){ say('No records have a GPS location, so there are no points to export.',true); return; }
+    dl('field-records-'+stamp()+'.geojson',JSON.stringify({type:'FeatureCollection',features:pts.map(function(r){ var p={}; COLS.forEach(function(c){ if(c!=='latitude'&&c!=='longitude'&&r[c]!==null&&r[c]!==undefined&&r[c]!=='') p[c]=r[c]; }); return {type:'Feature',properties:p,geometry:{type:'Point',coordinates:[+r.longitude,+r.latitude]}}; })}),'application/geo+json'); say(pts.length+' point'+(pts.length>1?'s':'')+' exported'+(pts.length<recs.length?' ('+(recs.length-pts.length)+' without GPS left out)':'')+'.');
+  });
+  function say(t,err){ $('msgD').className='msg'+(err?' err':' ok'); $('msgD').textContent=t; }
+  function parseCsv(t){
+    t=t.replace(/^﻿/,''); var rows=[],row=[],f='',q=false,i,c;
+    for(i=0;i<t.length;i++){ c=t[i]; if(q){ if(c==='"'){ if(t[i+1]==='"'){ f+='"'; i++; } else q=false; } else f+=c; } else if(c==='"') q=true; else if(c===','){ row.push(f); f=''; } else if(c==='\n'||c==='\r'){ if(c==='\r'&&t[i+1]==='\n') i++; row.push(f); f=''; if(row.length>1||row[0]!=='') rows.push(row); row=[]; } else f+=c; }
+    if(f!==''||row.length){ row.push(f); rows.push(row); } return rows;
+  }
+  $('imp').addEventListener('click',function(){ $('impFile').click(); });
+  $('impFile').addEventListener('change',function(e){
+    var fl=e.target.files[0]; e.target.value=''; if(!fl) return; if(fl.size>5*1024*1024){ say('That file is larger than 5 MB.',true); return; }
+    fl.text().then(function(t){
+      var rows=parseCsv(t); if(rows.length<2) throw new Error('empty'); var h=rows[0].map(function(x){ return x.trim().toLowerCase(); });
+      if(h.indexOf('type')<0) throw new Error('type'); var have={}; recs.forEach(function(r){ have[r.id]=1; }); var added=0, skipped=0, NUMC=['latitude','longitude','gps_accuracy_m','height_m','height_uncertainty_m','distance_m','eye_height_m','angle_top_deg','angle_base_deg','strike_deg','dip_deg','dip_direction_deg','declination_deg'];
+      rows.slice(1).forEach(function(row){ var r={}; COLS.forEach(function(c){ var ix=h.indexOf(c); if(ix>=0&&row[ix]!==undefined&&row[ix]!==''){ r[c]=NUMC.indexOf(c)>=0?parseFloat(row[ix]):row[ix].replace(/^'/,''); if(NUMC.indexOf(c)>=0&&!isFinite(r[c])) delete r[c]; } });
+        if(r.type!=='height'&&r.type!=='strike_dip'){ skipped++; return; }
+        if(r.type==='height'&&!isFinite(r.height_m)){ skipped++; return; }
+        if(r.type==='strike_dip'&&(!isFinite(r.dip_deg)||!isFinite(r.dip_direction_deg))){ skipped++; return; }
+        if(r.type==='strike_dip'&&!isFinite(r.strike_deg)) r.strike_deg=mod(r.dip_direction_deg-90,360);
+        if(r.type==='strike_dip'&&!r.dip_quadrant) r.dip_quadrant=quad(r.dip_direction_deg);
+        if(!r.id||have[r.id]){ if(r.id&&have[r.id]){ skipped++; return; } r.id=uid(); } have[r.id]=1; if(!r.time) r.time=new Date().toISOString(); r.label=r.label||''; r.notes=r.notes||''; recs.push(r); added++; });
+      persist(); renderData(); say('Imported '+added+' record'+(added===1?'':'s')+(skipped?'; skipped '+skipped+' (invalid or already here)':'')+'.',!added);
+    }).catch(function(){ say('Could not read that file. Use a CSV exported from this page, with a "type" column of height or strike_dip.',true); });
+  });
+
+  /* ---------- start ---------- */
+  var hash=(location.hash||'').replace('#',''); if(hash==='strike') showTab('tabS'); else if(hash==='data') showTab('tabD'); else updCnt();
+  window.__fn={elevCam:elevCam,elevEdge:elevEdge,normal:normal,dipFromNormal:dipFromNormal};
+})();
+</script>
+</body>
+</html>
