@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Earth Engine Analyzer | ESE Research Hub</title>
+<meta name="description" content="Choose any area in Bangladesh and get Google Earth Engine vegetation, land surface temperature, NO2, rainfall, land cover, surface water and elevation, with charts, map layers and CSV download.">
+<meta name="theme-color" content="#0E2A2F">
+<link rel="canonical" href="https://mdrokibul.me/ee-analyzer.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ESE Research Hub">
+<meta property="og:url" content="https://mdrokibul.me/ee-analyzer.html">
+<meta property="og:title" content="Earth Engine Analyzer">
+<meta property="og:description" content="Satellite analysis of any area in Bangladesh using your own Google Earth Engine account.">
+<meta property="og:image" content="https://mdrokibul.me/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Earth Engine Analyzer">
+<meta name="twitter:description" content="Satellite analysis of any area in Bangladesh using your own Google Earth Engine account.">
+<meta name="twitter:image" content="https://mdrokibul.me/og-image.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":["WebPage","WebApplication"],"name":"Earth Engine Analyzer","url":"https://mdrokibul.me/ee-analyzer.html","description":"Satellite analysis of vegetation, temperature, NO2, rainfall, land cover, water and elevation using Google Earth Engine.","applicationCategory":"EducationalApplication","operatingSystem":"Any","inLanguage":"en","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"isPartOf":{"@type":"WebSite","name":"ESE Research Hub","url":"https://mdrokibul.me/"},"author":{"@type":"Person","name":"Md Rokibul Islam Robin","url":"https://mdrokibul.me/about.html"}}</script>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="nav.css">
+<link rel="stylesheet" href="site.css">
+<style>
+main{padding:0 0 56px}
+[hidden]{display:none!important}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:clamp(18px,3vw,28px);box-shadow:0 10px 30px rgba(0,0,0,.09);margin-top:18px}
+.panel h2{font-size:1.25rem;font-weight:800;margin-bottom:6px;display:flex;gap:10px;align-items:center}
+.panel h2 i{color:var(--river)}
+.sub{font-size:.97rem;color:var(--ink-soft);margin-bottom:14px}
+.tabs{display:flex;gap:6px;margin-top:-24px;position:relative;z-index:2;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px;box-shadow:0 10px 30px rgba(0,0,0,.1)}
+.tabs button{flex:1;font:700 .95rem var(--display);padding:11px 8px;border-radius:999px;border:0;background:transparent;color:var(--ink);cursor:pointer;display:inline-flex;gap:8px;align-items:center;justify-content:center}
+.tabs button[aria-selected=true]{background:var(--river);color:#fff}
+.tabs .cnt{font-size:.75rem;background:rgba(255,255,255,.22);padding:1px 8px;border-radius:999px}
+.tabs button:not([aria-selected=true]) .cnt{background:var(--mist);color:var(--ink-soft)}
+@media (max-width:520px){.tabs button span.t{display:none}.tabs button{font-size:.85rem}}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:860px){.grid2{grid-template-columns:1fr}}
+.grid2>*{min-width:0}
+.fld{display:grid;gap:5px;margin-bottom:12px}
+.fld label{font:700 .8rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em}
+.fld input,.fld select,.fld textarea{font:inherit;font-size:1.05rem;width:100%;padding:11px 13px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink);font-variant-numeric:tabular-nums}
+.fld input:focus,.fld select:focus,.fld textarea:focus{outline:none;border-color:var(--river)}
+.fld small{font-size:.85rem;color:var(--ink-soft)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.b{font:700 .95rem var(--display);padding:11px 18px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;display:inline-flex;gap:8px;align-items:center;justify-content:center}
+.b:hover{background:var(--mist)}.b.pri{background:var(--river);border-color:var(--river);color:#fff}.b.pri:hover{background:#27818b}
+.b.bad{color:var(--bad)}.b[disabled]{opacity:.45;cursor:not-allowed}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.big{font:800 clamp(2.6rem,9vw,3.8rem)/1 var(--display);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.live{padding:16px;border-radius:18px;background:var(--mist);border:2px solid var(--line);text-align:center}
+.live small{display:block;font:700 .8rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.live.hit{border-color:var(--good);background:color-mix(in srgb,var(--good) 14%,var(--mist))}
+.stat{font-size:.92rem;color:var(--ink-soft);margin:10px 0;display:flex;gap:8px;align-items:center}
+.stat::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--line);flex:none}
+.stat.ok::before{background:var(--good)}.stat.run::before{background:var(--warn)}.stat.bad::before{background:var(--bad)}
+.cam{position:relative;border-radius:16px;overflow:hidden;background:#000;aspect-ratio:3/4;max-height:420px;margin:12px auto 0;max-width:340px}
+.cam video{width:100%;height:100%;object-fit:cover}
+.cam::before,.cam::after{content:"";position:absolute;background:rgba(255,255,255,.85);z-index:2}
+.cam::before{left:50%;top:0;bottom:0;width:2px;margin-left:-1px}.cam::after{top:50%;left:0;right:0;height:2px;margin-top:-1px}
+.res{margin-top:14px;padding:16px;border-radius:16px;border:2px solid var(--river);background:color-mix(in srgb,var(--river) 8%,var(--card))}
+.res .big{color:var(--river)}
+.res p{margin-top:6px;font-size:.95rem;color:var(--ink-soft)}
+.steps{padding-left:1.2em;color:var(--ink-soft);font-size:.98rem}.steps li+li{margin-top:.5em}
+.msg{min-height:1.3em;font-size:.95rem;margin-top:8px}.msg.err{color:var(--bad);font-weight:600}.msg.ok{color:var(--good);font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th,td{text-align:left;padding:8px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:700 .74rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.scroll{overflow-x:auto}
+.tag{display:inline-block;padding:2px 9px;border-radius:999px;font:700 .75rem var(--display);background:var(--mist);border:1px solid var(--line)}
+.sec{font:800 .85rem var(--display);text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);margin:20px 0 8px}
+.empty{padding:26px;text-align:center;color:var(--ink-soft);border:2px dashed var(--line);border-radius:16px}
+.chk{display:flex;gap:9px;align-items:center;margin:6px 0;font-size:.98rem}.chk input{width:18px;height:18px;accent-color:var(--river)}
+.note{font-size:.88rem;color:var(--ink-soft);margin-top:10px;line-height:1.45}
+.sr{position:absolute;left:-999px}
+.bar{height:8px;border-radius:99px;background:var(--mist);overflow:hidden;min-width:70px}.bar i{display:block;height:100%;background:var(--good)}.bar i.w{background:var(--warn)}.bar i.x{background:var(--bad)}
+.ok{color:var(--good);font-weight:700}.no{color:var(--bad);font-weight:700}
+.params{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:0 14px}
+#map{height:min(58vh,460px);border-radius:16px;border:1px solid var(--line);margin-top:14px;background:var(--mist)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-top:14px}
+.kpi{padding:12px;border-radius:14px;background:var(--mist);border:1px solid var(--line);text-align:center}
+.kpi small{display:block;font:700 .72rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em}
+.kpi b{font:800 1.5rem var(--display);font-variant-numeric:tabular-nums}
+.rec{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--bad);margin-right:6px;animation:pl 1.2s infinite}
+@keyframes pl{50%{opacity:.25}}
+.tabs2{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 14px}.tabs2 .b.on{background:var(--river);border-color:var(--river);color:#fff}
+.checks{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:2px 14px;margin:10px 0}
+.cv{position:relative;height:260px;margin-top:14px}
+.lyr{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;margin-top:12px}.op{font-size:.92rem;display:flex;gap:8px;align-items:center}
+.leg{display:flex;align-items:center;gap:8px;font-size:.8rem;color:var(--ink-soft);margin-top:6px}.leg i{display:block;height:10px;width:140px;border-radius:99px}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:8px;border:1px solid var(--line);vertical-align:-1px}
+details summary{cursor:pointer;padding:6px 0}details p{margin:4px 0 10px;line-height:1.5}
+</style>
+</head>
+<body>
+<div class="progress" id="progress" aria-hidden="true"></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav" id="nav" data-solid>
+  <div class="wrap">
+    <a class="brand" href="index.html">ESE Research<span> Hub</span></a>
+    <nav class="links" id="links" aria-label="Main">
+      <div class="dd cur"><button class="dd-btn" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="toolsMenu">Tools <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="dd-menu" id="toolsMenu"><a href="portal.html"><i class="fa-solid fa-building-columns" aria-hidden="true"></i><span><b>JKKNIU &amp; ESE Portal</b><small>Official links in one place</small></span></a><a href="library.html"><i class="fa-solid fa-folder-open" aria-hidden="true"></i><span><b>Batch Library</b><small>Shared ESE study materials</small></span></a><a href="sound-meter.html"><i class="fa-solid fa-ear-listen" aria-hidden="true"></i><span><b>Sound Level Meter</b><small>Measure noise with your phone</small></span></a><a href="soil-texture.html"><i class="fa-solid fa-layer-group" aria-hidden="true"></i><span><b>Soil Texture Triangle</b><small>Plot sand, silt and clay</small></span></a><a href="rock-cycle.html"><i class="fa-solid fa-gem" aria-hidden="true"></i><span><b>Rock Cycle Simulator</b><small>Weathering to metamorphism</small></span></a><a href="gis-map.html"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i><span><b>GIS Area Explorer</b><small>Boundary, topography, pollution</small></span></a><a href="ee-analyzer.html" class="on" aria-current="page"><i class="fa-solid fa-person-hiking" aria-hidden="true"></i><span><b>Field Notebook</b><small>Phone-only field measurements</small></span></a><a href="weather.html"><i class="fa-solid fa-cloud-sun-rain" aria-hidden="true"></i><span><b>EcoLens Weather</b><small>Your photo plus live weather and rain chance</small></span></a><a href="atmosphere-sim.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Atmosphere Simulator</b><small>Three-cell circulation model</small></span></a></div></div>
+      <a href="about.html">About</a>
+      <a href="about.html#contact">Contact</a>
+    </nav>
+    <div class="tools">
+      <button class="icon-btn" id="theme" type="button" aria-label="Switch to dark theme"><i class="fa-solid fa-moon"></i></button>
+      <button class="icon-btn burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="links"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</header>
+<div class="page-hero">
+  <div class="wrap">
+    <h1>Earth Engine analyzer</h1>
+    <p>Pick any area in Bangladesh, or draw your own, and get satellite-based vegetation, heat, air pollution, rainfall, land cover, surface water and elevation from Google Earth Engine. It uses your own Google login, so nothing is stored on this website.</p>
+  </div>
+</div>
+<main id="main">
+<div class="wrap">
+
+  <div class="panel" style="margin-top:-24px;position:relative;z-index:2">
+    <h2><i class="fa-solid fa-plug"></i> 1. Connect to Earth Engine</h2>
+    <div class="stat" id="auSt" role="status" aria-live="polite">Not connected</div>
+    <div class="grid2">
+      <div class="fld"><label for="proj">Your Google Cloud project ID</label><input id="proj" type="text" autocomplete="off" spellcheck="false" placeholder="e.g. my-ee-project"><small>A project registered for Earth Engine (non-commercial use is free). Each student uses their own.</small></div>
+      <div class="fld" id="cidBox" hidden><label for="cid">OAuth client ID</label><input id="cid" type="text" autocomplete="off" spellcheck="false" placeholder="xxxx.apps.googleusercontent.com"><small>Only needed if the site owner has not set one.</small></div>
+    </div>
+    <div class="btns"><button class="b pri" type="button" id="conn"><i class="fa-brands fa-google"></i> Sign in with Google</button></div>
+    <div class="msg" id="auMsg" role="alert"></div>
+    <details class="note"><summary><b>First time? How to get access (about 10 minutes)</b></summary>
+      <ol class="steps">
+        <li>Register for Earth Engine at <a href="https://earthengine.google.com/signup/" target="_blank" rel="noopener">earthengine.google.com/signup</a> and choose non-commercial use (research, education).</li>
+        <li>In the <a href="https://console.cloud.google.com/" target="_blank" rel="noopener">Google Cloud Console</a>, create or pick a project and register it for Earth Engine. Copy its <b>project ID</b> into the box above.</li>
+        <li>Enable the <b>Earth Engine API</b> for that project.</li>
+        <li>Come back here, press <b>Sign in with Google</b> and allow access.</li>
+      </ol>
+      <p class="note">If sign-in fails with "origin not allowed", the site owner must add this site's address as an authorised JavaScript origin on the OAuth client.</p>
+    </details>
+  </div>
+
+  <div class="panel">
+    <h2><i class="fa-solid fa-draw-polygon"></i> 2. Choose the area</h2>
+    <div class="tabs2" role="tablist" aria-label="Area source">
+      <button type="button" class="b on" data-m="admin" role="tab" aria-selected="true">Division / district</button>
+      <button type="button" class="b" data-m="draw" role="tab" aria-selected="false">Draw on map</button>
+      <button type="button" class="b" data-m="file" role="tab" aria-selected="false">Upload GeoJSON</button>
+    </div>
+    <div id="mAdmin" class="mode">
+      <div class="grid2">
+        <div class="fld"><label for="div">Division</label><select id="div" disabled><option>Connect first</option></select></div>
+        <div class="fld"><label for="dis">District</label><select id="dis" disabled><option>Choose a division</option></select></div>
+      </div>
+      <div class="btns" style="margin-top:0"><button class="b pri" type="button" id="useAdm" disabled><i class="fa-solid fa-check"></i> Use this area</button></div>
+    </div>
+    <div id="mDraw" class="mode" hidden>
+      <p class="sub">Click the map to add corners. Finish when you have at least three.</p>
+      <div class="btns" style="margin-top:0"><button class="b" type="button" id="dUndo">Undo corner</button><button class="b pri" type="button" id="dDone">Finish shape</button><button class="b" type="button" id="dClr">Clear</button></div>
+    </div>
+    <div id="mFile" class="mode" hidden>
+      <div class="fld"><label for="gjf">GeoJSON file (Polygon or MultiPolygon, up to 2 MB)</label><input id="gjf" type="file" accept=".geojson,.json,application/geo+json,application/json"></div>
+    </div>
+    <div class="msg" id="arMsg" role="status"></div>
+    <div id="map" role="region" aria-label="Map"></div>
+    <div class="note" id="arInfo">No area selected yet. Largest area allowed: 20,000 km².</div>
+  </div>
+
+  <div class="panel">
+    <h2><i class="fa-solid fa-sliders"></i> 3. Choose analyses and dates</h2>
+    <div class="grid2">
+      <div class="fld"><label for="d0">Start date</label><input id="d0" type="date"></div>
+      <div class="fld"><label for="d1">End date</label><input id="d1" type="date"></div>
+    </div>
+    <div class="checks" id="picks"></div>
+    <div class="fld" style="max-width:260px"><label for="occ">Surface-water occurrence threshold (%)</label><input id="occ" type="number" min="1" max="100" value="50"></div>
+    <div class="btns"><button class="b pri" type="button" id="run" disabled><i class="fa-solid fa-satellite"></i> Run analysis</button></div>
+    <div class="msg" id="runMsg" role="status"></div>
+  </div>
+
+  <div id="cards"></div>
+
+  <div class="panel">
+    <h2><i class="fa-solid fa-circle-info"></i> How these numbers are made</h2>
+    <div class="note" id="about"></div>
+  </div>
+  <p class="note" style="margin-bottom:0">Data: Google Earth Engine; contains modified Copernicus Sentinel data; NASA/USGS MODIS; UCSB Climate Hazards Group CHIRPS; ESA WorldCover; European Commission JRC Global Surface Water; USGS/NASA SRTM; FAO GAUL boundaries; map © OpenStreetMap contributors. Results are satellite estimates for learning and screening, not regulatory measurements.</p>
+</div>
+</main>
+<footer>&copy; 2026 Md Rokibul Islam Robin &middot; <a href="index.html">Back to home</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@google/earthengine@1.7.45/build/ee_api_js.js"></script>
+<script src="site.js"></script>
+<script>
+(function(){
+'use strict';
+// Site owner: paste the OAuth Web client ID here (it is public, not a secret). Leave as is to let users type their own.
+var OAUTH_CLIENT_ID='PASTE_CLIENT_ID_HERE';
+var MAX_KM2=20000,KEY='eeAnalyzer1';
+var $=function(i){return document.getElementById(i)};
+function esc(t){return String(t==null?'':t).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function prefs(){try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){return{}}}
+function setPrefs(o){try{var p=prefs();for(var k in o)p[k]=o[k];localStorage.setItem(KEY,JSON.stringify(p))}catch(e){}}
+function say(id,txt,cls){var n=$(id);n.className='msg'+(cls?' '+cls:'');n.textContent=txt}
+function errText(e){return (e&&e.message)?e.message:String(e||'Unknown error')}
+
+var S={ready:false,geom:null,gj:null,km2:0,mode:'admin',pts:[],charts:{},layers:{},data:{}};
+
+/* ---------- datasets (verify IDs, bands and scales in the Earth Engine catalogue) ---------- */
+var WC=[[10,'Tree cover','006400'],[20,'Shrubland','ffbb22'],[30,'Grassland','ffff4c'],[40,'Cropland','f096ff'],[50,'Built-up','fa0000'],[60,'Bare / sparse vegetation','b4b4b4'],[70,'Snow and ice','f0f0f0'],[80,'Permanent water bodies','0064c8'],[90,'Herbaceous wetland','0096a0'],[95,'Mangroves','00cf75'],[100,'Moss and lichen','fae6a0']];
+function series(c,imgFn,band,scale){
+  return ee.FeatureCollection(ee.List.sequence(0,c.n-1).map(function(i){
+    var s=c.d0.advance(i,'month'),e=s.advance(1,'month');
+    var v=imgFn(s,e).reduceRegion({reducer:ee.Reducer.mean(),geometry:c.geom,scale:scale,bestEffort:true,maxPixels:1e9}).get(band);
+    return ee.Feature(null,{date:s.format('YYYY-MM'),value:v});
+  }));
+}
+var A=[
+ {id:'ndvi',t:'Vegetation (NDVI)',i:'fa-leaf',u:'NDVI',kind:'ts',color:'#2f7d3a',
+  about:'Sentinel-2 Surface Reflectance Harmonized (COPERNICUS/S2_SR_HARMONIZED), 10 m bands B8 and B4. Clouds, cloud shadow, cirrus and snow are removed with the scene classification (SCL) band. NDVI = (B8 − B4) / (B8 + B4), monthly median, then averaged over your area. Monsoon cloud cover can leave months with no clear pixels, which show as gaps.',
+  col:function(c){return ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED').filterBounds(c.geom).map(function(im){var scl=im.select('SCL'),ok=scl.neq(1).and(scl.neq(3)).and(scl.neq(8)).and(scl.neq(9)).and(scl.neq(10)).and(scl.neq(11));return im.updateMask(ok).normalizedDifference(['B8','B4']).rename('NDVI')})},
+  build:function(c){var col=this.col(c);return{ts:series(c,function(s,e){return col.filterDate(s,e).median()},'NDVI',30),layer:{img:col.filterDate(c.startStr,c.endStr).median().clip(c.geom),vis:{min:0,max:0.9,palette:['#a52a2a','#e0c068','#fff59d','#9ccc65','#2e7d32','#0b4d1a']},lo:'0',hi:'0.9',unit:'NDVI'}}}},
+ {id:'lst',t:'Land surface temperature (day)',i:'fa-temperature-high',u:'°C',kind:'ts',color:'#d1604a',
+  about:'MODIS Terra daily land surface temperature, 1 km (MODIS/061/MOD11A1), band LST_Day_1km × 0.02 = kelvin, minus 273.15 = °C. This is the temperature of the ground surface seen from space, not air temperature. Cloudy pixels are missing, so monthly means come from clear days only.',
+  col:function(c){return ee.ImageCollection('MODIS/061/MOD11A1').select('LST_Day_1km').map(function(im){return im.multiply(0.02).subtract(273.15).rename('LST').copyProperties(im,['system:time_start'])})},
+  build:function(c){var col=this.col(c);return{ts:series(c,function(s,e){return col.filterDate(s,e).mean()},'LST',1000),layer:{img:col.filterDate(c.startStr,c.endStr).mean().clip(c.geom),vis:{min:20,max:42,palette:['#2c7bb6','#abd9e9','#ffffbf','#fdae61','#d7191c']},lo:'20',hi:'42',unit:'°C'}}}},
+ {id:'no2',t:'Tropospheric NO₂',i:'fa-smog',u:'µmol/m²',kind:'ts',color:'#7b5ea7',
+  about:'Sentinel-5P TROPOMI offline Level 3 product (COPERNICUS/S5P/OFFL/L3_NO2), band tropospheric_NO2_column_number_density, converted from mol/m² to µmol/m². It is the total amount of NO₂ in a column of air above the ground, not the concentration you breathe at the surface. Native pixels are several kilometres wide, so small areas are poorly resolved.',
+  col:function(c){return ee.ImageCollection('COPERNICUS/S5P/OFFL/L3_NO2').select('tropospheric_NO2_column_number_density').map(function(im){return im.multiply(1e6).rename('NO2').copyProperties(im,['system:time_start'])})},
+  build:function(c){var col=this.col(c);return{ts:series(c,function(s,e){return col.filterDate(s,e).mean()},'NO2',1113.2),layer:{img:col.filterDate(c.startStr,c.endStr).mean().clip(c.geom),vis:{min:0,max:150,palette:['#000004','#3b0f70','#8c2981','#de4968','#fe9f6d','#fcfdbf']},lo:'0',hi:'150',unit:'µmol/m²'}}}},
+ {id:'rain',t:'Rainfall',i:'fa-cloud-showers-heavy',u:'mm / month',kind:'ts',bar:true,color:'#2a7fa8',
+  about:'CHIRPS Daily (UCSB-CHG/CHIRPS/DAILY), band precipitation in mm/day, about 5 km. Daily values are summed to monthly totals and averaged over your area. CHIRPS blends satellite estimates with station data; values for a single small area are approximate.',
+  col:function(c){return ee.ImageCollection('UCSB-CHG/CHIRPS/DAILY').select('precipitation')},
+  build:function(c){var col=this.col(c);return{ts:series(c,function(s,e){return col.filterDate(s,e).sum()},'precipitation',5566),layer:{img:col.filterDate(c.startStr,c.endStr).sum().clip(c.geom),vis:{min:0,max:3000,palette:['#ffffd9','#c7e9b4','#7fcdbb','#41b6c4','#1d91c0','#225ea8','#0c2c84']},lo:'0',hi:'3000',unit:'mm (period total)'}}}},
+ {id:'lc',t:'Land cover',i:'fa-layer-group',u:'km²',kind:'lc',
+  about:'ESA WorldCover v200 (ESA/WorldCover/v200), 10 m, a single 2021 map. Area of each class inside your area, computed from pixel areas. This map does not change with your date range.',
+  build:function(c){var im=ee.ImageCollection('ESA/WorldCover/v200').first().select('Map');var codes=WC.map(function(w){return w[0]}),idx=WC.map(function(w,k){return k});
+    var obj=ee.Image.pixelArea().divide(1e6).addBands(im).reduceRegion({reducer:ee.Reducer.sum().group({groupField:1,groupName:'cls'}),geometry:c.geom,scale:30,bestEffort:true,maxPixels:1e10});
+    return{obj:obj,layer:{img:im.remap(codes,idx).clip(c.geom),vis:{min:0,max:WC.length-1,palette:WC.map(function(w){return w[2]})},legend:'lc'}}}},
+ {id:'water',t:'Surface water',i:'fa-water',u:'km²',kind:'num',
+  about:'JRC Global Surface Water v1.4 (JRC/GSW1_4), band occurrence: the percentage of valid observations from 1984 to 2021 in which a 30 m pixel was water. The area shown is the area whose occurrence is at or above your threshold. It describes long-term water, not water on a given date.',
+  build:function(c){var occ=ee.Image('JRC/GSW1_4/GlobalSurfaceWater').select('occurrence'),t=c.occ;
+    var obj=ee.Image.pixelArea().divide(1e6).updateMask(occ.gte(t)).rename('km2').reduceRegion({reducer:ee.Reducer.sum(),geometry:c.geom,scale:30,bestEffort:true,maxPixels:1e10});
+    return{obj:obj,layer:{img:occ.updateMask(occ.gte(t)).clip(c.geom),vis:{min:t,max:100,palette:['#9ecae1','#4292c6','#08519c','#08306b']},lo:String(t),hi:'100',unit:'% occurrence'}}}},
+ {id:'dem',t:'Elevation',i:'fa-mountain',u:'m',kind:'num',
+  about:'SRTM 1 arc-second (USGS/SRTMGL1_003), about 30 m, reduced at 90 m. Heights are above the EGM96 geoid; in flat, low-lying Bangladesh a few metres of error matter, so treat small differences with care. Over tall vegetation and buildings SRTM can read high.',
+  build:function(c){var dem=ee.Image('USGS/SRTMGL1_003').select('elevation');
+    var obj=dem.reduceRegion({reducer:ee.Reducer.min().combine(ee.Reducer.mean(),'',true).combine(ee.Reducer.max(),'',true),geometry:c.geom,scale:90,bestEffort:true,maxPixels:1e9});
+    return{obj:obj,layer:{img:dem.clip(c.geom),vis:{min:0,max:100,palette:['#1a9850','#91cf60','#d9ef8b','#fee08b','#fc8d59','#d73027']},lo:'0',hi:'100',unit:'m'}}}}
+];
+
+/* ---------- map ---------- */
+var map=L.map('map').setView([23.8,90.4],7);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap contributors'}).addTo(map);
+var regionL=L.geoJSON(null,{style:{color:'#d1604a',weight:3,fillOpacity:.08}}).addTo(map),drawL=L.layerGroup().addTo(map);
+function showGJ(gj){regionL.clearLayers();regionL.addData(gj);try{map.fitBounds(regionL.getBounds().pad(.1))}catch(e){}}
+function drawPts(){drawL.clearLayers();S.pts.forEach(function(p){L.circleMarker(p,{radius:5,color:'#d1604a'}).addTo(drawL)});if(S.pts.length>1)L.polyline(S.pts.concat(S.pts.length>2?[S.pts[0]]:[]),{color:'#d1604a',dashArray:'5 5'}).addTo(drawL)}
+map.on('click',function(e){if(S.mode!=='draw')return;S.pts.push([e.latlng.lat,e.latlng.lng]);drawPts()});
+
+/* ---------- connect ---------- */
+function configuredClient(){return /^PASTE_/.test(OAUTH_CLIENT_ID)?'':OAUTH_CLIENT_ID}
+function stat(txt,cls){var n=$('auSt');n.textContent=txt;n.className='stat '+(cls||'')}
+function init(){
+  var p=prefs();if(p.proj)$('proj').value=p.proj;if(p.cid)$('cid').value=p.cid;
+  if(!configuredClient())$('cidBox').hidden=false;
+  if(typeof ee==='undefined'){stat('Earth Engine library did not load','bad');say('auMsg','The Earth Engine script could not be loaded. Check your internet connection and reload.','err');$('conn').disabled=true}
+}
+$('conn').onclick=function(){
+  var proj=$('proj').value.trim(),cid=configuredClient()||$('cid').value.trim();
+  if(!proj){say('auMsg','Enter your Google Cloud project ID first.','err');return}
+  if(!cid){say('auMsg','No OAuth client ID is configured. Enter one in the box that appeared, or ask the site owner to set it.','err');$('cidBox').hidden=false;return}
+  setPrefs({proj:proj,cid:configuredClient()?'':cid});say('auMsg','');stat('Signing in…','run');$('conn').disabled=true;
+  var fail=function(e){$('conn').disabled=false;S.ready=false;stat('Not connected','bad');var m=errText(e);
+    if(/origin|redirect_uri|idpiframe/i.test(m))m+=' (This site address is not yet an authorised origin on the OAuth client.)';
+    else if(/not registered|signup|permission|403/i.test(m))m+=' (Your Google account or project may not be registered for Earth Engine.)';
+    say('auMsg',m,'err')};
+  try{
+    ee.data.authenticateViaOauth(cid,function(){
+      ee.initialize(null,null,function(){S.ready=true;$('conn').disabled=false;$('conn').innerHTML='<i class="fa-solid fa-rotate"></i> Reconnect';stat('Connected to Earth Engine','ok');say('auMsg','Connected.','ok');loadDivs();updRun()},fail,null,proj);
+    },fail);
+  }catch(e){fail(e)}
+};
+
+/* ---------- admin boundaries (FAO GAUL) ---------- */
+function gaul(l){return ee.FeatureCollection('FAO/GAUL/2015/level'+l).filter(ee.Filter.eq('ADM0_NAME','Bangladesh'))}
+function fillSel(id,arr,ph){var s=$(id);s.innerHTML='';var o=document.createElement('option');o.value='';o.textContent=ph;s.appendChild(o);arr.forEach(function(v){var o=document.createElement('option');o.value=v;o.textContent=v;s.appendChild(o)});s.disabled=!arr.length}
+function run(id,obj,cb){window.__cur=id;obj.evaluate(function(r,e){cb(r,e)})}
+function loadDivs(){
+  fillSel('div',[],'Loading…');
+  run('divs',gaul(1).aggregate_array('ADM1_NAME').distinct().sort(),function(r,e){
+    if(e||!r||!r.length){fillSel('div',[],'Could not load');say('arMsg','Could not load the boundary list'+(e?': '+errText(e):'.')+' You can still draw an area or upload a file.','err');return}
+    fillSel('div',r,'Choose a division');fillSel('dis',[],'Choose a division')})
+}
+$('div').onchange=function(){var d=this.value;$('useAdm').disabled=true;if(!d){fillSel('dis',[],'Choose a division');return}
+  fillSel('dis',[],'Loading…');
+  run('dist',gaul(2).filter(ee.Filter.eq('ADM1_NAME',d)).aggregate_array('ADM2_NAME').distinct().sort(),function(r,e){
+    if(e||!r){fillSel('dis',[],'Could not load');say('arMsg',errText(e),'err');return}
+    fillSel('dis',r,'Whole division ('+d+')');$('dis').disabled=false;$('useAdm').disabled=false})};
+$('dis').onchange=function(){$('useAdm').disabled=!$('div').value};
+$('useAdm').onclick=function(){var d=$('div').value,k=$('dis').value;if(!d)return;
+  var fc=k?gaul(2).filter(ee.Filter.eq('ADM1_NAME',d)).filter(ee.Filter.eq('ADM2_NAME',k)):gaul(1).filter(ee.Filter.eq('ADM1_NAME',d));
+  setRegion(fc.geometry(),k?k+', '+d:d)};
+
+/* ---------- region ---------- */
+function setRegion(geom,name,gjClient){
+  say('arMsg','Measuring area…');S.geom=null;updRun();
+  run('area',ee.Dictionary({a:geom.area(100).divide(1e6),g:geom.simplify(300)}),function(r,e){
+    if(e||!r){say('arMsg','Could not read the area: '+errText(e),'err');return}
+    var km=r.a;
+    if(km>MAX_KM2){say('arMsg','That area is about '+Math.round(km).toLocaleString()+' km², above the '+MAX_KM2.toLocaleString()+' km² limit. Choose a district or a smaller shape.','err');return}
+    S.geom=geom;S.km2=km;S.gj=gjClient||r.g;S.name=name;showGJ(S.gj);say('arMsg','');
+    $('arInfo').innerHTML='<b>'+esc(name)+'</b> · '+(km<10?km.toFixed(2):Math.round(km).toLocaleString())+' km²';updRun()})}
+document.querySelectorAll('.tabs2 button').forEach(function(b){b.onclick=function(){S.mode=b.dataset.m;document.querySelectorAll('.tabs2 button').forEach(function(x){var on=x===b;x.classList.toggle('on',on);x.setAttribute('aria-selected',on)});
+  $('mAdmin').hidden=S.mode!=='admin';$('mDraw').hidden=S.mode!=='draw';$('mFile').hidden=S.mode!=='file';map.getContainer().style.cursor=S.mode==='draw'?'crosshair':''}});
+$('dUndo').onclick=function(){S.pts.pop();drawPts()};
+$('dClr').onclick=function(){S.pts=[];drawPts()};
+$('dDone').onclick=function(){if(!S.ready){say('arMsg','Connect to Earth Engine first.','err');return}if(S.pts.length<3){say('arMsg','Add at least three corners.','err');return}
+  var ring=S.pts.map(function(p){return[p[1],p[0]]});ring.push(ring[0]);setRegion(ee.Geometry.Polygon([ring]),'Drawn shape');drawL.clearLayers()};
+function polys(g,out){if(!g)return;if(g.type==='Polygon')out.push(g.coordinates);else if(g.type==='MultiPolygon')g.coordinates.forEach(function(c){out.push(c)});else if(g.type==='GeometryCollection')(g.geometries||[]).forEach(function(x){polys(x,out)});else if(g.type==='Feature')polys(g.geometry,out);else if(g.type==='FeatureCollection')(g.features||[]).forEach(function(x){polys(x,out)})}
+function validRing(r){return Array.isArray(r)&&r.length>=4&&r.every(function(p){return Array.isArray(p)&&isFinite(p[0])&&isFinite(p[1])&&Math.abs(p[0])<=180&&Math.abs(p[1])<=90})}
+$('gjf').onchange=function(){var f=this.files[0];if(!f)return;if(!S.ready){say('arMsg','Connect to Earth Engine first.','err');return}
+  if(f.size>2*1024*1024){say('arMsg','That file is larger than 2 MB.','err');return}
+  var r=new FileReader();r.onload=function(){try{var j=JSON.parse(r.result),out=[];polys(j,out);
+    if(!out.length)throw new Error('No Polygon or MultiPolygon found in the file.');
+    if(!out.every(function(p){return p.length&&p.every(validRing)}))throw new Error('The file has invalid or non-WGS84 coordinates (expected longitude, latitude in degrees).');
+    var gj={type:'MultiPolygon',coordinates:out};setRegion(ee.Geometry(gj),f.name.replace(/\.[^.]+$/,''),gj)}catch(e){say('arMsg',errText(e),'err')}};
+  r.onerror=function(){say('arMsg','Could not read the file.','err')};r.readAsText(f)};
+
+/* ---------- analysis options ---------- */
+(function(){var h='';A.forEach(function(a){h+='<label class="chk"><input type="checkbox" value="'+a.id+'" checked> <i class="fa-solid '+a.i+'"></i> '+esc(a.t)+'</label>'});$('picks').innerHTML=h;
+  $('about').innerHTML=A.map(function(a){return'<details><summary><b>'+esc(a.t)+'</b></summary><p>'+esc(a.about)+'</p></details>'}).join('')})();
+(function(){var p=prefs(),t=new Date(),f=function(d){return d.toISOString().slice(0,10)},s=new Date(Date.UTC(t.getUTCFullYear()-1,t.getUTCMonth(),1)),e=new Date(Date.UTC(t.getUTCFullYear(),t.getUTCMonth(),1));
+  $('d0').value=p.d0||f(s);$('d1').value=p.d1||f(e)})();
+function updRun(){$('run').disabled=!(S.ready&&S.geom)}
+
+/* ---------- running ---------- */
+function months(a,b){return (b.getUTCFullYear()-a.getUTCFullYear())*12+b.getUTCMonth()-a.getUTCMonth()}
+function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()}
+$('run').onclick=function(){
+  var s=$('d0').value,e=$('d1').value;if(!s||!e){say('runMsg','Choose a start and end date.','err');return}
+  var a=new Date(s+'T00:00:00Z'),b=new Date(e+'T00:00:00Z');if(!(b>a)){say('runMsg','The end date must be after the start date.','err');return}
+  var n=months(a,b);if(b.getUTCDate()>1||n<1)n+=1;if(n>60){say('runMsg','Choose a range of 60 months or less.','err');return}
+  var occ=Math.min(100,Math.max(1,+$('occ').value||50)),picks=[].slice.call(document.querySelectorAll('#picks input:checked')).map(function(x){return x.value});
+  if(!picks.length){say('runMsg','Tick at least one analysis.','err');return}
+  setPrefs({d0:s,d1:e});say('runMsg','');
+  var first=s.slice(0,8)+'01',ctx={geom:S.geom,n:n,startStr:first,endStr:e,d0:ee.Date(first),occ:occ};
+  Object.keys(S.layers).forEach(function(k){map.removeLayer(S.layers[k])});S.layers={};Object.keys(S.charts).forEach(function(k){S.charts[k].destroy()});S.charts={};S.data={};$('cards').innerHTML='';
+  A.filter(function(x){return picks.indexOf(x.id)>-1}).forEach(function(a){card(a,ctx)});
+};
+function card(a,ctx){
+  var d=document.createElement('div');d.className='panel';d.id='c_'+a.id;
+  d.innerHTML='<h2><i class="fa-solid '+a.i+'"></i> '+esc(a.t)+'</h2><div class="stat run" id="s_'+a.id+'" role="status">Running on Earth Engine…</div><div id="b_'+a.id+'"></div>';$('cards').appendChild(d);
+  var st=function(txt,cls){var n=$('s_'+a.id);n.textContent=txt;n.className='stat '+cls},body=$('b_'+a.id),b;
+  try{b=a.build(ctx)}catch(e){st('Could not build this analysis: '+errText(e),'bad');return}
+  var ctl='<div class="lyr"><label class="chk"><input type="checkbox" id="t_'+a.id+'" checked> Show on map</label><label class="op">Opacity <input type="range" id="o_'+a.id+'" min="0.1" max="1" step="0.05" value="0.8"></label></div><div id="g_'+a.id+'"></div>';
+  window.__cur=a.id+'_layer';
+  b.layer.img.getMap(b.layer.vis,function(m,e){
+    if(e||!m){st('Map layer failed: '+errText(e),'bad');return}
+    var L1=L.tileLayer(m.urlFormat,{opacity:.8,maxZoom:19}).addTo(map);S.layers[a.id]=L1;
+    var t=$('t_'+a.id),o=$('o_'+a.id);if(!t)return;
+    t.onchange=function(){t.checked?L1.addTo(map):map.removeLayer(L1)};o.oninput=function(){L1.setOpacity(+o.value)};
+    var g=$('g_'+a.id);if(b.layer.legend==='lc')g.innerHTML='';else g.innerHTML='<div class="leg"><i style="background:linear-gradient(90deg,'+b.layer.vis.palette.join(',')+')"></i><span>'+esc(b.layer.lo)+'</span><span>'+esc(b.layer.hi)+' '+esc(b.layer.unit)+'</span></div>'});
+  var rowsFor=function(){return S.data[a.id]};
+  var csvBtn='<div class="btns"><button class="b" type="button" id="x_'+a.id+'"><i class="fa-solid fa-file-csv"></i> Download CSV</button></div>';
+  var bind=function(){
+    var L1=S.layers[a.id],t=$('t_'+a.id),o=$('o_'+a.id);if(L1&&t){t.checked=map.hasLayer(L1);t.onchange=function(){t.checked?L1.addTo(map):map.removeLayer(L1)};o.value=L1.options.opacity;o.oninput=function(){L1.setOpacity(+o.value)};
+      var gg=$('g_'+a.id);if(gg&&b.layer.legend!=='lc')gg.innerHTML='<div class="leg"><i style="background:linear-gradient(90deg,'+b.layer.vis.palette.join(',')+')"></i><span>'+esc(b.layer.lo)+'</span><span>'+esc(b.layer.hi)+' '+esc(b.layer.unit)+'</span></div>'}
+  };
+  var done=function(r,e){
+    if(e||!r){st('Failed: '+errText(e),'bad');return}
+    if(a.kind==='ts'){
+      var f=(r.features||[]).map(function(x){return x.properties}).sort(function(p,q){return p.date<q.date?-1:1}),vals=f.filter(function(p){return p.value!=null&&isFinite(p.value)});
+      if(!vals.length){st('No valid satellite pixels in this area and period (clouds, or no data for these dates).','bad');body.innerHTML=ctl;bind();return}
+      S.data[a.id]={head:['month',a.u],rows:f.map(function(p){return[p.date,p.value==null?'':+(+p.value).toFixed(4)]})};
+      var arr=vals.map(function(p){return+p.value}),mean=arr.reduce(function(x,y){return x+y},0)/arr.length,mn=Math.min.apply(null,arr),mx=Math.max.apply(null,arr);
+      st(vals.length+' of '+f.length+' months have data','ok');
+      body.innerHTML='<div class="kpis"><div class="kpi"><small>Mean</small><b>'+fmt(mean)+'</b></div><div class="kpi"><small>Lowest month</small><b>'+fmt(mn)+'</b></div><div class="kpi"><small>Highest month</small><b>'+fmt(mx)+'</b></div></div><div class="cv"><canvas id="cv_'+a.id+'" aria-label="'+esc(a.t)+' by month" role="img"></canvas></div>'+ctl+csvBtn;
+      S.charts[a.id]=new Chart($('cv_'+a.id),{type:a.bar?'bar':'line',data:{labels:f.map(function(p){return p.date}),datasets:[{label:a.u,data:f.map(function(p){return p.value==null?null:+p.value}),borderColor:a.color,backgroundColor:a.color+'99',tension:.25,spanGaps:false,pointRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:css('--ink-soft')},grid:{color:css('--line')}},y:{title:{display:true,text:a.u,color:css('--ink-soft')},ticks:{color:css('--ink-soft')},grid:{color:css('--line')}}}}});
+    }else if(a.kind==='lc'){
+      var g=(r.groups||[]),m={};g.forEach(function(x){m[x.cls]=x.sum});var tot=g.reduce(function(s,x){return s+x.sum},0);
+      if(!tot){st('No land-cover data for this area.','bad');body.innerHTML=ctl;bind();return}
+      var rows=WC.filter(function(w){return m[w[0]]>0}).sort(function(p,q){return m[q[0]]-m[p[0]]});
+      S.data[a.id]={head:['class','area_km2','percent'],rows:rows.map(function(w){return[w[1],+m[w[0]].toFixed(3),+(100*m[w[0]]/tot).toFixed(2)]})};
+      st('Done','ok');
+      body.innerHTML='<div class="scroll"><table><thead><tr><th>Class</th><th class="n">Area (km²)</th><th class="n">Share</th></tr></thead><tbody>'+rows.map(function(w){return'<tr><td><i class="sw" style="background:#'+w[2]+'"></i>'+esc(w[1])+'</td><td class="n">'+fmt(m[w[0]])+'</td><td class="n">'+(100*m[w[0]]/tot).toFixed(1)+'%</td></tr>'}).join('')+'</tbody></table></div>'+ctl+csvBtn;
+    }else{
+      var rowsN=[];
+      if(a.id==='water'){var v=r.km2;if(v==null)v=0;rowsN=[['Water area (occurrence ≥ '+ctx.occ+'%)',+(+v).toFixed(3),'km²']];}
+      else{rowsN=[['Minimum',r.elevation_min,'m'],['Mean',r.elevation_mean,'m'],['Maximum',r.elevation_max,'m']].map(function(x){return[x[0],x[1]==null?null:+(+x[1]).toFixed(1),x[2]]})}
+      if(rowsN.every(function(x){return x[1]==null})){st('No data for this area.','bad');body.innerHTML=ctl;bind();return}
+      S.data[a.id]={head:['metric','value','unit'],rows:rowsN.map(function(x){return[x[0],x[1]==null?'':x[1],x[2]]})};st('Done','ok');
+      body.innerHTML='<div class="kpis">'+rowsN.map(function(x){return'<div class="kpi"><small>'+esc(x[0])+'</small><b>'+(x[1]==null?'--':fmt(x[1]))+' <span style="font-size:.8rem">'+x[2]+'</span></b></div>'}).join('')+'</div>'+ctl+csvBtn;
+    }
+    var x=$('x_'+a.id);if(x)x.onclick=function(){csv(a.id)};
+    bind();
+  };
+  window.__cur=a.id;
+  (b.ts||b.obj).evaluate(function(r,e){done(r,e)});
+}
+function fmt(v){v=+v;var a=Math.abs(v);return a>=1000?Math.round(v).toLocaleString():a>=100?v.toFixed(1):a>=1?v.toFixed(2):v.toFixed(3)}
+function cell(v){v=String(v==null?'':v);if(/^[=+\-@\t]/.test(v))v="'"+v;return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v}
+function csv(id){var d=S.data[id];if(!d)return;var t='﻿'+d.head.join(',')+'\n'+d.rows.map(function(r){return r.map(cell).join(',')}).join('\n');
+  var u=URL.createObjectURL(new Blob([t],{type:'text/csv'})),l=document.createElement('a');l.href=u;l.download='earth-engine-'+id+'.csv';document.body.appendChild(l);l.click();l.remove();setTimeout(function(){URL.revokeObjectURL(u)},500)}
+init();
+})();
+</script>
+</body>
+</html>
