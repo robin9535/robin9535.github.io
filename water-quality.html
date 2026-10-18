@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Water Quality Calculator | ESE Research Hub</title>
+<meta name="description" content="Enter pH, TDS, turbidity, chloride, nitrate, fluoride, iron, arsenic and dissolved oxygen, compare them with WHO or Bangladesh drinking-water limits and get a weighted-arithmetic Water Quality Index.">
+<meta name="theme-color" content="#0E2A2F">
+<link rel="canonical" href="https://mdrokibul.me/water-quality.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ESE Research Hub">
+<meta property="og:url" content="https://mdrokibul.me/water-quality.html">
+<meta property="og:title" content="Water Quality Calculator">
+<meta property="og:description" content="Compare water samples with WHO or Bangladesh limits and get a Water Quality Index.">
+<meta property="og:image" content="https://mdrokibul.me/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Water Quality Calculator">
+<meta name="twitter:description" content="Compare water samples with WHO or Bangladesh limits and get a Water Quality Index.">
+<meta name="twitter:image" content="https://mdrokibul.me/og-image.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":["WebPage","WebApplication"],"name":"Water Quality Calculator","url":"https://mdrokibul.me/water-quality.html","description":"Compare water samples with WHO or Bangladesh drinking-water limits and compute a weighted arithmetic Water Quality Index.","applicationCategory":"EducationalApplication","operatingSystem":"Any","inLanguage":"en","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"isPartOf":{"@type":"WebSite","name":"ESE Research Hub","url":"https://mdrokibul.me/"},"author":{"@type":"Person","name":"Md Rokibul Islam Robin","url":"https://mdrokibul.me/about.html"}}</script>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="nav.css">
+<link rel="stylesheet" href="site.css">
+<style>
+main{padding:0 0 56px}
+[hidden]{display:none!important}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:clamp(18px,3vw,28px);box-shadow:0 10px 30px rgba(0,0,0,.09);margin-top:18px}
+.panel h2{font-size:1.25rem;font-weight:800;margin-bottom:6px;display:flex;gap:10px;align-items:center}
+.panel h2 i{color:var(--river)}
+.sub{font-size:.97rem;color:var(--ink-soft);margin-bottom:14px}
+.tabs{display:flex;gap:6px;margin-top:-24px;position:relative;z-index:2;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px;box-shadow:0 10px 30px rgba(0,0,0,.1)}
+.tabs button{flex:1;font:700 .95rem var(--display);padding:11px 8px;border-radius:999px;border:0;background:transparent;color:var(--ink);cursor:pointer;display:inline-flex;gap:8px;align-items:center;justify-content:center}
+.tabs button[aria-selected=true]{background:var(--river);color:#fff}
+.tabs .cnt{font-size:.75rem;background:rgba(255,255,255,.22);padding:1px 8px;border-radius:999px}
+.tabs button:not([aria-selected=true]) .cnt{background:var(--mist);color:var(--ink-soft)}
+@media (max-width:520px){.tabs button span.t{display:none}.tabs button{font-size:.85rem}}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:860px){.grid2{grid-template-columns:1fr}}
+.grid2>*{min-width:0}
+.fld{display:grid;gap:5px;margin-bottom:12px}
+.fld label{font:700 .8rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em}
+.fld input,.fld select,.fld textarea{font:inherit;font-size:1.05rem;width:100%;padding:11px 13px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink);font-variant-numeric:tabular-nums}
+.fld input:focus,.fld select:focus,.fld textarea:focus{outline:none;border-color:var(--river)}
+.fld small{font-size:.85rem;color:var(--ink-soft)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.b{font:700 .95rem var(--display);padding:11px 18px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;display:inline-flex;gap:8px;align-items:center;justify-content:center}
+.b:hover{background:var(--mist)}.b.pri{background:var(--river);border-color:var(--river);color:#fff}.b.pri:hover{background:#27818b}
+.b.bad{color:var(--bad)}.b[disabled]{opacity:.45;cursor:not-allowed}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.big{font:800 clamp(2.6rem,9vw,3.8rem)/1 var(--display);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.live{padding:16px;border-radius:18px;background:var(--mist);border:2px solid var(--line);text-align:center}
+.live small{display:block;font:700 .8rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.live.hit{border-color:var(--good);background:color-mix(in srgb,var(--good) 14%,var(--mist))}
+.stat{font-size:.92rem;color:var(--ink-soft);margin:10px 0;display:flex;gap:8px;align-items:center}
+.stat::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--line);flex:none}
+.stat.ok::before{background:var(--good)}.stat.run::before{background:var(--warn)}.stat.bad::before{background:var(--bad)}
+.cam{position:relative;border-radius:16px;overflow:hidden;background:#000;aspect-ratio:3/4;max-height:420px;margin:12px auto 0;max-width:340px}
+.cam video{width:100%;height:100%;object-fit:cover}
+.cam::before,.cam::after{content:"";position:absolute;background:rgba(255,255,255,.85);z-index:2}
+.cam::before{left:50%;top:0;bottom:0;width:2px;margin-left:-1px}.cam::after{top:50%;left:0;right:0;height:2px;margin-top:-1px}
+.res{margin-top:14px;padding:16px;border-radius:16px;border:2px solid var(--river);background:color-mix(in srgb,var(--river) 8%,var(--card))}
+.res .big{color:var(--river)}
+.res p{margin-top:6px;font-size:.95rem;color:var(--ink-soft)}
+.steps{padding-left:1.2em;color:var(--ink-soft);font-size:.98rem}.steps li+li{margin-top:.5em}
+.msg{min-height:1.3em;font-size:.95rem;margin-top:8px}.msg.err{color:var(--bad);font-weight:600}.msg.ok{color:var(--good);font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th,td{text-align:left;padding:8px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:700 .74rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.scroll{overflow-x:auto}
+.tag{display:inline-block;padding:2px 9px;border-radius:999px;font:700 .75rem var(--display);background:var(--mist);border:1px solid var(--line)}
+.sec{font:800 .85rem var(--display);text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);margin:20px 0 8px}
+.empty{padding:26px;text-align:center;color:var(--ink-soft);border:2px dashed var(--line);border-radius:16px}
+.chk{display:flex;gap:9px;align-items:center;margin:6px 0;font-size:.98rem}.chk input{width:18px;height:18px;accent-color:var(--river)}
+.note{font-size:.88rem;color:var(--ink-soft);margin-top:10px;line-height:1.45}
+.sr{position:absolute;left:-999px}
+.bar{height:8px;border-radius:99px;background:var(--mist);overflow:hidden;min-width:70px}.bar i{display:block;height:100%;background:var(--good)}.bar i.w{background:var(--warn)}.bar i.x{background:var(--bad)}
+.ok{color:var(--good);font-weight:700}.no{color:var(--bad);font-weight:700}
+.params{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:0 14px}
+</style>
+</head>
+<body>
+<div class="progress" id="progress" aria-hidden="true"></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav" id="nav" data-solid>
+  <div class="wrap">
+    <a class="brand" href="index.html">ESE Research<span> Hub</span></a>
+    <nav class="links" id="links" aria-label="Main">
+      <div class="dd cur"><button class="dd-btn" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="toolsMenu">Tools <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="dd-menu" id="toolsMenu"><a href="portal.html"><i class="fa-solid fa-building-columns" aria-hidden="true"></i><span><b>JKKNIU &amp; ESE Portal</b><small>Official links in one place</small></span></a><a href="library.html"><i class="fa-solid fa-folder-open" aria-hidden="true"></i><span><b>Batch Library</b><small>Shared ESE study materials</small></span></a><a href="sound-meter.html"><i class="fa-solid fa-ear-listen" aria-hidden="true"></i><span><b>Sound Level Meter</b><small>Measure noise with your phone</small></span></a><a href="soil-texture.html"><i class="fa-solid fa-layer-group" aria-hidden="true"></i><span><b>Soil Texture Triangle</b><small>Plot sand, silt and clay</small></span></a><a href="rock-cycle.html"><i class="fa-solid fa-gem" aria-hidden="true"></i><span><b>Rock Cycle Simulator</b><small>Weathering to metamorphism</small></span></a><a href="gis-map.html"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i><span><b>GIS Area Explorer</b><small>Boundary, topography, pollution</small></span></a><a href="water-quality.html" class="on" aria-current="page"><i class="fa-solid fa-person-hiking" aria-hidden="true"></i><span><b>Field Notebook</b><small>Phone-only field measurements</small></span></a><a href="weather.html"><i class="fa-solid fa-cloud-sun-rain" aria-hidden="true"></i><span><b>EcoLens Weather</b><small>Your photo plus live weather and rain chance</small></span></a><a href="atmosphere-sim.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Atmosphere Simulator</b><small>Three-cell circulation model</small></span></a></div></div>
+      <a href="about.html">About</a>
+      <a href="about.html#contact">Contact</a>
+    </nav>
+    <div class="tools">
+      <button class="icon-btn" id="theme" type="button" aria-label="Switch to dark theme"><i class="fa-solid fa-moon"></i></button>
+      <button class="icon-btn burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="links"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</header>
+<div class="page-hero">
+  <div class="wrap">
+    <h1>Water quality calculator</h1>
+    <p>Enter your lab or field-kit readings, compare each one with the drinking-water limit, and get a single Water Quality Index (WQI). Leave out any parameter you did not measure.</p>
+  </div>
+</div>
+<main id="main">
+<div class="wrap">
+  <div class="panel" style="margin-top:-24px;position:relative;z-index:2">
+    <h2><i class="fa-solid fa-droplet"></i> New sample</h2>
+    <div class="grid2">
+      <div class="fld"><label for="lbl">Sample name</label><input id="lbl" type="text" maxlength="60" placeholder="e.g. Tubewell, Ward 5"></div>
+      <div class="fld"><label for="std">Compare with</label><select id="std"><option value="who">WHO drinking-water guidelines</option><option value="bd">Bangladesh ECR 1997 drinking-water standard</option></select></div>
+    </div>
+    <div class="params" id="params"></div>
+    <div class="btns"><button class="b" type="button" id="gps"><i class="fa-solid fa-location-crosshairs"></i> Add my location</button><button class="b pri" type="button" id="save"><i class="fa-solid fa-floppy-disk"></i> Save sample</button><button class="b" type="button" id="reset">Clear inputs</button></div>
+    <div class="msg" id="msg" role="status"></div>
+    <div id="res" hidden class="res"><div class="big" id="wqi">--</div><p id="cls"></p></div>
+    <div class="scroll" id="cmpWrap" hidden><div class="sec">Each parameter against the limit</div><table><thead><tr><th>Parameter</th><th class="n">Value</th><th>Limit</th><th>Level</th><th>Result</th></tr></thead><tbody id="cmp"></tbody></table></div>
+    <p class="note">Limits shown are the values built into this page. Standards are revised from time to time, so check them against the current official WHO or Department of Environment text before using a result in a report. Dissolved oxygen has no drinking-water health limit; the 5 mg/L (WHO column) and 6 mg/L (Bangladesh column) values are the usual WQI convention.</p>
+  </div>
+  <div class="panel">
+    <h2><i class="fa-solid fa-table"></i> Saved samples <span class="tag" id="cnt">0</span></h2>
+    <div id="empty" class="empty">No samples saved yet.</div>
+    <div class="scroll"><table id="tbl" hidden><thead><tr id="thr"></tr></thead><tbody></tbody></table></div>
+    <div class="btns"><button class="b" type="button" id="exCsv"><i class="fa-solid fa-file-csv"></i> Export CSV</button><button class="b bad" type="button" id="clr"><i class="fa-solid fa-trash"></i> Clear all</button></div>
+    <p class="note">Samples are stored in this browser only. Export a CSV to keep or share them.</p>
+  </div>
+  <div class="panel">
+    <h2><i class="fa-solid fa-calculator"></i> How the index is calculated</h2>
+    <p class="sub">Weighted arithmetic WQI (Horton/Brown method). For each parameter measured: sub-index q = 100 &times; (V &minus; V<sub>ideal</sub>) / (S &minus; V<sub>ideal</sub>), where V is your reading, S the limit, and V<sub>ideal</sub> is 0 (pH 7, dissolved oxygen 14.6 mg/L). Weight w = 1/S. WQI = &Sigma;(q&times;w) / &Sigma;w, over the parameters you entered. For pH the deviation from 7 is used.</p>
+    <p class="note">Classes: below 50 excellent, 50&ndash;100 good, 100&ndash;200 poor, 200&ndash;300 very poor, above 300 unsuitable for drinking. A WQI under 100 can still hide one parameter above its limit, which is why the table checks each one.</p>
+  </div>
+</div>
+</main>
+<footer>&copy; 2026 Md Rokibul Islam Robin &middot; <a href="index.html">Back to home</a></footer>
+<script src="site.js"></script>
+<script>
+(function(){
+var P=[
+ {k:'ph',n:'pH',u:'',ideal:7,type:'range',who:[6.5,8.5],bd:[6.5,8.5],step:.01},
+ {k:'tds',n:'TDS',u:'mg/L',who:600,bd:1000},
+ {k:'turb',n:'Turbidity',u:'NTU',who:5,bd:10},
+ {k:'cl',n:'Chloride',u:'mg/L',who:250,bd:150},
+ {k:'no3',n:'Nitrate (as NO3)',u:'mg/L',who:50,bd:44.3},
+ {k:'f',n:'Fluoride',u:'mg/L',who:1.5,bd:1},
+ {k:'fe',n:'Iron',u:'mg/L',who:.3,bd:1},
+ {k:'as',n:'Arsenic',u:'mg/L',who:.01,bd:.05},
+ {k:'do',n:'Dissolved oxygen',u:'mg/L',ideal:14.6,type:'min',who:5,bd:6}
+];
+var $=function(i){return document.getElementById(i)};
+var box=$('params'),loc=null,KEY='waterRecords';
+P.forEach(function(p){var d=document.createElement('div');d.className='fld';d.innerHTML='<label for="v_'+p.k+'">'+p.n+(p.u?' ('+p.u+')':'')+'</label><input id="v_'+p.k+'" type="number" inputmode="decimal" step="any" min="0">';box.appendChild(d);d.querySelector('input').addEventListener('input',calc)});
+function lim(p,s){return p[s]}
+function limTxt(p,s){var l=p[s];return p.type==='range'?l[0]+' – '+l[1]:(p.type==='min'?'≥ ':'≤ ')+l}
+function S(p,s){var l=p[s];return p.type==='range'?l[1]:l}
+function calc(){
+ var s=$('std').value,num=0,den=0,rows=[],n=0;
+ P.forEach(function(p){var raw=$('v_'+p.k).value;if(raw===''||isNaN(+raw))return;var v=+raw,Si=S(p,s),V0=p.ideal||0,q=p.k==='ph'?100*Math.abs(v-7)/(Si-7):100*(v-V0)/(Si-V0),w=1/Si;num+=q*w;den+=w;n++;
+  var pass,ratio;
+  if(p.type==='range'){pass=v>=p[s][0]&&v<=p[s][1];ratio=Math.abs(v-7)/(p[s][1]-7)}
+  else if(p.type==='min'){pass=v>=Si;ratio=Si/Math.max(v,.0001)}
+  else{pass=v<=Si;ratio=v/Si}
+  rows.push({p:p,v:v,pass:pass,ratio:ratio})});
+ if(!n){$('res').hidden=true;$('cmpWrap').hidden=true;return null}
+ var W=num/den,c=W<50?'Excellent':W<100?'Good':W<200?'Poor':W<300?'Very poor':'Unsuitable for drinking';
+ $('wqi').textContent=W.toFixed(1);$('cls').textContent='Class: '+c+' ('+n+' parameter'+(n>1?'s':'')+' used)';$('res').hidden=false;
+ var tb=$('cmp');tb.innerHTML='';
+ rows.forEach(function(r){var tr=document.createElement('tr'),pct=Math.min(100,Math.round(r.ratio*100)),cl=r.ratio>1?'x':r.ratio>.75?'w':'';
+  tr.innerHTML='<td>'+r.p.n+'</td><td class="n">'+r.v+'</td><td>'+limTxt(r.p,s)+(r.p.u?' '+r.p.u:'')+'</td><td><div class="bar"><i class="'+cl+'" style="width:'+pct+'%"></i></div></td><td class="'+(r.pass?'ok':'no')+'">'+(r.pass?'Within limit':'Exceeds')+'</td>';tb.appendChild(tr)});
+ $('cmpWrap').hidden=false;
+ return {wqi:W,cls:c,n:n};
+}
+$('std').addEventListener('change',calc);
+$('gps').onclick=function(){var m=$('msg');if(!navigator.geolocation){m.className='msg err';m.textContent='Location is not available on this device.';return}
+ m.className='msg';m.textContent='Getting location…';navigator.geolocation.getCurrentPosition(function(r){loc=[r.coords.latitude,r.coords.longitude];m.className='msg ok';m.textContent='Location added ('+loc[0].toFixed(5)+', '+loc[1].toFixed(5)+').'},function(){m.className='msg err';m.textContent='Could not get your location. Allow location access and try again.'},{enableHighAccuracy:true,timeout:15000})};
+function load(){try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){return window.__mem||[]}}
+function store(a){window.__mem=a;try{localStorage.setItem(KEY,JSON.stringify(a))}catch(e){}}
+function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function render(){var a=load();$('cnt').textContent=a.length;$('empty').hidden=a.length>0;$('tbl').hidden=!a.length;
+ $('thr').innerHTML='<th>Name</th><th>Standard</th>'+P.map(function(p){return'<th class="n">'+p.n.replace(' (as NO3)','')+'</th>'}).join('')+'<th class="n">WQI</th><th>Class</th><th></th>';
+ var tb=$('tbl').tBodies[0];tb.innerHTML='';
+ a.forEach(function(r,i){var tr=document.createElement('tr');tr.innerHTML='<td>'+esc(r.label||'—')+'</td><td>'+(r.std==='bd'?'BD':'WHO')+'</td>'+P.map(function(p){return'<td class="n">'+(r[p.k]===''||r[p.k]==null?'':esc(r[p.k]))+'</td>'}).join('')+'<td class="n">'+r.wqi+'</td><td>'+esc(r.cls)+'</td><td><button class="b bad" type="button" data-i="'+i+'" aria-label="Delete sample">×</button></td>';tb.appendChild(tr)})}
+$('tbl').addEventListener('click',function(e){var b=e.target.closest('button[data-i]');if(!b)return;var a=load();a.splice(+b.dataset.i,1);store(a);render()});
+$('save').onclick=function(){var r=calc(),m=$('msg');if(!r){m.className='msg err';m.textContent='Enter at least one reading first.';return}
+ var o={id:Date.now().toString(36),time:new Date().toISOString(),label:$('lbl').value.trim(),std:$('std').value,lat:loc?loc[0]:'',lon:loc?loc[1]:'',wqi:r.wqi.toFixed(1),cls:r.cls};
+ P.forEach(function(p){var v=$('v_'+p.k).value;o[p.k]=v===''?'':+v});
+ var a=load();a.push(o);store(a);render();m.className='msg ok';m.textContent='Saved. '+a.length+' sample'+(a.length>1?'s':'')+' on this device.'};
+$('reset').onclick=function(){P.forEach(function(p){$('v_'+p.k).value=''});$('lbl').value='';loc=null;$('msg').textContent='';calc()};
+function cell(v){v=String(v==null?'':v);if(/^[=+\-@\t]/.test(v))v="'"+v;return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v}
+$('exCsv').onclick=function(){var a=load();if(!a.length)return;var cols=['id','time','label','std','lat','lon'].concat(P.map(function(p){return p.k}),['wqi','cls']);
+ var t=cols.join(',')+'\n'+a.map(function(r){return cols.map(function(c){return cell(r[c])}).join(',')}).join('\n');
+ var u=URL.createObjectURL(new Blob(['\ufeff'+t],{type:'text/csv'})),l=document.createElement('a');l.href=u;l.download='water-quality-samples.csv';document.body.appendChild(l);l.click();l.remove();setTimeout(function(){URL.revokeObjectURL(u)},500)};
+$('clr').onclick=function(){if(confirm('Delete all saved water samples on this device?')){store([]);render()}};
+render();
+})();
+</script>
+</body>
+</html>
