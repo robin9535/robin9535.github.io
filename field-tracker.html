@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Field Tracker | ESE Research Hub</title>
+<meta name="description" content="Record a GPS track and drop waypoints with notes while you walk a transect or survey a site. See distance, duration, enclosed area and elevation, then export GPX, GeoJSON or CSV.">
+<meta name="theme-color" content="#0E2A2F">
+<link rel="canonical" href="https://mdrokibul.me/field-tracker.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ESE Research Hub">
+<meta property="og:url" content="https://mdrokibul.me/field-tracker.html">
+<meta property="og:title" content="Field Tracker">
+<meta property="og:description" content="Record a GPS track and waypoints in the field, then export GPX, GeoJSON or CSV.">
+<meta property="og:image" content="https://mdrokibul.me/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Field Tracker">
+<meta name="twitter:description" content="Record a GPS track and waypoints in the field, then export GPX, GeoJSON or CSV.">
+<meta name="twitter:image" content="https://mdrokibul.me/og-image.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":["WebPage","WebApplication"],"name":"Field Tracker","url":"https://mdrokibul.me/field-tracker.html","description":"Record GPS tracks and waypoints for field surveys and export GPX, GeoJSON or CSV.","applicationCategory":"EducationalApplication","operatingSystem":"Any","inLanguage":"en","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"isPartOf":{"@type":"WebSite","name":"ESE Research Hub","url":"https://mdrokibul.me/"},"author":{"@type":"Person","name":"Md Rokibul Islam Robin","url":"https://mdrokibul.me/about.html"}}</script>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="nav.css">
+<link rel="stylesheet" href="site.css">
+<style>
+main{padding:0 0 56px}
+[hidden]{display:none!important}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:clamp(18px,3vw,28px);box-shadow:0 10px 30px rgba(0,0,0,.09);margin-top:18px}
+.panel h2{font-size:1.25rem;font-weight:800;margin-bottom:6px;display:flex;gap:10px;align-items:center}
+.panel h2 i{color:var(--river)}
+.sub{font-size:.97rem;color:var(--ink-soft);margin-bottom:14px}
+.tabs{display:flex;gap:6px;margin-top:-24px;position:relative;z-index:2;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px;box-shadow:0 10px 30px rgba(0,0,0,.1)}
+.tabs button{flex:1;font:700 .95rem var(--display);padding:11px 8px;border-radius:999px;border:0;background:transparent;color:var(--ink);cursor:pointer;display:inline-flex;gap:8px;align-items:center;justify-content:center}
+.tabs button[aria-selected=true]{background:var(--river);color:#fff}
+.tabs .cnt{font-size:.75rem;background:rgba(255,255,255,.22);padding:1px 8px;border-radius:999px}
+.tabs button:not([aria-selected=true]) .cnt{background:var(--mist);color:var(--ink-soft)}
+@media (max-width:520px){.tabs button span.t{display:none}.tabs button{font-size:.85rem}}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:860px){.grid2{grid-template-columns:1fr}}
+.grid2>*{min-width:0}
+.fld{display:grid;gap:5px;margin-bottom:12px}
+.fld label{font:700 .8rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em}
+.fld input,.fld select,.fld textarea{font:inherit;font-size:1.05rem;width:100%;padding:11px 13px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink);font-variant-numeric:tabular-nums}
+.fld input:focus,.fld select:focus,.fld textarea:focus{outline:none;border-color:var(--river)}
+.fld small{font-size:.85rem;color:var(--ink-soft)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.b{font:700 .95rem var(--display);padding:11px 18px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;display:inline-flex;gap:8px;align-items:center;justify-content:center}
+.b:hover{background:var(--mist)}.b.pri{background:var(--river);border-color:var(--river);color:#fff}.b.pri:hover{background:#27818b}
+.b.bad{color:var(--bad)}.b[disabled]{opacity:.45;cursor:not-allowed}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.big{font:800 clamp(2.6rem,9vw,3.8rem)/1 var(--display);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.live{padding:16px;border-radius:18px;background:var(--mist);border:2px solid var(--line);text-align:center}
+.live small{display:block;font:700 .8rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.live.hit{border-color:var(--good);background:color-mix(in srgb,var(--good) 14%,var(--mist))}
+.stat{font-size:.92rem;color:var(--ink-soft);margin:10px 0;display:flex;gap:8px;align-items:center}
+.stat::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--line);flex:none}
+.stat.ok::before{background:var(--good)}.stat.run::before{background:var(--warn)}.stat.bad::before{background:var(--bad)}
+.cam{position:relative;border-radius:16px;overflow:hidden;background:#000;aspect-ratio:3/4;max-height:420px;margin:12px auto 0;max-width:340px}
+.cam video{width:100%;height:100%;object-fit:cover}
+.cam::before,.cam::after{content:"";position:absolute;background:rgba(255,255,255,.85);z-index:2}
+.cam::before{left:50%;top:0;bottom:0;width:2px;margin-left:-1px}.cam::after{top:50%;left:0;right:0;height:2px;margin-top:-1px}
+.res{margin-top:14px;padding:16px;border-radius:16px;border:2px solid var(--river);background:color-mix(in srgb,var(--river) 8%,var(--card))}
+.res .big{color:var(--river)}
+.res p{margin-top:6px;font-size:.95rem;color:var(--ink-soft)}
+.steps{padding-left:1.2em;color:var(--ink-soft);font-size:.98rem}.steps li+li{margin-top:.5em}
+.msg{min-height:1.3em;font-size:.95rem;margin-top:8px}.msg.err{color:var(--bad);font-weight:600}.msg.ok{color:var(--good);font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th,td{text-align:left;padding:8px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:700 .74rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.scroll{overflow-x:auto}
+.tag{display:inline-block;padding:2px 9px;border-radius:999px;font:700 .75rem var(--display);background:var(--mist);border:1px solid var(--line)}
+.sec{font:800 .85rem var(--display);text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);margin:20px 0 8px}
+.empty{padding:26px;text-align:center;color:var(--ink-soft);border:2px dashed var(--line);border-radius:16px}
+.chk{display:flex;gap:9px;align-items:center;margin:6px 0;font-size:.98rem}.chk input{width:18px;height:18px;accent-color:var(--river)}
+.note{font-size:.88rem;color:var(--ink-soft);margin-top:10px;line-height:1.45}
+.sr{position:absolute;left:-999px}
+.bar{height:8px;border-radius:99px;background:var(--mist);overflow:hidden;min-width:70px}.bar i{display:block;height:100%;background:var(--good)}.bar i.w{background:var(--warn)}.bar i.x{background:var(--bad)}
+.ok{color:var(--good);font-weight:700}.no{color:var(--bad);font-weight:700}
+.params{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:0 14px}
+#map{height:min(58vh,460px);border-radius:16px;border:1px solid var(--line);margin-top:14px;background:var(--mist)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-top:14px}
+.kpi{padding:12px;border-radius:14px;background:var(--mist);border:1px solid var(--line);text-align:center}
+.kpi small{display:block;font:700 .72rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em}
+.kpi b{font:800 1.5rem var(--display);font-variant-numeric:tabular-nums}
+.rec{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--bad);margin-right:6px;animation:pl 1.2s infinite}
+@keyframes pl{50%{opacity:.25}}
+</style>
+</head>
+<body>
+<div class="progress" id="progress" aria-hidden="true"></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav" id="nav" data-solid>
+  <div class="wrap">
+    <a class="brand" href="index.html">ESE Research<span> Hub</span></a>
+    <nav class="links" id="links" aria-label="Main">
+      <div class="dd cur"><button class="dd-btn" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="toolsMenu">Tools <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="dd-menu" id="toolsMenu"><a href="portal.html"><i class="fa-solid fa-building-columns" aria-hidden="true"></i><span><b>JKKNIU &amp; ESE Portal</b><small>Official links in one place</small></span></a><a href="library.html"><i class="fa-solid fa-folder-open" aria-hidden="true"></i><span><b>Batch Library</b><small>Shared ESE study materials</small></span></a><a href="sound-meter.html"><i class="fa-solid fa-ear-listen" aria-hidden="true"></i><span><b>Sound Level Meter</b><small>Measure noise with your phone</small></span></a><a href="soil-texture.html"><i class="fa-solid fa-layer-group" aria-hidden="true"></i><span><b>Soil Texture Triangle</b><small>Plot sand, silt and clay</small></span></a><a href="rock-cycle.html"><i class="fa-solid fa-gem" aria-hidden="true"></i><span><b>Rock Cycle Simulator</b><small>Weathering to metamorphism</small></span></a><a href="gis-map.html"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i><span><b>GIS Area Explorer</b><small>Boundary, topography, pollution</small></span></a><a href="field-tracker.html" class="on" aria-current="page"><i class="fa-solid fa-person-hiking" aria-hidden="true"></i><span><b>Field Notebook</b><small>Phone-only field measurements</small></span></a><a href="weather.html"><i class="fa-solid fa-cloud-sun-rain" aria-hidden="true"></i><span><b>EcoLens Weather</b><small>Your photo plus live weather and rain chance</small></span></a><a href="atmosphere-sim.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Atmosphere Simulator</b><small>Three-cell circulation model</small></span></a></div></div>
+      <a href="about.html">About</a>
+      <a href="about.html#contact">Contact</a>
+    </nav>
+    <div class="tools">
+      <button class="icon-btn" id="theme" type="button" aria-label="Switch to dark theme"><i class="fa-solid fa-moon"></i></button>
+      <button class="icon-btn burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="links"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</header>
+<div class="page-hero">
+  <div class="wrap">
+    <h1>Field tracker</h1>
+    <p>Record your GPS track while you walk a transect, a stream bank or a survey boundary. Drop waypoints with notes, then export GPX, GeoJSON or CSV for QGIS, Google Earth or your report.</p>
+  </div>
+</div>
+<main id="main">
+<div class="wrap">
+  <div class="panel" style="margin-top:-24px;position:relative;z-index:2">
+    <h2><i class="fa-solid fa-route"></i> Track recorder</h2>
+    <div class="stat" id="st">Not recording</div>
+    <div class="btns" style="margin-top:0">
+      <button class="b pri" type="button" id="start"><i class="fa-solid fa-play"></i> Start</button>
+      <button class="b" type="button" id="pause" disabled><i class="fa-solid fa-pause"></i> Pause</button>
+      <button class="b" type="button" id="stop" disabled><i class="fa-solid fa-stop"></i> Stop</button>
+    </div>
+    <div class="kpis">
+      <div class="kpi"><small>Distance</small><b id="kD">0 m</b></div>
+      <div class="kpi"><small>Time</small><b id="kT">0:00</b></div>
+      <div class="kpi"><small>Avg speed</small><b id="kS">--</b></div>
+      <div class="kpi"><small>Points</small><b id="kP">0</b></div>
+      <div class="kpi"><small>Enclosed area</small><b id="kA">--</b></div>
+      <div class="kpi"><small>Climb / descent</small><b id="kE">--</b></div>
+    </div>
+    <div id="map" role="region" aria-label="Map of your track"></div>
+    <p class="note">Keep this page open and the screen on while recording; the phone may stop updating the location if the browser is in the background. Points with poor GPS accuracy (worse than 40 m) are ignored. Enclosed area treats the track as a closed loop and is only meaningful for a loop walk.</p>
+  </div>
+  <div class="panel">
+    <h2><i class="fa-solid fa-location-dot"></i> Waypoints <span class="tag" id="wc">0</span></h2>
+    <div class="grid2">
+      <div class="fld"><label for="wl">Label</label><input id="wl" type="text" maxlength="60" placeholder="e.g. Sampling point 1"></div>
+      <div class="fld"><label for="wn">Note</label><input id="wn" type="text" maxlength="200" placeholder="e.g. clay bank, sample taken"></div>
+    </div>
+    <div class="btns"><button class="b pri" type="button" id="wp"><i class="fa-solid fa-map-pin"></i> Drop waypoint here</button></div>
+    <div class="msg" id="msg" role="status"></div>
+    <div id="empty" class="empty">No waypoints yet. Start the recorder or drop one directly.</div>
+    <div class="scroll"><table id="tbl" hidden><thead><tr><th>#</th><th>Label</th><th>Note</th><th class="n">Lat</th><th class="n">Lon</th><th class="n">Acc (m)</th><th>Time</th><th></th></tr></thead><tbody></tbody></table></div>
+  </div>
+  <div class="panel">
+    <h2><i class="fa-solid fa-file-export"></i> Export</h2>
+    <div class="btns"><button class="b" type="button" id="gpx"><i class="fa-solid fa-satellite-dish"></i> GPX</button><button class="b" type="button" id="gj"><i class="fa-solid fa-code"></i> GeoJSON</button><button class="b" type="button" id="csv"><i class="fa-solid fa-file-csv"></i> CSV</button><button class="b bad" type="button" id="clr"><i class="fa-solid fa-trash"></i> Clear all</button></div>
+    <p class="note">GPX opens in Google Earth, QGIS, Garmin and most mapping apps. Your recording is stored in this browser, so it survives a page reload, but export it before clearing site data.</p>
+  </div>
+</div>
+</main>
+<footer>&copy; 2026 Md Rokibul Islam Robin &middot; <a href="index.html">Back to home</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="site.js"></script>
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)},KEY='fieldTrack1';
+var S={pts:[],wps:[],state:'idle',ms:0,t0:0};
+var wid=null,wake=null,tick=null,last=null,cur=null;
+function save(){try{localStorage.setItem(KEY,JSON.stringify({pts:S.pts,wps:S.wps,ms:elapsed()}))}catch(e){}}
+function load(){try{var d=JSON.parse(localStorage.getItem(KEY)||'null');if(d){S.pts=d.pts||[];S.wps=d.wps||[];S.ms=d.ms||0}}catch(e){}}
+function elapsed(){return S.ms+(S.state==='rec'?Date.now()-S.t0:0)}
+function hav(a,b){var R=6371008.8,r=Math.PI/180,dl=(b[0]-a[0])*r,dn=(b[1]-a[1])*r,x=Math.sin(dl/2)*Math.sin(dl/2)+Math.cos(a[0]*r)*Math.cos(b[0]*r)*Math.sin(dn/2)*Math.sin(dn/2);return 2*R*Math.asin(Math.sqrt(x))}
+function dist(){var d=0;for(var i=1;i<S.pts.length;i++)d+=hav(S.pts[i-1],S.pts[i]);return d}
+function area(){if(S.pts.length<3)return 0;var r=Math.PI/180,l0=S.pts[0][0]*r,R=6371008.8,xy=S.pts.map(function(p){return[R*p[1]*r*Math.cos(l0),R*p[0]*r]}),a=0;for(var i=0;i<xy.length;i++){var j=(i+1)%xy.length;a+=xy[i][0]*xy[j][1]-xy[j][0]*xy[i][1]}return Math.abs(a)/2}
+function elev(){var up=0,dn=0,prev=null;S.pts.forEach(function(p){if(p[2]==null)return;if(prev!=null){var d=p[2]-prev;if(Math.abs(d)>=3){if(d>0)up+=d;else dn-=d;prev=p[2]}}else prev=p[2]});return prev==null?null:[up,dn]}
+function fd(m){return m>=1000?(m/1000).toFixed(2)+' km':Math.round(m)+' m'}
+function ft(ms){var s=Math.floor(ms/1000),h=Math.floor(s/3600),m=Math.floor(s%3600/60);s%=60;return(h?h+':'+('0'+m).slice(-2):m)+':'+('0'+s).slice(-2)}
+function fa(a){return a<=0?'--':a>=10000?(a/10000).toFixed(2)+' ha':Math.round(a).toLocaleString()+' m²'}
+// map
+var map=L.map('map',{zoomControl:true}).setView([23.8,90.4],7);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap contributors'}).addTo(map);
+var line=L.polyline([],{color:'#1F6F78',weight:5}).addTo(map),wl=L.featureGroup().addTo(map),me=L.circleMarker([0,0],{radius:8,color:'#fff',weight:3,fillColor:'#d1604a',fillOpacity:1});
+function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function draw(fit){line.setLatLngs(S.pts.map(function(p){return[p[0],p[1]]}));wl.clearLayers();S.wps.forEach(function(w,i){L.marker([w.lat,w.lon]).bindPopup('<b>'+(i+1)+'. '+esc(w.label||'Waypoint')+'</b><br>'+esc(w.note||'')).addTo(wl)});
+ if(fit){var g=L.featureGroup([line,wl]);if(g.getBounds().isValid())map.fitBounds(g.getBounds().pad(.2),{maxZoom:18})}}
+function ui(){var d=dist(),t=elapsed(),e=elev();$('kD').textContent=fd(d);$('kT').textContent=ft(t);$('kS').textContent=t>5000&&d>0?(d/(t/1000)*3.6).toFixed(1)+' km/h':'--';$('kP').textContent=S.pts.length;$('kA').textContent=fa(area());$('kE').textContent=e?'+'+Math.round(e[0])+' / −'+Math.round(e[1])+' m':'--';
+ $('start').disabled=S.state==='rec';$('start').innerHTML=S.state==='pause'?'<i class="fa-solid fa-play"></i> Resume':'<i class="fa-solid fa-play"></i> Start';$('pause').disabled=S.state!=='rec';$('stop').disabled=S.state==='idle';
+ $('st').innerHTML=S.state==='rec'?'<span class="rec"></span>Recording'+(last?' · accuracy ±'+Math.round(last)+' m':' · waiting for GPS…'):S.state==='pause'?'Paused':'Not recording';$('st').className='stat '+(S.state==='rec'?'run':'');
+ $('wc').textContent=S.wps.length;$('empty').hidden=S.wps.length>0;$('tbl').hidden=!S.wps.length;var tb=$('tbl').tBodies[0];tb.innerHTML='';
+ S.wps.forEach(function(w,i){var tr=document.createElement('tr');tr.innerHTML='<td>'+(i+1)+'</td><td>'+esc(w.label||'—')+'</td><td>'+esc(w.note||'')+'</td><td class="n">'+w.lat.toFixed(6)+'</td><td class="n">'+w.lon.toFixed(6)+'</td><td class="n">'+(w.acc==null?'':Math.round(w.acc))+'</td><td>'+new Date(w.time).toLocaleTimeString()+'</td><td><button class="b bad" type="button" data-i="'+i+'" aria-label="Delete waypoint">×</button></td>';tb.appendChild(tr)})}
+function onpos(p){var c=p.coords;cur={lat:c.latitude,lon:c.longitude,alt:c.altitude,acc:c.accuracy};last=c.accuracy;me.setLatLng([c.latitude,c.longitude]);if(!map.hasLayer(me))me.addTo(map);
+ if(S.state==='rec'&&c.accuracy<=40){var q=[c.latitude,c.longitude,c.altitude==null?null:Math.round(c.altitude*10)/10,Date.now()],l=S.pts[S.pts.length-1];if(!l||hav(l,q)>=3){S.pts.push(q);line.addLatLng([q[0],q[1]]);if(S.pts.length<2)map.setView([q[0],q[1]],18);else if(!map.getBounds().contains([q[0],q[1]]))map.panTo([q[0],q[1]]);save()}}
+ ui()}
+function onerr(e){$('msg').className='msg err';$('msg').textContent=e.code===1?'Location permission was denied. Allow location access for this site and try again.':'Could not get a GPS fix. Move to open sky and try again.'}
+function watch(){if(wid!=null)return;if(!navigator.geolocation){onerr({code:2});return}wid=navigator.geolocation.watchPosition(onpos,onerr,{enableHighAccuracy:true,maximumAge:0,timeout:20000})}
+function unwatch(){if(wid!=null){navigator.geolocation.clearWatch(wid);wid=null}}
+function lock(){try{if(navigator.wakeLock)navigator.wakeLock.request('screen').then(function(l){wake=l}).catch(function(){})}catch(e){}}
+function unlock(){try{if(wake){wake.release();wake=null}}catch(e){}}
+document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible'&&S.state==='rec')lock()});
+$('start').onclick=function(){$('msg').textContent='';if(S.state==='idle'&&S.pts.length&&!confirm('A saved track exists. Starting again appends to it. Press Cancel and use Clear all to begin a new one.'))return;S.state='rec';S.t0=Date.now();watch();lock();clearInterval(tick);tick=setInterval(ui,1000);ui()};
+$('pause').onclick=function(){S.ms=elapsed();S.state='pause';unlock();clearInterval(tick);save();ui()};
+$('stop').onclick=function(){S.ms=elapsed();S.state='idle';unwatch();unlock();clearInterval(tick);last=null;save();ui();draw(true)};
+$('wp').onclick=function(){var m=$('msg');if(!cur){m.className='msg err';m.textContent='No GPS fix yet. Start the recorder or wait a few seconds.';watch();navigator.geolocation&&navigator.geolocation.getCurrentPosition(function(p){onpos(p);m.className='msg';m.textContent='Got a fix. Press the button again.'},onerr,{enableHighAccuracy:true,timeout:20000});return}
+ S.wps.push({label:$('wl').value.trim(),note:$('wn').value.trim(),lat:cur.lat,lon:cur.lon,alt:cur.alt,acc:cur.acc,time:Date.now()});$('wl').value='';$('wn').value='';save();draw(false);ui();m.className='msg ok';m.textContent='Waypoint '+S.wps.length+' saved.'};
+$('tbl').addEventListener('click',function(e){var b=e.target.closest('button[data-i]');if(!b)return;S.wps.splice(+b.dataset.i,1);save();draw(false);ui()});
+$('clr').onclick=function(){if(!confirm('Delete the recorded track and all waypoints on this device?'))return;unwatch();unlock();clearInterval(tick);S={pts:[],wps:[],state:'idle',ms:0,t0:0};try{localStorage.removeItem(KEY)}catch(e){}draw(false);ui()};
+function dl(name,type,text){var u=URL.createObjectURL(new Blob([text],{type:type})),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},500)}
+function none(){if(S.pts.length||S.wps.length)return false;$('msg').className='msg err';$('msg').textContent='Nothing recorded yet.';return true}
+function x(t){return String(t).replace(/[&<>]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;'}[c]})}
+$('gpx').onclick=function(){if(none())return;var g='<?xml version="1.0" encoding="UTF-8"?>\n<gpx version="1.1" creator="ESE Research Hub Field Tracker" xmlns="http://www.topografix.com/GPX/1/1">\n';
+ S.wps.forEach(function(w){g+='<wpt lat="'+w.lat+'" lon="'+w.lon+'">'+(w.alt!=null?'<ele>'+w.alt.toFixed(1)+'</ele>':'')+'<time>'+new Date(w.time).toISOString()+'</time><name>'+x(w.label||'Waypoint')+'</name>'+(w.note?'<desc>'+x(w.note)+'</desc>':'')+'</wpt>\n'});
+ if(S.pts.length){g+='<trk><name>Field track</name><trkseg>\n';S.pts.forEach(function(p){g+='<trkpt lat="'+p[0]+'" lon="'+p[1]+'">'+(p[2]!=null?'<ele>'+p[2]+'</ele>':'')+'<time>'+new Date(p[3]).toISOString()+'</time></trkpt>\n'});g+='</trkseg></trk>\n'}
+ dl('field-track.gpx','application/gpx+xml',g+'</gpx>')};
+$('gj').onclick=function(){if(none())return;var f=[];if(S.pts.length>1)f.push({type:'Feature',properties:{type:'track',distance_m:Math.round(dist()),duration_s:Math.round(elapsed()/1000)},geometry:{type:'LineString',coordinates:S.pts.map(function(p){return p[2]==null?[p[1],p[0]]:[p[1],p[0],p[2]]})}});
+ S.wps.forEach(function(w,i){f.push({type:'Feature',properties:{type:'waypoint',n:i+1,label:w.label,note:w.note,accuracy_m:w.acc==null?null:Math.round(w.acc),time:new Date(w.time).toISOString()},geometry:{type:'Point',coordinates:[w.lon,w.lat]}})});
+ dl('field-track.geojson','application/geo+json',JSON.stringify({type:'FeatureCollection',features:f}))};
+function cell(v){v=String(v==null?'':v);if(/^[=+\-@\t]/.test(v))v="'"+v;return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v}
+$('csv').onclick=function(){if(none())return;var r=['kind,n,label,note,latitude,longitude,altitude_m,accuracy_m,time'];
+ S.pts.forEach(function(p,i){r.push(['track',i+1,'','',p[0],p[1],p[2],'',new Date(p[3]).toISOString()].map(cell).join(','))});
+ S.wps.forEach(function(w,i){r.push(['waypoint',i+1,w.label,w.note,w.lat,w.lon,w.alt==null?'':w.alt,w.acc==null?'':Math.round(w.acc),new Date(w.time).toISOString()].map(cell).join(','))});
+ dl('field-track.csv','text/csv','\ufeff'+r.join('\n'))};
+load();draw(true);ui();
+})();
+</script>
+</body>
+</html>
