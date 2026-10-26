@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quadrat Counter | ESE Research Hub</title>
+<meta name="description" content="Tally species quadrat by quadrat in the field and get density, frequency, importance value, Shannon and Simpson diversity and evenness, with charts and CSV export.">
+<meta name="theme-color" content="#0E2A2F">
+<link rel="canonical" href="https://mdrokibul.me/ecology-quadrat.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ESE Research Hub">
+<meta property="og:url" content="https://mdrokibul.me/ecology-quadrat.html">
+<meta property="og:title" content="Quadrat Counter">
+<meta property="og:description" content="Field tally counter with density, frequency and diversity indices.">
+<meta property="og:image" content="https://mdrokibul.me/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Quadrat Counter">
+<meta name="twitter:description" content="Field tally counter with density, frequency and diversity indices.">
+<meta name="twitter:image" content="https://mdrokibul.me/og-image.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":["WebPage","WebApplication"],"name":"Quadrat Counter","url":"https://mdrokibul.me/ecology-quadrat.html","description":"Tally species by quadrat and compute density, frequency, importance value and diversity indices.","applicationCategory":"EducationalApplication","operatingSystem":"Any","inLanguage":"en","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"isPartOf":{"@type":"WebSite","name":"ESE Research Hub","url":"https://mdrokibul.me/"},"author":{"@type":"Person","name":"Md Rokibul Islam Robin","url":"https://mdrokibul.me/about.html"}}</script>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="nav.css">
+<link rel="stylesheet" href="site.css">
+<style>
+main{padding:0 0 56px}
+[hidden]{display:none!important}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:clamp(18px,3vw,28px);box-shadow:0 10px 30px rgba(0,0,0,.09);margin-top:18px}
+.panel h2{font-size:1.25rem;font-weight:800;margin-bottom:6px;display:flex;gap:10px;align-items:center}
+.panel h2 i{color:var(--river)}
+.sub{font-size:.97rem;color:var(--ink-soft);margin-bottom:14px}
+.tabs{display:flex;gap:6px;margin-top:-24px;position:relative;z-index:2;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px;box-shadow:0 10px 30px rgba(0,0,0,.1)}
+.tabs button{flex:1;font:700 .95rem var(--display);padding:11px 8px;border-radius:999px;border:0;background:transparent;color:var(--ink);cursor:pointer;display:inline-flex;gap:8px;align-items:center;justify-content:center}
+.tabs button[aria-selected=true]{background:var(--river);color:#fff}
+.tabs .cnt{font-size:.75rem;background:rgba(255,255,255,.22);padding:1px 8px;border-radius:999px}
+.tabs button:not([aria-selected=true]) .cnt{background:var(--mist);color:var(--ink-soft)}
+@media (max-width:520px){.tabs button span.t{display:none}.tabs button{font-size:.85rem}}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:860px){.grid2{grid-template-columns:1fr}}
+.grid2>*{min-width:0}
+.fld{display:grid;gap:5px;margin-bottom:12px}
+.fld label{font:700 .8rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em}
+.fld input,.fld select,.fld textarea{font:inherit;font-size:1.05rem;width:100%;padding:11px 13px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink);font-variant-numeric:tabular-nums}
+.fld input:focus,.fld select:focus,.fld textarea:focus{outline:none;border-color:var(--river)}
+.fld small{font-size:.85rem;color:var(--ink-soft)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.b{font:700 .95rem var(--display);padding:11px 18px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;display:inline-flex;gap:8px;align-items:center;justify-content:center}
+.b:hover{background:var(--mist)}.b.pri{background:var(--river);border-color:var(--river);color:#fff}.b.pri:hover{background:#27818b}
+.b.bad{color:var(--bad)}.b[disabled]{opacity:.45;cursor:not-allowed}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.big{font:800 clamp(2.6rem,9vw,3.8rem)/1 var(--display);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.live{padding:16px;border-radius:18px;background:var(--mist);border:2px solid var(--line);text-align:center}
+.live small{display:block;font:700 .8rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.live.hit{border-color:var(--good);background:color-mix(in srgb,var(--good) 14%,var(--mist))}
+.stat{font-size:.92rem;color:var(--ink-soft);margin:10px 0;display:flex;gap:8px;align-items:center}
+.stat::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--line);flex:none}
+.stat.ok::before{background:var(--good)}.stat.run::before{background:var(--warn)}.stat.bad::before{background:var(--bad)}
+.cam{position:relative;border-radius:16px;overflow:hidden;background:#000;aspect-ratio:3/4;max-height:420px;margin:12px auto 0;max-width:340px}
+.cam video{width:100%;height:100%;object-fit:cover}
+.cam::before,.cam::after{content:"";position:absolute;background:rgba(255,255,255,.85);z-index:2}
+.cam::before{left:50%;top:0;bottom:0;width:2px;margin-left:-1px}.cam::after{top:50%;left:0;right:0;height:2px;margin-top:-1px}
+.res{margin-top:14px;padding:16px;border-radius:16px;border:2px solid var(--river);background:color-mix(in srgb,var(--river) 8%,var(--card))}
+.res .big{color:var(--river)}
+.res p{margin-top:6px;font-size:.95rem;color:var(--ink-soft)}
+.steps{padding-left:1.2em;color:var(--ink-soft);font-size:.98rem}.steps li+li{margin-top:.5em}
+.msg{min-height:1.3em;font-size:.95rem;margin-top:8px}.msg.err{color:var(--bad);font-weight:600}.msg.ok{color:var(--good);font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th,td{text-align:left;padding:8px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:700 .74rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.scroll{overflow-x:auto}
+.tag{display:inline-block;padding:2px 9px;border-radius:999px;font:700 .75rem var(--display);background:var(--mist);border:1px solid var(--line)}
+.sec{font:800 .85rem var(--display);text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);margin:20px 0 8px}
+.empty{padding:26px;text-align:center;color:var(--ink-soft);border:2px dashed var(--line);border-radius:16px}
+.chk{display:flex;gap:9px;align-items:center;margin:6px 0;font-size:.98rem}.chk input{width:18px;height:18px;accent-color:var(--river)}
+.note{font-size:.88rem;color:var(--ink-soft);margin-top:10px;line-height:1.45}
+.sr{position:absolute;left:-999px}
+.bar{height:8px;border-radius:99px;background:var(--mist);overflow:hidden;min-width:70px}.bar i{display:block;height:100%;background:var(--good)}.bar i.w{background:var(--warn)}.bar i.x{background:var(--bad)}
+.ok{color:var(--good);font-weight:700}.no{color:var(--bad);font-weight:700}
+.params{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:0 14px}
+.qbar{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 12px}.qbar select{flex:1;min-width:180px;font:inherit;padding:11px 13px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink)}
+.sp-add{display:flex;gap:10px;flex-wrap:wrap}.sp-add input{flex:1;min-width:180px;font:inherit;padding:11px 13px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink)}
+.tally{display:grid;gap:10px;margin-top:12px}.trow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border-radius:16px;border:1px solid var(--line);background:var(--mist)}
+.tn{display:grid;gap:2px;min-width:0}.tn b{overflow-wrap:anywhere}.lnk{background:none;border:0;color:var(--ink-soft);font-size:.8rem;text-align:left;cursor:pointer;padding:0;text-decoration:underline}
+.tc{display:flex;align-items:center;gap:12px}.tc output{font:800 1.8rem var(--display);min-width:2.2ch;text-align:center;font-variant-numeric:tabular-nums}
+.tb{width:56px;height:56px;border-radius:50%;border:2px solid var(--line);background:var(--card);color:var(--ink);font:700 1.6rem var(--display);cursor:pointer}.tb.p{background:var(--river);border-color:var(--river);color:#fff}.tb:active{transform:scale(.94)}
+.cv{position:relative;height:240px}
+.sr{position:absolute;left:-999px}
+</style>
+</head>
+<body>
+<div class="progress" id="progress" aria-hidden="true"></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav" id="nav" data-solid>
+  <div class="wrap">
+    <a class="brand" href="index.html">ESE Research<span> Hub</span></a>
+    <nav class="links" id="links" aria-label="Main">
+      <div class="dd cur"><button class="dd-btn" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="toolsMenu">Tools <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="dd-menu" id="toolsMenu"><a href="portal.html"><i class="fa-solid fa-building-columns" aria-hidden="true"></i><span><b>JKKNIU &amp; ESE Portal</b><small>Official links in one place</small></span></a><a href="library.html"><i class="fa-solid fa-folder-open" aria-hidden="true"></i><span><b>Batch Library</b><small>Shared ESE study materials</small></span></a><a href="sound-meter.html"><i class="fa-solid fa-ear-listen" aria-hidden="true"></i><span><b>Sound Level Meter</b><small>Measure noise with your phone</small></span></a><a href="soil-texture.html"><i class="fa-solid fa-layer-group" aria-hidden="true"></i><span><b>Soil Texture Triangle</b><small>Plot sand, silt and clay</small></span></a><a href="rock-cycle.html"><i class="fa-solid fa-gem" aria-hidden="true"></i><span><b>Rock Cycle Simulator</b><small>Weathering to metamorphism</small></span></a><a href="gis-map.html"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i><span><b>GIS Area Explorer</b><small>Boundary, topography, pollution</small></span></a><a href="gis-lab.html"><i class="fa-solid fa-satellite" aria-hidden="true"></i><span><b>WebGIS Lab</b><small>DEM profiles and GEE scripts</small></span></a><a href="field-notebook.html"><i class="fa-solid fa-person-hiking" aria-hidden="true"></i><span><b>Field Notebook</b><small>Phone-only field measurements</small></span></a><a class="on" aria-current="page" href="ecology-quadrat.html"><i class="fa-solid fa-droplet" aria-hidden="true"></i><span><b>Water Quality</b><small>WQI against WHO and BD limits</small></span></a><a href="field-tracker.html"><i class="fa-solid fa-route" aria-hidden="true"></i><span><b>Field Tracker</b><small>GPS track and waypoints</small></span></a><a href="ee-analyzer.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Earth Engine</b><small>Satellite analysis of any area</small></span></a><a href="weather.html"><i class="fa-solid fa-cloud-sun-rain" aria-hidden="true"></i><span><b>EcoLens Weather</b><small>Your photo plus live weather and rain chance</small></span></a><a href="atmosphere-sim.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Atmosphere Simulator</b><small>Three-cell circulation model</small></span></a></div></div>
+      <a href="about.html">About</a>
+      <a href="about.html#contact">Contact</a>
+    </nav>
+    <div class="tools">
+      <button class="icon-btn" id="theme" type="button" aria-label="Switch to dark theme"><i class="fa-solid fa-moon"></i></button>
+      <button class="icon-btn burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="links"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</header>
+<div class="page-hero">
+  <div class="wrap">
+    <h1>Quadrat counter</h1>
+    <p>Count plants or animals quadrat by quadrat with big tap buttons, then get density, frequency, importance value and diversity indices (Shannon, Simpson, evenness) without a calculator.</p>
+  </div>
+</div>
+<main id="main">
+<div class="wrap">
+  <div class="panel" style="margin-top:-24px;position:relative;z-index:2">
+    <h2><i class="fa-solid fa-table-cells"></i> 1. Study setup</h2>
+    <div class="grid2">
+      <div class="fld"><label for="site">Site / habitat</label><input id="site" type="text" maxlength="80" placeholder="e.g. Someshwari riverbank"></div>
+      <div class="fld"><label for="qa">Area of one quadrat (m²)</label><input id="qa" type="number" inputmode="decimal" min="0.01" step="any" value="1"><small>For example 1 m × 1 m = 1 m², 0.5 m × 0.5 m = 0.25 m².</small></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2><i class="fa-solid fa-hand-pointer"></i> 2. Count</h2>
+    <div class="qbar"><label for="qsel" class="sr">Quadrat</label><select id="qsel"></select><button class="b" type="button" id="qadd"><i class="fa-solid fa-plus"></i> New quadrat</button><button class="b bad" type="button" id="qdel" aria-label="Delete this quadrat"><i class="fa-solid fa-trash"></i></button></div>
+    <div class="sp-add"><input id="spn" type="text" maxlength="60" placeholder="Species or group name" aria-label="Species name"><button class="b pri" type="button" id="spa"><i class="fa-solid fa-plus"></i> Add species</button></div>
+    <div class="msg" id="msg" role="status"></div>
+    <div id="tally" class="tally"></div>
+    <p class="note">Tap + for each individual counted in the selected quadrat. Species you add appear in every quadrat. Use a name like "Unknown grass 1" for plants you cannot identify yet and rename them later by exporting and editing the CSV.</p>
+  </div>
+
+  <div class="panel" id="resP" hidden>
+    <h2><i class="fa-solid fa-chart-column"></i> 3. Results</h2>
+    <div class="kpis" id="kp"></div>
+    <div class="sec">Per species</div>
+    <div class="scroll"><table><thead><tr><th>Species</th><th class="n">Total</th><th class="n">Density (/m²)</th><th class="n">Rel. density %</th><th class="n">Frequency %</th><th class="n">Rel. frequency %</th><th class="n">Importance value</th><th class="n">pᵢ</th></tr></thead><tbody id="tb"></tbody></table></div>
+    <div class="grid2" style="margin-top:14px">
+      <div><div class="sec">Rank abundance</div><div class="cv"><canvas id="c1" role="img" aria-label="Rank abundance chart"></canvas></div></div>
+      <div><div class="sec">Species accumulation (quadrats in order)</div><div class="cv"><canvas id="c2" role="img" aria-label="Species accumulation chart"></canvas></div></div>
+    </div>
+    <div class="btns"><button class="b" type="button" id="ex1"><i class="fa-solid fa-file-csv"></i> Counts CSV</button><button class="b" type="button" id="ex2"><i class="fa-solid fa-file-csv"></i> Summary CSV</button><label class="b" for="imp"><i class="fa-solid fa-file-import"></i> Import counts CSV</label><input id="imp" type="file" accept=".csv,text/csv" class="sr"><button class="b bad" type="button" id="clr"><i class="fa-solid fa-trash"></i> Clear all</button></div>
+  </div>
+
+  <div class="panel">
+    <h2><i class="fa-solid fa-calculator"></i> How each number is worked out</h2>
+    <p class="note" style="margin-top:0">Let n<sub>i</sub> be the individuals of species i over all quadrats, N the total individuals, S the number of species, Q the number of quadrats and A the quadrat area.</p>
+    <ul class="steps">
+      <li><b>Density</b> = n<sub>i</sub> / (Q × A). <b>Relative density</b> = n<sub>i</sub> / N × 100.</li>
+      <li><b>Frequency</b> = quadrats containing the species / Q × 100. <b>Relative frequency</b> = frequency of the species / sum of all frequencies × 100.</li>
+      <li><b>Importance value</b> here = relative density + relative frequency (maximum 200). It leaves out relative dominance because this tool counts individuals and does not measure cover or basal area.</li>
+      <li><b>Shannon index</b> H′ = −Σ p<sub>i</sub> ln p<sub>i</sub>, with p<sub>i</sub> = n<sub>i</sub> / N. <b>Simpson index</b> D = Σ p<sub>i</sub>²; the diversity form 1 − D is shown, and 1/D.</li>
+      <li><b>Pielou evenness</b> J = H′ / ln S (shown when S &gt; 1). <b>Margalef richness</b> = (S − 1) / ln N (shown when N &gt; 1).</li>
+    </ul>
+    <p class="note">These indices describe the sample you counted. A handful of small quadrats gives rough values, so compare sites only when you used the same quadrat size and number of quadrats.</p>
+  </div>
+</div>
+</main>
+<footer>&copy; 2026 Md Rokibul Islam Robin &middot; <a href="index.html">Back to home</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="site.js"></script>
+<script>
+(function(){
+'use strict';
+var $=function(i){return document.getElementById(i)},KEY='quadrat1';
+var S={site:'',area:1,sp:[],q:[{}],sel:0},charts={};
+function esc(t){return String(t==null?'':t).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function load(){try{var d=JSON.parse(localStorage.getItem(KEY)||'null');if(d&&d.sp&&d.q&&d.q.length){S=d;S.sel=Math.min(S.sel||0,S.q.length-1)}}catch(e){}}
+function say(t,c){$('msg').className='msg'+(c?' '+c:'');$('msg').textContent=t}
+function calc(){
+  var Q=S.q.length,A=+S.area>0?+S.area:1,tot={},pres={},N=0;
+  S.sp.forEach(function(s){tot[s]=0;pres[s]=0});
+  S.q.forEach(function(q){S.sp.forEach(function(s){var n=q[s]||0;tot[s]+=n;N+=n;if(n>0)pres[s]++})});
+  var sp=S.sp.filter(function(s){return tot[s]>0}),richness=sp.length;
+  var fsum=sp.reduce(function(a,s){return a+pres[s]/Q*100},0);
+  var rows=sp.map(function(s){var f=pres[s]/Q*100,rd=N?tot[s]/N*100:0,rf=fsum?f/fsum*100:0;return{s:s,n:tot[s],den:tot[s]/(Q*A),rd:rd,f:f,rf:rf,iv:rd+rf,p:N?tot[s]/N:0}}).sort(function(a,b){return b.n-a.n});
+  var H=0,D=0;rows.forEach(function(r){if(r.p>0){H-=r.p*Math.log(r.p);D+=r.p*r.p}});
+  return{Q:Q,A:A,N:N,S:richness,rows:rows,H:H,D:D,simp:N?1-D:0,inv:D?1/D:0,J:richness>1?H/Math.log(richness):null,mar:N>1?(richness-1)/Math.log(N):null,dens:N/(Q*A)};
+}
+function fmt(v,d){return v==null||!isFinite(v)?'--':(+v).toFixed(d==null?2:d)}
+function drawTally(){
+  var sel=$('qsel');sel.innerHTML='';S.q.forEach(function(q,i){var n=0;for(var k in q)n+=q[k];var o=document.createElement('option');o.value=i;o.textContent='Quadrat '+(i+1)+' ('+n+' counted)';sel.appendChild(o)});sel.value=S.sel;
+  var q=S.q[S.sel]||{},h='';
+  if(!S.sp.length)h='<div class="empty">Add your first species above, then tap + to count.</div>';
+  S.sp.forEach(function(s,i){h+='<div class="trow"><div class="tn"><b>'+esc(s)+'</b><button class="lnk" type="button" data-rm="'+i+'" aria-label="Remove species '+esc(s)+'">remove</button></div><div class="tc"><button class="tb" type="button" data-m="'+i+'" aria-label="Subtract one '+esc(s)+'">−</button><output aria-live="polite">'+(q[s]||0)+'</output><button class="tb p" type="button" data-p="'+i+'" aria-label="Add one '+esc(s)+'">+</button></div></div>'});
+  $('tally').innerHTML=h;
+}
+function chart(id,cfg){if(charts[id])charts[id].destroy();charts[id]=new Chart($(id),cfg)}
+function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()}
+function render(){
+  drawTally();var r=calc();$('resP').hidden=r.N===0;if(!r.N)return;
+  $('kp').innerHTML=[['Species (S)',r.S],['Individuals (N)',r.N],['Quadrats',r.Q],['Density /m²',fmt(r.dens)],['Shannon H′',fmt(r.H)],['Simpson 1 − D',fmt(r.simp)],['Simpson 1 / D',fmt(r.inv)],['Evenness J',fmt(r.J)],['Margalef',fmt(r.mar)]].map(function(k){return'<div class="kpi"><small>'+k[0]+'</small><b>'+k[1]+'</b></div>'}).join('');
+  $('tb').innerHTML=r.rows.map(function(x){return'<tr><td>'+esc(x.s)+'</td><td class="n">'+x.n+'</td><td class="n">'+fmt(x.den)+'</td><td class="n">'+fmt(x.rd,1)+'</td><td class="n">'+fmt(x.f,1)+'</td><td class="n">'+fmt(x.rf,1)+'</td><td class="n">'+fmt(x.iv,1)+'</td><td class="n">'+fmt(x.p,3)+'</td></tr>'}).join('');
+  var tk={color:css('--ink-soft')},gr={color:css('--line')};
+  chart('c1',{type:'bar',data:{labels:r.rows.map(function(x){return x.s}),datasets:[{label:'Individuals',data:r.rows.map(function(x){return x.n}),backgroundColor:'#2f7d5bcc'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:tk,grid:gr},y:{beginAtZero:true,title:{display:true,text:'Individuals',color:tk.color},ticks:tk,grid:gr}}}});
+  var seen={},cum=[];S.q.forEach(function(q){S.sp.forEach(function(s){if((q[s]||0)>0)seen[s]=1});cum.push(Object.keys(seen).length)});
+  chart('c2',{type:'line',data:{labels:cum.map(function(_,i){return i+1}),datasets:[{label:'Cumulative species',data:cum,borderColor:'#2a7fa8',backgroundColor:'#2a7fa855',tension:.2,pointRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{title:{display:true,text:'Quadrats counted',color:tk.color},ticks:tk,grid:gr},y:{beginAtZero:true,title:{display:true,text:'Species',color:tk.color},ticks:{color:tk.color,precision:0},grid:gr}}}});
+}
+$('site').oninput=function(){S.site=this.value;save()};
+$('qa').oninput=function(){S.area=this.value;save();render()};
+$('qsel').onchange=function(){S.sel=+this.value;save();drawTally()};
+$('qadd').onclick=function(){S.q.push({});S.sel=S.q.length-1;save();render()};
+$('qdel').onclick=function(){if(S.q.length<2){say('Keep at least one quadrat.','err');return}if(!confirm('Delete quadrat '+(S.sel+1)+' and its counts?'))return;S.q.splice(S.sel,1);S.sel=Math.max(0,S.sel-1);save();say('');render()};
+function addSp(){var n=$('spn').value.trim().replace(/\s+/g,' ');if(!n){say('Type a species name.','err');return}
+  if(S.sp.some(function(s){return s.toLowerCase()===n.toLowerCase()})){say('That species is already in the list.','err');return}
+  S.sp.push(n);$('spn').value='';save();say('');render()}
+$('spa').onclick=addSp;$('spn').onkeydown=function(e){if(e.key==='Enter'){e.preventDefault();addSp()}};
+$('tally').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;var q=S.q[S.sel];
+  if(b.dataset.p!=null){var s=S.sp[+b.dataset.p];q[s]=(q[s]||0)+1}
+  else if(b.dataset.m!=null){var s2=S.sp[+b.dataset.m];q[s2]=Math.max(0,(q[s2]||0)-1)}
+  else if(b.dataset.rm!=null){var s3=S.sp[+b.dataset.rm],any=S.q.some(function(x){return x[s3]>0});if(any&&!confirm('Remove "'+s3+'" and all its counts?'))return;S.sp.splice(+b.dataset.rm,1);S.q.forEach(function(x){delete x[s3]})}
+  save();render()});
+function cell(v){v=String(v==null?'':v);if(/^[=+\-@\t]/.test(v))v="'"+v;return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v}
+function dl(name,text){var u=URL.createObjectURL(new Blob(['﻿'+text],{type:'text/csv'})),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},500)}
+$('ex1').onclick=function(){var r=['site,quadrat,quadrat_area_m2,species,count'];S.q.forEach(function(q,i){S.sp.forEach(function(s){r.push([S.site,i+1,S.area,s,q[s]||0].map(cell).join(','))})});dl('quadrat-counts.csv',r.join('\n'))};
+$('ex2').onclick=function(){var c=calc(),r=['species,total,density_per_m2,relative_density_pct,frequency_pct,relative_frequency_pct,importance_value,p'];c.rows.forEach(function(x){r.push([x.s,x.n,x.den.toFixed(4),x.rd.toFixed(2),x.f.toFixed(2),x.rf.toFixed(2),x.iv.toFixed(2),x.p.toFixed(4)].map(cell).join(','))});
+  r.push('');r.push('metric,value');[['site',S.site],['quadrats',c.Q],['quadrat_area_m2',c.A],['species_S',c.S],['individuals_N',c.N],['shannon_H',fmt(c.H,4)],['simpson_1_minus_D',fmt(c.simp,4)],['simpson_1_over_D',fmt(c.inv,4)],['pielou_J',fmt(c.J,4)],['margalef',fmt(c.mar,4)]].forEach(function(m){r.push(m.map(cell).join(','))});dl('quadrat-summary.csv',r.join('\n'))};
+function parseCsv(t){var rows=[],row=[],f='',q=false;t=t.replace(/^﻿/,'');for(var i=0;i<t.length;i++){var c=t[i];if(q){if(c==='"'){if(t[i+1]==='"'){f+='"';i++}else q=false}else f+=c}else if(c==='"')q=true;else if(c===','){row.push(f);f=''}else if(c==='\n'||c==='\r'){if(c==='\r'&&t[i+1]==='\n')i++;row.push(f);rows.push(row);row=[];f=''}else f+=c}if(f!==''||row.length){row.push(f);rows.push(row)}return rows.filter(function(r){return r.length>1||r[0]!==''})}
+$('imp').onchange=function(){var f=this.files[0];if(!f)return;var rd=new FileReader();rd.onload=function(){try{
+  var rows=parseCsv(rd.result),h=rows[0].map(function(x){return x.trim().toLowerCase()}),ix=function(n){return h.indexOf(n)};
+  if(ix('quadrat')<0||ix('species')<0||ix('count')<0)throw new Error('Expected the columns quadrat, species and count (use the Counts CSV from this page).');
+  var sp=[],q=[],site='',area=S.area;
+  rows.slice(1).forEach(function(r){var qi=Math.floor(+r[ix('quadrat')])-1,s=(r[ix('species')]||'').replace(/^'/,'').trim(),n=Math.round(+r[ix('count')]);if(!(qi>=0&&qi<500)||!s||!(n>=0))return;if(sp.indexOf(s)<0)sp.push(s);while(q.length<=qi)q.push({});if(n>0)q[qi][s]=(q[qi][s]||0)+n;if(ix('site')>-1&&r[ix('site')])site=r[ix('site')];if(ix('quadrat_area_m2')>-1&&+r[ix('quadrat_area_m2')]>0)area=+r[ix('quadrat_area_m2')]});
+  if(!sp.length||!q.length)throw new Error('No valid rows found.');
+  S={site:site,area:area,sp:sp,q:q,sel:0};$('site').value=site;$('qa').value=area;save();render();say('Imported '+sp.length+' species in '+q.length+' quadrats.','ok')}catch(e){say(e.message,'err')}};rd.readAsText(f);this.value=''};
+$('clr').onclick=function(){if(!confirm('Delete all quadrats, species and counts on this device?'))return;S={site:'',area:1,sp:[],q:[{}],sel:0};$('site').value='';$('qa').value=1;save();say('');render()};
+load();$('site').value=S.site||'';$('qa').value=S.area||1;render();
+
+})();
+</script>
+</body>
+</html>
