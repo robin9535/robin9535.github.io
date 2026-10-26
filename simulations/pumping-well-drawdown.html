@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pumping Well Drawdown Simulation | ESE Research Hub</title>
+<meta name="description" content="Interactive Theis model of a pumping well: watch the cone of depression spread, read drawdown at any distance and see how two wells interfere.">
+<meta name="theme-color" content="#0E2A2F">
+<link rel="canonical" href="https://mdrokibul.me/simulations/pumping-well-drawdown.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ESE Research Hub">
+<meta property="og:url" content="https://mdrokibul.me/simulations/pumping-well-drawdown.html">
+<meta property="og:title" content="Pumping Well Drawdown Simulation">
+<meta property="og:description" content="Interactive Theis model of a pumping well: watch the cone of depression spread, read drawdown at any distance and see how two wells interfere.">
+<meta property="og:image" content="https://mdrokibul.me/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Pumping Well Drawdown Simulation">
+<meta name="twitter:description" content="Interactive Theis model of a pumping well: watch the cone of depression spread, read drawdown at any distance and see how two wells interfere.">
+<meta name="twitter:image" content="https://mdrokibul.me/og-image.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":["WebPage","WebApplication"],"name":"Pumping Well Drawdown Simulation","url":"https://mdrokibul.me/simulations/pumping-well-drawdown.html","description":"Interactive Theis model of a pumping well: watch the cone of depression spread, read drawdown at any distance and see how two wells interfere.","applicationCategory":"EducationalApplication","operatingSystem":"Any","inLanguage":"en","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"isPartOf":{"@type":"WebSite","name":"ESE Research Hub","url":"https://mdrokibul.me/"},"author":{"@type":"Person","name":"Md Rokibul Islam Robin","url":"https://mdrokibul.me/about.html"}}</script>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="../nav.css">
+<link rel="stylesheet" href="../site.css">
+<style>
+main{padding:0 0 56px}
+[hidden]{display:none!important}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:clamp(18px,3vw,28px);box-shadow:0 10px 30px rgba(0,0,0,.09);margin-top:18px}
+.panel h2{font-size:1.25rem;font-weight:800;margin-bottom:6px;display:flex;gap:10px;align-items:center}
+.panel h2 i{color:var(--river)}
+.sub{font-size:.97rem;color:var(--ink-soft);margin-bottom:14px}
+.tabs{display:flex;gap:6px;margin-top:-24px;position:relative;z-index:2;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px;box-shadow:0 10px 30px rgba(0,0,0,.1)}
+.tabs button{flex:1;font:700 .95rem var(--display);padding:11px 8px;border-radius:999px;border:0;background:transparent;color:var(--ink);cursor:pointer;display:inline-flex;gap:8px;align-items:center;justify-content:center}
+.tabs button[aria-selected=true]{background:var(--river);color:#fff}
+.tabs .cnt{font-size:.75rem;background:rgba(255,255,255,.22);padding:1px 8px;border-radius:999px}
+.tabs button:not([aria-selected=true]) .cnt{background:var(--mist);color:var(--ink-soft)}
+@media (max-width:520px){.tabs button span.t{display:none}.tabs button{font-size:.85rem}}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:860px){.grid2{grid-template-columns:1fr}}
+.grid2>*{min-width:0}
+.fld{display:grid;gap:5px;margin-bottom:12px}
+.fld label{font:700 .8rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em}
+.fld input,.fld select,.fld textarea{font:inherit;font-size:1.05rem;width:100%;padding:11px 13px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink);font-variant-numeric:tabular-nums}
+.fld input:focus,.fld select:focus,.fld textarea:focus{outline:none;border-color:var(--river)}
+.fld small{font-size:.85rem;color:var(--ink-soft)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.b{font:700 .95rem var(--display);padding:11px 18px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;display:inline-flex;gap:8px;align-items:center;justify-content:center}
+.b:hover{background:var(--mist)}.b.pri{background:var(--river);border-color:var(--river);color:#fff}.b.pri:hover{background:#27818b}
+.b.bad{color:var(--bad)}.b[disabled]{opacity:.45;cursor:not-allowed}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.big{font:800 clamp(2.6rem,9vw,3.8rem)/1 var(--display);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.live{padding:16px;border-radius:18px;background:var(--mist);border:2px solid var(--line);text-align:center}
+.live small{display:block;font:700 .8rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.live.hit{border-color:var(--good);background:color-mix(in srgb,var(--good) 14%,var(--mist))}
+.stat{font-size:.92rem;color:var(--ink-soft);margin:10px 0;display:flex;gap:8px;align-items:center}
+.stat::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--line);flex:none}
+.stat.ok::before{background:var(--good)}.stat.run::before{background:var(--warn)}.stat.bad::before{background:var(--bad)}
+.cam{position:relative;border-radius:16px;overflow:hidden;background:#000;aspect-ratio:3/4;max-height:420px;margin:12px auto 0;max-width:340px}
+.cam video{width:100%;height:100%;object-fit:cover}
+.cam::before,.cam::after{content:"";position:absolute;background:rgba(255,255,255,.85);z-index:2}
+.cam::before{left:50%;top:0;bottom:0;width:2px;margin-left:-1px}.cam::after{top:50%;left:0;right:0;height:2px;margin-top:-1px}
+.res{margin-top:14px;padding:16px;border-radius:16px;border:2px solid var(--river);background:color-mix(in srgb,var(--river) 8%,var(--card))}
+.res .big{color:var(--river)}
+.res p{margin-top:6px;font-size:.95rem;color:var(--ink-soft)}
+.steps{padding-left:1.2em;color:var(--ink-soft);font-size:.98rem}.steps li+li{margin-top:.5em}
+.msg{min-height:1.3em;font-size:.95rem;margin-top:8px}.msg.err{color:var(--bad);font-weight:600}.msg.ok{color:var(--good);font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th,td{text-align:left;padding:8px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:700 .74rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.scroll{overflow-x:auto}
+.tag{display:inline-block;padding:2px 9px;border-radius:999px;font:700 .75rem var(--display);background:var(--mist);border:1px solid var(--line)}
+.sec{font:800 .85rem var(--display);text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);margin:20px 0 8px}
+.empty{padding:26px;text-align:center;color:var(--ink-soft);border:2px dashed var(--line);border-radius:16px}
+.chk{display:flex;gap:9px;align-items:center;margin:6px 0;font-size:.98rem}.chk input{width:18px;height:18px;accent-color:var(--river)}
+.note{font-size:.88rem;color:var(--ink-soft);margin-top:10px;line-height:1.45}
+.sr{position:absolute;left:-999px}
+.bar{height:8px;border-radius:99px;background:var(--mist);overflow:hidden;min-width:70px}.bar i{display:block;height:100%;background:var(--good)}.bar i.w{background:var(--warn)}.bar i.x{background:var(--bad)}
+.ok{color:var(--good);font-weight:700}.no{color:var(--bad);font-weight:700}
+.params{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:0 14px}
+.qbar{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 12px}.qbar select{flex:1;min-width:180px;font:inherit;padding:11px 13px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink)}
+.sp-add{display:flex;gap:10px;flex-wrap:wrap}.sp-add input{flex:1;min-width:180px;font:inherit;padding:11px 13px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink)}
+.tally{display:grid;gap:10px;margin-top:12px}.trow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border-radius:16px;border:1px solid var(--line);background:var(--mist)}
+.tn{display:grid;gap:2px;min-width:0}.tn b{overflow-wrap:anywhere}.lnk{background:none;border:0;color:var(--ink-soft);font-size:.8rem;text-align:left;cursor:pointer;padding:0;text-decoration:underline}
+.tc{display:flex;align-items:center;gap:12px}.tc output{font:800 1.8rem var(--display);min-width:2.2ch;text-align:center;font-variant-numeric:tabular-nums}
+.tb{width:56px;height:56px;border-radius:50%;border:2px solid var(--line);background:var(--card);color:var(--ink);font:700 1.6rem var(--display);cursor:pointer}.tb.p{background:var(--river);border-color:var(--river);color:#fff}.tb:active{transform:scale(.94)}
+.cv{position:relative;height:240px}
+.sr{position:absolute;left:-999px}
+.leg{display:flex;align-items:center;flex-wrap:wrap;gap:8px;font-size:.8rem;color:var(--ink-soft);margin-top:6px}.leg i{display:block;height:10px;width:120px;border-radius:99px}#map{width:100%;height:100%;border-radius:12px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:6px}
+.kpi{padding:12px;border-radius:14px;background:var(--mist);border:1px solid var(--line);text-align:center}
+.kpi small{display:block;font:700 .72rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em}
+.kpi b{font:800 1.35rem var(--display);font-variant-numeric:tabular-nums}
+.cs{width:100%;height:260px;display:block;border-radius:12px;border:1px solid var(--line)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:12px}.kpi{padding:12px;border-radius:14px;background:var(--mist);border:1px solid var(--line);text-align:center}.kpi small{display:block;font:700 .72rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em}.kpi b{font:800 1.15rem var(--display);font-variant-numeric:tabular-nums}
+.cv{position:relative;height:280px}input[type=range]{width:100%;accent-color:var(--river)}
+</style>
+</head>
+<body>
+<div class="progress" id="progress" aria-hidden="true"></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav" id="nav" data-solid>
+  <div class="wrap">
+    <a class="brand" href="../index.html">ESE Research<span> Hub</span></a>
+    <nav class="links" id="links" aria-label="Main">
+      <div class="dd cur"><button class="dd-btn" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="toolsMenu">Tools <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="dd-menu" id="toolsMenu"><a href="../portal.html"><i class="fa-solid fa-building-columns" aria-hidden="true"></i><span><b>JKKNIU &amp; ESE Portal</b><small>Official links in one place</small></span></a><a href="../library.html"><i class="fa-solid fa-folder-open" aria-hidden="true"></i><span><b>Batch Library</b><small>Shared ESE study materials</small></span></a><a href="../sound-meter.html"><i class="fa-solid fa-ear-listen" aria-hidden="true"></i><span><b>Sound Level Meter</b><small>Measure noise with your phone</small></span></a><a href="../soil-texture.html"><i class="fa-solid fa-layer-group" aria-hidden="true"></i><span><b>Soil Texture Triangle</b><small>Plot sand, silt and clay</small></span></a><a href="../rock-cycle.html"><i class="fa-solid fa-gem" aria-hidden="true"></i><span><b>Rock Cycle Simulator</b><small>Weathering to metamorphism</small></span></a><a href="../gis-map.html"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i><span><b>GIS Area Explorer</b><small>Boundary, topography, pollution</small></span></a><a href="../gis-lab.html"><i class="fa-solid fa-satellite" aria-hidden="true"></i><span><b>WebGIS Lab</b><small>DEM profiles and GEE scripts</small></span></a><a href="../field-notebook.html"><i class="fa-solid fa-person-hiking" aria-hidden="true"></i><span><b>Field Notebook</b><small>Phone-only field measurements</small></span></a><a href="../water-quality.html"><i class="fa-solid fa-droplet" aria-hidden="true"></i><span><b>Water Quality</b><small>WQI against WHO and BD limits</small></span></a><a href="../field-tracker.html"><i class="fa-solid fa-route" aria-hidden="true"></i><span><b>Field Tracker</b><small>GPS track and waypoints</small></span></a><a href="../ecology-quadrat.html"><i class="fa-solid fa-table-cells" aria-hidden="true"></i><span><b>Quadrat Counter</b><small>Tally species, diversity indices</small></span></a><a class="on" aria-current="page" href="../simulations/pumping-well-drawdown.html"><i class="fa-solid fa-industry" aria-hidden="true"></i><span><b>Air Dispersion</b><small>Gaussian plume from a stack</small></span></a><a href="../eia-field.html"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i><span><b>EIA Field Visit Kit</b><small>Baseline checklist and impact matrix</small></span></a><a href="../ee-analyzer.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Earth Engine</b><small>Satellite analysis of any area</small></span></a><a href="../weather.html"><i class="fa-solid fa-cloud-sun-rain" aria-hidden="true"></i><span><b>EcoLens Weather</b><small>Your photo plus live weather and rain chance</small></span></a><a href="../atmosphere-sim.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Atmosphere Simulator</b><small>Three-cell circulation model</small></span></a></div></div>
+      <a href="index.html" aria-current="page">Simulations</a>
+      <a href="../about.html">About</a>
+      <a href="../about.html#contact">Contact</a>
+    </nav>
+    <div class="tools">
+      <button class="icon-btn" id="theme" type="button" aria-label="Switch to dark theme"><i class="fa-solid fa-moon"></i></button>
+      <button class="icon-btn burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="links"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</header>
+<div class="page-hero">
+  <div class="wrap">
+    <h1>Pumping well drawdown</h1>
+    <p>Pump a well and watch the water table sink into a cone of depression that spreads outward with time. Change the pumping rate and the aquifer properties, add a second well to see how wells interfere, and read the drawdown at any distance.</p>
+  </div>
+</div>
+<main id="main">
+<div class="wrap">
+  <div class="panel" style="margin-top:-24px;position:relative;z-index:2">
+    <h2><i class="fa-solid fa-sliders"></i> Aquifer and wells</h2>
+    <div class="grid2">
+      <div>
+        <div class="fld"><label for="Q">Pumping rate Q (m³/day): <b id="Qv"></b></label><input id="Q" type="range" min="50" max="5000" step="50" value="1000"></div>
+        <div class="fld"><label for="Tr">Transmissivity T (m²/day): <b id="Trv"></b></label><input id="Tr" type="range" min="10" max="3000" step="10" value="500"><small>How easily water moves through the full thickness of the aquifer. Clean sand is high; silt and clay are low.</small></div>
+        <div class="fld"><label for="St">Storativity S: <b id="Stv"></b></label><input id="St" type="range" min="-5" max="-1" step="0.1" value="-3.7"><small>Water released per unit area per metre of head drop. Confined aquifers are typically 10⁻⁵ to 10⁻³.</small></div>
+      </div>
+      <div>
+        <div class="fld"><label for="t">Time since pumping started (days): <b id="tv"></b></label><input id="t" type="range" min="-2" max="3.5" step="0.02" value="0.5"></div>
+        <div class="fld"><label for="r">Observation distance from the well (m): <b id="rv"></b></label><input id="r" type="range" min="1" max="1000" step="1" value="100"></div>
+        <label class="chk"><input type="checkbox" id="w2"> Add a second pumping well</label>
+        <div id="w2box" hidden>
+          <div class="row">
+            <div class="fld"><label for="d2">Distance to well 2 (m)</label><input id="d2" type="number" min="10" max="2000" step="10" value="300"></div>
+            <div class="fld"><label for="Q2">Well 2 rate (m³/day)</label><input id="Q2" type="number" min="0" max="5000" step="50" value="1000"></div>
+          </div>
+        </div>
+        <div class="btns"><button class="b pri" type="button" id="play"><i class="fa-solid fa-play"></i> Run pumping</button><button class="b" type="button" id="reset">Reset</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2><i class="fa-solid fa-water"></i> Cross-section</h2>
+    <canvas id="cs" class="cs" role="img" aria-label="Cross-section of the water level around the pumping well"></canvas>
+    <div class="kpis" id="kp"></div>
+    <div class="sec">Drawdown at the observation point over time</div>
+    <div class="cv"><canvas id="c1" role="img" aria-label="Drawdown against time at the observation distance"></canvas></div>
+    <div class="btns"><button class="b" type="button" id="csv"><i class="fa-solid fa-file-csv"></i> Drawdown CSV</button></div>
+  </div>
+
+  <div class="panel">
+    <h2><i class="fa-solid fa-circle-info"></i> How it works</h2>
+    <ul class="steps">
+      <li><b>Theis equation (1935).</b> For a well pumped at a constant rate Q in a confined aquifer, the drawdown s at distance r after time t is s = Q / (4πT) · W(u), with u = r²S / (4Tt). W(u) is the well function, W(u) = −0.5772 − ln u + u − u²/(2·2!) + u³/(3·3!) − …</li>
+      <li><b>Cone of depression.</b> Drawdown is largest at the well and falls with distance. The cone keeps widening as long as pumping continues.</li>
+      <li><b>Radius of influence.</b> The Cooper–Jacob approximation r<sub>0</sub> = 1.5 √(T t / S) gives the distance at which the straight-line approximation of drawdown reaches zero. It is valid once u is small.</li>
+      <li><b>Two wells.</b> Drawdowns simply add (superposition): s = s<sub>1</sub>(r<sub>1</sub>) + s<sub>2</sub>(r<sub>2</sub>), where r<sub>1</sub> and r<sub>2</sub> are the distances to each well. The cross-section runs along the line through both wells.</li>
+    </ul>
+    <p class="note">The model assumes a confined, uniform, infinite aquifer of constant thickness, a fully penetrating well with negligible storage, and constant pumping, with no leakage or boundaries. Real Bangladesh aquifers are layered and leaky, so this explains the behaviour but must not be used to design or license a well. Drawdown shown is at the aquifer level; the vertical scale is exaggerated to make the cone visible.</p>
+  </div>
+</div>
+</main>
+<footer>&copy; 2026 Md Rokibul Islam Robin &middot; <a href="../index.html">Back to home</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="../site.js"></script>
+<script>
+(function(){
+'use strict';
+var $=function(i){return document.getElementById(i)};
+var G=0.5772156649015329;
+function W(u){ // Theis well function = E1(u)
+  if(!(u>0))return Infinity;
+  if(u<=1){var s=-G-Math.log(u),term=1;for(var k=1;k<60;k++){term*=-u/k;s-=term/k;if(Math.abs(term/k)<1e-16)break}return s}
+  var b=u+1,c=1e300,d=1/b,h=d;for(var i=1;i<300;i++){var an=-i*i;b+=2;d=1/(an*d+b);c=b+an/c;var del=c*d;h*=del;if(Math.abs(del-1)<1e-14)break}return h*Math.exp(-u)}
+function drawdown(Q,T,S,r,t){if(t<=0)return 0;if(r<.05)r=.05;return Q/(4*Math.PI*T)*W(r*r*S/(4*T*t))}
+function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()}
+function P(){var v=function(i){return +$(i).value};return{Q:v('Q'),T:v('Tr'),S:Math.pow(10,v('St')),t:Math.pow(10,v('t')),r:v('r'),two:$('w2').checked,d:+$('d2').value,Q2:+$('Q2').value}}
+function total(p,x,t){ // x = position along the line of wells (well 1 at 0, well 2 at d)
+  var s=drawdown(p.Q,p.T,p.S,Math.abs(x),t);if(p.two)s+=drawdown(p.Q2,p.T,p.S,Math.abs(x-p.d),t);return s}
+function f(v,d){return(+v).toFixed(d)}
+var ch=null;
+function draw(){var p=P();$('Qv').textContent=p.Q;$('Trv').textContent=p.T;$('Stv').textContent=p.S.toExponential(1);$('tv').textContent=p.t<1?f(p.t*24,1)+' hours':f(p.t,1)+' days';$('rv').textContent=p.r;$('w2box').hidden=!p.two;
+  var sObs=total(p,p.r,p.t),r0=1.5*Math.sqrt(p.T*p.t/p.S),u=p.r*p.r*p.S/(4*p.T*p.t),sWell=drawdown(p.Q,p.T,p.S,.1,p.t);
+  $('kp').innerHTML=[['Drawdown at '+p.r+' m',f(sObs,2)+' m'],['Near the well (0.1 m)',f(sWell,2)+' m'],['Radius of influence',r0>=1000?f(r0/1000,2)+' km':f(r0,0)+' m'],['u = r²S / 4Tt',u.toExponential(2)],['Well function W(u)',f(W(u),3)]].map(function(k){return'<div class="kpi"><small>'+k[0]+'</small><b>'+k[1]+'</b></div>'}).join('');
+  var cv=$('cs'),rc=cv.getBoundingClientRect(),Wd=Math.max(320,Math.floor(rc.width)),H=260;cv.width=Wd;cv.height=H;var g=cv.getContext('2d');
+  var half=Math.max(150,Math.min(3000,r0*1.2,1.5*Math.max(p.r,p.two?p.d:0)+100)),x0=p.two?-half*.4:-half,x1=p.two?p.d+half*.6:half,top=60,sc=function(x){return(x-x0)/(x1-x0)*Wd};
+  var N=Math.floor(Wd/3),pts=[],smax=0;for(var i=0;i<=N;i++){var x=x0+(x1-x0)*i/N,s=total(p,x,p.t);pts.push([x,s]);if(s>smax)smax=s}
+  var depth=Math.max(smax,.5),ys=function(s){return top+Math.min(130,s/depth*110)};
+  g.fillStyle='#8b6b3d';g.fillRect(0,top+150,Wd,H-top-150);g.fillStyle='#c9b79a';g.fillRect(0,top+18,Wd,132);
+  g.fillStyle=css('--card')||'#fff';g.fillRect(0,0,Wd,top-2);
+  g.fillStyle='#2a7fa8';g.globalAlpha=.55;g.fillRect(0,top+18,Wd,132);g.globalAlpha=1;
+  g.fillStyle='#c9b79a';g.beginPath();g.moveTo(0,top+18);pts.forEach(function(q){g.lineTo(sc(q[0]),top+18+Math.min(130,q[1]/depth*110))});g.lineTo(Wd,top+18);g.closePath();g.fill();
+  g.strokeStyle='#d1604a';g.lineWidth=2;g.beginPath();pts.forEach(function(q,i){var X=sc(q[0]),Y=top+18+Math.min(130,q[1]/depth*110);i?g.lineTo(X,Y):g.moveTo(X,Y)});g.stroke();
+  g.setLineDash([6,5]);g.strokeStyle='#1f5f80';g.beginPath();g.moveTo(0,top+18);g.lineTo(Wd,top+18);g.stroke();g.setLineDash([]);
+  function well(x,lab){var X=sc(x);g.fillStyle='#333';g.fillRect(X-4,top-20,8,170);g.fillStyle=css('--ink')||'#222';g.font='12px sans-serif';g.textAlign='center';g.fillText(lab,X,top-26)}
+  well(0,'Well 1');if(p.two)well(p.d,'Well 2');
+  var xo=sc(p.r);g.strokeStyle='#7b5ea7';g.lineWidth=2;g.beginPath();g.moveTo(xo,top+4);g.lineTo(xo,top+150);g.stroke();g.fillStyle='#7b5ea7';g.textAlign='center';g.fillText('observe '+p.r+' m',Math.min(Wd-50,Math.max(50,xo)),top+170);
+  g.textAlign='left';g.fillStyle=css('--ink-soft')||'#555';g.fillText('dashed = original water level   ·   red = pumped water level   ·   max drawdown '+f(smax,2)+' m (vertical exaggerated)',8,H-8);
+  // time series
+  var ts=[],lab=[];for(var k=0;k<=60;k++){var tt=Math.pow(10,-2+5.5*k/60);lab.push(+tt.toFixed(3));ts.push(+total(p,p.r,tt).toFixed(3))}
+  var tk={color:css('--ink-soft')},gr={color:css('--line')};if(ch)ch.destroy();
+  ch=new Chart($('c1'),{type:'line',data:{labels:lab,datasets:[{label:'Drawdown (m)',data:ts,borderColor:'#d1604a',backgroundColor:'#d1604a22',fill:true,pointRadius:0,tension:.2}]},options:{animation:false,responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{type:'category',title:{display:true,text:'Days since pumping began (log spaced)',color:tk.color},ticks:{color:tk.color,maxTicksLimit:7,callback:function(v){var l=this.getLabelForValue(v);return l>=1?Math.round(l):l.toFixed(2)}},grid:gr},y:{reverse:true,title:{display:true,text:'Drawdown (m)',color:tk.color},ticks:tk,grid:gr}}}});
+  window.__last={p:p,sObs:sObs,r0:r0}
+}
+['Q','Tr','St','t','r','d2','Q2'].forEach(function(id){$(id).addEventListener('input',draw)});$('w2').addEventListener('change',draw);
+var raf=null;
+$('play').onclick=function(){if(raf){cancelAnimationFrame(raf);raf=null;$('play').innerHTML='<i class="fa-solid fa-play"></i> Run pumping';return}
+  var sl=$('t'),a=-2,b=3.5,t0=null,dur=11000;$('play').innerHTML='<i class="fa-solid fa-pause"></i> Pause';
+  (function step(ts){if(t0==null)t0=ts;var k=Math.min(1,(ts-t0)/dur);sl.value=a+(b-a)*k;draw();if(k<1)raf=requestAnimationFrame(step);else{raf=null;$('play').innerHTML='<i class="fa-solid fa-play"></i> Run pumping'}})(performance.now())};
+$('reset').onclick=function(){var D={Q:1000,Tr:500,St:-3.7,t:.5,r:100};for(var k in D)$(k).value=D[k];$('w2').checked=false;draw()};
+$('csv').onclick=function(){var p=P(),r=['days,drawdown_m_at_'+p.r+'_m'];for(var k=0;k<=100;k++){var tt=Math.pow(10,-2+5.5*k/100);r.push(tt.toFixed(4)+','+total(p,p.r,tt).toFixed(4))}
+  var u=URL.createObjectURL(new Blob(['﻿'+r.join('\n')],{type:'text/csv'})),a=document.createElement('a');a.href=u;a.download='drawdown.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},500)};
+window.addEventListener('resize',draw);
+window.__W=W;window.__dd=drawdown;
+draw();
+})();
+</script>
+</body>
+</html>
