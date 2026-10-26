@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>River Oxygen Sag Simulation | ESE Research Hub</title>
+<meta name="description" content="Interactive Streeter-Phelps simulation: see how a waste discharge changes dissolved oxygen and BOD along a river, find the critical point and follow the water downstream.">
+<meta name="theme-color" content="#0E2A2F">
+<link rel="canonical" href="https://mdrokibul.me/simulations/river-oxygen-sag.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ESE Research Hub">
+<meta property="og:url" content="https://mdrokibul.me/simulations/river-oxygen-sag.html">
+<meta property="og:title" content="River Oxygen Sag Simulation">
+<meta property="og:description" content="Interactive Streeter-Phelps simulation: see how a waste discharge changes dissolved oxygen and BOD along a river, find the critical point and follow the water downstream.">
+<meta property="og:image" content="https://mdrokibul.me/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="River Oxygen Sag Simulation">
+<meta name="twitter:description" content="Interactive Streeter-Phelps simulation: see how a waste discharge changes dissolved oxygen and BOD along a river, find the critical point and follow the water downstream.">
+<meta name="twitter:image" content="https://mdrokibul.me/og-image.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":["WebPage","WebApplication"],"name":"River Oxygen Sag Simulation","url":"https://mdrokibul.me/simulations/river-oxygen-sag.html","description":"Interactive Streeter-Phelps simulation: see how a waste discharge changes dissolved oxygen and BOD along a river, find the critical point and follow the water downstream.","applicationCategory":"EducationalApplication","operatingSystem":"Any","inLanguage":"en","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"isPartOf":{"@type":"WebSite","name":"ESE Research Hub","url":"https://mdrokibul.me/"},"author":{"@type":"Person","name":"Md Rokibul Islam Robin","url":"https://mdrokibul.me/about.html"}}</script>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="../nav.css">
+<link rel="stylesheet" href="../site.css">
+<style>
+main{padding:0 0 56px}
+[hidden]{display:none!important}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:clamp(18px,3vw,28px);box-shadow:0 10px 30px rgba(0,0,0,.09);margin-top:18px}
+.panel h2{font-size:1.25rem;font-weight:800;margin-bottom:6px;display:flex;gap:10px;align-items:center}
+.panel h2 i{color:var(--river)}
+.sub{font-size:.97rem;color:var(--ink-soft);margin-bottom:14px}
+.tabs{display:flex;gap:6px;margin-top:-24px;position:relative;z-index:2;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px;box-shadow:0 10px 30px rgba(0,0,0,.1)}
+.tabs button{flex:1;font:700 .95rem var(--display);padding:11px 8px;border-radius:999px;border:0;background:transparent;color:var(--ink);cursor:pointer;display:inline-flex;gap:8px;align-items:center;justify-content:center}
+.tabs button[aria-selected=true]{background:var(--river);color:#fff}
+.tabs .cnt{font-size:.75rem;background:rgba(255,255,255,.22);padding:1px 8px;border-radius:999px}
+.tabs button:not([aria-selected=true]) .cnt{background:var(--mist);color:var(--ink-soft)}
+@media (max-width:520px){.tabs button span.t{display:none}.tabs button{font-size:.85rem}}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:860px){.grid2{grid-template-columns:1fr}}
+.grid2>*{min-width:0}
+.fld{display:grid;gap:5px;margin-bottom:12px}
+.fld label{font:700 .8rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em}
+.fld input,.fld select,.fld textarea{font:inherit;font-size:1.05rem;width:100%;padding:11px 13px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink);font-variant-numeric:tabular-nums}
+.fld input:focus,.fld select:focus,.fld textarea:focus{outline:none;border-color:var(--river)}
+.fld small{font-size:.85rem;color:var(--ink-soft)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.b{font:700 .95rem var(--display);padding:11px 18px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;display:inline-flex;gap:8px;align-items:center;justify-content:center}
+.b:hover{background:var(--mist)}.b.pri{background:var(--river);border-color:var(--river);color:#fff}.b.pri:hover{background:#27818b}
+.b.bad{color:var(--bad)}.b[disabled]{opacity:.45;cursor:not-allowed}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.big{font:800 clamp(2.6rem,9vw,3.8rem)/1 var(--display);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.live{padding:16px;border-radius:18px;background:var(--mist);border:2px solid var(--line);text-align:center}
+.live small{display:block;font:700 .8rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.live.hit{border-color:var(--good);background:color-mix(in srgb,var(--good) 14%,var(--mist))}
+.stat{font-size:.92rem;color:var(--ink-soft);margin:10px 0;display:flex;gap:8px;align-items:center}
+.stat::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--line);flex:none}
+.stat.ok::before{background:var(--good)}.stat.run::before{background:var(--warn)}.stat.bad::before{background:var(--bad)}
+.cam{position:relative;border-radius:16px;overflow:hidden;background:#000;aspect-ratio:3/4;max-height:420px;margin:12px auto 0;max-width:340px}
+.cam video{width:100%;height:100%;object-fit:cover}
+.cam::before,.cam::after{content:"";position:absolute;background:rgba(255,255,255,.85);z-index:2}
+.cam::before{left:50%;top:0;bottom:0;width:2px;margin-left:-1px}.cam::after{top:50%;left:0;right:0;height:2px;margin-top:-1px}
+.res{margin-top:14px;padding:16px;border-radius:16px;border:2px solid var(--river);background:color-mix(in srgb,var(--river) 8%,var(--card))}
+.res .big{color:var(--river)}
+.res p{margin-top:6px;font-size:.95rem;color:var(--ink-soft)}
+.steps{padding-left:1.2em;color:var(--ink-soft);font-size:.98rem}.steps li+li{margin-top:.5em}
+.msg{min-height:1.3em;font-size:.95rem;margin-top:8px}.msg.err{color:var(--bad);font-weight:600}.msg.ok{color:var(--good);font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th,td{text-align:left;padding:8px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:700 .74rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.scroll{overflow-x:auto}
+.tag{display:inline-block;padding:2px 9px;border-radius:999px;font:700 .75rem var(--display);background:var(--mist);border:1px solid var(--line)}
+.sec{font:800 .85rem var(--display);text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);margin:20px 0 8px}
+.empty{padding:26px;text-align:center;color:var(--ink-soft);border:2px dashed var(--line);border-radius:16px}
+.chk{display:flex;gap:9px;align-items:center;margin:6px 0;font-size:.98rem}.chk input{width:18px;height:18px;accent-color:var(--river)}
+.note{font-size:.88rem;color:var(--ink-soft);margin-top:10px;line-height:1.45}
+.sr{position:absolute;left:-999px}
+.bar{height:8px;border-radius:99px;background:var(--mist);overflow:hidden;min-width:70px}.bar i{display:block;height:100%;background:var(--good)}.bar i.w{background:var(--warn)}.bar i.x{background:var(--bad)}
+.ok{color:var(--good);font-weight:700}.no{color:var(--bad);font-weight:700}
+.params{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:0 14px}
+.qbar{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 12px}.qbar select{flex:1;min-width:180px;font:inherit;padding:11px 13px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink)}
+.sp-add{display:flex;gap:10px;flex-wrap:wrap}.sp-add input{flex:1;min-width:180px;font:inherit;padding:11px 13px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink)}
+.tally{display:grid;gap:10px;margin-top:12px}.trow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border-radius:16px;border:1px solid var(--line);background:var(--mist)}
+.tn{display:grid;gap:2px;min-width:0}.tn b{overflow-wrap:anywhere}.lnk{background:none;border:0;color:var(--ink-soft);font-size:.8rem;text-align:left;cursor:pointer;padding:0;text-decoration:underline}
+.tc{display:flex;align-items:center;gap:12px}.tc output{font:800 1.8rem var(--display);min-width:2.2ch;text-align:center;font-variant-numeric:tabular-nums}
+.tb{width:56px;height:56px;border-radius:50%;border:2px solid var(--line);background:var(--card);color:var(--ink);font:700 1.6rem var(--display);cursor:pointer}.tb.p{background:var(--river);border-color:var(--river);color:#fff}.tb:active{transform:scale(.94)}
+.cv{position:relative;height:240px}
+.sr{position:absolute;left:-999px}
+.leg{display:flex;align-items:center;flex-wrap:wrap;gap:8px;font-size:.8rem;color:var(--ink-soft);margin-top:6px}.leg i{display:block;height:10px;width:120px;border-radius:99px}#map{width:100%;height:100%;border-radius:12px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:6px}
+.kpi{padding:12px;border-radius:14px;background:var(--mist);border:1px solid var(--line);text-align:center}
+.kpi small{display:block;font:700 .72rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em}
+.kpi b{font:800 1.35rem var(--display);font-variant-numeric:tabular-nums}
+.rv{width:100%;height:90px;border-radius:12px;display:block}
+.leg{display:flex;align-items:center;flex-wrap:wrap;gap:8px;font-size:.8rem;color:var(--ink-soft);margin-top:6px}.leg i{display:block;height:10px;width:140px;border-radius:99px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:12px}.kpi{padding:12px;border-radius:14px;background:var(--mist);border:1px solid var(--line);text-align:center}.kpi small{display:block;font:700 .72rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em}.kpi b{font:800 1.2rem var(--display);font-variant-numeric:tabular-nums}
+.cv{position:relative;height:300px;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="progress" id="progress" aria-hidden="true"></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav" id="nav" data-solid>
+  <div class="wrap">
+    <a class="brand" href="../index.html">ESE Research<span> Hub</span></a>
+    <nav class="links" id="links" aria-label="Main">
+      <div class="dd cur"><button class="dd-btn" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="toolsMenu">Tools <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="dd-menu" id="toolsMenu"><a href="../portal.html"><i class="fa-solid fa-building-columns" aria-hidden="true"></i><span><b>JKKNIU &amp; ESE Portal</b><small>Official links in one place</small></span></a><a href="../library.html"><i class="fa-solid fa-folder-open" aria-hidden="true"></i><span><b>Batch Library</b><small>Shared ESE study materials</small></span></a><a href="../sound-meter.html"><i class="fa-solid fa-ear-listen" aria-hidden="true"></i><span><b>Sound Level Meter</b><small>Measure noise with your phone</small></span></a><a href="../soil-texture.html"><i class="fa-solid fa-layer-group" aria-hidden="true"></i><span><b>Soil Texture Triangle</b><small>Plot sand, silt and clay</small></span></a><a href="../rock-cycle.html"><i class="fa-solid fa-gem" aria-hidden="true"></i><span><b>Rock Cycle Simulator</b><small>Weathering to metamorphism</small></span></a><a href="../gis-map.html"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i><span><b>GIS Area Explorer</b><small>Boundary, topography, pollution</small></span></a><a href="../gis-lab.html"><i class="fa-solid fa-satellite" aria-hidden="true"></i><span><b>WebGIS Lab</b><small>DEM profiles and GEE scripts</small></span></a><a href="../field-notebook.html"><i class="fa-solid fa-person-hiking" aria-hidden="true"></i><span><b>Field Notebook</b><small>Phone-only field measurements</small></span></a><a href="../water-quality.html"><i class="fa-solid fa-droplet" aria-hidden="true"></i><span><b>Water Quality</b><small>WQI against WHO and BD limits</small></span></a><a href="../field-tracker.html"><i class="fa-solid fa-route" aria-hidden="true"></i><span><b>Field Tracker</b><small>GPS track and waypoints</small></span></a><a href="../ecology-quadrat.html"><i class="fa-solid fa-table-cells" aria-hidden="true"></i><span><b>Quadrat Counter</b><small>Tally species, diversity indices</small></span></a><a class="on" aria-current="page" href="../simulations/river-oxygen-sag.html"><i class="fa-solid fa-industry" aria-hidden="true"></i><span><b>Air Dispersion</b><small>Gaussian plume from a stack</small></span></a><a href="../eia-field.html"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i><span><b>EIA Field Visit Kit</b><small>Baseline checklist and impact matrix</small></span></a><a href="../ee-analyzer.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Earth Engine</b><small>Satellite analysis of any area</small></span></a><a href="../weather.html"><i class="fa-solid fa-cloud-sun-rain" aria-hidden="true"></i><span><b>EcoLens Weather</b><small>Your photo plus live weather and rain chance</small></span></a><a href="../atmosphere-sim.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Atmosphere Simulator</b><small>Three-cell circulation model</small></span></a></div></div>
+      <a href="index.html" aria-current="page">Simulations</a>
+      <a href="../about.html">About</a>
+      <a href="../about.html#contact">Contact</a>
+    </nav>
+    <div class="tools">
+      <button class="icon-btn" id="theme" type="button" aria-label="Switch to dark theme"><i class="fa-solid fa-moon"></i></button>
+      <button class="icon-btn burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="links"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</header>
+<div class="page-hero">
+  <div class="wrap">
+    <h1>River oxygen sag</h1>
+    <p>Watch what a waste discharge does to the oxygen in a river. Change the flow, the pollution load and the temperature, then follow a parcel of water downstream to see where dissolved oxygen drops lowest. This is the classic Streeter–Phelps model from environmental engineering.</p>
+  </div>
+</div>
+<main id="main">
+<div class="wrap">
+  <div class="panel" style="margin-top:-24px;position:relative;z-index:2">
+    <h2><i class="fa-solid fa-sliders"></i> River and waste</h2>
+    <div class="grid2">
+      <div>
+        <div class="sec" style="margin-top:0">River upstream of the outfall</div>
+        <div class="row">
+          <div class="fld"><label for="Qr">Flow (m³/s)</label><input id="Qr" type="number" step="any" min="0.01" value="10"></div>
+          <div class="fld"><label for="Lr">BOD₅-ultimate L (mg/L)</label><input id="Lr" type="number" step="any" min="0" value="1"></div>
+        </div>
+        <div class="row">
+          <div class="fld"><label for="Dr">Dissolved oxygen (mg/L)</label><input id="Dr" type="number" step="any" min="0" value="8"></div>
+          <div class="fld"><label for="Tr">Temperature (°C)</label><input id="Tr" type="number" step="any" min="0" max="35" value="25"></div>
+        </div>
+        <div class="sec">Waste discharge</div>
+        <div class="row">
+          <div class="fld"><label for="Qw">Flow (m³/s)</label><input id="Qw" type="number" step="any" min="0" value="1"></div>
+          <div class="fld"><label for="Lw">BOD-ultimate L (mg/L)</label><input id="Lw" type="number" step="any" min="0" value="60"></div>
+        </div>
+        <div class="row">
+          <div class="fld"><label for="Dw">Dissolved oxygen (mg/L)</label><input id="Dw" type="number" step="any" min="0" value="1"></div>
+          <div class="fld"><label for="Tw">Temperature (°C)</label><input id="Tw" type="number" step="any" min="0" max="35" value="28"></div>
+        </div>
+      </div>
+      <div>
+        <div class="sec" style="margin-top:0">Stream behaviour</div>
+        <div class="row">
+          <div class="fld"><label for="v">Velocity (m/s)</label><input id="v" type="number" step="any" min="0.01" value="0.3"></div>
+          <div class="fld"><label for="kd">Deoxygenation k<sub>d</sub> at 20 °C (1/day)</label><input id="kd" type="number" step="any" min="0.01" value="0.3"></div>
+        </div>
+        <div class="fld"><label for="kr">Reaeration k<sub>r</sub> at 20 °C (1/day)</label><input id="kr" type="number" step="any" min="0.01" value="0.4"><small>Larger for shallow, fast, turbulent streams; smaller for deep, slow ones.</small></div>
+        <div class="fld"><label for="ln">Distance to show (km)</label><input id="ln" type="number" step="1" min="5" max="500" value="150"></div>
+        <div class="btns"><button class="b pri" type="button" id="play"><i class="fa-solid fa-play"></i> Follow the water</button><button class="b" type="button" id="reset">Reset values</button></div>
+        <div class="msg" id="msg" role="alert"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2><i class="fa-solid fa-water"></i> The river</h2>
+    <canvas id="rv" class="rv" role="img" aria-label="River strip coloured by dissolved oxygen"></canvas>
+    <div class="leg"><i style="background:linear-gradient(90deg,#b2182b,#ef8a62,#fddbc7,#92c5de,#2166ac)"></i><span>0 mg/L</span><span>saturation</span></div>
+    <div class="kpis" id="kp"></div>
+    <div class="fld" style="margin-top:12px"><label for="sl">Position along the river: <b id="slv">0 km</b></label><input id="sl" type="range" min="0" max="100" step="0.5" value="0"></div>
+    <div class="cv"><canvas id="c1" role="img" aria-label="Dissolved oxygen and BOD against distance"></canvas></div>
+  </div>
+
+  <div class="panel">
+    <h2><i class="fa-solid fa-circle-info"></i> How it works</h2>
+    <ul class="steps">
+      <li><b>Mixing.</b> Just below the outfall the river and waste mix completely. Flow-weighted averages give the starting BOD L₀, oxygen DO₀ and temperature.</li>
+      <li><b>Oxygen demand.</b> Bacteria use oxygen to break down the waste: L(t) = L₀·e<sup>−k<sub>d</sub>t</sup>.</li>
+      <li><b>Oxygen deficit.</b> D = DO<sub>sat</sub> − DO. It grows from deoxygenation and shrinks from reaeration through the water surface: D(t) = [k<sub>d</sub>L₀ / (k<sub>r</sub> − k<sub>d</sub>)]·(e<sup>−k<sub>d</sub>t</sup> − e<sup>−k<sub>r</sub>t</sup>) + D₀·e<sup>−k<sub>r</sub>t</sup>.</li>
+      <li><b>Critical point.</b> The lowest oxygen occurs at t<sub>c</sub> = [1 / (k<sub>r</sub> − k<sub>d</sub>)] · ln{ (k<sub>r</sub>/k<sub>d</sub>) · [1 − D₀(k<sub>r</sub> − k<sub>d</sub>) / (k<sub>d</sub>L₀)] }. Distance = velocity × time.</li>
+      <li><b>Temperature.</b> Rates are corrected as k<sub>T</sub> = k<sub>20</sub>·θ<sup>T−20</sup> with θ = 1.047 for deoxygenation and 1.024 for reaeration. Saturation DO comes from a standard freshwater table (0–35 °C, sea level) by interpolation.</li>
+    </ul>
+    <p class="note">Rates used here are typical textbook values and defaults are for learning. Real rivers need measured k<sub>d</sub> and k<sub>r</sub>. The model assumes one steady discharge, a single straight reach, no algae, sediment demand or tributaries, so use it to understand cause and effect, not to permit a real discharge. If DO would fall to zero the model's equations stop being valid and the page says so.</p>
+  </div>
+</div>
+</main>
+<footer>&copy; 2026 Md Rokibul Islam Robin &middot; <a href="../index.html">Back to home</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="../site.js"></script>
+<script>
+(function(){
+'use strict';
+var $=function(i){return document.getElementById(i)};
+var TT=[[0,14.62],[5,12.77],[10,11.29],[15,10.07],[20,9.09],[25,8.26],[30,7.56],[35,6.95]];
+function dosat(T){T=Math.max(0,Math.min(35,T));for(var i=1;i<TT.length;i++)if(T<=TT[i][0]){var a=TT[i-1],b=TT[i];return a[1]+(b[1]-a[1])*(T-a[0])/(b[0]-a[0])}return TT[TT.length-1][1]}
+var DEF={Qr:10,Lr:1,Dr:8,Tr:25,Qw:1,Lw:60,Dw:1,Tw:28,v:.3,kd:.3,kr:.4,ln:150};
+function read(){var P={};for(var k in DEF)P[k]=+$(k).value;return P}
+function model(P){
+  var Q=P.Qr+P.Qw,L0=(P.Qr*P.Lr+P.Qw*P.Lw)/Q,DO0=(P.Qr*P.Dr+P.Qw*P.Dw)/Q,T=(P.Qr*P.Tr+P.Qw*P.Tw)/Q;
+  var kd=P.kd*Math.pow(1.047,T-20),kr=P.kr*Math.pow(1.024,T-20),Cs=dosat(T),D0=Cs-DO0;
+  var vkm=P.v*86.4; // km per day
+  function at(t){var L=L0*Math.exp(-kd*t),D;
+    if(Math.abs(kr-kd)<1e-9)D=(kd*L0*t+D0)*Math.exp(-kd*t);else D=kd*L0/(kr-kd)*(Math.exp(-kd*t)-Math.exp(-kr*t))+D0*Math.exp(-kr*t);
+    return{L:L,D:D,DO:Cs-D}}
+  var tc=null;if(Math.abs(kr-kd)>1e-9){var arg=(kr/kd)*(1-D0*(kr-kd)/(kd*L0));if(arg>0)tc=Math.log(arg)/(kr-kd)}
+  if(tc!=null&&tc<0)tc=0; // deficit only falls
+  return{Q:Q,L0:L0,DO0:DO0,T:T,kd:kd,kr:kr,Cs:Cs,D0:D0,vkm:vkm,at:at,tc:tc};
+}
+var ch=null;
+function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()}
+function f(v,d){return isFinite(v)?(+v).toFixed(d):'--'}
+var M=null,P=null;
+function col(t){ // t 0..1 -> color
+  var s=[[178,24,43],[239,138,98],[253,219,199],[146,197,222],[33,102,172]],n=4,i=Math.min(n-1,Math.floor(t*n)),k=t*n-i,a=s[i],b=s[i+1];return'rgb('+Math.round(a[0]+(b[0]-a[0])*k)+','+Math.round(a[1]+(b[1]-a[1])*k)+','+Math.round(a[2]+(b[2]-a[2])*k)+')'}
+function strip(posKm){
+  var cv=$('rv'),r=cv.getBoundingClientRect(),W=Math.max(300,Math.floor(r.width)),H=90;cv.width=W;cv.height=H;var g=cv.getContext('2d'),ox=Math.round(W*.06);
+  for(var x=0;x<W;x++){var km=x<ox?-1:(x-ox)/(W-ox)*P.ln,state=km<0?{DO:P.Dr}:M.at(km/M.vkm),t=Math.max(0,Math.min(1,state.DO/M.Cs));g.fillStyle=km<0?col(Math.max(0,Math.min(1,P.Dr/dosat(P.Tr)))):col(t);g.fillRect(x,22,1,46)}
+  g.fillStyle='#000';g.fillRect(ox-2,10,4,70);g.font='11px sans-serif';g.fillStyle=css('--ink-soft')||'#555';g.fillText('outfall',Math.max(0,ox-18),8);
+  var mx=ox+posKm/P.ln*(W-ox);g.fillStyle='#fff';g.strokeStyle='#000';g.lineWidth=2;g.beginPath();g.arc(mx,45,9,0,7);g.fill();g.stroke();
+  if(M.tc!=null&&M.tc*M.vkm<=P.ln){var cx=ox+M.tc*M.vkm/P.ln*(W-ox);g.fillStyle='#000';g.beginPath();g.moveTo(cx,72);g.lineTo(cx-6,84);g.lineTo(cx+6,84);g.fill()}
+}
+function run(){
+  var m=$('msg');P=read();
+  if(!(P.Qr>0&&P.Qw>=0&&P.Lr>=0&&P.Lw>=0&&P.Dr>=0&&P.Dw>=0&&P.v>0&&P.kd>0&&P.kr>0&&P.ln>=5&&P.ln<=500)){m.className='msg err';m.textContent='Check the inputs: flows above 0 (waste may be 0), concentrations not negative, velocity and rates above 0, distance 5 to 500 km.';return}
+  m.className='msg';m.textContent='';M=model(P);var N=200,xs=[],dos=[],ls=[],min={DO:1e9,km:0},zero=null;
+  for(var i=0;i<=N;i++){var km=P.ln*i/N,s=M.at(km/M.vkm);xs.push(+km.toFixed(1));dos.push(+s.DO.toFixed(3));ls.push(+s.L.toFixed(3));if(s.DO<min.DO)min={DO:s.DO,km:km};if(zero==null&&s.DO<=0)zero=km}
+  var crit=M.tc!=null?M.at(M.tc):null;
+  var warn=zero!=null?'Model breaks down: dissolved oxygen would reach zero about '+f(zero,0)+' km below the outfall, so the equations are not valid beyond that point (real rivers go anaerobic).':'';
+  m.className='msg'+(warn?' err':'');m.textContent=warn;
+  $('kp').innerHTML=[['Mixed BOD L₀',f(M.L0,1)+' mg/L'],['Mixed DO₀',f(M.DO0,2)+' mg/L'],['Saturation DO',f(M.Cs,2)+' mg/L'],['Initial deficit D₀',f(M.D0,2)+' mg/L'],['Lowest DO',crit?f(crit.DO,2)+' mg/L':f(min.DO,2)+' mg/L'],['Where',(crit?f(M.tc*M.vkm,1):f(min.km,1))+' km'],['Time to lowest',crit?f(M.tc,2)+' days':'--'],['k<sub>d</sub> / k<sub>r</sub> at '+f(M.T,1)+' °C',f(M.kd,2)+' / '+f(M.kr,2)+' per day']].map(function(k){return'<div class="kpi"><small>'+k[0]+'</small><b>'+k[1]+'</b></div>'}).join('');
+  var sl=$('sl');sl.max=P.ln;sl.step=P.ln/200;if(+sl.value>P.ln)sl.value=P.ln;
+  var tk={color:css('--ink-soft')},gr={color:css('--line')};if(ch)ch.destroy();
+  ch=new Chart($('c1'),{type:'line',data:{labels:xs,datasets:[{label:'Dissolved oxygen (mg/L)',data:dos,borderColor:'#2a7fa8',pointRadius:0,tension:.2},{label:'Saturation',data:xs.map(function(){return+M.Cs.toFixed(2)}),borderColor:'#7aa',borderDash:[6,5],pointRadius:0},{label:'BOD remaining (mg/L)',data:ls,borderColor:'#b5803b',pointRadius:0,tension:.2}]},options:{animation:false,responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:tk.color}}},scales:{x:{title:{display:true,text:'Distance below the outfall (km)',color:tk.color},ticks:{color:tk.color,maxTicksLimit:9},grid:gr},y:{beginAtZero:true,title:{display:true,text:'mg/L',color:tk.color},ticks:tk,grid:gr}}}});
+  pos(+sl.value);
+}
+function pos(km){$('slv').textContent=f(km,1)+' km  ·  DO '+f(M.at(km/M.vkm).DO,2)+' mg/L  ·  BOD '+f(M.at(km/M.vkm).L,1)+' mg/L';strip(km)}
+$('sl').addEventListener('input',function(){if(M)pos(+this.value)});
+Object.keys(DEF).forEach(function(k){$(k).addEventListener('input',run)});
+var raf=null;
+$('play').onclick=function(){if(raf){cancelAnimationFrame(raf);raf=null;$('play').innerHTML='<i class="fa-solid fa-play"></i> Follow the water';return}
+  var sl=$('sl'),t0=null,start=+sl.value>=P.ln-1?0:+sl.value;$('play').innerHTML='<i class="fa-solid fa-pause"></i> Pause';
+  var dur=9000*(P.ln-start)/P.ln;
+  (function step(ts){if(t0==null)t0=ts;var k=Math.min(1,(ts-t0)/dur);sl.value=start+(P.ln-start)*k;pos(+sl.value);if(k<1)raf=requestAnimationFrame(step);else{raf=null;$('play').innerHTML='<i class="fa-solid fa-play"></i> Follow the water'}})(performance.now?performance.now():0)};
+$('reset').onclick=function(){for(var k in DEF)$(k).value=DEF[k];$('sl').value=0;run()};
+window.addEventListener('resize',function(){if(M)strip(+$('sl').value)});
+window.__m=function(p){return model(p)};
+run();
+})();
+</script>
+</body>
+</html>
