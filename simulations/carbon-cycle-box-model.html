@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carbon Cycle Box Model Simulation | ESE Research Hub</title>
+<meta name="description" content="Interactive four-box carbon cycle model: emit CO2, then see how much stays in the air and how much the land and ocean absorb, and how long the extra CO2 lingers.">
+<meta name="theme-color" content="#0E2A2F">
+<link rel="canonical" href="https://mdrokibul.me/simulations/carbon-cycle-box-model.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ESE Research Hub">
+<meta property="og:url" content="https://mdrokibul.me/simulations/carbon-cycle-box-model.html">
+<meta property="og:title" content="Carbon Cycle Box Model Simulation">
+<meta property="og:description" content="Interactive four-box carbon cycle model: emit CO2, then see how much stays in the air and how much the land and ocean absorb, and how long the extra CO2 lingers.">
+<meta property="og:image" content="https://mdrokibul.me/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Carbon Cycle Box Model Simulation">
+<meta name="twitter:description" content="Interactive four-box carbon cycle model: emit CO2, then see how much stays in the air and how much the land and ocean absorb, and how long the extra CO2 lingers.">
+<meta name="twitter:image" content="https://mdrokibul.me/og-image.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":["WebPage","WebApplication"],"name":"Carbon Cycle Box Model Simulation","url":"https://mdrokibul.me/simulations/carbon-cycle-box-model.html","description":"Interactive four-box carbon cycle model: emit CO2, then see how much stays in the air and how much the land and ocean absorb, and how long the extra CO2 lingers.","applicationCategory":"EducationalApplication","operatingSystem":"Any","inLanguage":"en","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"isPartOf":{"@type":"WebSite","name":"ESE Research Hub","url":"https://mdrokibul.me/"},"author":{"@type":"Person","name":"Md Rokibul Islam Robin","url":"https://mdrokibul.me/about.html"}}</script>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="../nav.css">
+<link rel="stylesheet" href="../site.css">
+<style>
+main{padding:0 0 56px}
+[hidden]{display:none!important}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:clamp(18px,3vw,28px);box-shadow:0 10px 30px rgba(0,0,0,.09);margin-top:18px}
+.panel h2{font-size:1.25rem;font-weight:800;margin-bottom:6px;display:flex;gap:10px;align-items:center}
+.panel h2 i{color:var(--river)}
+.sub{font-size:.97rem;color:var(--ink-soft);margin-bottom:14px}
+.tabs{display:flex;gap:6px;margin-top:-24px;position:relative;z-index:2;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px;box-shadow:0 10px 30px rgba(0,0,0,.1)}
+.tabs button{flex:1;font:700 .95rem var(--display);padding:11px 8px;border-radius:999px;border:0;background:transparent;color:var(--ink);cursor:pointer;display:inline-flex;gap:8px;align-items:center;justify-content:center}
+.tabs button[aria-selected=true]{background:var(--river);color:#fff}
+.tabs .cnt{font-size:.75rem;background:rgba(255,255,255,.22);padding:1px 8px;border-radius:999px}
+.tabs button:not([aria-selected=true]) .cnt{background:var(--mist);color:var(--ink-soft)}
+@media (max-width:520px){.tabs button span.t{display:none}.tabs button{font-size:.85rem}}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:860px){.grid2{grid-template-columns:1fr}}
+.grid2>*{min-width:0}
+.fld{display:grid;gap:5px;margin-bottom:12px}
+.fld label{font:700 .8rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em}
+.fld input,.fld select,.fld textarea{font:inherit;font-size:1.05rem;width:100%;padding:11px 13px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink);font-variant-numeric:tabular-nums}
+.fld input:focus,.fld select:focus,.fld textarea:focus{outline:none;border-color:var(--river)}
+.fld small{font-size:.85rem;color:var(--ink-soft)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.b{font:700 .95rem var(--display);padding:11px 18px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;display:inline-flex;gap:8px;align-items:center;justify-content:center}
+.b:hover{background:var(--mist)}.b.pri{background:var(--river);border-color:var(--river);color:#fff}.b.pri:hover{background:#27818b}
+.b.bad{color:var(--bad)}.b[disabled]{opacity:.45;cursor:not-allowed}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.big{font:800 clamp(2.6rem,9vw,3.8rem)/1 var(--display);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.live{padding:16px;border-radius:18px;background:var(--mist);border:2px solid var(--line);text-align:center}
+.live small{display:block;font:700 .8rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.live.hit{border-color:var(--good);background:color-mix(in srgb,var(--good) 14%,var(--mist))}
+.stat{font-size:.92rem;color:var(--ink-soft);margin:10px 0;display:flex;gap:8px;align-items:center}
+.stat::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--line);flex:none}
+.stat.ok::before{background:var(--good)}.stat.run::before{background:var(--warn)}.stat.bad::before{background:var(--bad)}
+.cam{position:relative;border-radius:16px;overflow:hidden;background:#000;aspect-ratio:3/4;max-height:420px;margin:12px auto 0;max-width:340px}
+.cam video{width:100%;height:100%;object-fit:cover}
+.cam::before,.cam::after{content:"";position:absolute;background:rgba(255,255,255,.85);z-index:2}
+.cam::before{left:50%;top:0;bottom:0;width:2px;margin-left:-1px}.cam::after{top:50%;left:0;right:0;height:2px;margin-top:-1px}
+.res{margin-top:14px;padding:16px;border-radius:16px;border:2px solid var(--river);background:color-mix(in srgb,var(--river) 8%,var(--card))}
+.res .big{color:var(--river)}
+.res p{margin-top:6px;font-size:.95rem;color:var(--ink-soft)}
+.steps{padding-left:1.2em;color:var(--ink-soft);font-size:.98rem}.steps li+li{margin-top:.5em}
+.msg{min-height:1.3em;font-size:.95rem;margin-top:8px}.msg.err{color:var(--bad);font-weight:600}.msg.ok{color:var(--good);font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th,td{text-align:left;padding:8px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:700 .74rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.scroll{overflow-x:auto}
+.tag{display:inline-block;padding:2px 9px;border-radius:999px;font:700 .75rem var(--display);background:var(--mist);border:1px solid var(--line)}
+.sec{font:800 .85rem var(--display);text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);margin:20px 0 8px}
+.empty{padding:26px;text-align:center;color:var(--ink-soft);border:2px dashed var(--line);border-radius:16px}
+.chk{display:flex;gap:9px;align-items:center;margin:6px 0;font-size:.98rem}.chk input{width:18px;height:18px;accent-color:var(--river)}
+.note{font-size:.88rem;color:var(--ink-soft);margin-top:10px;line-height:1.45}
+.sr{position:absolute;left:-999px}
+.bar{height:8px;border-radius:99px;background:var(--mist);overflow:hidden;min-width:70px}.bar i{display:block;height:100%;background:var(--good)}.bar i.w{background:var(--warn)}.bar i.x{background:var(--bad)}
+.ok{color:var(--good);font-weight:700}.no{color:var(--bad);font-weight:700}
+.params{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:0 14px}
+.qbar{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 12px}.qbar select{flex:1;min-width:180px;font:inherit;padding:11px 13px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink)}
+.sp-add{display:flex;gap:10px;flex-wrap:wrap}.sp-add input{flex:1;min-width:180px;font:inherit;padding:11px 13px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink)}
+.tally{display:grid;gap:10px;margin-top:12px}.trow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border-radius:16px;border:1px solid var(--line);background:var(--mist)}
+.tn{display:grid;gap:2px;min-width:0}.tn b{overflow-wrap:anywhere}.lnk{background:none;border:0;color:var(--ink-soft);font-size:.8rem;text-align:left;cursor:pointer;padding:0;text-decoration:underline}
+.tc{display:flex;align-items:center;gap:12px}.tc output{font:800 1.8rem var(--display);min-width:2.2ch;text-align:center;font-variant-numeric:tabular-nums}
+.tb{width:56px;height:56px;border-radius:50%;border:2px solid var(--line);background:var(--card);color:var(--ink);font:700 1.6rem var(--display);cursor:pointer}.tb.p{background:var(--river);border-color:var(--river);color:#fff}.tb:active{transform:scale(.94)}
+.cv{position:relative;height:240px}
+.sr{position:absolute;left:-999px}
+.leg{display:flex;align-items:center;flex-wrap:wrap;gap:8px;font-size:.8rem;color:var(--ink-soft);margin-top:6px}.leg i{display:block;height:10px;width:120px;border-radius:99px}#map{width:100%;height:100%;border-radius:12px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:6px}
+.kpi{padding:12px;border-radius:14px;background:var(--mist);border:1px solid var(--line);text-align:center}
+.kpi small{display:block;font:700 .72rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em}
+.kpi b{font:800 1.35rem var(--display);font-variant-numeric:tabular-nums}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}.kpi{padding:12px;border-radius:14px;background:var(--mist);border:1px solid var(--line);text-align:center}.kpi small{display:block;font:700 .72rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em}.kpi b{font:800 1.1rem var(--display);font-variant-numeric:tabular-nums}
+.cv{position:relative;height:320px}input[type=range]{width:100%;accent-color:var(--river)}
+</style>
+</head>
+<body>
+<div class="progress" id="progress" aria-hidden="true"></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav" id="nav" data-solid>
+  <div class="wrap">
+    <a class="brand" href="../index.html">ESE Research<span> Hub</span></a>
+    <nav class="links" id="links" aria-label="Main">
+      <div class="dd cur"><button class="dd-btn" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="toolsMenu">Tools <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="dd-menu" id="toolsMenu"><a href="../portal.html"><i class="fa-solid fa-building-columns" aria-hidden="true"></i><span><b>JKKNIU &amp; ESE Portal</b><small>Official links in one place</small></span></a><a href="../library.html"><i class="fa-solid fa-folder-open" aria-hidden="true"></i><span><b>Batch Library</b><small>Shared ESE study materials</small></span></a><a href="../sound-meter.html"><i class="fa-solid fa-ear-listen" aria-hidden="true"></i><span><b>Sound Level Meter</b><small>Measure noise with your phone</small></span></a><a href="../soil-texture.html"><i class="fa-solid fa-layer-group" aria-hidden="true"></i><span><b>Soil Texture Triangle</b><small>Plot sand, silt and clay</small></span></a><a href="../rock-cycle.html"><i class="fa-solid fa-gem" aria-hidden="true"></i><span><b>Rock Cycle Simulator</b><small>Weathering to metamorphism</small></span></a><a href="../gis-map.html"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i><span><b>GIS Area Explorer</b><small>Boundary, topography, pollution</small></span></a><a href="../gis-lab.html"><i class="fa-solid fa-satellite" aria-hidden="true"></i><span><b>WebGIS Lab</b><small>DEM profiles and GEE scripts</small></span></a><a href="../field-notebook.html"><i class="fa-solid fa-person-hiking" aria-hidden="true"></i><span><b>Field Notebook</b><small>Phone-only field measurements</small></span></a><a href="../water-quality.html"><i class="fa-solid fa-droplet" aria-hidden="true"></i><span><b>Water Quality</b><small>WQI against WHO and BD limits</small></span></a><a href="../field-tracker.html"><i class="fa-solid fa-route" aria-hidden="true"></i><span><b>Field Tracker</b><small>GPS track and waypoints</small></span></a><a href="../ecology-quadrat.html"><i class="fa-solid fa-table-cells" aria-hidden="true"></i><span><b>Quadrat Counter</b><small>Tally species, diversity indices</small></span></a><a class="on" aria-current="page" href="../simulations/carbon-cycle-box-model.html"><i class="fa-solid fa-industry" aria-hidden="true"></i><span><b>Air Dispersion</b><small>Gaussian plume from a stack</small></span></a><a href="../eia-field.html"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i><span><b>EIA Field Visit Kit</b><small>Baseline checklist and impact matrix</small></span></a><a href="../ee-analyzer.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Earth Engine</b><small>Satellite analysis of any area</small></span></a><a href="../weather.html"><i class="fa-solid fa-cloud-sun-rain" aria-hidden="true"></i><span><b>EcoLens Weather</b><small>Your photo plus live weather and rain chance</small></span></a><a href="../atmosphere-sim.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Atmosphere Simulator</b><small>Three-cell circulation model</small></span></a></div></div>
+      <a href="index.html" aria-current="page">Simulations</a>
+      <a href="../about.html">About</a>
+      <a href="../about.html#contact">Contact</a>
+    </nav>
+    <div class="tools">
+      <button class="icon-btn" id="theme" type="button" aria-label="Switch to dark theme"><i class="fa-solid fa-moon"></i></button>
+      <button class="icon-btn burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="links"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</header>
+<div class="page-hero">
+  <div class="wrap">
+    <h1>Carbon cycle box model</h1>
+    <p>Emit carbon dioxide for a while and follow where it goes: how much stays in the air, how much the land and the ocean take up, and how long the extra CO₂ lingers after emissions stop.</p>
+  </div>
+</div>
+<main id="main">
+<div class="wrap">
+  <div class="panel" style="margin-top:-24px;position:relative;z-index:2">
+    <h2><i class="fa-solid fa-sliders"></i> Scenario</h2>
+    <div class="grid2">
+      <div>
+        <div class="fld"><label for="E">Emissions (GtC per year): <b id="Ev"></b></label><input id="E" type="range" min="0" max="20" step="0.5" value="5"><small>1 GtC (gigatonne of carbon) = 3.67 Gt of CO₂.</small></div>
+        <div class="fld"><label for="Du">Emit for this many years: <b id="Duv"></b></label><input id="Du" type="range" min="10" max="300" step="5" value="130"><small>Then emissions drop to zero.</small></div>
+        <div class="fld"><label for="T">Simulate for (years): <b id="Tv"></b></label><input id="T" type="range" min="50" max="1000" step="10" value="400"></div>
+      </div>
+      <div>
+        <div class="fld"><label for="be">Land response to extra CO₂ (fertilisation): <b id="bev"></b></label><input id="be" type="range" min="0" max="0.5" step="0.01" value="0.15"><small>0 means plants take up no extra carbon when CO₂ rises.</small></div>
+        <div class="fld"><label for="rf">Ocean chemistry buffer (Revelle factor): <b id="rfv"></b></label><input id="rf" type="range" min="6" max="16" step="0.5" value="10"><small>Larger means surface water resists taking up more CO₂.</small></div>
+        <div class="btns"><button class="b" type="button" data-p="a">5 GtC/yr for 130 yr</button><button class="b" type="button" data-p="b">10 GtC/yr for 100 yr</button><button class="b" type="button" data-p="c">Emit 100 yr, long recovery</button><button class="b" type="button" data-p="d">One short pulse (50 GtC/yr, 2 yr)</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2><i class="fa-solid fa-chart-line"></i> Results</h2>
+    <div class="kpis" id="kp"></div>
+    <div class="grid2" style="margin-top:14px">
+      <div><div class="sec">Atmospheric CO₂ (ppm)</div><div class="cv"><canvas id="c1" role="img" aria-label="Atmospheric CO2 over time"></canvas></div></div>
+      <div><div class="sec">Where the extra carbon is (change in each reservoir, GtC)</div><div class="cv"><canvas id="c2" role="img" aria-label="Change in each carbon reservoir over time"></canvas></div></div>
+    </div>
+    <div class="btns"><button class="b" type="button" id="csv"><i class="fa-solid fa-file-csv"></i> Download CSV</button></div>
+  </div>
+
+  <div class="panel">
+    <h2><i class="fa-solid fa-circle-info"></i> How it works</h2>
+    <p class="sub">Four boxes of carbon (in GtC) start in balance, as before industrial times: atmosphere 590, land vegetation and soil 2,500, surface ocean 900 and deep ocean 37,100. Round numbers of the size reported in IPCC assessments are used for teaching. Carbon moves between boxes each year:</p>
+    <ul class="steps">
+      <li><b>Atmosphere ⇄ land.</b> Photosynthesis takes 120 GtC/yr × (CO₂ / start CO₂)<sup>β</sup>, with β your fertilisation slider. Respiration and decay return 120 GtC/yr × (land carbon / start land carbon).</li>
+      <li><b>Atmosphere ⇄ surface ocean.</b> Gas exchange takes 90 GtC/yr × (CO₂ / start CO₂) into the ocean and returns 90 GtC/yr × (ocean carbon / start)<sup>R</sup>, with R the Revelle factor. Because R is about 10, a 1% rise in dissolved carbon raises the ocean's CO₂ pressure by about 10%, which is why the ocean takes up less than its size suggests.</li>
+      <li><b>Surface ⇄ deep ocean.</b> 90 GtC/yr each way in balance, proportional to each box's carbon.</li>
+      <li>Emissions are added to the atmosphere. 1 ppm of CO₂ is about 2.12 GtC. The equations are integrated with a fourth-order Runge–Kutta method.</li>
+    </ul>
+    <p class="note">This is a teaching box model, not a climate projection. It leaves out ocean carbonate chemistry in detail, ocean circulation changes, warming feedbacks, rock weathering and sediment burial, so it recovers faster than the real cycle does; real extra CO₂ persists for thousands of years. The default settings were chosen so that the share staying in the air lands in the range often reported for the industrial era (roughly 40–45%), but the model is not fitted to observations.</p>
+  </div>
+</div>
+</main>
+<footer>&copy; 2026 Md Rokibul Islam Robin &middot; <a href="../index.html">Back to home</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="../site.js"></script>
+<script>
+(function(){
+'use strict';
+var $=function(i){return document.getElementById(i)};
+var A0=590,L0=2500,S0=900,D0=37100,PPM=2.124;
+function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()}
+function sim(E,Du,T,be,R){
+  var dt=.05,n=Math.round(T/dt),y=[A0,L0,S0,D0],cum=0,out=[];
+  function f(y,e){var A=y[0],L=y[1],S=y[2],D=y[3],Fav=120*Math.pow(A/A0,be),Fla=120*(L/L0),Fao=90*(A/A0),Fsa=90*Math.pow(S/S0,R),Fsd=90*(S/S0),Fds=90*(D/D0);return[-Fav+Fla-Fao+Fsa+e,Fav-Fla,Fao-Fsa-Fsd+Fds,Fsd-Fds]}
+  function add(y,k,h){return y.map(function(v,i){return v+h*k[i]})}
+  var every=Math.round(1/dt);
+  for(var i=0;i<=n;i++){var t=i*dt,e=t<Du?E:0;
+    if(i%every===0)out.push({t:Math.round(t),A:y[0],L:y[1],S:y[2],D:y[3],cum:cum});
+    var k1=f(y,e),k2=f(add(y,k1,dt/2),e),k3=f(add(y,k2,dt/2),e),k4=f(add(y,k3,dt),e);
+    y=y.map(function(v,j){return v+dt/6*(k1[j]+2*k2[j]+2*k3[j]+k4[j])});cum+=e*dt}
+  return out}
+var c1=null,c2=null,rows=[];
+function read(){return{E:+$('E').value,Du:+$('Du').value,T:+$('T').value,be:+$('be').value,R:+$('rf').value}}
+function run(){var P=read();$('Ev').textContent=P.E+' GtC/yr';$('Duv').textContent=P.Du+' yr';$('Tv').textContent=P.T+' yr';$('bev').textContent=P.be.toFixed(2);$('rfv').textContent=P.R;
+  rows=sim(P.E,P.Du,Math.max(P.T,P.Du),P.be,P.R);var endE=rows[Math.min(rows.length-1,Math.round(P.Du))],last=rows[rows.length-1],pk=rows.reduce(function(a,r){return r.A>a.A?r:a},rows[0]);
+  var cumE=P.E*P.Du,af=cumE>0?(endE.A-A0)/cumE:0,fr=cumE>0?(last.A-A0)/cumE:0;
+  $('kp').innerHTML=[['Total emitted',Math.round(cumE)+' GtC'],['Peak CO₂',(pk.A/PPM).toFixed(0)+' ppm (year '+pk.t+')'],['Share still airborne when emissions stop',(af*100).toFixed(0)+'%'],['Share still airborne at the end',(fr*100).toFixed(0)+'%'],['Land took up by end',Math.round(last.L-L0)+' GtC'],['Ocean took up by end',Math.round(last.S-S0+last.D-D0)+' GtC'],['CO₂ at the end',(last.A/PPM).toFixed(0)+' ppm']].map(function(k){return'<div class="kpi"><small>'+k[0]+'</small><b>'+k[1]+'</b></div>'}).join('');
+  var tk={color:css('--ink-soft')},gr={color:css('--line')},lab=rows.map(function(r){return r.t});
+  var opt=function(yt){return{animation:false,responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:tk.color}}},scales:{x:{title:{display:true,text:'Years',color:tk.color},ticks:{color:tk.color,maxTicksLimit:9},grid:gr},y:{title:{display:true,text:yt,color:tk.color},ticks:tk,grid:gr}}}};
+  if(c1)c1.destroy();if(c2)c2.destroy();
+  c1=new Chart($('c1'),{type:'line',data:{labels:lab,datasets:[{label:'CO₂ (ppm)',data:rows.map(function(r){return+(r.A/PPM).toFixed(1)}),borderColor:'#d1604a',backgroundColor:'#d1604a22',fill:true,pointRadius:0,tension:.2},{label:'Start (about '+(A0/PPM).toFixed(0)+' ppm)',data:rows.map(function(){return+(A0/PPM).toFixed(1)}),borderColor:'#7aa',borderDash:[6,5],pointRadius:0}]},options:opt('ppm')});
+  var ds=[['Atmosphere','A',A0,'#d1604a'],['Land','L',L0,'#3d8f4f'],['Surface ocean','S',S0,'#2a7fa8'],['Deep ocean','D',D0,'#1f3f7a']].map(function(d){return{label:d[0],data:rows.map(function(r){return+(r[d[1]]-d[2]).toFixed(1)}),borderColor:d[3],pointRadius:0,tension:.2}});
+  ds.push({label:'Cumulative emitted',data:rows.map(function(r){return+r.cum.toFixed(1)}),borderColor:'#888',borderDash:[6,5],pointRadius:0});
+  c2=new Chart($('c2'),{type:'line',data:{labels:lab,datasets:ds},options:opt('GtC')})}
+['E','Du','T','be','rf'].forEach(function(id){$(id).addEventListener('input',run)});
+var PRE={a:[5,130,400],b:[10,100,400],c:[5,100,1000],d:[50,2,400]};
+document.querySelectorAll('[data-p]').forEach(function(b){b.onclick=function(){var p=PRE[b.dataset.p];$('E').value=p[0];$('Du').value=p[1];$('T').value=p[2];run()}});
+$('csv').onclick=function(){var t='year,atmosphere_GtC,co2_ppm,land_GtC,surface_ocean_GtC,deep_ocean_GtC,cumulative_emitted_GtC\n'+rows.map(function(r){return[r.t,r.A.toFixed(2),(r.A/PPM).toFixed(2),r.L.toFixed(2),r.S.toFixed(2),r.D.toFixed(2),r.cum.toFixed(2)].join(',')}).join('\n');
+  var u=URL.createObjectURL(new Blob(['﻿'+t],{type:'text/csv'})),a=document.createElement('a');a.href=u;a.download='carbon-cycle-box-model.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},500)};
+
+run();
+})();
+</script>
+</body>
+</html>
