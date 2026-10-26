@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EIA Field Visit Kit | ESE Research Hub</title>
+<meta name="description" content="Guided baseline checklist and impact matrix for an EIA site visit: score project activities against environmental components, rank adverse impacts, add mitigation notes and print a summary.">
+<meta name="theme-color" content="#0E2A2F">
+<link rel="canonical" href="https://mdrokibul.me/eia-field.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ESE Research Hub">
+<meta property="og:url" content="https://mdrokibul.me/eia-field.html">
+<meta property="og:title" content="EIA Field Visit Kit">
+<meta property="og:description" content="Baseline checklist and impact matrix for EIA site visits.">
+<meta property="og:image" content="https://mdrokibul.me/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="EIA Field Visit Kit">
+<meta name="twitter:description" content="Baseline checklist and impact matrix for EIA site visits.">
+<meta name="twitter:image" content="https://mdrokibul.me/og-image.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":["WebPage","WebApplication"],"name":"EIA Field Visit Kit","url":"https://mdrokibul.me/eia-field.html","description":"Baseline checklist and impact matrix for EIA site visits.","applicationCategory":"EducationalApplication","operatingSystem":"Any","inLanguage":"en","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"isPartOf":{"@type":"WebSite","name":"ESE Research Hub","url":"https://mdrokibul.me/"},"author":{"@type":"Person","name":"Md Rokibul Islam Robin","url":"https://mdrokibul.me/about.html"}}</script>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="nav.css">
+<link rel="stylesheet" href="site.css">
+<style>
+main{padding:0 0 56px}
+[hidden]{display:none!important}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:clamp(18px,3vw,28px);box-shadow:0 10px 30px rgba(0,0,0,.09);margin-top:18px}
+.panel h2{font-size:1.25rem;font-weight:800;margin-bottom:6px;display:flex;gap:10px;align-items:center}
+.panel h2 i{color:var(--river)}
+.sub{font-size:.97rem;color:var(--ink-soft);margin-bottom:14px}
+.tabs{display:flex;gap:6px;margin-top:-24px;position:relative;z-index:2;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px;box-shadow:0 10px 30px rgba(0,0,0,.1)}
+.tabs button{flex:1;font:700 .95rem var(--display);padding:11px 8px;border-radius:999px;border:0;background:transparent;color:var(--ink);cursor:pointer;display:inline-flex;gap:8px;align-items:center;justify-content:center}
+.tabs button[aria-selected=true]{background:var(--river);color:#fff}
+.tabs .cnt{font-size:.75rem;background:rgba(255,255,255,.22);padding:1px 8px;border-radius:999px}
+.tabs button:not([aria-selected=true]) .cnt{background:var(--mist);color:var(--ink-soft)}
+@media (max-width:520px){.tabs button span.t{display:none}.tabs button{font-size:.85rem}}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:860px){.grid2{grid-template-columns:1fr}}
+.grid2>*{min-width:0}
+.fld{display:grid;gap:5px;margin-bottom:12px}
+.fld label{font:700 .8rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em}
+.fld input,.fld select,.fld textarea{font:inherit;font-size:1.05rem;width:100%;padding:11px 13px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink);font-variant-numeric:tabular-nums}
+.fld input:focus,.fld select:focus,.fld textarea:focus{outline:none;border-color:var(--river)}
+.fld small{font-size:.85rem;color:var(--ink-soft)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.b{font:700 .95rem var(--display);padding:11px 18px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;display:inline-flex;gap:8px;align-items:center;justify-content:center}
+.b:hover{background:var(--mist)}.b.pri{background:var(--river);border-color:var(--river);color:#fff}.b.pri:hover{background:#27818b}
+.b.bad{color:var(--bad)}.b[disabled]{opacity:.45;cursor:not-allowed}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.big{font:800 clamp(2.6rem,9vw,3.8rem)/1 var(--display);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.live{padding:16px;border-radius:18px;background:var(--mist);border:2px solid var(--line);text-align:center}
+.live small{display:block;font:700 .8rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.live.hit{border-color:var(--good);background:color-mix(in srgb,var(--good) 14%,var(--mist))}
+.stat{font-size:.92rem;color:var(--ink-soft);margin:10px 0;display:flex;gap:8px;align-items:center}
+.stat::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--line);flex:none}
+.stat.ok::before{background:var(--good)}.stat.run::before{background:var(--warn)}.stat.bad::before{background:var(--bad)}
+.cam{position:relative;border-radius:16px;overflow:hidden;background:#000;aspect-ratio:3/4;max-height:420px;margin:12px auto 0;max-width:340px}
+.cam video{width:100%;height:100%;object-fit:cover}
+.cam::before,.cam::after{content:"";position:absolute;background:rgba(255,255,255,.85);z-index:2}
+.cam::before{left:50%;top:0;bottom:0;width:2px;margin-left:-1px}.cam::after{top:50%;left:0;right:0;height:2px;margin-top:-1px}
+.res{margin-top:14px;padding:16px;border-radius:16px;border:2px solid var(--river);background:color-mix(in srgb,var(--river) 8%,var(--card))}
+.res .big{color:var(--river)}
+.res p{margin-top:6px;font-size:.95rem;color:var(--ink-soft)}
+.steps{padding-left:1.2em;color:var(--ink-soft);font-size:.98rem}.steps li+li{margin-top:.5em}
+.msg{min-height:1.3em;font-size:.95rem;margin-top:8px}.msg.err{color:var(--bad);font-weight:600}.msg.ok{color:var(--good);font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th,td{text-align:left;padding:8px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:700 .74rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.scroll{overflow-x:auto}
+.tag{display:inline-block;padding:2px 9px;border-radius:999px;font:700 .75rem var(--display);background:var(--mist);border:1px solid var(--line)}
+.sec{font:800 .85rem var(--display);text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);margin:20px 0 8px}
+.empty{padding:26px;text-align:center;color:var(--ink-soft);border:2px dashed var(--line);border-radius:16px}
+.chk{display:flex;gap:9px;align-items:center;margin:6px 0;font-size:.98rem}.chk input{width:18px;height:18px;accent-color:var(--river)}
+.note{font-size:.88rem;color:var(--ink-soft);margin-top:10px;line-height:1.45}
+.sr{position:absolute;left:-999px}
+.grp{padding:14px 0;border-top:1px solid var(--line)}.grp:first-child{border-top:0}.grp h3{font:800 1.05rem var(--display);display:flex;gap:9px;align-items:center;margin-bottom:6px}.grp h3 i{color:var(--river)}
+.fld textarea{resize:vertical;font-family:inherit}
+.mx th,.mx td{padding:6px 5px}.mx th.act{min-width:150px;font-size:.9rem;text-transform:none;letter-spacing:0;white-space:normal;color:var(--ink)}.mx thead th{white-space:normal;min-width:78px;text-align:center}
+.cell{width:100%;min-width:56px;height:42px;border-radius:10px;border:1px solid var(--line);background:var(--mist);color:var(--ink);font:700 1rem var(--display);cursor:pointer}
+.cell.hi{background:#c0392b;color:#fff}.cell.mo{background:#e67e22;color:#fff}.cell.lo{background:#f4d03f;color:#222}.cell.ben{background:#58a86f;color:#fff}
+.mx tr.tot td,.mx tr.tot th{border-top:2px solid var(--line)}
+.lnk{background:none;border:0;color:var(--ink-soft);font-size:.8rem;cursor:pointer;text-decoration:underline;padding:4px}
+.leg2{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.85rem;color:var(--ink-soft);margin-top:10px}.leg2 i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+dialog{border:1px solid var(--line);border-radius:20px;background:var(--card);color:var(--ink);padding:22px;width:min(440px,92vw)}dialog::backdrop{background:rgba(0,0,0,.5)}dialog h3{font:800 1.1rem var(--display);margin-bottom:4px}
+#prt{display:none}
+@media print{body>*:not(#prt){display:none!important}#prt{display:block;color:#000;background:#fff;font:12pt/1.45 Georgia,serif;padding:0}#prt h1{font-size:18pt;margin-bottom:8pt}#prt h2{font-size:13pt;margin:14pt 0 5pt}#prt table{font-size:8.5pt;border-collapse:collapse;width:100%}#prt th,#prt td{border:1px solid #888;padding:3pt;text-align:center}#prt .cell{border:0;background:none!important;color:#000!important;width:auto;height:auto;font:700 9pt Georgia,serif}#prt th.act{text-align:left}}
+</style>
+</head>
+<body>
+<div class="progress" id="progress" aria-hidden="true"></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav" id="nav" data-solid>
+  <div class="wrap">
+    <a class="brand" href="index.html">ESE Research<span> Hub</span></a>
+    <nav class="links" id="links" aria-label="Main">
+      <div class="dd cur"><button class="dd-btn" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="toolsMenu">Tools <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="dd-menu" id="toolsMenu"><a href="portal.html"><i class="fa-solid fa-building-columns" aria-hidden="true"></i><span><b>JKKNIU &amp; ESE Portal</b><small>Official links in one place</small></span></a><a href="library.html"><i class="fa-solid fa-folder-open" aria-hidden="true"></i><span><b>Batch Library</b><small>Shared ESE study materials</small></span></a><a href="sound-meter.html"><i class="fa-solid fa-ear-listen" aria-hidden="true"></i><span><b>Sound Level Meter</b><small>Measure noise with your phone</small></span></a><a href="soil-texture.html"><i class="fa-solid fa-layer-group" aria-hidden="true"></i><span><b>Soil Texture Triangle</b><small>Plot sand, silt and clay</small></span></a><a href="rock-cycle.html"><i class="fa-solid fa-gem" aria-hidden="true"></i><span><b>Rock Cycle Simulator</b><small>Weathering to metamorphism</small></span></a><a href="gis-map.html"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i><span><b>GIS Area Explorer</b><small>Boundary, topography, pollution</small></span></a><a href="gis-lab.html"><i class="fa-solid fa-satellite" aria-hidden="true"></i><span><b>WebGIS Lab</b><small>DEM profiles and GEE scripts</small></span></a><a href="field-notebook.html"><i class="fa-solid fa-person-hiking" aria-hidden="true"></i><span><b>Field Notebook</b><small>Phone-only field measurements</small></span></a><a href="water-quality.html"><i class="fa-solid fa-droplet" aria-hidden="true"></i><span><b>Water Quality</b><small>WQI against WHO and BD limits</small></span></a><a href="field-tracker.html"><i class="fa-solid fa-route" aria-hidden="true"></i><span><b>Field Tracker</b><small>GPS track and waypoints</small></span></a><a href="ecology-quadrat.html"><i class="fa-solid fa-table-cells" aria-hidden="true"></i><span><b>Quadrat Counter</b><small>Tally species, diversity indices</small></span></a><a href="air-dispersion.html"><i class="fa-solid fa-industry" aria-hidden="true"></i><span><b>Air Dispersion</b><small>Gaussian plume from a stack</small></span></a><a class="on" aria-current="page" href="eia-field.html"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i><span><b>EIA Field Visit Kit</b><small>Baseline checklist and impact matrix</small></span></a><a href="ee-analyzer.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Earth Engine</b><small>Satellite analysis of any area</small></span></a><a href="weather.html"><i class="fa-solid fa-cloud-sun-rain" aria-hidden="true"></i><span><b>EcoLens Weather</b><small>Your photo plus live weather and rain chance</small></span></a><a href="atmosphere-sim.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Atmosphere Simulator</b><small>Three-cell circulation model</small></span></a></div></div>
+      <a href="about.html">About</a>
+      <a href="about.html#contact">Contact</a>
+    </nav>
+    <div class="tools">
+      <button class="icon-btn" id="theme" type="button" aria-label="Switch to dark theme"><i class="fa-solid fa-moon"></i></button>
+      <button class="icon-btn burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="links"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</header>
+<div class="page-hero">
+  <div class="wrap">
+    <h1>EIA field visit kit</h1>
+    <p>Walk the site with a guided baseline checklist, then score the likely impacts of each project activity in a simple matrix. You get ranked impacts, mitigation notes and a printable summary to start your EIA report from.</p>
+  </div>
+</div>
+<main id="main">
+<div class="wrap">
+  <div class="tabs" role="tablist" aria-label="EIA steps">
+    <button type="button" role="tab" id="t1" aria-selected="true" aria-controls="p1"><i class="fa-solid fa-clipboard-list"></i><span class="t">1 Site</span></button>
+    <button type="button" role="tab" id="t2" aria-selected="false" aria-controls="p2"><i class="fa-solid fa-binoculars"></i><span class="t">2 Baseline</span></button>
+    <button type="button" role="tab" id="t3" aria-selected="false" aria-controls="p3"><i class="fa-solid fa-table-cells-large"></i><span class="t">3 Impacts</span></button>
+    <button type="button" role="tab" id="t4" aria-selected="false" aria-controls="p4"><i class="fa-solid fa-file-lines"></i><span class="t">4 Report</span></button>
+  </div>
+
+  <section id="p1" role="tabpanel" aria-labelledby="t1"><div class="panel">
+    <h2><i class="fa-solid fa-clipboard-list"></i> Project and site</h2>
+    <div class="grid2">
+      <div class="fld"><label for="pn">Project name</label><input id="pn" data-k="name" type="text" maxlength="120" placeholder="e.g. Proposed brick kiln"></div>
+      <div class="fld"><label for="pp">Proponent / client</label><input id="pp" data-k="proponent" type="text" maxlength="120"></div>
+      <div class="fld"><label for="pl">Location (village, upazila, district)</label><input id="pl" data-k="location" type="text" maxlength="160"></div>
+      <div class="fld"><label for="pd">Visit date</label><input id="pd" data-k="date" type="date"></div>
+      <div class="fld"><label for="pt">Team members</label><input id="pt" data-k="team" type="text" maxlength="160" placeholder="Names, separated by commas"></div>
+      <div class="fld"><label for="pw">Weather during the visit</label><input id="pw" data-k="weather" type="text" maxlength="120" placeholder="e.g. hot, dry, light wind"></div>
+    </div>
+    <div class="fld"><label for="pa">Project description (what will be built or done)</label><textarea id="pa" data-k="desc" rows="3" maxlength="800"></textarea></div>
+    <div class="btns"><button class="b" type="button" id="gps"><i class="fa-solid fa-location-crosshairs"></i> Add site GPS position</button><span class="note" id="gpsv" style="align-self:center"></span></div>
+    <div class="msg" id="gmsg" role="status"></div>
+  </div></section>
+
+  <section id="p2" role="tabpanel" aria-labelledby="t2" hidden><div class="panel">
+    <h2><i class="fa-solid fa-binoculars"></i> Baseline observations</h2>
+    <p class="sub">Answer what you can see and hear on the visit. Choose a condition for each component group and write what you noticed. "Not observed" is a valid answer; do not guess.</p>
+    <div id="base"></div>
+  </div></section>
+
+  <section id="p3" role="tabpanel" aria-labelledby="t3" hidden><div class="panel">
+    <h2><i class="fa-solid fa-table-cells-large"></i> Impact matrix</h2>
+    <p class="sub">Tap a cell to score the effect of an activity on a component. Give a direction (harmful or beneficial), a magnitude from 1 to 5 and an importance from 1 to 5. The cell value is magnitude × importance, negative for harmful effects.</p>
+    <div class="btns" style="margin-top:0"><button class="b" type="button" id="addAct"><i class="fa-solid fa-plus"></i> Add activity</button><button class="b" type="button" id="resetAct">Reset activities</button></div>
+    <div class="scroll"><table id="mx" class="mx"></table></div>
+    <div class="leg2"><span><i style="background:#c0392b"></i>High adverse</span><span><i style="background:#e67e22"></i>Moderate adverse</span><span><i style="background:#f4d03f"></i>Low adverse</span><span><i style="background:#58a86f"></i>Beneficial</span></div>
+    <p class="note">Convention used on this page (adjust it to your Terms of Reference): absolute value 1–6 is low, 8–12 is moderate, 15–25 is high.</p>
+  </div></section>
+
+  <section id="p4" role="tabpanel" aria-labelledby="t4" hidden>
+    <div class="panel"><h2><i class="fa-solid fa-ranking-star"></i> Ranked adverse impacts</h2><div id="rank"></div></div>
+    <div class="panel"><h2><i class="fa-solid fa-shield-halved"></i> Mitigation notes</h2><p class="sub">Write a measure for each moderate or high adverse impact.</p><div id="mit"></div></div>
+    <div class="panel"><h2><i class="fa-solid fa-print"></i> Output</h2>
+      <div class="btns" style="margin-top:0"><button class="b pri" type="button" id="prn"><i class="fa-solid fa-print"></i> Print or save as PDF</button><button class="b" type="button" id="csv"><i class="fa-solid fa-file-csv"></i> Matrix CSV</button><button class="b" type="button" id="sav"><i class="fa-solid fa-download"></i> Save project file</button><label class="b" for="lod"><i class="fa-solid fa-upload"></i> Open project file</label><input id="lod" type="file" accept=".json,application/json" class="sr"><button class="b bad" type="button" id="clr"><i class="fa-solid fa-trash"></i> Clear all</button></div>
+      <div class="msg" id="omsg" role="status"></div>
+      <p class="note">Your work is stored in this browser only. Save the project file to keep a copy or to move it to another device. This kit helps you organise field observations and a screening-level matrix; it does not replace the scoping, baseline measurements, public consultation and expert judgement that a full EIA requires.</p>
+    </div>
+  </section>
+</div>
+</main>
+<dialog id="dlg" aria-labelledby="dt"><form method="dialog" id="df">
+  <h3 id="dt">Score</h3><p class="note" id="dsub" style="margin-top:0"></p>
+  <div class="fld"><label for="ds">Direction</label><select id="ds"><option value="-1">Harmful (adverse)</option><option value="1">Beneficial</option></select></div>
+  <div class="row"><div class="fld"><label for="dm">Magnitude (1 small – 5 large)</label><select id="dm"></select></div><div class="fld"><label for="di">Importance (1 minor – 5 key)</label><select id="di"></select></div></div>
+  <div class="fld"><label for="dn">Why (optional)</label><input id="dn" type="text" maxlength="160"></div>
+  <div class="btns"><button class="b pri" type="submit" value="ok" id="dok">Save</button><button class="b" type="button" id="dno">No effect</button><button class="b" type="button" id="dcx">Cancel</button></div>
+</form></dialog>
+<footer>&copy; 2026 Md Rokibul Islam Robin &middot; <a href="index.html">Back to home</a></footer>
+<script src="site.js"></script>
+<script>
+(function(){
+'use strict';
+var $=function(i){return document.getElementById(i)},KEY='eiaField1';
+function esc(t){return String(t==null?'':t).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+var COMP=['Air quality','Water','Noise','Soil and land','Ecology','Socio-economic','Health and safety'];
+var DEFACT=['Site clearing and earthwork','Construction and civil works','Transport of materials','Operation of the facility','Waste and effluent handling','Closure or decommissioning'];
+var BASE=[
+ {k:'air',t:'Air quality',i:'fa-wind',q:['Visible dust, smoke or haze at the site','Odours noticed and their likely source','Nearby sources of emissions (roads, kilns, factories, burning)','Distance to the nearest homes, school or clinic downwind']},
+ {k:'water',t:'Water',i:'fa-droplet',q:['Nearest surface water (river, pond, canal) and distance','Colour, odour and floating material in the water','Drainage paths and signs of waterlogging or flooding','Drinking water sources in use (tubewell, pond, piped) nearby','Discharge points or dumping into water']},
+ {k:'noise',t:'Noise',i:'fa-volume-high',q:['Dominant sounds during the visit (traffic, machinery, people)','Nearest sensitive places (homes, school, mosque, clinic) and distance','Time of day and how noise changes through the day (ask residents)']},
+ {k:'soil',t:'Soil and land',i:'fa-mountain',q:['Current land use (cropland, homestead, fallow, wetland)','Signs of erosion, bank cutting or siltation','Signs of contamination (stains, dumped waste, burnt patches)','Soil type and texture you can see or feel']},
+ {k:'eco',t:'Ecology',i:'fa-tree',q:['Dominant vegetation and tree cover','Large or old trees and any that would be removed','Animals, birds, fish or their signs observed','Wetland, forest, river or protected area nearby']},
+ {k:'soc',t:'Socio-economic',i:'fa-people-roof',q:['Nearest settlement, number of households (estimate) and distance','Main livelihoods (farming, fishing, day labour, business)','Access roads and condition','Schools, health facilities, markets, places of worship nearby','Concerns raised by residents you spoke with']},
+ {k:'haz',t:'Hazards and safety',i:'fa-triangle-exclamation',q:['Flood, cyclone, river erosion or other hazards residents mention','Fire, chemical or traffic safety concerns at the site','Existing waste management on site']}
+];
+var CONDS=[['','Not rated'],['good','Good'],['moderate','Moderate'],['poor','Poor'],['na','Not observed']];
+var S={info:{},gps:null,base:{},acts:DEFACT.slice(),cells:{},mit:{}};
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function load(){try{var d=JSON.parse(localStorage.getItem(KEY)||'null');if(d&&d.acts){S=d;S.info=S.info||{};S.base=S.base||{};S.cells=S.cells||{};S.mit=S.mit||{}}}catch(e){}}
+/* tabs */
+var T=['t1','t2','t3','t4'];
+function tab(id){T.forEach(function(t){var on=t===id;$(t).setAttribute('aria-selected',on);$('p'+t.slice(1)).hidden=!on});if(id==='t4')report();try{history.replaceState(null,'','#'+id)}catch(e){}}
+T.forEach(function(t){$(t).onclick=function(){tab(t)}});
+/* info */
+document.querySelectorAll('[data-k]').forEach(function(el){el.oninput=function(){S.info[el.dataset.k]=el.value;save()}});
+$('gps').onclick=function(){var m=$('gmsg');if(!navigator.geolocation){m.className='msg err';m.textContent='Location is not available on this device.';return}m.className='msg';m.textContent='Getting position…';
+ navigator.geolocation.getCurrentPosition(function(p){S.gps=[+p.coords.latitude.toFixed(6),+p.coords.longitude.toFixed(6),Math.round(p.coords.accuracy)];save();gpsShow();m.className='msg ok';m.textContent='Position saved.'},function(){m.className='msg err';m.textContent='Could not get your position. Allow location access and try again.'},{enableHighAccuracy:true,timeout:15000})};
+function gpsShow(){$('gpsv').textContent=S.gps?S.gps[0]+', '+S.gps[1]+' (±'+S.gps[2]+' m)':''}
+/* baseline */
+function drawBase(){var h='';BASE.forEach(function(g){var b=S.base[g.k]||{};
+  h+='<div class="grp"><h3><i class="fa-solid '+g.i+'"></i> '+esc(g.t)+'</h3><ul class="steps">'+g.q.map(function(q){return'<li>'+esc(q)+'</li>'}).join('')+'</ul>'+
+   '<div class="row"><div class="fld"><label for="c_'+g.k+'">Overall condition at the site</label><select id="c_'+g.k+'" data-g="'+g.k+'" data-f="cond">'+CONDS.map(function(c){return'<option value="'+c[0]+'"'+(b.cond===c[0]?' selected':'')+'>'+c[1]+'</option>'}).join('')+'</select></div></div>'+
+   '<div class="fld"><label for="n_'+g.k+'">What you observed</label><textarea id="n_'+g.k+'" data-g="'+g.k+'" data-f="note" rows="3" maxlength="1200">'+esc(b.note||'')+'</textarea></div></div>'});
+  $('base').innerHTML=h}
+$('base').addEventListener('input',function(e){var t=e.target;if(!t.dataset.g)return;(S.base[t.dataset.g]=S.base[t.dataset.g]||{})[t.dataset.f]=t.value;save()});
+/* matrix */
+function key(a,c){return a+'|'+c}
+function val(c){return c?c.s*c.m*c.i:0}
+function cls(v){var a=Math.abs(v);if(!v)return'';if(v>0)return'ben';return a>=15?'hi':a>=8?'mo':'lo'}
+function drawMx(){var h='<thead><tr><th>Activity</th>'+COMP.map(function(c){return'<th class="n">'+esc(c)+'</th>'}).join('')+'<th class="n">Row total</th><th></th></tr></thead><tbody>';
+  S.acts.forEach(function(a,ai){var tot=0;h+='<tr><th scope="row" class="act">'+esc(a)+'</th>';
+    COMP.forEach(function(c,ci){var cell=S.cells[key(ai,ci)],v=val(cell);tot+=v;h+='<td class="n"><button type="button" class="cell '+cls(v)+'" data-a="'+ai+'" data-c="'+ci+'" aria-label="'+esc(a+' on '+c+(v?': '+v:': no effect set'))+'">'+(v?(v>0?'+':'')+v:'·')+'</button></td>'});
+    h+='<td class="n"><b>'+(tot>0?'+':'')+tot+'</b></td><td><button type="button" class="lnk" data-del="'+ai+'" aria-label="Remove activity '+esc(a)+'">remove</button></td></tr>'});
+  h+='<tr class="tot"><th scope="row">Column total</th>'+COMP.map(function(c,ci){var t=0;S.acts.forEach(function(a,ai){t+=val(S.cells[key(ai,ci)])});return'<td class="n"><b>'+(t>0?'+':'')+t+'</b></td>'}).join('')+'<td></td><td></td></tr></tbody>';
+  $('mx').innerHTML=h}
+var cur=null;
+function opts(sel,n){sel.innerHTML='';for(var i=1;i<=n;i++){var o=document.createElement('option');o.value=i;o.textContent=i;sel.appendChild(o)}}
+opts($('dm'),5);opts($('di'),5);
+$('mx').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;
+  if(b.dataset.del!=null){var ai=+b.dataset.del;if(!confirm('Remove the activity "'+S.acts[ai]+'" and its scores?'))return;var nc={};S.acts.splice(ai,1);
+    Object.keys(S.cells).forEach(function(k){var p=k.split('|'),a=+p[0];if(a===ai)return;nc[key(a>ai?a-1:a,p[1])]=S.cells[k]});S.cells=nc;
+    var nm={};Object.keys(S.mit).forEach(function(k){var p=k.split('|'),a=+p[0];if(a===ai)return;nm[key(a>ai?a-1:a,p[1])]=S.mit[k]});S.mit=nm;save();drawMx();return}
+  if(b.dataset.a==null)return;cur=[+b.dataset.a,+b.dataset.c];var c=S.cells[key(cur[0],cur[1])]||{s:-1,m:2,i:2,n:''};
+  $('dt').textContent=S.acts[cur[0]]+' → '+COMP[cur[1]];$('dsub').textContent='Think about what will change for this component because of this activity.';
+  $('ds').value=String(c.s);$('dm').value=c.m;$('di').value=c.i;$('dn').value=c.n||'';$('dlg').showModal()});
+$('df').onsubmit=function(e){e.preventDefault();S.cells[key(cur[0],cur[1])]={s:+$('ds').value,m:+$('dm').value,i:+$('di').value,n:$('dn').value.trim()};save();$('dlg').close();drawMx()};
+$('dno').onclick=function(){delete S.cells[key(cur[0],cur[1])];save();$('dlg').close();drawMx()};
+$('dcx').onclick=function(){$('dlg').close()};
+$('addAct').onclick=function(){var n=(prompt('Name of the activity')||'').trim();if(!n)return;if(S.acts.length>=20){alert('Up to 20 activities.');return}S.acts.push(n.slice(0,80));save();drawMx()};
+$('resetAct').onclick=function(){if(!confirm('Reset to the default activity list? Scores will be cleared.'))return;S.acts=DEFACT.slice();S.cells={};S.mit={};save();drawMx()};
+/* report */
+function adverse(){var r=[];S.acts.forEach(function(a,ai){COMP.forEach(function(c,ci){var cell=S.cells[key(ai,ci)],v=val(cell);if(v<0)r.push({ai:ai,ci:ci,a:a,c:c,v:v,n:cell.n||'',k:key(ai,ci)})})});return r.sort(function(x,y){return x.v-y.v})}
+function lvl(v){var a=Math.abs(v);return a>=15?'High':a>=8?'Moderate':'Low'}
+function report(){var r=adverse(),ben=0;Object.keys(S.cells).forEach(function(k){if(val(S.cells[k])>0)ben++});
+  $('rank').innerHTML=r.length?'<div class="scroll"><table><thead><tr><th>#</th><th>Activity</th><th>Component</th><th class="n">Score</th><th>Level</th><th>Reason</th></tr></thead><tbody>'+r.map(function(x,i){return'<tr><td>'+(i+1)+'</td><td>'+esc(x.a)+'</td><td>'+esc(x.c)+'</td><td class="n">'+x.v+'</td><td>'+lvl(x.v)+'</td><td>'+esc(x.n)+'</td></tr>'}).join('')+'</tbody></table></div><p class="note">'+r.length+' adverse and '+ben+' beneficial scored effects.</p>':'<div class="empty">No adverse impacts scored yet. Fill the matrix in step 3.</div>';
+  var m=r.filter(function(x){return Math.abs(x.v)>=8});
+  $('mit').innerHTML=m.length?m.map(function(x){return'<div class="fld"><label for="m_'+x.ai+'_'+x.ci+'">'+esc(x.a)+' → '+esc(x.c)+' ('+x.v+', '+lvl(x.v).toLowerCase()+')</label><textarea id="m_'+x.ai+'_'+x.ci+'" data-mk="'+x.k+'" rows="2" maxlength="600">'+esc(S.mit[x.k]||'')+'</textarea></div>'}).join(''):'<div class="empty">No moderate or high adverse impacts yet.</div>'}
+$('mit').addEventListener('input',function(e){var k=e.target.dataset.mk;if(!k)return;S.mit[k]=e.target.value;save()});
+/* output */
+function cell(v){v=String(v==null?'':v);if(/^[=+\-@\t]/.test(v)&&!/^[+-]?\d+(\.\d+)?$/.test(v))v="'"+v;return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v}
+function dl(name,type,text){var u=URL.createObjectURL(new Blob([text],{type:type})),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},500)}
+$('csv').onclick=function(){var r=['activity,component,direction,magnitude,importance,score,level,reason,mitigation'];
+  S.acts.forEach(function(a,ai){COMP.forEach(function(c,ci){var x=S.cells[key(ai,ci)];if(!x)return;var v=val(x);r.push([a,c,x.s<0?'adverse':'beneficial',x.m,x.i,v,v<0?lvl(v):'',x.n,S.mit[key(ai,ci)]||''].map(cell).join(','))})});dl('eia-impact-matrix.csv','text/csv','﻿'+r.join('\n'))};
+$('sav').onclick=function(){dl('eia-project.json','application/json',JSON.stringify(S,null,1))};
+$('lod').onchange=function(){var f=this.files[0];if(!f)return;var rd=new FileReader();rd.onload=function(){var m=$('omsg');try{var d=JSON.parse(rd.result);if(!d||!Array.isArray(d.acts)||typeof d.cells!=='object')throw new Error('This is not an EIA project file from this page.');
+  S={info:d.info||{},gps:d.gps||null,base:d.base||{},acts:d.acts.slice(0,20).map(function(x){return String(x).slice(0,80)}),cells:d.cells||{},mit:d.mit||{}};save();init();tab('t1');m.className='msg ok';m.textContent='Project opened.'}catch(e){m.className='msg err';m.textContent=e.message}};rd.readAsText(f);this.value=''};
+$('clr').onclick=function(){if(!confirm('Delete everything in this project on this device?'))return;S={info:{},gps:null,base:{},acts:DEFACT.slice(),cells:{},mit:{}};save();init();tab('t1')};
+$('prn').onclick=function(){buildPrint();window.print()};
+function buildPrint(){var i=S.info,old=$('prt');if(old)old.remove();var d=document.createElement('div');d.id='prt';
+  var h='<h1>EIA field visit summary</h1><p><b>Project:</b> '+esc(i.name||'-')+'<br><b>Proponent:</b> '+esc(i.proponent||'-')+'<br><b>Location:</b> '+esc(i.location||'-')+(S.gps?' ('+S.gps[0]+', '+S.gps[1]+')':'')+'<br><b>Visit date:</b> '+esc(i.date||'-')+' &nbsp; <b>Weather:</b> '+esc(i.weather||'-')+'<br><b>Team:</b> '+esc(i.team||'-')+'</p>'+(i.desc?'<p><b>Description:</b> '+esc(i.desc)+'</p>':'')+'<h2>Baseline observations</h2>';
+  BASE.forEach(function(g){var b=S.base[g.k]||{};h+='<p><b>'+esc(g.t)+'</b> — condition: '+esc((CONDS.filter(function(c){return c[0]===(b.cond||'')})[0]||[0,'Not rated'])[1])+'<br>'+esc(b.note||'No notes.').replace(/\n/g,'<br>')+'</p>'});
+  h+='<h2>Impact matrix (magnitude × importance)</h2>'+$('mx').outerHTML.replace(/<button[^>]*data-del[^>]*>.*?<\/button>/g,'');
+  var r=adverse();h+='<h2>Adverse impacts, ranked</h2>'+(r.length?'<ol>'+r.map(function(x){return'<li>'+esc(x.a)+' → '+esc(x.c)+': <b>'+x.v+'</b> ('+lvl(x.v)+')'+(x.n?' — '+esc(x.n):'')+(S.mit[x.k]?'<br><i>Mitigation:</i> '+esc(S.mit[x.k]):'')+'</li>'}).join('')+'</ol>':'<p>None scored.</p>');
+  h+='<p style="font-size:.85em">Screening-level summary produced with the ESE Research Hub EIA field visit kit (mdrokibul.me). Scores are the team\'s judgement from one site visit and are not a substitute for a full EIA.</p>';
+  d.innerHTML=h;document.body.appendChild(d)}
+function init(){Object.keys(S.info).forEach(function(k){var el=document.querySelector('[data-k="'+k+'"]');if(el)el.value=S.info[k]});document.querySelectorAll('[data-k]').forEach(function(el){if(!(el.dataset.k in S.info))el.value=''});gpsShow();drawBase();drawMx()}
+load();init();
+var h=(location.hash||'').slice(1);if(T.indexOf(h)>-1)tab(h);
+
+})();
+</script>
+</body>
+</html>
