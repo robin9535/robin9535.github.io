@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Air Dispersion Model | ESE Research Hub</title>
+<meta name="description" content="Gaussian plume model for stack emissions: peak ground-level concentration, where it lands, concentration at a receptor, plan-view map and CSV, with Pasquill stability classes.">
+<meta name="theme-color" content="#0E2A2F">
+<link rel="canonical" href="https://mdrokibul.me/air-dispersion.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ESE Research Hub">
+<meta property="og:url" content="https://mdrokibul.me/air-dispersion.html">
+<meta property="og:title" content="Air Dispersion Model">
+<meta property="og:description" content="Gaussian plume screening model for stack emissions.">
+<meta property="og:image" content="https://mdrokibul.me/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Air Dispersion Model">
+<meta name="twitter:description" content="Gaussian plume screening model for stack emissions.">
+<meta name="twitter:image" content="https://mdrokibul.me/og-image.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":["WebPage","WebApplication"],"name":"Air Dispersion Model","url":"https://mdrokibul.me/air-dispersion.html","description":"Gaussian plume model for ground-level concentration downwind of a stack.","applicationCategory":"EducationalApplication","operatingSystem":"Any","inLanguage":"en","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"isPartOf":{"@type":"WebSite","name":"ESE Research Hub","url":"https://mdrokibul.me/"},"author":{"@type":"Person","name":"Md Rokibul Islam Robin","url":"https://mdrokibul.me/about.html"}}</script>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="nav.css">
+<link rel="stylesheet" href="site.css">
+<style>
+main{padding:0 0 56px}
+[hidden]{display:none!important}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:clamp(18px,3vw,28px);box-shadow:0 10px 30px rgba(0,0,0,.09);margin-top:18px}
+.panel h2{font-size:1.25rem;font-weight:800;margin-bottom:6px;display:flex;gap:10px;align-items:center}
+.panel h2 i{color:var(--river)}
+.sub{font-size:.97rem;color:var(--ink-soft);margin-bottom:14px}
+.tabs{display:flex;gap:6px;margin-top:-24px;position:relative;z-index:2;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px;box-shadow:0 10px 30px rgba(0,0,0,.1)}
+.tabs button{flex:1;font:700 .95rem var(--display);padding:11px 8px;border-radius:999px;border:0;background:transparent;color:var(--ink);cursor:pointer;display:inline-flex;gap:8px;align-items:center;justify-content:center}
+.tabs button[aria-selected=true]{background:var(--river);color:#fff}
+.tabs .cnt{font-size:.75rem;background:rgba(255,255,255,.22);padding:1px 8px;border-radius:999px}
+.tabs button:not([aria-selected=true]) .cnt{background:var(--mist);color:var(--ink-soft)}
+@media (max-width:520px){.tabs button span.t{display:none}.tabs button{font-size:.85rem}}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:860px){.grid2{grid-template-columns:1fr}}
+.grid2>*{min-width:0}
+.fld{display:grid;gap:5px;margin-bottom:12px}
+.fld label{font:700 .8rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em}
+.fld input,.fld select,.fld textarea{font:inherit;font-size:1.05rem;width:100%;padding:11px 13px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink);font-variant-numeric:tabular-nums}
+.fld input:focus,.fld select:focus,.fld textarea:focus{outline:none;border-color:var(--river)}
+.fld small{font-size:.85rem;color:var(--ink-soft)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.b{font:700 .95rem var(--display);padding:11px 18px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;display:inline-flex;gap:8px;align-items:center;justify-content:center}
+.b:hover{background:var(--mist)}.b.pri{background:var(--river);border-color:var(--river);color:#fff}.b.pri:hover{background:#27818b}
+.b.bad{color:var(--bad)}.b[disabled]{opacity:.45;cursor:not-allowed}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.big{font:800 clamp(2.6rem,9vw,3.8rem)/1 var(--display);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.live{padding:16px;border-radius:18px;background:var(--mist);border:2px solid var(--line);text-align:center}
+.live small{display:block;font:700 .8rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.live.hit{border-color:var(--good);background:color-mix(in srgb,var(--good) 14%,var(--mist))}
+.stat{font-size:.92rem;color:var(--ink-soft);margin:10px 0;display:flex;gap:8px;align-items:center}
+.stat::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--line);flex:none}
+.stat.ok::before{background:var(--good)}.stat.run::before{background:var(--warn)}.stat.bad::before{background:var(--bad)}
+.cam{position:relative;border-radius:16px;overflow:hidden;background:#000;aspect-ratio:3/4;max-height:420px;margin:12px auto 0;max-width:340px}
+.cam video{width:100%;height:100%;object-fit:cover}
+.cam::before,.cam::after{content:"";position:absolute;background:rgba(255,255,255,.85);z-index:2}
+.cam::before{left:50%;top:0;bottom:0;width:2px;margin-left:-1px}.cam::after{top:50%;left:0;right:0;height:2px;margin-top:-1px}
+.res{margin-top:14px;padding:16px;border-radius:16px;border:2px solid var(--river);background:color-mix(in srgb,var(--river) 8%,var(--card))}
+.res .big{color:var(--river)}
+.res p{margin-top:6px;font-size:.95rem;color:var(--ink-soft)}
+.steps{padding-left:1.2em;color:var(--ink-soft);font-size:.98rem}.steps li+li{margin-top:.5em}
+.msg{min-height:1.3em;font-size:.95rem;margin-top:8px}.msg.err{color:var(--bad);font-weight:600}.msg.ok{color:var(--good);font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th,td{text-align:left;padding:8px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:700 .74rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.scroll{overflow-x:auto}
+.tag{display:inline-block;padding:2px 9px;border-radius:999px;font:700 .75rem var(--display);background:var(--mist);border:1px solid var(--line)}
+.sec{font:800 .85rem var(--display);text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);margin:20px 0 8px}
+.empty{padding:26px;text-align:center;color:var(--ink-soft);border:2px dashed var(--line);border-radius:16px}
+.chk{display:flex;gap:9px;align-items:center;margin:6px 0;font-size:.98rem}.chk input{width:18px;height:18px;accent-color:var(--river)}
+.note{font-size:.88rem;color:var(--ink-soft);margin-top:10px;line-height:1.45}
+.sr{position:absolute;left:-999px}
+.bar{height:8px;border-radius:99px;background:var(--mist);overflow:hidden;min-width:70px}.bar i{display:block;height:100%;background:var(--good)}.bar i.w{background:var(--warn)}.bar i.x{background:var(--bad)}
+.ok{color:var(--good);font-weight:700}.no{color:var(--bad);font-weight:700}
+.params{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:0 14px}
+.qbar{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 12px}.qbar select{flex:1;min-width:180px;font:inherit;padding:11px 13px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink)}
+.sp-add{display:flex;gap:10px;flex-wrap:wrap}.sp-add input{flex:1;min-width:180px;font:inherit;padding:11px 13px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink)}
+.tally{display:grid;gap:10px;margin-top:12px}.trow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border-radius:16px;border:1px solid var(--line);background:var(--mist)}
+.tn{display:grid;gap:2px;min-width:0}.tn b{overflow-wrap:anywhere}.lnk{background:none;border:0;color:var(--ink-soft);font-size:.8rem;text-align:left;cursor:pointer;padding:0;text-decoration:underline}
+.tc{display:flex;align-items:center;gap:12px}.tc output{font:800 1.8rem var(--display);min-width:2.2ch;text-align:center;font-variant-numeric:tabular-nums}
+.tb{width:56px;height:56px;border-radius:50%;border:2px solid var(--line);background:var(--card);color:var(--ink);font:700 1.6rem var(--display);cursor:pointer}.tb.p{background:var(--river);border-color:var(--river);color:#fff}.tb:active{transform:scale(.94)}
+.cv{position:relative;height:240px}
+.sr{position:absolute;left:-999px}
+.leg{display:flex;align-items:center;flex-wrap:wrap;gap:8px;font-size:.8rem;color:var(--ink-soft);margin-top:6px}.leg i{display:block;height:10px;width:120px;border-radius:99px}#map{width:100%;height:100%;border-radius:12px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:6px}
+.kpi{padding:12px;border-radius:14px;background:var(--mist);border:1px solid var(--line);text-align:center}
+.kpi small{display:block;font:700 .72rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em}
+.kpi b{font:800 1.35rem var(--display);font-variant-numeric:tabular-nums}
+</style>
+</head>
+<body>
+<div class="progress" id="progress" aria-hidden="true"></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav" id="nav" data-solid>
+  <div class="wrap">
+    <a class="brand" href="index.html">ESE Research<span> Hub</span></a>
+    <nav class="links" id="links" aria-label="Main">
+      <div class="dd cur"><button class="dd-btn" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="toolsMenu">Tools <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="dd-menu" id="toolsMenu"><a href="portal.html"><i class="fa-solid fa-building-columns" aria-hidden="true"></i><span><b>JKKNIU &amp; ESE Portal</b><small>Official links in one place</small></span></a><a href="library.html"><i class="fa-solid fa-folder-open" aria-hidden="true"></i><span><b>Batch Library</b><small>Shared ESE study materials</small></span></a><a href="sound-meter.html"><i class="fa-solid fa-ear-listen" aria-hidden="true"></i><span><b>Sound Level Meter</b><small>Measure noise with your phone</small></span></a><a href="soil-texture.html"><i class="fa-solid fa-layer-group" aria-hidden="true"></i><span><b>Soil Texture Triangle</b><small>Plot sand, silt and clay</small></span></a><a href="rock-cycle.html"><i class="fa-solid fa-gem" aria-hidden="true"></i><span><b>Rock Cycle Simulator</b><small>Weathering to metamorphism</small></span></a><a href="gis-map.html"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i><span><b>GIS Area Explorer</b><small>Boundary, topography, pollution</small></span></a><a href="gis-lab.html"><i class="fa-solid fa-satellite" aria-hidden="true"></i><span><b>WebGIS Lab</b><small>DEM profiles and GEE scripts</small></span></a><a href="field-notebook.html"><i class="fa-solid fa-person-hiking" aria-hidden="true"></i><span><b>Field Notebook</b><small>Phone-only field measurements</small></span></a><a href="water-quality.html"><i class="fa-solid fa-droplet" aria-hidden="true"></i><span><b>Water Quality</b><small>WQI against WHO and BD limits</small></span></a><a href="field-tracker.html"><i class="fa-solid fa-route" aria-hidden="true"></i><span><b>Field Tracker</b><small>GPS track and waypoints</small></span></a><a href="ecology-quadrat.html"><i class="fa-solid fa-table-cells" aria-hidden="true"></i><span><b>Quadrat Counter</b><small>Tally species, diversity indices</small></span></a><a class="on" aria-current="page" href="air-dispersion.html"><i class="fa-solid fa-industry" aria-hidden="true"></i><span><b>Air Dispersion</b><small>Gaussian plume from a stack</small></span></a><a href="ee-analyzer.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Earth Engine</b><small>Satellite analysis of any area</small></span></a><a href="weather.html"><i class="fa-solid fa-cloud-sun-rain" aria-hidden="true"></i><span><b>EcoLens Weather</b><small>Your photo plus live weather and rain chance</small></span></a><a href="atmosphere-sim.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Atmosphere Simulator</b><small>Three-cell circulation model</small></span></a></div></div>
+      <a href="about.html">About</a>
+      <a href="about.html#contact">Contact</a>
+    </nav>
+    <div class="tools">
+      <button class="icon-btn" id="theme" type="button" aria-label="Switch to dark theme"><i class="fa-solid fa-moon"></i></button>
+      <button class="icon-btn burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="links"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</header>
+<div class="page-hero">
+  <div class="wrap">
+    <h1>Air dispersion model</h1>
+    <p>Estimate ground-level pollutant concentration downwind of a stack or chimney with the Gaussian plume model: the peak value and where it lands, the concentration at any receptor, and a plan-view map of the plume. A standard environmental engineering calculation for a brick kiln, factory or generator exhaust.</p>
+  </div>
+</div>
+<main id="main">
+<div class="wrap">
+  <div class="panel" style="margin-top:-24px;position:relative;z-index:2">
+    <h2><i class="fa-solid fa-industry"></i> Inputs</h2>
+    <div class="grid2">
+      <div>
+        <div class="row">
+          <div class="fld"><label for="Q">Emission rate Q (g/s)</label><input id="Q" type="number" inputmode="decimal" min="0" step="any" value="100"></div>
+          <div class="fld"><label for="u">Wind speed u (m/s)</label><input id="u" type="number" inputmode="decimal" min="0.5" step="any" value="4"><small>At stack height, at least 0.5</small></div>
+        </div>
+        <div class="row">
+          <div class="fld"><label for="hs">Stack height (m)</label><input id="hs" type="number" inputmode="decimal" min="0" step="any" value="40"></div>
+          <div class="fld"><label for="dh">Plume rise Δh (m)</label><input id="dh" type="number" inputmode="decimal" min="0" step="any" value="10"><small>Effective height H = stack + rise</small></div>
+        </div>
+        <div class="fld"><label for="st">Atmospheric stability class</label>
+          <select id="st"><option value="AB">A–B  very or moderately unstable</option><option value="C">C  slightly unstable</option><option value="D" selected>D  neutral</option><option value="E">E  slightly stable</option><option value="F">F  stable</option></select>
+          <small>Pick from the table below if unsure.</small></div>
+        <div class="fld"><label for="ter">Surroundings</label>
+          <select id="ter"><option value="rural">Open country (rural)</option><option value="urban">Urban or built-up</option></select></div>
+      </div>
+      <div>
+        <div class="sec" style="margin-top:0">Receptor (optional)</div>
+        <div class="row">
+          <div class="fld"><label for="rx">Downwind distance x (m)</label><input id="rx" type="number" inputmode="decimal" min="1" step="any" value="1000"></div>
+          <div class="fld"><label for="ry">Crosswind distance y (m)</label><input id="ry" type="number" inputmode="decimal" step="any" value="0"></div>
+        </div>
+        <div class="fld"><label for="lim">Limit line for the chart (µg/m³, optional)</label><input id="lim" type="number" inputmode="decimal" min="0" step="any" placeholder="e.g. a standard you are comparing with"><small>Enter the value from the standard you are using. This page does not supply one.</small></div>
+        <div class="fld"><label for="xm">Map reach (m downwind)</label><input id="xm" type="number" min="200" max="20000" step="100" value="3000"></div>
+      </div>
+    </div>
+    <div class="msg" id="msg" role="alert"></div>
+  </div>
+
+  <div class="panel">
+    <h2><i class="fa-solid fa-gauge-high"></i> Results</h2>
+    <div class="kpis" id="kp"></div>
+    <div class="grid2" style="margin-top:14px">
+      <div><div class="sec">Ground-level concentration along the plume centreline</div><div class="cv"><canvas id="c1" role="img" aria-label="Centreline concentration against distance"></canvas></div></div>
+      <div><div class="sec">Plan view (wind blows to the right)</div><div class="cv"><canvas id="map" role="img" aria-label="Plan view of ground-level concentration"></canvas></div><div class="leg" id="leg"></div></div>
+    </div>
+    <div class="btns"><button class="b" type="button" id="csv"><i class="fa-solid fa-file-csv"></i> Centreline CSV</button></div>
+  </div>
+
+  <div class="panel">
+    <h2><i class="fa-solid fa-circle-question"></i> Which stability class?</h2>
+    <p class="sub">Pasquill's scheme, from surface wind speed and daytime sun or night cloud:</p>
+    <div class="scroll"><table><thead><tr><th>Wind at 10 m (m/s)</th><th>Strong sun</th><th>Moderate sun</th><th>Slight sun</th><th>Night, ≥ 4/8 cloud</th><th>Night, ≤ 3/8 cloud</th></tr></thead><tbody>
+      <tr><td>&lt; 2</td><td>A</td><td>A–B</td><td>B</td><td>E</td><td>F</td></tr>
+      <tr><td>2–3</td><td>A–B</td><td>B</td><td>C</td><td>E</td><td>F</td></tr>
+      <tr><td>3–5</td><td>B</td><td>B–C</td><td>C</td><td>D</td><td>E</td></tr>
+      <tr><td>5–6</td><td>C</td><td>C–D</td><td>D</td><td>D</td><td>D</td></tr>
+      <tr><td>&gt; 6</td><td>C</td><td>D</td><td>D</td><td>D</td><td>D</td></tr>
+    </tbody></table></div>
+    <p class="note">Overcast conditions, day or night, are class D. This page merges A and B into one class.</p>
+  </div>
+
+  <div class="panel">
+    <h2><i class="fa-solid fa-calculator"></i> The equation</h2>
+    <p class="sub">Ground-level concentration with total reflection from the ground, for a continuous point source:</p>
+    <p style="font-size:1.05rem;margin:6px 0 10px"><b>C(x, y, 0) = Q / (π · u · σ<sub>y</sub> · σ<sub>z</sub>) · exp(−y² / 2σ<sub>y</sub>²) · exp(−H² / 2σ<sub>z</sub>²)</b></p>
+    <p class="note">C in g/m³ (shown in µg/m³), Q in g/s, u in m/s, H the effective release height in m. The dispersion widths σ<sub>y</sub> and σ<sub>z</sub> (m) depend on downwind distance x and stability class and are taken from the Briggs (1973) formulas for open country and urban surroundings. The peak is found by scanning x from 20 m to 20 km.</p>
+    <p class="note"><b>Limits.</b> Steady wind and emission, flat terrain, no chemical reaction, no deposition, and it is a screening estimate that works best from about 100 m to 10 km. Buildings, hills, sea breezes and calm conditions are not modelled, and real concentrations can differ from the result by a factor of two or more. Use it to learn and to compare scenarios, not as a regulatory assessment.</p>
+  </div>
+</div>
+</main>
+<footer>&copy; 2026 Md Rokibul Islam Robin &middot; <a href="index.html">Back to home</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="site.js"></script>
+<script>
+(function(){
+'use strict';
+var $=function(i){return document.getElementById(i)};
+// Briggs (1973) dispersion coefficients; x in metres. [a,b,c,d] -> a*x*(1+b*x)^c
+var BR={
+ rural:{AB:{y:[.22,1e-4,-.5],z:[.20,0,0]},C:{y:[.11,1e-4,-.5],z:[.08,2e-4,-.5]},D:{y:[.08,1e-4,-.5],z:[.06,1.5e-3,-.5]},E:{y:[.06,1e-4,-.5],z:[.03,3e-4,-1]},F:{y:[.04,1e-4,-.5],z:[.016,3e-4,-1]}},
+ urban:{AB:{y:[.32,4e-4,-.5],z:[.24,1e-3,.5]},C:{y:[.22,4e-4,-.5],z:[.20,0,0]},D:{y:[.16,4e-4,-.5],z:[.14,3e-4,-.5]},E:{y:[.11,4e-4,-.5],z:[.08,1.5e-3,-.5]},F:{y:[.11,4e-4,-.5],z:[.08,1.5e-3,-.5]}}
+};
+function sig(p,x){return p[0]*x*Math.pow(1+p[1]*x,p[2])}
+function conc(P,x,y){ // ug/m3 at ground
+  if(x<=0)return 0;var c=BR[P.ter][P.st],sy=sig(c.y,x),sz=sig(c.z,x);
+  return P.Q*1e6/(Math.PI*P.u*sy*sz)*Math.exp(-y*y/(2*sy*sy))*Math.exp(-P.H*P.H/(2*sz*sz));
+}
+function peak(P){var best={c:0,x:0};for(var x=20;x<=20000;x*=1.01){var c=conc(P,x,0);if(c>best.c)best={c:c,x:x}}
+  var lo=best.x/1.01,hi=best.x*1.01;for(var i=0;i<40;i++){var a=lo+(hi-lo)/3,b=hi-(hi-lo)/3;if(conc(P,a,0)<conc(P,b,0))lo=a;else hi=b}var xm=(lo+hi)/2;return{c:conc(P,xm,0),x:xm}}
+function read(){var P={Q:+$('Q').value,u:+$('u').value,hs:+$('hs').value,dh:+$('dh').value,st:$('st').value,ter:$('ter').value,rx:+$('rx').value,ry:+$('ry').value,xm:+$('xm').value,lim:$('lim').value===''?null:+$('lim').value};P.H=P.hs+P.dh;return P}
+function fmt(v){v=+v;if(!isFinite(v))return'--';var a=Math.abs(v);return a>=1000?Math.round(v).toLocaleString():a>=100?v.toFixed(0):a>=10?v.toFixed(1):a>=1?v.toFixed(2):a>=.01?v.toFixed(3):v.toExponential(1)}
+var ch=null;
+function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()}
+function ramp(t){ // 0..1 -> rgb (light-to-dark teal/orange)
+  var s=[[255,255,224],[254,217,118],[253,141,60],[215,48,31],[103,0,13]],n=s.length-1,i=Math.min(n-1,Math.floor(t*n)),f=t*n-i,a=s[i],b=s[i+1];
+  return[Math.round(a[0]+(b[0]-a[0])*f),Math.round(a[1]+(b[1]-a[1])*f),Math.round(a[2]+(b[2]-a[2])*f)]}
+function draw(P,pk){
+  var xs=[],cs=[];for(var x=50;x<=P.xm;x+=P.xm/120){xs.push(Math.round(x));cs.push(+conc(P,x,0).toPrecision(4))}
+  if(ch)ch.destroy();var ds=[{label:'Concentration (µg/m³)',data:cs,borderColor:'#d1604a',backgroundColor:'#d1604a22',fill:true,pointRadius:0,tension:.2}];
+  if(P.lim!=null&&isFinite(P.lim))ds.push({label:'Your limit',data:xs.map(function(){return P.lim}),borderColor:'#2a7fa8',borderDash:[6,5],pointRadius:0,fill:false});
+  var tk={color:css('--ink-soft')},gr={color:css('--line')};
+  ch=new Chart($('c1'),{type:'line',data:{labels:xs,datasets:ds},options:{animation:false,responsive:true,maintainAspectRatio:false,plugins:{legend:{display:ds.length>1,labels:{color:tk.color}}},scales:{x:{title:{display:true,text:'Downwind distance (m)',color:tk.color},ticks:{color:tk.color,maxTicksLimit:8},grid:gr},y:{beginAtZero:true,title:{display:true,text:'µg/m³',color:tk.color},ticks:tk,grid:gr}}}});
+  // plan view
+  var cv=$('map'),r=cv.getBoundingClientRect(),W=Math.max(200,Math.floor(r.width)),Hh=Math.max(160,Math.floor(r.height));cv.width=W;cv.height=Hh;var g=cv.getContext('2d'),img=g.createImageData(W,Hh);
+  var yspan=P.xm*0.35,top=Math.max(pk.c,1e-9);
+  for(var py=0;py<Hh;py++)for(var px=0;px<W;px++){var X=px/(W-1)*P.xm,Y=(py/(Hh-1)-.5)*2*yspan,c=conc(P,X,Y),t=Math.min(1,Math.sqrt(c/top)),i=(py*W+px)*4;
+    if(c<top*0.0025||X<=0){var bg=css('--mist')||'#eee';img.data[i]=235;img.data[i+1]=240;img.data[i+2]=238;img.data[i+3]=255}else{var rgb=ramp(t);img.data[i]=rgb[0];img.data[i+1]=rgb[1];img.data[i+2]=rgb[2];img.data[i+3]=255}}
+  g.putImageData(img,0,0);g.fillStyle='#000';g.beginPath();g.arc(0,Hh/2,5,0,7);g.fill();
+  var mx=pk.x/P.xm*(W-1);if(pk.x<=P.xm){g.strokeStyle='#000';g.lineWidth=2;g.beginPath();g.arc(mx,Hh/2,6,0,7);g.stroke()}
+  if(P.rx<=P.xm&&Math.abs(P.ry)<=yspan){var rxp=P.rx/P.xm*(W-1),ryp=(P.ry/(2*yspan)+.5)*(Hh-1);g.fillStyle='#fff';g.strokeStyle='#000';g.lineWidth=2;g.beginPath();g.rect(rxp-5,ryp-5,10,10);g.fill();g.stroke()}
+  $('leg').innerHTML='<i style="background:linear-gradient(90deg,#ffffe0,#fed976,#fd8d3c,#d7191c,#67000d)"></i><span>low</span><span>peak '+fmt(pk.c)+' µg/m³ · ● source · ◯ peak · ▢ receptor</span>';
+}
+function run(){
+  var P=read(),m=$('msg');
+  if(!(P.Q>0)||!(P.u>=.5)||!(P.hs>=0)||!(P.dh>=0)||!(P.rx>0)||!(P.xm>=200&&P.xm<=20000)){m.className='msg err';m.textContent='Check the inputs: emission rate above 0, wind speed at least 0.5 m/s, heights not negative, receptor distance above 0, map reach 200 to 20,000 m.';return}
+  m.className='msg';m.textContent='';var pk=peak(P),rc=conc(P,P.rx,P.ry);
+  $('kp').innerHTML=[['Peak ground-level',fmt(pk.c)+' µg/m³'],['Peak lands at',fmt(pk.x)+' m'],['At your receptor',fmt(rc)+' µg/m³'],['Effective height H',fmt(P.H)+' m']].map(function(k){return'<div class="kpi"><small>'+k[0]+'</small><b>'+k[1]+'</b></div>'}).join('');
+  draw(P,pk);window.__last={P:P,pk:pk,rc:rc};
+}
+['Q','u','hs','dh','st','ter','rx','ry','lim','xm'].forEach(function(id){$(id).addEventListener('input',run);$(id).addEventListener('change',run)});
+$('csv').onclick=function(){var P=read(),r=['x_m,concentration_ug_m3'];for(var x=50;x<=P.xm;x+=50)r.push(x+','+conc(P,x,0).toPrecision(5));
+  var u=URL.createObjectURL(new Blob(['﻿'+r.join('\n')],{type:'text/csv'})),a=document.createElement('a');a.href=u;a.download='plume-centreline.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},500)};
+window.addEventListener('resize',function(){var l=window.__last;if(l)draw(l.P,l.pk)});
+run();
+})();
+</script>
+</body>
+</html>
