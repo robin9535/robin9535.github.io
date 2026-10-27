@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D Cell Explorer | ESE Research Hub</title>
+<meta name="description" content="Interactive 3D model of an animal cell and a plant cell: rotate, zoom, slice open, and tap any organelle to read what it does.">
+<meta name="theme-color" content="#0E2A2F">
+<link rel="canonical" href="https://mdrokibul.me/simulations/cell-3d.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ESE Research Hub">
+<meta property="og:url" content="https://mdrokibul.me/simulations/cell-3d.html">
+<meta property="og:title" content="3D Cell Explorer">
+<meta property="og:description" content="Interactive 3D model of an animal cell and a plant cell: rotate, zoom, slice open, and tap any organelle to read what it does.">
+<meta property="og:image" content="https://mdrokibul.me/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="3D Cell Explorer">
+<meta name="twitter:description" content="Interactive 3D model of an animal cell and a plant cell: rotate, zoom, slice open, and tap any organelle to read what it does.">
+<meta name="twitter:image" content="https://mdrokibul.me/og-image.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":["WebPage","WebApplication"],"name":"3D Cell Explorer","url":"https://mdrokibul.me/simulations/cell-3d.html","description":"Interactive 3D model of an animal cell and a plant cell: rotate, zoom, slice open, and tap any organelle to read what it does.","applicationCategory":"EducationalApplication","operatingSystem":"Any","inLanguage":"en","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"isPartOf":{"@type":"WebSite","name":"ESE Research Hub","url":"https://mdrokibul.me/"},"author":{"@type":"Person","name":"Md Rokibul Islam Robin","url":"https://mdrokibul.me/about.html"}}</script>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="../nav.css">
+<link rel="stylesheet" href="../site.css">
+<style>
+main{padding:0 0 56px}
+[hidden]{display:none!important}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:clamp(18px,3vw,28px);box-shadow:0 10px 30px rgba(0,0,0,.09);margin-top:18px}
+.panel h2{font-size:1.25rem;font-weight:800;margin-bottom:6px;display:flex;gap:10px;align-items:center}
+.panel h2 i{color:var(--river)}
+.sub{font-size:.97rem;color:var(--ink-soft);margin-bottom:14px}
+.tabs{display:flex;gap:6px;margin-top:-24px;position:relative;z-index:2;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px;box-shadow:0 10px 30px rgba(0,0,0,.1)}
+.tabs button{flex:1;font:700 .95rem var(--display);padding:11px 8px;border-radius:999px;border:0;background:transparent;color:var(--ink);cursor:pointer;display:inline-flex;gap:8px;align-items:center;justify-content:center}
+.tabs button[aria-selected=true]{background:var(--river);color:#fff}
+.tabs .cnt{font-size:.75rem;background:rgba(255,255,255,.22);padding:1px 8px;border-radius:999px}
+.tabs button:not([aria-selected=true]) .cnt{background:var(--mist);color:var(--ink-soft)}
+@media (max-width:520px){.tabs button span.t{display:none}.tabs button{font-size:.85rem}}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:860px){.grid2{grid-template-columns:1fr}}
+.grid2>*{min-width:0}
+.fld{display:grid;gap:5px;margin-bottom:12px}
+.fld label{font:700 .8rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em}
+.fld input,.fld select,.fld textarea{font:inherit;font-size:1.05rem;width:100%;padding:11px 13px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink);font-variant-numeric:tabular-nums}
+.fld input:focus,.fld select:focus,.fld textarea:focus{outline:none;border-color:var(--river)}
+.fld small{font-size:.85rem;color:var(--ink-soft)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.b{font:700 .95rem var(--display);padding:11px 18px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;display:inline-flex;gap:8px;align-items:center;justify-content:center}
+.b:hover{background:var(--mist)}.b.pri{background:var(--river);border-color:var(--river);color:#fff}.b.pri:hover{background:#27818b}
+.b.bad{color:var(--bad)}.b[disabled]{opacity:.45;cursor:not-allowed}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.big{font:800 clamp(2.6rem,9vw,3.8rem)/1 var(--display);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.live{padding:16px;border-radius:18px;background:var(--mist);border:2px solid var(--line);text-align:center}
+.live small{display:block;font:700 .8rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.live.hit{border-color:var(--good);background:color-mix(in srgb,var(--good) 14%,var(--mist))}
+.stat{font-size:.92rem;color:var(--ink-soft);margin:10px 0;display:flex;gap:8px;align-items:center}
+.stat::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--line);flex:none}
+.stat.ok::before{background:var(--good)}.stat.run::before{background:var(--warn)}.stat.bad::before{background:var(--bad)}
+.cam{position:relative;border-radius:16px;overflow:hidden;background:#000;aspect-ratio:3/4;max-height:420px;margin:12px auto 0;max-width:340px}
+.cam video{width:100%;height:100%;object-fit:cover}
+.cam::before,.cam::after{content:"";position:absolute;background:rgba(255,255,255,.85);z-index:2}
+.cam::before{left:50%;top:0;bottom:0;width:2px;margin-left:-1px}.cam::after{top:50%;left:0;right:0;height:2px;margin-top:-1px}
+.res{margin-top:14px;padding:16px;border-radius:16px;border:2px solid var(--river);background:color-mix(in srgb,var(--river) 8%,var(--card))}
+.res .big{color:var(--river)}
+.res p{margin-top:6px;font-size:.95rem;color:var(--ink-soft)}
+.steps{padding-left:1.2em;color:var(--ink-soft);font-size:.98rem}.steps li+li{margin-top:.5em}
+.msg{min-height:1.3em;font-size:.95rem;margin-top:8px}.msg.err{color:var(--bad);font-weight:600}.msg.ok{color:var(--good);font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th,td{text-align:left;padding:8px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:700 .74rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.scroll{overflow-x:auto}
+.tag{display:inline-block;padding:2px 9px;border-radius:999px;font:700 .75rem var(--display);background:var(--mist);border:1px solid var(--line)}
+.sec{font:800 .85rem var(--display);text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);margin:20px 0 8px}
+.empty{padding:26px;text-align:center;color:var(--ink-soft);border:2px dashed var(--line);border-radius:16px}
+.chk{display:flex;gap:9px;align-items:center;margin:6px 0;font-size:.98rem}.chk input{width:18px;height:18px;accent-color:var(--river)}
+.note{font-size:.88rem;color:var(--ink-soft);margin-top:10px;line-height:1.45}
+.sr{position:absolute;left:-999px}
+.bar{height:8px;border-radius:99px;background:var(--mist);overflow:hidden;min-width:70px}.bar i{display:block;height:100%;background:var(--good)}.bar i.w{background:var(--warn)}.bar i.x{background:var(--bad)}
+.ok{color:var(--good);font-weight:700}.no{color:var(--bad);font-weight:700}
+.params{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:0 14px}
+.qbar{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 12px}.qbar select{flex:1;min-width:180px;font:inherit;padding:11px 13px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink)}
+.sp-add{display:flex;gap:10px;flex-wrap:wrap}.sp-add input{flex:1;min-width:180px;font:inherit;padding:11px 13px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink)}
+.tally{display:grid;gap:10px;margin-top:12px}.trow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border-radius:16px;border:1px solid var(--line);background:var(--mist)}
+.tn{display:grid;gap:2px;min-width:0}.tn b{overflow-wrap:anywhere}.lnk{background:none;border:0;color:var(--ink-soft);font-size:.8rem;text-align:left;cursor:pointer;padding:0;text-decoration:underline}
+.tc{display:flex;align-items:center;gap:12px}.tc output{font:800 1.8rem var(--display);min-width:2.2ch;text-align:center;font-variant-numeric:tabular-nums}
+.tb{width:56px;height:56px;border-radius:50%;border:2px solid var(--line);background:var(--card);color:var(--ink);font:700 1.6rem var(--display);cursor:pointer}.tb.p{background:var(--river);border-color:var(--river);color:#fff}.tb:active{transform:scale(.94)}
+.cv{position:relative;height:240px}
+.sr{position:absolute;left:-999px}
+.leg{display:flex;align-items:center;flex-wrap:wrap;gap:8px;font-size:.8rem;color:var(--ink-soft);margin-top:6px}.leg i{display:block;height:10px;width:120px;border-radius:99px}#map{width:100%;height:100%;border-radius:12px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:6px}
+.kpi{padding:12px;border-radius:14px;background:var(--mist);border:1px solid var(--line);text-align:center}
+.kpi small{display:block;font:700 .72rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em}
+.kpi b{font:800 1.35rem var(--display);font-variant-numeric:tabular-nums}
+.tabs2{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}.tabs2 .b.on{background:var(--river);border-color:var(--river);color:#fff}
+.stage>*{min-width:0}.stage{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:18px}@media(max-width:860px){.stage{grid-template-columns:1fr}}
+.vp{position:relative;border-radius:18px;overflow:hidden;background:radial-gradient(circle at 50% 40%,#1f4a52,#0b1d21);height:clamp(290px,62vw,500px);width:100%;min-width:0}
+.vp canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}.vp canvas:active{cursor:grabbing}
+.vh{position:absolute;left:12px;bottom:10px;font-size:.78rem;color:#cfe6dc;pointer-events:none;text-shadow:0 1px 2px #000}
+.nogl{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;color:#fff}
+.info{padding:14px 16px;border-radius:16px;background:var(--mist);border:1px solid var(--line);margin-bottom:14px;min-height:150px}.info h3{font:800 1.15rem var(--display);margin-bottom:6px}.info p{font-size:.97rem;line-height:1.5}.info .env{margin-top:8px;color:var(--ink-soft);font-size:.92rem}
+.parts{display:flex;flex-wrap:wrap;gap:8px}.pt{font:600 .85rem var(--display);padding:7px 12px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}.pt.on{background:var(--river);border-color:var(--river);color:#fff}
+.chk{display:flex;gap:9px;align-items:center;margin:6px 0;font-size:.98rem}.chk input{width:18px;height:18px;accent-color:var(--river)}
+input[type=range]{width:100%;accent-color:var(--river)}.fld{display:grid;gap:5px;margin-bottom:10px}.fld label{font:700 .8rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em}
+</style>
+</head>
+<body>
+<div class="progress" id="progress" aria-hidden="true"></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav" id="nav" data-solid>
+  <div class="wrap">
+    <a class="brand" href="../index.html">ESE Research<span> Hub</span></a>
+    <nav class="links" id="links" aria-label="Main">
+      <div class="dd cur"><button class="dd-btn" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="toolsMenu">Tools <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="dd-menu" id="toolsMenu"><a href="../portal.html"><i class="fa-solid fa-building-columns" aria-hidden="true"></i><span><b>JKKNIU &amp; ESE Portal</b><small>Official links in one place</small></span></a><a href="../library.html"><i class="fa-solid fa-folder-open" aria-hidden="true"></i><span><b>Batch Library</b><small>Shared ESE study materials</small></span></a><a href="../sound-meter.html"><i class="fa-solid fa-ear-listen" aria-hidden="true"></i><span><b>Sound Level Meter</b><small>Measure noise with your phone</small></span></a><a href="../soil-texture.html"><i class="fa-solid fa-layer-group" aria-hidden="true"></i><span><b>Soil Texture Triangle</b><small>Plot sand, silt and clay</small></span></a><a href="../rock-cycle.html"><i class="fa-solid fa-gem" aria-hidden="true"></i><span><b>Rock Cycle Simulator</b><small>Weathering to metamorphism</small></span></a><a href="../gis-map.html"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i><span><b>GIS Area Explorer</b><small>Boundary, topography, pollution</small></span></a><a href="../gis-lab.html"><i class="fa-solid fa-satellite" aria-hidden="true"></i><span><b>WebGIS Lab</b><small>DEM profiles and GEE scripts</small></span></a><a href="../field-notebook.html"><i class="fa-solid fa-person-hiking" aria-hidden="true"></i><span><b>Field Notebook</b><small>Phone-only field measurements</small></span></a><a href="../water-quality.html"><i class="fa-solid fa-droplet" aria-hidden="true"></i><span><b>Water Quality</b><small>WQI against WHO and BD limits</small></span></a><a href="../field-tracker.html"><i class="fa-solid fa-route" aria-hidden="true"></i><span><b>Field Tracker</b><small>GPS track and waypoints</small></span></a><a href="../ecology-quadrat.html"><i class="fa-solid fa-table-cells" aria-hidden="true"></i><span><b>Quadrat Counter</b><small>Tally species, diversity indices</small></span></a><a class="on" aria-current="page" href="../simulations/cell-3d.html"><i class="fa-solid fa-industry" aria-hidden="true"></i><span><b>Air Dispersion</b><small>Gaussian plume from a stack</small></span></a><a href="../eia-field.html"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i><span><b>EIA Field Visit Kit</b><small>Baseline checklist and impact matrix</small></span></a><a href="../ee-analyzer.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Earth Engine</b><small>Satellite analysis of any area</small></span></a><a href="../weather.html"><i class="fa-solid fa-cloud-sun-rain" aria-hidden="true"></i><span><b>EcoLens Weather</b><small>Your photo plus live weather and rain chance</small></span></a><a href="../atmosphere-sim.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Atmosphere Simulator</b><small>Three-cell circulation model</small></span></a></div></div>
+      <a href="index.html" aria-current="page">Simulations</a>
+      <a href="../about.html">About</a>
+      <a href="../about.html#contact">Contact</a>
+    </nav>
+    <div class="tools">
+      <button class="icon-btn" id="theme" type="button" aria-label="Switch to dark theme"><i class="fa-solid fa-moon"></i></button>
+      <button class="icon-btn burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="links"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</header>
+<div class="page-hero">
+  <div class="wrap">
+    <h1>3D cell explorer</h1>
+    <p>Rotate and slice open an animal cell and a plant cell. Tap any part to see what it is and what it does, and compare how the two kinds of cell differ.</p>
+  </div>
+</div>
+<main id="main">
+<div class="wrap">
+  <div class="panel" style="margin-top:-24px;position:relative;z-index:2">
+    <div class="tabs2" role="tablist" aria-label="Cell type">
+      <button type="button" class="b on" data-c="animal" role="tab" aria-selected="true">Animal cell</button>
+      <button type="button" class="b" data-c="plant" role="tab" aria-selected="false">Plant cell</button>
+    </div>
+    <div class="stage">
+      <div class="vp"><canvas id="gl" aria-label="3D model of a cell. Drag to rotate, scroll to zoom, tap a part to select it." tabindex="0"></canvas><div class="vh">Drag to rotate · scroll or pinch to zoom · tap a part</div><div class="nogl" id="nogl" hidden>Your browser could not start 3D graphics, so the model cannot be shown. The parts list and descriptions still work.</div></div>
+      <div class="side">
+        <div class="info" id="info" aria-live="polite"></div>
+        <div class="fld"><label for="cut">Slice open the cell: <b id="cutv">off</b></label><input id="cut" type="range" min="-100" max="100" step="1" value="100"></div>
+        <label class="chk"><input type="checkbox" id="spin" checked> Slowly rotate</label>
+        <label class="chk"><input type="checkbox" id="mem" checked> Show the outer membrane</label>
+        <div class="sec" style="margin-top:12px">Parts</div>
+        <div class="parts" id="parts"></div>
+      </div>
+    </div>
+    <p class="note">A schematic model: shapes, numbers and sizes are simplified and not to scale. Real cells are crowded and their organelles are constantly moving.</p>
+  </div>
+  <div class="panel">
+    <h2><i class="fa-solid fa-scale-balanced"></i> Animal versus plant cell</h2>
+    <div class="scroll"><table><thead><tr><th>Feature</th><th>Animal cell</th><th>Plant cell</th></tr></thead><tbody>
+      <tr><td>Cell wall</td><td>No</td><td>Yes, made mainly of cellulose</td></tr>
+      <tr><td>Chloroplasts</td><td>No</td><td>Yes (photosynthesis)</td></tr>
+      <tr><td>Vacuole</td><td>Small and temporary, if any</td><td>One large central vacuole</td></tr>
+      <tr><td>Lysosomes and centrioles</td><td>Present</td><td>Lysosomes are less obvious and centrioles are absent in most plants</td></tr>
+      <tr><td>Shape</td><td>Usually rounded or irregular</td><td>Fixed, often boxy, held by the wall</td></tr>
+    </tbody></table></div>
+  </div>
+</div>
+</main>
+<footer>&copy; 2026 Md Rokibul Islam Robin &middot; <a href="../index.html">Back to home</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="../site.js"></script>
+<script>
+(function(){
+'use strict';
+var $=function(i){return document.getElementById(i)};
+function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+var INFO={
+ membrane:{n:'Cell membrane',d:'A thin, flexible double layer of lipids with proteins. It is selectively permeable: it controls what enters and leaves the cell and receives chemical signals.'},
+ wall:{n:'Cell wall',d:'A rigid outer layer made mainly of cellulose. It gives the plant cell its fixed shape, supports the plant body and stops the cell bursting when it takes in water.'},
+ nucleus:{n:'Nucleus',d:'Holds the cell\'s DNA and controls its activities by deciding which genes are read. It is wrapped in a double envelope with pores that let messages (RNA) out.'},
+ nucleolus:{n:'Nucleolus',d:'A dense region inside the nucleus where ribosomal RNA is made and ribosome parts are assembled.'},
+ rer:{n:'Rough endoplasmic reticulum',d:'A network of folded membranes studded with ribosomes. It makes proteins that are exported, placed in membranes or sent to other organelles.'},
+ ser:{n:'Smooth endoplasmic reticulum',d:'A network of membrane tubes without ribosomes. It makes lipids, helps break down some toxins and stores calcium ions.'},
+ golgi:{n:'Golgi apparatus',d:'A stack of flattened sacs that modifies, sorts and packages proteins and lipids into vesicles, like a sorting and dispatch office.'},
+ mito:{n:'Mitochondrion',d:'The site of aerobic respiration. It uses oxygen to turn food molecules into ATP, the cell\'s usable energy, and releases carbon dioxide. It has its own small DNA and folded inner membranes (cristae).',env:'Respiration by mitochondria is the cell-level source of the CO₂ that returns to the air in the carbon cycle.'},
+ lyso:{n:'Lysosome',d:'A small sac of digestive enzymes that breaks down worn-out organelles, food particles and invaders.'},
+ centri:{n:'Centrioles',d:'A pair of short tubes at right angles. They help organise the spindle that pulls chromosomes apart when an animal cell divides.'},
+ ribo:{n:'Ribosomes',d:'Tiny molecular machines that build proteins by reading RNA. They float free in the cytoplasm or sit on the rough ER.'},
+ vac:{n:'Central vacuole',d:'A large sac of water, salts and sugars. Its pressure against the wall (turgor) keeps soft plant tissue firm, and it stores nutrients and waste.'},
+ chloro:{n:'Chloroplast',d:'Contains stacks of membranes (grana) with chlorophyll. It captures sunlight and uses it to make sugars from carbon dioxide and water, releasing oxygen. It has its own small DNA.',env:'Photosynthesis in chloroplasts is how plants take CO₂ out of the air, the land uptake in the carbon cycle.'}
+};
+var LISTS={animal:['membrane','nucleus','nucleolus','rer','ser','golgi','mito','lyso','centri','ribo'],plant:['wall','membrane','vac','nucleus','nucleolus','rer','ser','golgi','mito','chloro','ribo']};
+var kind='animal',sel=null,T=window.THREE,R,Sc,Cam,G,planes=null,ray,mats=[],picks=[],auto=true;
+function mkR(){try{R=new T.WebGLRenderer({canvas:$('gl'),antialias:true,alpha:true,preserveDrawingBuffer:false});R.localClippingEnabled=true;R.setPixelRatio(Math.min(2,window.devicePixelRatio||1));return true}catch(e){return false}}
+function mat(c,o,extra){var m=new T.MeshStandardMaterial(Object.assign({color:c,roughness:.55,metalness:.05,transparent:o<1,opacity:o,side:o<1?T.DoubleSide:T.FrontSide,depthWrite:o>=.6},extra||{}));mats.push(m);return m}
+function reg(mesh,id){mesh.userData.id=id;picks.push(mesh);G.add(mesh);return mesh}
+function ell(rx,ry,rz,m,id,x,y,z){var s=new T.Mesh(new T.SphereGeometry(1,32,24),m);s.scale.set(rx,ry,rz);s.position.set(x||0,y||0,z||0);return reg(s,id)}
+function tube(pts,r,m,id,closed){var c=new T.CatmullRomCurve3(pts,closed);return reg(new T.Mesh(new T.TubeGeometry(c,pts.length*8,r,8,closed),m),id)}
+function dots(n,gen,id,size,color){var pos=new Float32Array(n*3);for(var i=0;i<n;i++){var p=gen(i);pos[i*3]=p[0];pos[i*3+1]=p[1];pos[i*3+2]=p[2]}var g=new T.BufferGeometry();g.setAttribute('position',new T.BufferAttribute(pos,3));var m=new T.PointsMaterial({color:color,size:size,sizeAttenuation:true});m.clippingPlanes=[];mats.push(m);var p=new T.Points(g,m);p.userData.id=id;picks.push(p);G.add(p);return p}
+var seed=7;function rnd(){seed=(seed*16807)%2147483647;return(seed-1)/2147483646}
+function inEll(x,y,z,a,b,c){return x*x/(a*a)+y*y/(b*b)+z*z/(c*c)<1}
+function build(k){
+  while(G.children.length)G.remove(G.children[0]);picks=[];mats=[];seed=7;
+  var nuc=k==='plant'?{x:-1.15,y:.45,z:.55,r:.5}:{x:-.2,y:.05,z:0,r:.72};
+  // outer
+  if(k==='animal'){ell(2.1,1.8,1.9,mat(0x9ac8e8,.16),'membrane')}
+  else{reg(new T.Mesh(new T.BoxGeometry(3.7,2.3,2.5),mat(0x6fbf73,.12)),'wall');reg(new T.Mesh(new T.BoxGeometry(3.5,2.1,2.3),mat(0x9ac8e8,.12)),'membrane')}
+  // nucleus
+  ell(nuc.r,nuc.r,nuc.r,mat(0x8e7cc3,.35),'nucleus',nuc.x,nuc.y,nuc.z);
+  ell(nuc.r*.32,nuc.r*.32,nuc.r*.32,mat(0x4b3f8f,1),'nucleolus',nuc.x+nuc.r*.15,nuc.y,nuc.z+nuc.r*.1);
+  // ER around the nucleus
+  var rp=[],sp=[];for(var i=0;i<28;i++){var a=i/28*Math.PI*2;rp.push(new T.Vector3(nuc.x+(nuc.r+.22+.08*Math.sin(5*a))*Math.cos(a),nuc.y+.38*Math.sin(3*a),nuc.z+(nuc.r+.22+.08*Math.sin(5*a))*Math.sin(a)))}
+  tube(rp,.07,mat(0x5aa9a3,1),'rer',true);var rp2=rp.map(function(p){return new T.Vector3(nuc.x+(p.x-nuc.x)*1.18,nuc.y+(p.y-nuc.y)*.7+.18,nuc.z+(p.z-nuc.z)*1.18)});tube(rp2,.06,mat(0x5aa9a3,1),'rer',true);
+  dots(70,function(i){var q=rp[i%28],j=rp2[i%28],t=i<28?q:j;return[t.x+(rnd()-.5)*.14,t.y+(rnd()-.5)*.14+.06,t.z+(rnd()-.5)*.14]},'ribo',.1,0x222222);
+  var base=k==='plant'?new T.Vector3(.4,-.55,-.5):new T.Vector3(.9,-.7,-.6);
+  for(i=0;i<22;i++){var b=i/22*Math.PI*2;sp.push(new T.Vector3(base.x+(.5+.15*Math.sin(4*b))*Math.cos(b),base.y+.25*Math.sin(2*b+1),base.z+(.5+.15*Math.sin(4*b))*Math.sin(b)))}
+  tube(sp,.06,mat(0xe3a6c8,1),'ser',true);
+  // Golgi
+  for(i=0;i<5;i++){var gm=ell((.55-.04*Math.abs(i-2))*.72,.055,(.34-.03*Math.abs(i-2))*.72,mat(0xf2b04a,1),'golgi',(k==='plant'?-.2:.55),(k==='plant'?-.9:-.15)+i*.11,(k==='plant'?.8:.95));gm.rotation.z=.18}
+  // mitochondria
+  var mp=k==='plant'?[[.6,.55,.55],[1.2,-.1,.75],[-.4,-.75,.6]]:[[1.0,.1,.75],[-1.1,-.85,.55],[.3,-1.0,.2],[-1.3,.8,-.5]];
+  mp.forEach(function(p,j){var m1=ell(.34,.17,.17,mat(0xe9774a,.55),'mito',p[0],p[1],p[2]);m1.rotation.set(j*.7,j*1.1,j*.5);
+    var inner=new T.Mesh(new T.TorusKnotGeometry(.09,.025,40,6,2,3),mat(0xb5421f,1));inner.scale.set(1.5,.9,.9);inner.userData.id='mito';picks.push(inner);m1.add(inner)});
+  if(k==='animal'){
+    for(i=0;i<6;i++){var a2=i*1.1;ell(.12,.12,.12,mat(0xd6d03a,1),'lyso',-1.2+.4*Math.cos(a2)*1.3,.4+.9*Math.sin(a2*1.3)*.6,-.7+.4*Math.sin(a2)*1.2)}
+    var c1=new T.Mesh(new T.CylinderGeometry(.06,.06,.3,12),mat(0x555555,1));c1.position.set(-.1,1.0,.85);c1.rotation.z=1.57;reg(c1,'centri');
+    var c2=new T.Mesh(new T.CylinderGeometry(.06,.06,.3,12),mat(0x555555,1));c2.position.set(-.1,1.0,.85);c2.position.x+=.0;c2.position.y+=.0;c2.position.z+=.22;c2.rotation.x=1.57;reg(c2,'centri');
+  }else{
+    ell(1.55,.85,.95,mat(0xbfe3f5,.38),'vac',.6,0,-.05);
+    var cp=[[-1.3,-.7,.8],[1.6,.78,.7],[1.55,-.75,.75],[-.4,.9,.9],[.1,.92,-.9],[1.5,.2,-.8],[-1.45,-.1,-.75]];
+    cp.forEach(function(p,j){var c=ell(.36,.17,.22,mat(0x3f9c4a,.7),'chloro',p[0],p[1],p[2]);c.rotation.y=j*.7;for(var s=0;s<3;s++){var st=new T.Group();for(var d=0;d<4;d++){var disc=new T.Mesh(new T.CylinderGeometry(.045,.045,.012,10),mat(0x1f6b2b,1));disc.position.set(0,-.02+d*.028,0);disc.userData.id='chloro';picks.push(disc);st.add(disc)}st.position.set(-.45+s*.45,0,0);st.scale.set(1/.36,1/.17,1/.22);st.scale.multiplyScalar(.6);c.add(st)}})}
+  // free ribosomes in cytoplasm
+  var lim=k==='plant'?{a:1.65,b:1.0,c:1.1}:{a:1.95,b:1.65,c:1.75};
+  dots(k==='plant'?120:160,function(){var x,y,z,t=0;do{x=(rnd()*2-1)*lim.a;y=(rnd()*2-1)*lim.b;z=(rnd()*2-1)*lim.c;t++}while((!inEll(x,y,z,lim.a,lim.b,lim.c)||Math.hypot(x-nuc.x,y-nuc.y,z-nuc.z)<nuc.r+.1||(k==='plant'&&inEll(x-.6,y,z+.05,1.6,.9,1.0))||Math.hypot(x,y+.2,z)>9)&&t<60);return[x,y,z]},'ribo',.085,0x333333);
+  applyClip();paint();
+}
+function applyClip(){var v=+$('cut').value;$('cutv').textContent=v>=100?'off':Math.round((100-v)/2)+'% cut away';
+  if(!planes)planes=[new T.Plane(new T.Vector3(1,0,0),0)];var wp=planes[0].clone();
+  G.updateMatrixWorld(true);wp.constant=-(v/100)*2.2;wp.applyMatrix4(G.matrixWorld);
+  var use=v<100?[wp]:[];G.traverse(function(o){if(o.material)o.material.clippingPlanes=use});mats.forEach(function(m){m.clippingPlanes=use});
+  var showMem=$('mem').checked;picks.forEach(function(p){if(p.userData.id==='membrane'||p.userData.id==='wall')p.visible=showMem||p.userData.id==='wall'&&false})}
+function paint(){G.traverse(function(o){if(o.material&&o.material.emissive){var on=sel&&o.userData.id===sel;o.material.emissive.setHex(on?0x555522:0x000000)}});G.traverse(function(o){if(o.isMesh&&o.parent&&o.parent!==G&&o.parent.userData.id){var on=sel&&o.parent.userData.id===sel;o.material.emissive&&o.material.emissive.setHex(on?0x555522:0x000000)}})}
+function show(id){sel=id;var d=INFO[id];$('info').innerHTML=d?'<h3>'+esc(d.n)+'</h3><p>'+esc(d.d)+'</p>'+(d.env?'<p class="env"><b>Why it matters for the environment:</b> '+esc(d.env)+'</p>':''):'<h3>Tap a part</h3><p>Select a part of the cell, in the 3D view or in the list, to read what it does.</p>';
+  document.querySelectorAll('.parts button').forEach(function(b){b.classList.toggle('on',b.dataset.id===id)});paint()}
+function list(){$('parts').innerHTML=LISTS[kind].map(function(id){return'<button type="button" class="pt" data-id="'+id+'">'+esc(INFO[id].n)+'</button>'}).join('')}
+$('parts').addEventListener('click',function(e){var b=e.target.closest('button');if(b)show(b.dataset.id)});
+document.querySelectorAll('.tabs2 button').forEach(function(b){b.onclick=function(){kind=b.dataset.c;document.querySelectorAll('.tabs2 button').forEach(function(x){var on=x===b;x.classList.toggle('on',on);x.setAttribute('aria-selected',on)});sel=null;list();if(R)build(kind);show(null)}});
+['cut','mem'].forEach(function(id){$(id).addEventListener('input',function(){if(R)applyClip()})});$('spin').addEventListener('change',function(){auto=this.checked});
+function init(){
+  if(!T||!mkR()){$('nogl').hidden=false;list();show(null);return}
+  Sc=new T.Scene();Cam=new T.PerspectiveCamera(40,1,.1,100);Cam.position.set(0,0,6.6);
+  Sc.add(new T.AmbientLight(0xffffff,.75));var d1=new T.DirectionalLight(0xffffff,.8);d1.position.set(4,5,6);Sc.add(d1);var d2=new T.DirectionalLight(0x99bbff,.35);d2.position.set(-5,-3,-4);Sc.add(d2);
+  G=new T.Group();Sc.add(G);G.rotation.set(.35,-.5,0);ray=new T.Raycaster();ray.params.Points.threshold=.07;
+  list();build(kind);show(null);size();loop();
+  var cv=$('gl'),down=null,moved=0,pts={};
+  cv.addEventListener('pointerdown',function(e){cv.setPointerCapture(e.pointerId);pts[e.pointerId]=[e.clientX,e.clientY];down=[e.clientX,e.clientY];moved=0});
+  cv.addEventListener('pointermove',function(e){var p=pts[e.pointerId];if(!p)return;var ids=Object.keys(pts);if(ids.length===2){var o=ids.filter(function(k){return+k!==e.pointerId})[0],q=pts[o],d0=Math.hypot(p[0]-q[0],p[1]-q[1]),d1=Math.hypot(e.clientX-q[0],e.clientY-q[1]);Cam.position.z=Math.max(4,Math.min(14,Cam.position.z*d0/Math.max(1,d1)));moved=99}else{var dx=e.clientX-p[0],dy=e.clientY-p[1];moved+=Math.abs(dx)+Math.abs(dy);G.rotation.y+=dx*.008;G.rotation.x=Math.max(-1.5,Math.min(1.5,G.rotation.x+dy*.008));applyClip()}pts[e.pointerId]=[e.clientX,e.clientY]});
+  cv.addEventListener('pointerup',function(e){delete pts[e.pointerId];if(moved<6&&down)pick(e.clientX,e.clientY);down=null});
+  cv.addEventListener('pointercancel',function(e){delete pts[e.pointerId]});
+  cv.addEventListener('wheel',function(e){e.preventDefault();Cam.position.z=Math.max(4,Math.min(14,Cam.position.z*(1+e.deltaY*.001)))},{passive:false});
+  window.addEventListener('resize',size);
+}
+function pick(cx,cy){var r=$('gl').getBoundingClientRect();ray.setFromCamera({x:(cx-r.left)/r.width*2-1,y:-((cy-r.top)/r.height*2-1)},Cam);
+  var vis=[];picks.forEach(function(p){if(p.visible!==false)vis.push(p)});var hits=ray.intersectObjects(vis,false);
+  hits=hits.filter(function(h){var cp=h.object.material.clippingPlanes;if(cp&&cp.length&&cp[0].distanceToPoint(h.point)<0)return false;return true});
+  var inner=hits.filter(function(h){var id=h.object.userData.id;return id!=='membrane'&&id!=='wall'});var h=inner[0]||hits[0];if(h)show(h.object.userData.id)}
+function size(){var cv=$('gl'),w=cv.clientWidth,h=cv.clientHeight;if(!w||!h)return;R.setSize(w,h,false);Cam.aspect=w/h;Cam.updateProjectionMatrix()}
+var last=0;function loop(t){requestAnimationFrame(loop);if(auto&&!document.hidden){G.rotation.y+=.003;applyClip()}R.render(Sc,Cam)}
+
+init();
+})();
+</script>
+</body>
+</html>
