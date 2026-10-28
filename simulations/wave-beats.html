@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wave Beats | ESE Research Hub</title>
+<meta name="description" content="Interactive wave beat simulation: add two waves of nearly equal frequency, see the envelope, beat frequency and loudness swing, and listen to the beats.">
+<meta name="theme-color" content="#0E2A2F">
+<link rel="canonical" href="https://mdrokibul.me/simulations/wave-beats.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ESE Research Hub">
+<meta property="og:url" content="https://mdrokibul.me/simulations/wave-beats.html">
+<meta property="og:title" content="Wave Beats">
+<meta property="og:description" content="Interactive wave beat simulation: add two waves of nearly equal frequency, see the envelope, beat frequency and loudness swing, and listen to the beats.">
+<meta property="og:image" content="https://mdrokibul.me/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Wave Beats">
+<meta name="twitter:description" content="Interactive wave beat simulation: add two waves of nearly equal frequency, see the envelope, beat frequency and loudness swing, and listen to the beats.">
+<meta name="twitter:image" content="https://mdrokibul.me/og-image.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":["WebPage","WebApplication"],"name":"Wave Beats","url":"https://mdrokibul.me/simulations/wave-beats.html","description":"Interactive wave beat simulation: add two waves of nearly equal frequency, see the envelope, beat frequency and loudness swing, and listen to the beats.","applicationCategory":"EducationalApplication","operatingSystem":"Any","inLanguage":"en","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"isPartOf":{"@type":"WebSite","name":"ESE Research Hub","url":"https://mdrokibul.me/"},"author":{"@type":"Person","name":"Md Rokibul Islam Robin","url":"https://mdrokibul.me/about.html"}}</script>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="../nav.css">
+<link rel="stylesheet" href="../site.css">
+<style>
+main{padding:0 0 56px}
+[hidden]{display:none!important}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:clamp(18px,3vw,28px);box-shadow:0 10px 30px rgba(0,0,0,.09);margin-top:18px}
+.panel h2{font-size:1.25rem;font-weight:800;margin-bottom:6px;display:flex;gap:10px;align-items:center}
+.panel h2 i{color:var(--river)}
+.sub{font-size:.97rem;color:var(--ink-soft);margin-bottom:14px}
+.tabs{display:flex;gap:6px;margin-top:-24px;position:relative;z-index:2;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px;box-shadow:0 10px 30px rgba(0,0,0,.1)}
+.tabs button{flex:1;font:700 .95rem var(--display);padding:11px 8px;border-radius:999px;border:0;background:transparent;color:var(--ink);cursor:pointer;display:inline-flex;gap:8px;align-items:center;justify-content:center}
+.tabs button[aria-selected=true]{background:var(--river);color:#fff}
+.tabs .cnt{font-size:.75rem;background:rgba(255,255,255,.22);padding:1px 8px;border-radius:999px}
+.tabs button:not([aria-selected=true]) .cnt{background:var(--mist);color:var(--ink-soft)}
+@media (max-width:520px){.tabs button span.t{display:none}.tabs button{font-size:.85rem}}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:860px){.grid2{grid-template-columns:1fr}}
+.grid2>*{min-width:0}
+.fld{display:grid;gap:5px;margin-bottom:12px}
+.fld label{font:700 .8rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em}
+.fld input,.fld select,.fld textarea{font:inherit;font-size:1.05rem;width:100%;padding:11px 13px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink);font-variant-numeric:tabular-nums}
+.fld input:focus,.fld select:focus,.fld textarea:focus{outline:none;border-color:var(--river)}
+.fld small{font-size:.85rem;color:var(--ink-soft)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.b{font:700 .95rem var(--display);padding:11px 18px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;display:inline-flex;gap:8px;align-items:center;justify-content:center}
+.b:hover{background:var(--mist)}.b.pri{background:var(--river);border-color:var(--river);color:#fff}.b.pri:hover{background:#27818b}
+.b.bad{color:var(--bad)}.b[disabled]{opacity:.45;cursor:not-allowed}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.big{font:800 clamp(2.6rem,9vw,3.8rem)/1 var(--display);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.live{padding:16px;border-radius:18px;background:var(--mist);border:2px solid var(--line);text-align:center}
+.live small{display:block;font:700 .8rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.live.hit{border-color:var(--good);background:color-mix(in srgb,var(--good) 14%,var(--mist))}
+.stat{font-size:.92rem;color:var(--ink-soft);margin:10px 0;display:flex;gap:8px;align-items:center}
+.stat::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--line);flex:none}
+.stat.ok::before{background:var(--good)}.stat.run::before{background:var(--warn)}.stat.bad::before{background:var(--bad)}
+.cam{position:relative;border-radius:16px;overflow:hidden;background:#000;aspect-ratio:3/4;max-height:420px;margin:12px auto 0;max-width:340px}
+.cam video{width:100%;height:100%;object-fit:cover}
+.cam::before,.cam::after{content:"";position:absolute;background:rgba(255,255,255,.85);z-index:2}
+.cam::before{left:50%;top:0;bottom:0;width:2px;margin-left:-1px}.cam::after{top:50%;left:0;right:0;height:2px;margin-top:-1px}
+.res{margin-top:14px;padding:16px;border-radius:16px;border:2px solid var(--river);background:color-mix(in srgb,var(--river) 8%,var(--card))}
+.res .big{color:var(--river)}
+.res p{margin-top:6px;font-size:.95rem;color:var(--ink-soft)}
+.steps{padding-left:1.2em;color:var(--ink-soft);font-size:.98rem}.steps li+li{margin-top:.5em}
+.msg{min-height:1.3em;font-size:.95rem;margin-top:8px}.msg.err{color:var(--bad);font-weight:600}.msg.ok{color:var(--good);font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th,td{text-align:left;padding:8px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:700 .74rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.scroll{overflow-x:auto}
+.tag{display:inline-block;padding:2px 9px;border-radius:999px;font:700 .75rem var(--display);background:var(--mist);border:1px solid var(--line)}
+.sec{font:800 .85rem var(--display);text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);margin:20px 0 8px}
+.empty{padding:26px;text-align:center;color:var(--ink-soft);border:2px dashed var(--line);border-radius:16px}
+.chk{display:flex;gap:9px;align-items:center;margin:6px 0;font-size:.98rem}.chk input{width:18px;height:18px;accent-color:var(--river)}
+.note{font-size:.88rem;color:var(--ink-soft);margin-top:10px;line-height:1.45}
+.sr{position:absolute;left:-999px}
+.bar{height:8px;border-radius:99px;background:var(--mist);overflow:hidden;min-width:70px}.bar i{display:block;height:100%;background:var(--good)}.bar i.w{background:var(--warn)}.bar i.x{background:var(--bad)}
+.ok{color:var(--good);font-weight:700}.no{color:var(--bad);font-weight:700}
+.params{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:0 14px}
+.qbar{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 12px}.qbar select{flex:1;min-width:180px;font:inherit;padding:11px 13px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink)}
+.sp-add{display:flex;gap:10px;flex-wrap:wrap}.sp-add input{flex:1;min-width:180px;font:inherit;padding:11px 13px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink)}
+.tally{display:grid;gap:10px;margin-top:12px}.trow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border-radius:16px;border:1px solid var(--line);background:var(--mist)}
+.tn{display:grid;gap:2px;min-width:0}.tn b{overflow-wrap:anywhere}.lnk{background:none;border:0;color:var(--ink-soft);font-size:.8rem;text-align:left;cursor:pointer;padding:0;text-decoration:underline}
+.tc{display:flex;align-items:center;gap:12px}.tc output{font:800 1.8rem var(--display);min-width:2.2ch;text-align:center;font-variant-numeric:tabular-nums}
+.tb{width:56px;height:56px;border-radius:50%;border:2px solid var(--line);background:var(--card);color:var(--ink);font:700 1.6rem var(--display);cursor:pointer}.tb.p{background:var(--river);border-color:var(--river);color:#fff}.tb:active{transform:scale(.94)}
+.cv{position:relative;height:240px}
+.sr{position:absolute;left:-999px}
+.leg{display:flex;align-items:center;flex-wrap:wrap;gap:8px;font-size:.8rem;color:var(--ink-soft);margin-top:6px}.leg i{display:block;height:10px;width:120px;border-radius:99px}#map{width:100%;height:100%;border-radius:12px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:6px}
+.kpi{padding:12px;border-radius:14px;background:var(--mist);border:1px solid var(--line);text-align:center}
+.kpi small{display:block;font:700 .72rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em}
+.kpi b{font:800 1.35rem var(--display);font-variant-numeric:tabular-nums}
+.warnb{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border-radius:14px;background:color-mix(in srgb,var(--warn) 18%,var(--card));border:1px solid var(--warn);margin:14px 0;font-size:.95rem}.warnb i{margin-top:3px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}.kpi{padding:12px;border-radius:14px;background:var(--mist);border:1px solid var(--line);text-align:center}.kpi small{display:block;font:700 .72rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em}.kpi b{font:800 1.05rem var(--display);font-variant-numeric:tabular-nums}
+.plot{width:100%;height:clamp(300px,52vw,440px);border-radius:12px;display:block}
+.lg{display:flex;flex-wrap:wrap;gap:16px;margin:10px 0;font-size:.9rem}.lg i{display:inline-block;width:18px;height:4px;border-radius:2px;margin-right:6px;vertical-align:middle}.lg i.dash{background:repeating-linear-gradient(90deg,#2f8f5b 0 5px,transparent 5px 9px)}
+input[type=range]{width:100%;accent-color:var(--river)}
+.fld{display:grid;gap:5px;margin-bottom:12px}.fld label{font:700 .8rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em}
+</style>
+</head>
+<body>
+<div class="progress" id="progress" aria-hidden="true"></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav" id="nav" data-solid>
+  <div class="wrap">
+    <a class="brand" href="../index.html">ESE Research<span> Hub</span></a>
+    <nav class="links" id="links" aria-label="Main">
+      <div class="dd cur"><button class="dd-btn" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="toolsMenu">Tools <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="dd-menu" id="toolsMenu"><a href="../portal.html"><i class="fa-solid fa-building-columns" aria-hidden="true"></i><span><b>JKKNIU &amp; ESE Portal</b><small>Official links in one place</small></span></a><a href="../library.html"><i class="fa-solid fa-folder-open" aria-hidden="true"></i><span><b>Batch Library</b><small>Shared ESE study materials</small></span></a><a href="../sound-meter.html"><i class="fa-solid fa-ear-listen" aria-hidden="true"></i><span><b>Sound Level Meter</b><small>Measure noise with your phone</small></span></a><a href="../soil-texture.html"><i class="fa-solid fa-layer-group" aria-hidden="true"></i><span><b>Soil Texture Triangle</b><small>Plot sand, silt and clay</small></span></a><a href="../rock-cycle.html"><i class="fa-solid fa-gem" aria-hidden="true"></i><span><b>Rock Cycle Simulator</b><small>Weathering to metamorphism</small></span></a><a href="../gis-map.html"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i><span><b>GIS Area Explorer</b><small>Boundary, topography, pollution</small></span></a><a href="../gis-lab.html"><i class="fa-solid fa-satellite" aria-hidden="true"></i><span><b>WebGIS Lab</b><small>DEM profiles and GEE scripts</small></span></a><a href="../field-notebook.html"><i class="fa-solid fa-person-hiking" aria-hidden="true"></i><span><b>Field Notebook</b><small>Phone-only field measurements</small></span></a><a href="../water-quality.html"><i class="fa-solid fa-droplet" aria-hidden="true"></i><span><b>Water Quality</b><small>WQI against WHO and BD limits</small></span></a><a href="../field-tracker.html"><i class="fa-solid fa-route" aria-hidden="true"></i><span><b>Field Tracker</b><small>GPS track and waypoints</small></span></a><a href="../ecology-quadrat.html"><i class="fa-solid fa-table-cells" aria-hidden="true"></i><span><b>Quadrat Counter</b><small>Tally species, diversity indices</small></span></a><a class="on" aria-current="page" href="../simulations/wave-beats.html"><i class="fa-solid fa-industry" aria-hidden="true"></i><span><b>Air Dispersion</b><small>Gaussian plume from a stack</small></span></a><a href="../eia-field.html"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i><span><b>EIA Field Visit Kit</b><small>Baseline checklist and impact matrix</small></span></a><a href="../ee-analyzer.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Earth Engine</b><small>Satellite analysis of any area</small></span></a><a href="../weather.html"><i class="fa-solid fa-cloud-sun-rain" aria-hidden="true"></i><span><b>EcoLens Weather</b><small>Your photo plus live weather and rain chance</small></span></a><a href="../atmosphere-sim.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Atmosphere Simulator</b><small>Three-cell circulation model</small></span></a></div></div>
+      <a href="index.html" aria-current="page">Simulations</a>
+      <a href="../about.html">About</a>
+      <a href="../about.html#contact">Contact</a>
+    </nav>
+    <div class="tools">
+      <button class="icon-btn" id="theme" type="button" aria-label="Switch to dark theme"><i class="fa-solid fa-moon"></i></button>
+      <button class="icon-btn burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="links"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</header>
+<div class="page-hero">
+  <div class="wrap">
+    <h1>Wave beats</h1>
+    <p>Add two waves of nearly the same frequency and watch the sum swell and fade. The slow rise and fall is called a beat, and its rate is the difference between the two frequencies. Change the frequencies and amplitudes, then listen to it.</p>
+  </div>
+</div>
+<main id="main">
+<div class="wrap">
+  <div class="panel" style="margin-top:-24px;position:relative;z-index:2">
+    <div class="grid2">
+      <div>
+        <div class="fld"><label for="f1">Wave 1 frequency: <b id="f1v"></b></label><input id="f1" type="range" min="100" max="1000" step="1" value="440"></div>
+        <div class="fld"><label for="df">Difference (wave 2 minus wave 1): <b id="dfv"></b></label><input id="df" type="range" min="0.5" max="20" step="0.5" value="4"></div>
+      </div>
+      <div>
+        <div class="fld"><label for="a1">Wave 1 amplitude: <b id="a1v"></b></label><input id="a1" type="range" min="0.1" max="1" step="0.05" value="1"></div>
+        <div class="fld"><label for="a2">Wave 2 amplitude: <b id="a2v"></b></label><input id="a2" type="range" min="0.1" max="1" step="0.05" value="1"></div>
+      </div>
+    </div>
+    <div class="btns" style="margin-top:0">
+      <button class="b" type="button" id="anim" aria-pressed="true"><i class="fa-solid fa-pause"></i> <span>Pause motion</span></button>
+      <button class="b pri" type="button" id="listen" aria-pressed="false"><i class="fa-solid fa-volume-high"></i> <span>Listen</span></button>
+    </div>
+    <div class="warnb"><i class="fa-solid fa-ear-listen"></i><span>Listening starts quietly. Turn your device volume down first, then raise it slowly.</span></div>
+    <div class="kpis" id="kp"></div>
+  </div>
+
+  <div class="panel">
+    <h2><i class="fa-solid fa-wave-square"></i> The two waves and their sum</h2>
+    <canvas id="cv" class="plot" role="img" aria-label="Wave 1, wave 2 and their sum with the beat envelope"></canvas>
+    <div class="lg"><span><i style="background:#2a7fa8"></i>Wave 1</span><span><i style="background:#d1604a"></i>Wave 2</span><span><i style="background:#2f8f5b"></i>Sum</span><span><i class="dash"></i>Envelope (beat)</span></div>
+    <p class="note" id="cn"></p>
+  </div>
+
+  <div class="panel">
+    <h2><i class="fa-solid fa-circle-info"></i> The idea</h2>
+    <p>The two waves are y₁ = A₁ sin(2πf₁t) and y₂ = A₂ sin(2πf₂t), and the sum is y₁ + y₂. When the waves are in step the peaks add and the sound is loud. A little later the peaks of one line up with the troughs of the other and they partly cancel. The sum's strength swings between A₁ + A₂ and |A₁ − A₂|.</p>
+    <p>The beat frequency is f<sub>beat</sub> = |f₂ − f₁|. If both amplitudes are equal the sound fades to silence between beats. The ear hears a single tone at the average frequency (f₁ + f₂) ÷ 2 that gets louder and softer. Tuning two instruments until the beats slow down and stop is a classic way to bring them to the same pitch. Beating is also how a radar speed gun and many interferometers read very small frequency differences.</p>
+    <p class="note">The picture is drawn to a time scale that shows about three beats. If the carrier would be too dense to see (frequency much larger than the difference), the drawn wave uses fewer cycles than the real sound, and the note under the chart says so. The beat rate and the amplitudes are always exact. Listening uses the real frequencies you set. Wave 2 is always the higher one.</p>
+  </div>
+</div>
+</main>
+<footer>&copy; 2026 Md Rokibul Islam Robin &middot; <a href="../index.html">Back to home</a></footer>
+<script src="../site.js"></script>
+<script>
+(function(){
+'use strict';
+var $=function(i){return document.getElementById(i)},cv=$('cv'),AC=window.AudioContext||window.webkitAudioContext,ctx=null,o1,o2,g1,g2,mg,on=false,moving=true,off=0,last=0;
+function S(){return{f1:+$('f1').value,d:+$('df').value,a1:+$('a1').value,a2:+$('a2').value}}
+function info(){var s=S();$('f1v').textContent=s.f1+' Hz';$('dfv').textContent=s.d+' Hz';$('a1v').textContent=s.a1.toFixed(2);$('a2v').textContent=s.a2.toFixed(2);
+  var f2=s.f1+s.d,mx=s.a1+s.a2,mn=Math.abs(s.a1-s.a2);
+  $('kp').innerHTML=[['Wave 2 frequency',f2+' Hz'],['Beat frequency',s.d+' beats/s'],['Beat period',(1/s.d).toFixed(3)+' s'],['Heard pitch',((s.f1+f2)/2).toFixed(1)+' Hz'],['Loudest / softest',mx.toFixed(2)+' / '+mn.toFixed(2)]].map(function(k){return'<div class="kpi"><small>'+k[0]+'</small><b>'+k[1]+'</b></div>'}).join('');
+  var fv=drawF(s);$('cn').textContent=fv<s.f1?'Carrier compressed for drawing: shown with '+fv.toFixed(1)+' Hz and '+(fv+s.d).toFixed(1)+' Hz in place of the real '+s.f1+' Hz and '+f2+' Hz. The beat rate is unchanged.':'Drawn at the true frequencies.';
+  if(ctx){var t=ctx.currentTime;o1.frequency.setTargetAtTime(s.f1,t,.02);o2.frequency.setTargetAtTime(f2,t,.02);g1.gain.setTargetAtTime(s.a1,t,.02);g2.gain.setTargetAtTime(s.a2,t,.02)}}
+function drawF(s){return Math.min(s.f1,30*s.d)}
+function env(s,t){return Math.sqrt(s.a1*s.a1+s.a2*s.a2+2*s.a1*s.a2*Math.cos(2*Math.PI*s.d*t))}
+function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()}
+function render(){var r=cv.getBoundingClientRect(),dpr=Math.min(2,devicePixelRatio||1);cv.width=Math.max(300,Math.floor(r.width*dpr));cv.height=Math.floor(r.height*dpr);
+  var c=cv.getContext('2d'),W=cv.width,H=cv.height,s=S(),fv=drawF(s),f2v=fv+s.d,T=3/s.d,rows=[[0,H/3],[H/3,2*H/3],[2*H/3,H]],amp=H/3/2*.86/ (s.a1+s.a2>1?(s.a1+s.a2):1);
+  c.fillStyle=css('--mist')||'#eee';c.fillRect(0,0,W,H);c.strokeStyle=css('--line')||'#ccc';c.lineWidth=1;
+  var ym=[H/6,H/2,5*H/6];ym.forEach(function(y){c.beginPath();c.moveTo(0,y);c.lineTo(W,y);c.stroke()});
+  var sc=H/3/2*.86/ Math.max(1,(s.a1+s.a2)/ (s.a1+s.a2>1?1:1));
+  var unit=(H/6*.86)/Math.max(1,s.a1+s.a2);
+  function line(row,col,fn,dash){c.strokeStyle=col;c.lineWidth=2*dpr/ (dpr>1?1.2:1);c.setLineDash(dash||[]);c.beginPath();for(var x=0;x<=W;x++){var t=off+x/W*T,y=ym[row]-fn(t)*unit;x?c.lineTo(x,y):c.moveTo(x,y)}c.stroke();c.setLineDash([])}
+  var w1=function(t){return s.a1*Math.sin(2*Math.PI*fv*t)},w2=function(t){return s.a2*Math.sin(2*Math.PI*f2v*t)};
+  line(0,'#2a7fa8',w1);line(1,'#d1604a',w2);line(2,'#2f8f5b',function(t){return w1(t)+w2(t)});
+  // envelope on sum row (exact for drawn carriers: amplitude envelope depends only on d)
+  line(2,'#2f8f5b',function(t){return env(s,t)},[6,5]);line(2,'#2f8f5b',function(t){return -env(s,t)},[6,5]);
+  c.fillStyle=css('--ink-soft')||'#666';c.font=Math.round(12*dpr)+'px sans-serif';c.fillText('Wave 1',8,16*dpr);c.fillText('Wave 2',8,H/3+16*dpr);c.fillText('Sum',8,2*H/3+16*dpr);
+  // loudness bar
+  var e=env(s,off+T/2)/(s.a1+s.a2);c.fillStyle='rgba(47,143,91,.25)';c.fillRect(W-14*dpr,2*H/3+(H/3)*(1-e),10*dpr,(H/3)*e)}
+function loop(ts){var dt=last?(ts-last)/1000:0;last=ts;if(moving)off+=dt*0.35*(1/S().d);render();requestAnimationFrame(loop)}
+['f1','df','a1','a2'].forEach(function(id){$(id).addEventListener('input',info)});
+$('anim').onclick=function(){moving=!moving;this.setAttribute('aria-pressed',moving);this.querySelector('span').textContent=moving?'Pause motion':'Resume motion';this.querySelector('i').className='fa-solid '+(moving?'fa-pause':'fa-play')};
+$('listen').onclick=function(){
+  if(!on){if(!AC){alert('Your browser cannot play audio with the Web Audio API.');return}
+    if(!ctx){ctx=new AC();mg=ctx.createGain();mg.gain.value=0;mg.connect(ctx.destination);o1=ctx.createOscillator();o2=ctx.createOscillator();g1=ctx.createGain();g2=ctx.createGain();o1.connect(g1);o2.connect(g2);g1.connect(mg);g2.connect(mg);o1.start();o2.start()}
+    if(ctx.state==='suspended')ctx.resume();on=true;info();mg.gain.setTargetAtTime(.06,ctx.currentTime,.05)}
+  else{on=false;mg.gain.setTargetAtTime(0,ctx.currentTime,.05)}
+  this.setAttribute('aria-pressed',on);this.querySelector('span').textContent=on?'Stop':'Listen';this.querySelector('i').className='fa-solid '+(on?'fa-stop':'fa-volume-high')};
+info();requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
