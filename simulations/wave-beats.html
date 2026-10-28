@@ -108,7 +108,9 @@ input[type=range]{width:100%;accent-color:var(--river);min-width:0}
 .chk{display:flex;gap:9px;align-items:center;margin:10px 0;font-size:.98rem}.chk input{width:18px;height:18px;accent-color:var(--river)}
 .eq{display:grid;gap:8px}.eqrow{display:grid;grid-template-columns:150px minmax(0,1fr);gap:12px;align-items:baseline;padding:10px 12px;border-radius:12px;background:var(--mist)}.eqrow b{font:700 .8rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em}.eqrow code{font:500 .98rem ui-monospace,Menlo,Consolas,monospace;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
 @media(max-width:600px){.eqrow{grid-template-columns:1fr;gap:4px}}
-</style>
+.cbar{display:grid;grid-template-columns:auto repeat(4,minmax(0,1fr));gap:10px 14px;align-items:end;margin-bottom:4px}.cb1{display:flex;gap:6px;align-items:center;margin-bottom:12px}.cbar .fld{margin-bottom:0}.cbar input[type=number],.cbar select{width:100%;font:inherit;font-size:1rem;padding:9px 10px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink)}
+@media(max-width:820px){.cbar{grid-template-columns:repeat(2,minmax(0,1fr))}.cb1{grid-column:1/-1;margin-bottom:0}}
+.cbar+.fld{margin-top:12px}.fld label b{text-transform:none}</style>
 </head>
 <body>
 <div class="progress" id="progress" aria-hidden="true"></div>
@@ -154,7 +156,6 @@ input[type=range]{width:100%;accent-color:var(--river);min-width:0}
     <div class="presets" id="dp"></div>
     <label class="chk"><input type="checkbox" id="lk" checked> When I change wave 1, move wave 2 with it (keep the same difference)</label>
     <div class="btns" style="margin-top:6px">
-      <button class="b" type="button" id="anim" aria-pressed="true"><i class="fa-solid fa-pause"></i> <span>Pause motion</span></button>
       <button class="b pri" type="button" id="listen" aria-pressed="false"><i class="fa-solid fa-volume-high"></i> <span>Listen</span></button>
     </div>
     <div class="warnb"><i class="fa-solid fa-ear-listen"></i><span>Listening starts quietly. Turn your device volume down first, then raise it slowly. Sound level is kept safe whatever amplitudes you choose, and phase does not change what you hear.</span></div>
@@ -163,10 +164,16 @@ input[type=range]{width:100%;accent-color:var(--river);min-width:0}
 
   <div class="panel">
     <h2><i class="fa-solid fa-wave-square"></i> The two waves and their sum</h2>
-    <div class="fld" style="max-width:420px"><label for="vw">View (time window)</label><select id="vw">
-      <option value="0">Overview: about 3 beats</option>
-      <option value="0.002">Close-up: 2 ms</option><option value="0.005">Close-up: 5 ms</option><option value="0.01">Close-up: 10 ms</option><option value="0.02">Close-up: 20 ms</option><option value="0.05">Close-up: 50 ms</option><option value="0.1">Close-up: 100 ms</option><option value="0.25">Close-up: 250 ms</option></select>
-      <small>Close-up views use the true frequencies, so you can count real cycles. Move the pointer over the chart (or touch it) to read exact values at that moment. Pause the motion to hold still.</small></div>
+    <div class="cbar">
+      <div class="cb1"><button class="b pri" type="button" id="anim" aria-pressed="true"><i class="fa-solid fa-pause"></i> <span>Pause motion</span></button><button class="b" type="button" id="stL" aria-label="Step back"><i class="fa-solid fa-backward-step"></i> <span>Step</span></button><button class="b" type="button" id="stR" aria-label="Step forward"><span>Step</span> <i class="fa-solid fa-forward-step"></i></button></div>
+      <div class="fld"><label for="qf1">Wave 1 (Hz)</label><input id="qf1" type="number" min="20" max="20000" step="any" value="440"></div>
+      <div class="fld"><label for="qf2">Wave 2 (Hz)</label><input id="qf2" type="number" min="20" max="20000" step="any" value="444"></div>
+      <div class="fld"><label for="vw">Time window</label><select id="vw">
+        <option value="0">Overview: about 3 beats</option>
+        <option value="0.002">2 ms</option><option value="0.005">5 ms</option><option value="0.01">10 ms</option><option value="0.02">20 ms</option><option value="0.05">50 ms</option><option value="0.1">100 ms</option><option value="0.25">250 ms</option></select></div>
+      <div class="fld"><label for="sp">Motion speed</label><select id="sp"><option value="0.25">¼×</option><option value="0.5">½×</option><option value="1" selected>1×</option><option value="2">2×</option><option value="4">4×</option></select></div>
+    </div>
+    <div class="fld"><label for="ts">Start time: <b id="tsv">0 ms</b></label><input id="ts" type="range" min="0" max="1000" step="1" value="0" aria-label="Start time of the view"><small>Drag to move the view along the time axis. Close-up windows use the true frequencies; pause to hold still, or use the step buttons to move one tenth of a window. Point at the chart to read values.</small></div>
     <canvas id="cv" class="plot" role="img" aria-label="Wave 1, wave 2 and their sum with the beat envelope"></canvas>
     <div class="lg"><span><i style="background:#2a7fa8"></i>Wave 1</span><span><i style="background:#d1604a"></i>Wave 2</span><span><i style="background:#2f8f5b"></i>Sum</span><span><i class="dash"></i>Envelope (beat)</span></div>
     <output class="rd" id="rd" aria-live="off">Move the pointer over the chart to read values.</output>
@@ -202,7 +209,7 @@ function view(s){var ad=Math.abs(s.d),T,f1v,f2v,true_;
   if(s.win>0){T=s.win;f1v=s.f1;f2v=s.f2;true_=true}
   else{T=ad>0?3/ad:0.05;var fv=ad>0?Math.min(s.f1,30*ad):Math.min(s.f1,200);f1v=fv;f2v=fv+s.d;if(f2v<1){f2v=1;f1v=1-s.d}true_=(f1v===s.f1&&f2v===s.f2)}
   return{T:T,f1:f1v,f2:f2v,true_:true_}}
-function sync(src){var s=S();
+function sync(src){var s=S();['qf1','qf2'].forEach(function(id,i){var el=$(id);if(document.activeElement!==el)el.value=$(i?'f2n':'f1n').value});
   if(src==='f1n'){var o=num('f1n',20,20000,440)-lastF1;lastF1=num('f1n',20,20000,440);if($('lk').checked)$('f2n').value=g(Math.max(20,Math.min(20000,num('f2n',20,20000,444)+o)),3)}
   $('f1').value=Math.min(2000,num('f1n',20,20000,440));$('f2').value=Math.min(2000,num('f2n',20,20000,444));$('a1').value=num('a1n',0,5,1);$('a2').value=num('a2n',0,5,1);$('ph').value=num('phn',0,360,0)}
 var lastF1=440;
@@ -237,7 +244,12 @@ function render(){var r=cv.getBoundingClientRect(),dpr=Math.min(2,devicePixelRat
   if(mx!==null){var x=mx*W,t=off+mx*T;c.strokeStyle=css('--ink')||'#000';c.lineWidth=dpr;c.beginPath();c.moveTo(x,0);c.lineTo(x,H);c.stroke();
     var a=w1(t),b=w2(t),tm=s.win>0||true?(t*1000):0;
     $('rd').textContent=(s.win>0?'t = '+g(tm,3)+' ms':'drawn time t = '+g(tm,2)+' ms')+'   y₁ = '+sgn(a)+'   y₂ = '+sgn(b)+'   sum = '+sgn(a+b)+'   envelope = ±'+g(env(s,t))}}
-function loop(ts){var dt=last?(ts-last)/1000:0;last=ts;if(moving)off+=dt*0.35*view(S()).T;render();requestAnimationFrame(loop)}
+function loop(ts){var dt=last?(ts-last)/1000:0;last=ts;var T=view(S()).T;if(moving)off+=dt*0.35*T*(+$('sp').value);scrubUI(T);render();requestAnimationFrame(loop)}
+function scrubUI(T){var span=4*T,m=((off%span)+span)%span;if(document.activeElement!==$('ts'))$('ts').value=Math.round(m/span*1000);$('tsv').textContent=(m*1000>=1000?g(m,3)+' s':g(m*1000,2)+' ms')}
+$('ts').addEventListener('input',function(){var T=view(S()).T,span=4*T;off=Math.floor(off/span)*span+(+this.value/1000)*span;scrubUI(T)});
+function step(k){var T=view(S()).T;off+=k*T/10;scrubUI(T)}
+$('stL').onclick=function(){step(-1)};$('stR').onclick=function(){step(1)};
+['qf1','qf2'].forEach(function(id,i){var tg=i?'f2n':'f1n';$(id).addEventListener('input',function(){if(this.value==='')return;$(tg).value=this.value;$(tg).dispatchEvent(new Event('input'))});$(id).addEventListener('change',function(){$(tg).value=this.value;$(tg).dispatchEvent(new Event('change'));this.value=$(tg).value})});
 function setM(ev){var r=cv.getBoundingClientRect();mx=Math.max(0,Math.min(1,(ev.clientX-r.left)/r.width))}
 cv.addEventListener('pointermove',setM);cv.addEventListener('pointerdown',setM);cv.addEventListener('pointerleave',function(){mx=null;$('rd').textContent='Move the pointer over the chart to read values.'});
 cv.style.touchAction='pan-y';
