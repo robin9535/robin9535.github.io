@@ -4,20 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Wave Beats | ESE Research Hub</title>
-<meta name="description" content="Interactive wave beat simulation: add two waves of nearly equal frequency, see the envelope, beat frequency and loudness swing, and listen to the beats.">
+<meta name="description" content="Interactive wave beat simulation: set both frequencies and amplitudes, zoom in to single cycles, read exact values, and see the equations with your numbers.">
 <meta name="theme-color" content="#0E2A2F">
 <link rel="canonical" href="https://mdrokibul.me/simulations/wave-beats.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ESE Research Hub">
 <meta property="og:url" content="https://mdrokibul.me/simulations/wave-beats.html">
 <meta property="og:title" content="Wave Beats">
-<meta property="og:description" content="Interactive wave beat simulation: add two waves of nearly equal frequency, see the envelope, beat frequency and loudness swing, and listen to the beats.">
+<meta property="og:description" content="Interactive wave beat simulation: set both frequencies and amplitudes, zoom in to single cycles, read exact values, and see the equations with your numbers.">
 <meta property="og:image" content="https://mdrokibul.me/og-image.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Wave Beats">
-<meta name="twitter:description" content="Interactive wave beat simulation: add two waves of nearly equal frequency, see the envelope, beat frequency and loudness swing, and listen to the beats.">
+<meta name="twitter:description" content="Interactive wave beat simulation: set both frequencies and amplitudes, zoom in to single cycles, read exact values, and see the equations with your numbers.">
 <meta name="twitter:image" content="https://mdrokibul.me/og-image.jpg">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":["WebPage","WebApplication"],"name":"Wave Beats","url":"https://mdrokibul.me/simulations/wave-beats.html","description":"Interactive wave beat simulation: add two waves of nearly equal frequency, see the envelope, beat frequency and loudness swing, and listen to the beats.","applicationCategory":"EducationalApplication","operatingSystem":"Any","inLanguage":"en","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"isPartOf":{"@type":"WebSite","name":"ESE Research Hub","url":"https://mdrokibul.me/"},"author":{"@type":"Person","name":"Md Rokibul Islam Robin","url":"https://mdrokibul.me/about.html"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":["WebPage","WebApplication"],"name":"Wave Beats","url":"https://mdrokibul.me/simulations/wave-beats.html","description":"Interactive wave beat simulation: set both frequencies and amplitudes, zoom in to single cycles, read exact values, and see the equations with your numbers.","applicationCategory":"EducationalApplication","operatingSystem":"Any","inLanguage":"en","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"isPartOf":{"@type":"WebSite","name":"ESE Research Hub","url":"https://mdrokibul.me/"},"author":{"@type":"Person","name":"Md Rokibul Islam Robin","url":"https://mdrokibul.me/about.html"}}</script>
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -96,10 +96,18 @@ td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
 .kpi b{font:800 1.35rem var(--display);font-variant-numeric:tabular-nums}
 .warnb{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border-radius:14px;background:color-mix(in srgb,var(--warn) 18%,var(--card));border:1px solid var(--warn);margin:14px 0;font-size:.95rem}.warnb i{margin-top:3px}
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}.kpi{padding:12px;border-radius:14px;background:var(--mist);border:1px solid var(--line);text-align:center}.kpi small{display:block;font:700 .72rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em}.kpi b{font:800 1.05rem var(--display);font-variant-numeric:tabular-nums}
-.plot{width:100%;height:clamp(300px,52vw,440px);border-radius:12px;display:block}
+.plot{width:100%;height:clamp(300px,52vw,440px);border-radius:12px;display:block;cursor:crosshair}
 .lg{display:flex;flex-wrap:wrap;gap:16px;margin:10px 0;font-size:.9rem}.lg i{display:inline-block;width:18px;height:4px;border-radius:2px;margin-right:6px;vertical-align:middle}.lg i.dash{background:repeating-linear-gradient(90deg,#2f8f5b 0 5px,transparent 5px 9px)}
-input[type=range]{width:100%;accent-color:var(--river)}
-.fld{display:grid;gap:5px;margin-bottom:12px}.fld label{font:700 .8rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em}
+.rd{display:block;min-height:1.5em;font:600 .9rem var(--display);font-variant-numeric:tabular-nums;color:var(--ink);padding:8px 12px;border-radius:10px;background:var(--mist);margin:6px 0;overflow-wrap:anywhere}
+input[type=range]{width:100%;accent-color:var(--river);min-width:0}
+.fld{display:grid;gap:5px;margin-bottom:12px}.fld label{font:700 .8rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em}.fld select,.pair input[type=number]{font:inherit;font-size:1.05rem;padding:10px 12px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink)}.fld select{width:100%}
+.pair{display:grid;grid-template-columns:minmax(0,1fr) 110px;gap:12px;align-items:center}.pair input[type=number]{width:100%;text-align:center;font-variant-numeric:tabular-nums}
+.box{padding:14px;border-radius:16px;border:1px solid var(--line)}.wh{margin:0 0 10px;font:800 1.1rem var(--display);padding-left:10px;border-left:5px solid var(--c)}
+.sec{font:700 .8rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;margin:16px 0 8px}
+.presets{display:flex;flex-wrap:wrap;gap:8px}.pt{font:600 .85rem var(--display);padding:7px 12px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}.pt:hover{background:var(--mist)}
+.chk{display:flex;gap:9px;align-items:center;margin:10px 0;font-size:.98rem}.chk input{width:18px;height:18px;accent-color:var(--river)}
+.eq{display:grid;gap:8px}.eqrow{display:grid;grid-template-columns:150px minmax(0,1fr);gap:12px;align-items:baseline;padding:10px 12px;border-radius:12px;background:var(--mist)}.eqrow b{font:700 .8rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em}.eqrow code{font:500 .98rem ui-monospace,Menlo,Consolas,monospace;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+@media(max-width:600px){.eqrow{grid-template-columns:1fr;gap:4px}}
 </style>
 </head>
 <body>
@@ -123,42 +131,59 @@ input[type=range]{width:100%;accent-color:var(--river)}
 <div class="page-hero">
   <div class="wrap">
     <h1>Wave beats</h1>
-    <p>Add two waves of nearly the same frequency and watch the sum swell and fade. The slow rise and fall is called a beat, and its rate is the difference between the two frequencies. Change the frequencies and amplitudes, then listen to it.</p>
+    <p>Add two waves of nearly the same frequency and watch the sum swell and fade. Type in the exact frequency of each wave, set the amplitudes and phase, zoom in to see individual cycles, and read the equations with your own numbers filled in.</p>
   </div>
 </div>
 <main id="main">
 <div class="wrap">
   <div class="panel" style="margin-top:-24px;position:relative;z-index:2">
     <div class="grid2">
-      <div>
-        <div class="fld"><label for="f1">Wave 1 frequency: <b id="f1v"></b></label><input id="f1" type="range" min="100" max="1000" step="1" value="440"></div>
-        <div class="fld"><label for="df">Difference (wave 2 minus wave 1): <b id="dfv"></b></label><input id="df" type="range" min="0.5" max="20" step="0.5" value="4"></div>
+      <div class="box">
+        <h3 class="wh" style="--c:#2a7fa8">Wave 1</h3>
+        <div class="fld"><label for="f1n">Frequency (Hz)</label><div class="pair"><input id="f1" type="range" min="20" max="2000" step="1" value="440" aria-label="Wave 1 frequency slider"><input id="f1n" type="number" min="20" max="20000" step="any" value="440"></div></div>
+        <div class="fld"><label for="a1n">Amplitude</label><div class="pair"><input id="a1" type="range" min="0" max="5" step="0.1" value="1" aria-label="Wave 1 amplitude slider"><input id="a1n" type="number" min="0" max="5" step="any" value="1"></div></div>
       </div>
-      <div>
-        <div class="fld"><label for="a1">Wave 1 amplitude: <b id="a1v"></b></label><input id="a1" type="range" min="0.1" max="1" step="0.05" value="1"></div>
-        <div class="fld"><label for="a2">Wave 2 amplitude: <b id="a2v"></b></label><input id="a2" type="range" min="0.1" max="1" step="0.05" value="1"></div>
+      <div class="box">
+        <h3 class="wh" style="--c:#d1604a">Wave 2</h3>
+        <div class="fld"><label for="f2n">Frequency (Hz)</label><div class="pair"><input id="f2" type="range" min="20" max="2000" step="1" value="444" aria-label="Wave 2 frequency slider"><input id="f2n" type="number" min="20" max="20000" step="any" value="444"></div></div>
+        <div class="fld"><label for="a2n">Amplitude</label><div class="pair"><input id="a2" type="range" min="0" max="5" step="0.1" value="1" aria-label="Wave 2 amplitude slider"><input id="a2n" type="number" min="0" max="5" step="any" value="1"></div></div>
+        <div class="fld"><label for="phn">Starting phase (degrees)</label><div class="pair"><input id="ph" type="range" min="0" max="360" step="1" value="0" aria-label="Wave 2 phase slider"><input id="phn" type="number" min="0" max="360" step="any" value="0"></div></div>
       </div>
     </div>
-    <div class="btns" style="margin-top:0">
+    <div class="sec">Set wave 2 from wave 1</div>
+    <div class="presets" id="dp"></div>
+    <label class="chk"><input type="checkbox" id="lk" checked> When I change wave 1, move wave 2 with it (keep the same difference)</label>
+    <div class="btns" style="margin-top:6px">
       <button class="b" type="button" id="anim" aria-pressed="true"><i class="fa-solid fa-pause"></i> <span>Pause motion</span></button>
       <button class="b pri" type="button" id="listen" aria-pressed="false"><i class="fa-solid fa-volume-high"></i> <span>Listen</span></button>
     </div>
-    <div class="warnb"><i class="fa-solid fa-ear-listen"></i><span>Listening starts quietly. Turn your device volume down first, then raise it slowly.</span></div>
+    <div class="warnb"><i class="fa-solid fa-ear-listen"></i><span>Listening starts quietly. Turn your device volume down first, then raise it slowly. Sound level is kept safe whatever amplitudes you choose, and phase does not change what you hear.</span></div>
     <div class="kpis" id="kp"></div>
   </div>
 
   <div class="panel">
     <h2><i class="fa-solid fa-wave-square"></i> The two waves and their sum</h2>
+    <div class="fld" style="max-width:420px"><label for="vw">View (time window)</label><select id="vw">
+      <option value="0">Overview: about 3 beats</option>
+      <option value="0.002">Close-up: 2 ms</option><option value="0.005">Close-up: 5 ms</option><option value="0.01">Close-up: 10 ms</option><option value="0.02">Close-up: 20 ms</option><option value="0.05">Close-up: 50 ms</option><option value="0.1">Close-up: 100 ms</option><option value="0.25">Close-up: 250 ms</option></select>
+      <small>Close-up views use the true frequencies, so you can count real cycles. Move the pointer over the chart (or touch it) to read exact values at that moment. Pause the motion to hold still.</small></div>
     <canvas id="cv" class="plot" role="img" aria-label="Wave 1, wave 2 and their sum with the beat envelope"></canvas>
     <div class="lg"><span><i style="background:#2a7fa8"></i>Wave 1</span><span><i style="background:#d1604a"></i>Wave 2</span><span><i style="background:#2f8f5b"></i>Sum</span><span><i class="dash"></i>Envelope (beat)</span></div>
+    <output class="rd" id="rd" aria-live="off">Move the pointer over the chart to read values.</output>
     <p class="note" id="cn"></p>
   </div>
 
   <div class="panel">
+    <h2><i class="fa-solid fa-square-root-variable"></i> Equations with your numbers</h2>
+    <div class="eq" id="eq"></div>
+    <p class="note">General rule: sin a + sin b = 2 sin((a+b)/2) cos((a−b)/2). With equal amplitudes and no phase difference, the sum is a fast wave at the average frequency whose size is shaped by a slow cosine. That slow shape is the envelope, and the loudness peaks twice per cosine cycle, so the beat frequency is |f₂ − f₁|.</p>
+  </div>
+
+  <div class="panel">
     <h2><i class="fa-solid fa-circle-info"></i> The idea</h2>
-    <p>The two waves are y₁ = A₁ sin(2πf₁t) and y₂ = A₂ sin(2πf₂t), and the sum is y₁ + y₂. When the waves are in step the peaks add and the sound is loud. A little later the peaks of one line up with the troughs of the other and they partly cancel. The sum's strength swings between A₁ + A₂ and |A₁ − A₂|.</p>
-    <p>The beat frequency is f<sub>beat</sub> = |f₂ − f₁|. If both amplitudes are equal the sound fades to silence between beats. The ear hears a single tone at the average frequency (f₁ + f₂) ÷ 2 that gets louder and softer. Tuning two instruments until the beats slow down and stop is a classic way to bring them to the same pitch. Beating is also how a radar speed gun and many interferometers read very small frequency differences.</p>
-    <p class="note">The picture is drawn to a time scale that shows about three beats. If the carrier would be too dense to see (frequency much larger than the difference), the drawn wave uses fewer cycles than the real sound, and the note under the chart says so. The beat rate and the amplitudes are always exact. Listening uses the real frequencies you set. Wave 2 is always the higher one.</p>
+    <p>When the two waves are in step the peaks add and the sound is loud. A little later the peaks of one line up with the troughs of the other and they partly cancel. The sum's strength swings between A₁ + A₂ and |A₁ − A₂|. With equal amplitudes it falls to silence between beats.</p>
+    <p>The ear hears one tone at the average frequency (f₁ + f₂) ÷ 2 that gets louder and softer at the beat frequency. Tuning two instruments until the beats slow down and stop is a classic way to bring them to the same pitch.</p>
+    <p class="note">In the overview the carrier waves would be too dense to see, so they are drawn with fewer cycles than the real sound, and a note under the chart says so. The beat rate, amplitudes and envelope are always exact. Close-up views use the real frequencies.</p>
   </div>
 </div>
 </main>
@@ -167,32 +192,63 @@ input[type=range]{width:100%;accent-color:var(--river)}
 <script>
 (function(){
 'use strict';
-var $=function(i){return document.getElementById(i)},cv=$('cv'),AC=window.AudioContext||window.webkitAudioContext,ctx=null,o1,o2,g1,g2,mg,on=false,moving=true,off=0,last=0;
-function S(){return{f1:+$('f1').value,d:+$('df').value,a1:+$('a1').value,a2:+$('a2').value}}
-function info(){var s=S();$('f1v').textContent=s.f1+' Hz';$('dfv').textContent=s.d+' Hz';$('a1v').textContent=s.a1.toFixed(2);$('a2v').textContent=s.a2.toFixed(2);
-  var f2=s.f1+s.d,mx=s.a1+s.a2,mn=Math.abs(s.a1-s.a2);
-  $('kp').innerHTML=[['Wave 2 frequency',f2+' Hz'],['Beat frequency',s.d+' beats/s'],['Beat period',(1/s.d).toFixed(3)+' s'],['Heard pitch',((s.f1+f2)/2).toFixed(1)+' Hz'],['Loudest / softest',mx.toFixed(2)+' / '+mn.toFixed(2)]].map(function(k){return'<div class="kpi"><small>'+k[0]+'</small><b>'+k[1]+'</b></div>'}).join('');
-  var fv=drawF(s);$('cn').textContent=fv<s.f1?'Carrier compressed for drawing: shown with '+fv.toFixed(1)+' Hz and '+(fv+s.d).toFixed(1)+' Hz in place of the real '+s.f1+' Hz and '+f2+' Hz. The beat rate is unchanged.':'Drawn at the true frequencies.';
-  if(ctx){var t=ctx.currentTime;o1.frequency.setTargetAtTime(s.f1,t,.02);o2.frequency.setTargetAtTime(f2,t,.02);g1.gain.setTargetAtTime(s.a1,t,.02);g2.gain.setTargetAtTime(s.a2,t,.02)}}
-function drawF(s){return Math.min(s.f1,30*s.d)}
-function env(s,t){return Math.sqrt(s.a1*s.a1+s.a2*s.a2+2*s.a1*s.a2*Math.cos(2*Math.PI*s.d*t))}
+var $=function(i){return document.getElementById(i)},cv=$('cv'),AC=window.AudioContext||window.webkitAudioContext,ctx=null,o1,o2,g1,g2,mg,on=false,moving=true,off=0,last=0,mx=null,TWO=2*Math.PI;
+function num(id,lo,hi,def){var v=parseFloat($(id).value);if(!isFinite(v))v=def;return Math.max(lo,Math.min(hi,v))}
+function S(){var f1=num('f1n',20,20000,440),f2=num('f2n',20,20000,444);return{f1:f1,f2:f2,d:f2-f1,a1:num('a1n',0,5,1),a2:num('a2n',0,5,1),ph:num('phn',0,360,0)*Math.PI/180,win:+$('vw').value}}
+function g(x,n){return (+x.toFixed(n===undefined?2:n)).toString()}
+function sgn(x){return x<0?'−'+g(-x):g(x)}
+function env(s,t){var v=s.a1*s.a1+s.a2*s.a2+2*s.a1*s.a2*Math.cos(TWO*s.d*t+s.ph);return Math.sqrt(Math.max(0,v))}
+function view(s){var ad=Math.abs(s.d),T,f1v,f2v,true_;
+  if(s.win>0){T=s.win;f1v=s.f1;f2v=s.f2;true_=true}
+  else{T=ad>0?3/ad:0.05;var fv=ad>0?Math.min(s.f1,30*ad):Math.min(s.f1,200);f1v=fv;f2v=fv+s.d;if(f2v<1){f2v=1;f1v=1-s.d}true_=(f1v===s.f1&&f2v===s.f2)}
+  return{T:T,f1:f1v,f2:f2v,true_:true_}}
+function sync(src){var s=S();
+  if(src==='f1n'){var o=num('f1n',20,20000,440)-lastF1;lastF1=num('f1n',20,20000,440);if($('lk').checked)$('f2n').value=g(Math.max(20,Math.min(20000,num('f2n',20,20000,444)+o)),3)}
+  $('f1').value=Math.min(2000,num('f1n',20,20000,440));$('f2').value=Math.min(2000,num('f2n',20,20000,444));$('a1').value=num('a1n',0,5,1);$('a2').value=num('a2n',0,5,1);$('ph').value=num('phn',0,360,0)}
+var lastF1=440;
+function info(){var s=S(),ad=Math.abs(s.d),mxA=s.a1+s.a2,mnA=Math.abs(s.a1-s.a2),v=view(s);
+  $('kp').innerHTML=[['Difference f₂ − f₁',sgn(s.d)+' Hz'],['Beat frequency',ad>0?g(ad,3)+' beats/s':'none'],['Beat period',ad>0?g(1/ad,3)+' s':'no beat'],['Heard pitch',g((s.f1+s.f2)/2,1)+' Hz'],['Loudest / softest',g(mxA)+' / '+g(mnA)]].map(function(k){return'<div class="kpi"><small>'+k[0]+'</small><b>'+k[1]+'</b></div>'}).join('');
+  var cyc=Math.max(v.f1,v.f2)*v.T;
+  $('cn').textContent=s.win>0?(cyc>cv.width/4?'This window holds about '+Math.round(cyc)+' cycles, which is too dense to read. Choose a smaller window.':'Drawn at the true frequencies, about '+g(cyc,1)+' cycles of the faster wave in view.'):(v.true_?'Drawn at the true frequencies.':'Carrier compressed for drawing: shown with '+g(v.f1,1)+' Hz and '+g(v.f2,1)+' Hz in place of the real '+g(s.f1,2)+' Hz and '+g(s.f2,2)+' Hz. The beat rate is unchanged.');
+  var ph=num('phn',0,360,0),eqs=[];
+  eqs.push('<div class="eqrow"><b>Wave 1</b><code>y₁(t) = '+g(s.a1)+' · sin(2π · '+g(s.f1,3)+' · t)</code></div>');
+  eqs.push('<div class="eqrow"><b>Wave 2</b><code>y₂(t) = '+g(s.a2)+' · sin(2π · '+g(s.f2,3)+' · t + '+g(ph,1)+'°)</code></div>');
+  eqs.push('<div class="eqrow"><b>Sum</b><code>y(t) = y₁(t) + y₂(t)</code></div>');
+  if(Math.abs(s.a1-s.a2)<1e-9&&ph===0)eqs.push('<div class="eqrow"><b>Same size, same start</b><code>y(t) = 2 · '+g(s.a1)+' · cos(π · '+sgn(s.d)+' · t) · sin(π · '+g(s.f1+s.f2,3)+' · t)</code></div>');
+  eqs.push('<div class="eqrow"><b>Envelope</b><code>R(t) = √(A₁² + A₂² + 2A₁A₂ · cos(2π · '+sgn(s.d)+' · t + '+g(ph,1)+'°))</code></div>');
+  eqs.push('<div class="eqrow"><b>Numbers</b><code>R(t) = √('+g(s.a1*s.a1)+' + '+g(s.a2*s.a2)+' + '+g(2*s.a1*s.a2)+' · cos(…))</code></div>');
+  eqs.push('<div class="eqrow"><b>Beat</b><code>f_beat = |f₂ − f₁| = |'+g(s.f2,3)+' − '+g(s.f1,3)+'| = '+g(ad,3)+' Hz</code></div>');
+  eqs.push('<div class="eqrow"><b>Heard pitch</b><code>f_avg = (f₁ + f₂) ÷ 2 = '+g((s.f1+s.f2)/2,3)+' Hz</code></div>');
+  eqs.push('<div class="eqrow"><b>Range</b><code>R<sub>max</sub> = A₁ + A₂ = '+g(mxA)+', R<sub>min</sub> = |A₁ − A₂| = '+g(mnA)+'</code></div>');
+  $('eq').innerHTML=eqs.join('');
+  if(ctx){var t=ctx.currentTime,tot=Math.max(mxA,.01);o1.frequency.setTargetAtTime(s.f1,t,.02);o2.frequency.setTargetAtTime(s.f2,t,.02);g1.gain.setTargetAtTime(s.a1/tot,t,.02);g2.gain.setTargetAtTime(s.a2/tot,t,.02)}}
 function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()}
 function render(){var r=cv.getBoundingClientRect(),dpr=Math.min(2,devicePixelRatio||1);cv.width=Math.max(300,Math.floor(r.width*dpr));cv.height=Math.floor(r.height*dpr);
-  var c=cv.getContext('2d'),W=cv.width,H=cv.height,s=S(),fv=drawF(s),f2v=fv+s.d,T=3/s.d,rows=[[0,H/3],[H/3,2*H/3],[2*H/3,H]],amp=H/3/2*.86/ (s.a1+s.a2>1?(s.a1+s.a2):1);
+  var c=cv.getContext('2d'),W=cv.width,H=cv.height,s=S(),v=view(s),T=v.T,ym=[H/6,H/2,5*H/6],unit=(H/6*.86)/Math.max(.1,s.a1+s.a2);
   c.fillStyle=css('--mist')||'#eee';c.fillRect(0,0,W,H);c.strokeStyle=css('--line')||'#ccc';c.lineWidth=1;
-  var ym=[H/6,H/2,5*H/6];ym.forEach(function(y){c.beginPath();c.moveTo(0,y);c.lineTo(W,y);c.stroke()});
-  var sc=H/3/2*.86/ Math.max(1,(s.a1+s.a2)/ (s.a1+s.a2>1?1:1));
-  var unit=(H/6*.86)/Math.max(1,s.a1+s.a2);
-  function line(row,col,fn,dash){c.strokeStyle=col;c.lineWidth=2*dpr/ (dpr>1?1.2:1);c.setLineDash(dash||[]);c.beginPath();for(var x=0;x<=W;x++){var t=off+x/W*T,y=ym[row]-fn(t)*unit;x?c.lineTo(x,y):c.moveTo(x,y)}c.stroke();c.setLineDash([])}
-  var w1=function(t){return s.a1*Math.sin(2*Math.PI*fv*t)},w2=function(t){return s.a2*Math.sin(2*Math.PI*f2v*t)};
+  ym.forEach(function(y){c.beginPath();c.moveTo(0,y);c.lineTo(W,y);c.stroke()});
+  var w1=function(t){return s.a1*Math.sin(TWO*v.f1*t)},w2=function(t){return s.a2*Math.sin(TWO*v.f2*t+s.ph)};
+  function line(row,col,fn,dash){c.strokeStyle=col;c.lineWidth=2*Math.min(dpr,1.5);c.setLineDash(dash||[]);c.beginPath();for(var x=0;x<=W;x++){var t=off+x/W*T,y=ym[row]-fn(t)*unit;x?c.lineTo(x,y):c.moveTo(x,y)}c.stroke();c.setLineDash([])}
   line(0,'#2a7fa8',w1);line(1,'#d1604a',w2);line(2,'#2f8f5b',function(t){return w1(t)+w2(t)});
-  // envelope on sum row (exact for drawn carriers: amplitude envelope depends only on d)
-  line(2,'#2f8f5b',function(t){return env(s,t)},[6,5]);line(2,'#2f8f5b',function(t){return -env(s,t)},[6,5]);
+  var e1=function(t){return env(s,t)},e2=function(t){return -env(s,t)};line(2,'#2f8f5b',e1,[6,5]);line(2,'#2f8f5b',e2,[6,5]);
   c.fillStyle=css('--ink-soft')||'#666';c.font=Math.round(12*dpr)+'px sans-serif';c.fillText('Wave 1',8,16*dpr);c.fillText('Wave 2',8,H/3+16*dpr);c.fillText('Sum',8,2*H/3+16*dpr);
-  // loudness bar
-  var e=env(s,off+T/2)/(s.a1+s.a2);c.fillStyle='rgba(47,143,91,.25)';c.fillRect(W-14*dpr,2*H/3+(H/3)*(1-e),10*dpr,(H/3)*e)}
-function loop(ts){var dt=last?(ts-last)/1000:0;last=ts;if(moving)off+=dt*0.35*(1/S().d);render();requestAnimationFrame(loop)}
-['f1','df','a1','a2'].forEach(function(id){$(id).addEventListener('input',info)});
+  c.fillText(s.win>0?'window '+(T*1000>=1000?g(T,2)+' s':g(T*1000,1)+' ms'):'window ≈ 3 beats',W-110*dpr,16*dpr);
+  var e=env(s,off+T/2)/Math.max(.01,s.a1+s.a2);c.fillStyle='rgba(47,143,91,.25)';c.fillRect(W-14*dpr,2*H/3+(H/3)*(1-e),10*dpr,(H/3)*e);
+  if(mx!==null){var x=mx*W,t=off+mx*T;c.strokeStyle=css('--ink')||'#000';c.lineWidth=dpr;c.beginPath();c.moveTo(x,0);c.lineTo(x,H);c.stroke();
+    var a=w1(t),b=w2(t),tm=s.win>0||true?(t*1000):0;
+    $('rd').textContent=(s.win>0?'t = '+g(tm,3)+' ms':'drawn time t = '+g(tm,2)+' ms')+'   y₁ = '+sgn(a)+'   y₂ = '+sgn(b)+'   sum = '+sgn(a+b)+'   envelope = ±'+g(env(s,t))}}
+function loop(ts){var dt=last?(ts-last)/1000:0;last=ts;if(moving)off+=dt*0.35*view(S()).T;render();requestAnimationFrame(loop)}
+function setM(ev){var r=cv.getBoundingClientRect();mx=Math.max(0,Math.min(1,(ev.clientX-r.left)/r.width))}
+cv.addEventListener('pointermove',setM);cv.addEventListener('pointerdown',setM);cv.addEventListener('pointerleave',function(){mx=null;$('rd').textContent='Move the pointer over the chart to read values.'});
+cv.style.touchAction='pan-y';
+var PD=[[1,'+1 Hz'],[2,'+2 Hz'],[4,'+4 Hz'],[10,'+10 Hz'],[-4,'−4 Hz'],[0,'Same (no beat)']];
+$('dp').innerHTML=PD.map(function(p){return'<button type="button" class="pt" data-d="'+p[0]+'">f₂ = f₁ '+p[1]+'</button>'}).join('');
+$('dp').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;var f=Math.max(20,Math.min(20000,num('f1n',20,20000,440)+ +b.dataset.d));$('f2n').value=g(f,3);sync();info()});
+[['f1','f1n'],['f2','f2n'],['a1','a1n'],['a2','a2n'],['ph','phn']].forEach(function(p){
+  $(p[0]).addEventListener('input',function(){var prev=num('f1n',20,20000,440);$(p[1]).value=this.value;if(p[1]==='f1n'){if($('lk').checked){var d=num('f1n',20,20000,440)-prev;$('f2n').value=g(Math.max(20,Math.min(20000,num('f2n',20,20000,444)+d)),3)}lastF1=num('f1n',20,20000,440)}sync();info()});
+  $(p[1]).addEventListener('input',function(){if(this.value==='')return;sync(p[1]);info()});
+  $(p[1]).addEventListener('change',function(){var lo=+this.min,hi=+this.max,v=parseFloat(this.value);this.value=isFinite(v)?Math.max(lo,Math.min(hi,v)):this.defaultValue;sync();info()})});
+$('vw').onchange=function(){off=0;info()};
 $('anim').onclick=function(){moving=!moving;this.setAttribute('aria-pressed',moving);this.querySelector('span').textContent=moving?'Pause motion':'Resume motion';this.querySelector('i').className='fa-solid '+(moving?'fa-pause':'fa-play')};
 $('listen').onclick=function(){
   if(!on){if(!AC){alert('Your browser cannot play audio with the Web Audio API.');return}
@@ -200,7 +256,7 @@ $('listen').onclick=function(){
     if(ctx.state==='suspended')ctx.resume();on=true;info();mg.gain.setTargetAtTime(.06,ctx.currentTime,.05)}
   else{on=false;mg.gain.setTargetAtTime(0,ctx.currentTime,.05)}
   this.setAttribute('aria-pressed',on);this.querySelector('span').textContent=on?'Stop':'Listen';this.querySelector('i').className='fa-solid '+(on?'fa-stop':'fa-volume-high')};
-info();requestAnimationFrame(loop);
+sync();info();requestAnimationFrame(loop);
 })();
 </script>
 </body>
