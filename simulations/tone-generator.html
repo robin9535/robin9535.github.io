@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tone Generator | ESE Research Hub</title>
+<meta name="description" content="Free online tone generator: play pure tones from 20 Hz to 20,000 Hz, change the wave shape, sweep frequencies, hear beats and see wavelength, note, waveform and spectrum.">
+<meta name="theme-color" content="#0E2A2F">
+<link rel="canonical" href="https://mdrokibul.me/simulations/tone-generator.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ESE Research Hub">
+<meta property="og:url" content="https://mdrokibul.me/simulations/tone-generator.html">
+<meta property="og:title" content="Tone Generator">
+<meta property="og:description" content="Free online tone generator: play pure tones from 20 Hz to 20,000 Hz, change the wave shape, sweep frequencies, hear beats and see wavelength, note, waveform and spectrum.">
+<meta property="og:image" content="https://mdrokibul.me/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tone Generator">
+<meta name="twitter:description" content="Free online tone generator: play pure tones from 20 Hz to 20,000 Hz, change the wave shape, sweep frequencies, hear beats and see wavelength, note, waveform and spectrum.">
+<meta name="twitter:image" content="https://mdrokibul.me/og-image.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":["WebPage","WebApplication"],"name":"Tone Generator","url":"https://mdrokibul.me/simulations/tone-generator.html","description":"Free online tone generator: play pure tones from 20 Hz to 20,000 Hz, change the wave shape, sweep frequencies, hear beats and see wavelength, note, waveform and spectrum.","applicationCategory":"EducationalApplication","operatingSystem":"Any","inLanguage":"en","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"isPartOf":{"@type":"WebSite","name":"ESE Research Hub","url":"https://mdrokibul.me/"},"author":{"@type":"Person","name":"Md Rokibul Islam Robin","url":"https://mdrokibul.me/about.html"}}</script>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="../nav.css">
+<link rel="stylesheet" href="../site.css">
+<style>
+main{padding:0 0 56px}
+[hidden]{display:none!important}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:clamp(18px,3vw,28px);box-shadow:0 10px 30px rgba(0,0,0,.09);margin-top:18px}
+.panel h2{font-size:1.25rem;font-weight:800;margin-bottom:6px;display:flex;gap:10px;align-items:center}
+.panel h2 i{color:var(--river)}
+.sub{font-size:.97rem;color:var(--ink-soft);margin-bottom:14px}
+.tabs{display:flex;gap:6px;margin-top:-24px;position:relative;z-index:2;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px;box-shadow:0 10px 30px rgba(0,0,0,.1)}
+.tabs button{flex:1;font:700 .95rem var(--display);padding:11px 8px;border-radius:999px;border:0;background:transparent;color:var(--ink);cursor:pointer;display:inline-flex;gap:8px;align-items:center;justify-content:center}
+.tabs button[aria-selected=true]{background:var(--river);color:#fff}
+.tabs .cnt{font-size:.75rem;background:rgba(255,255,255,.22);padding:1px 8px;border-radius:999px}
+.tabs button:not([aria-selected=true]) .cnt{background:var(--mist);color:var(--ink-soft)}
+@media (max-width:520px){.tabs button span.t{display:none}.tabs button{font-size:.85rem}}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:860px){.grid2{grid-template-columns:1fr}}
+.grid2>*{min-width:0}
+.fld{display:grid;gap:5px;margin-bottom:12px}
+.fld label{font:700 .8rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em}
+.fld input,.fld select,.fld textarea{font:inherit;font-size:1.05rem;width:100%;padding:11px 13px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink);font-variant-numeric:tabular-nums}
+.fld input:focus,.fld select:focus,.fld textarea:focus{outline:none;border-color:var(--river)}
+.fld small{font-size:.85rem;color:var(--ink-soft)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.b{font:700 .95rem var(--display);padding:11px 18px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;display:inline-flex;gap:8px;align-items:center;justify-content:center}
+.b:hover{background:var(--mist)}.b.pri{background:var(--river);border-color:var(--river);color:#fff}.b.pri:hover{background:#27818b}
+.b.bad{color:var(--bad)}.b[disabled]{opacity:.45;cursor:not-allowed}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.big{font:800 clamp(2.6rem,9vw,3.8rem)/1 var(--display);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.live{padding:16px;border-radius:18px;background:var(--mist);border:2px solid var(--line);text-align:center}
+.live small{display:block;font:700 .8rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.live.hit{border-color:var(--good);background:color-mix(in srgb,var(--good) 14%,var(--mist))}
+.stat{font-size:.92rem;color:var(--ink-soft);margin:10px 0;display:flex;gap:8px;align-items:center}
+.stat::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--line);flex:none}
+.stat.ok::before{background:var(--good)}.stat.run::before{background:var(--warn)}.stat.bad::before{background:var(--bad)}
+.cam{position:relative;border-radius:16px;overflow:hidden;background:#000;aspect-ratio:3/4;max-height:420px;margin:12px auto 0;max-width:340px}
+.cam video{width:100%;height:100%;object-fit:cover}
+.cam::before,.cam::after{content:"";position:absolute;background:rgba(255,255,255,.85);z-index:2}
+.cam::before{left:50%;top:0;bottom:0;width:2px;margin-left:-1px}.cam::after{top:50%;left:0;right:0;height:2px;margin-top:-1px}
+.res{margin-top:14px;padding:16px;border-radius:16px;border:2px solid var(--river);background:color-mix(in srgb,var(--river) 8%,var(--card))}
+.res .big{color:var(--river)}
+.res p{margin-top:6px;font-size:.95rem;color:var(--ink-soft)}
+.steps{padding-left:1.2em;color:var(--ink-soft);font-size:.98rem}.steps li+li{margin-top:.5em}
+.msg{min-height:1.3em;font-size:.95rem;margin-top:8px}.msg.err{color:var(--bad);font-weight:600}.msg.ok{color:var(--good);font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th,td{text-align:left;padding:8px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:700 .74rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.scroll{overflow-x:auto}
+.tag{display:inline-block;padding:2px 9px;border-radius:999px;font:700 .75rem var(--display);background:var(--mist);border:1px solid var(--line)}
+.sec{font:800 .85rem var(--display);text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);margin:20px 0 8px}
+.empty{padding:26px;text-align:center;color:var(--ink-soft);border:2px dashed var(--line);border-radius:16px}
+.chk{display:flex;gap:9px;align-items:center;margin:6px 0;font-size:.98rem}.chk input{width:18px;height:18px;accent-color:var(--river)}
+.note{font-size:.88rem;color:var(--ink-soft);margin-top:10px;line-height:1.45}
+.sr{position:absolute;left:-999px}
+.bar{height:8px;border-radius:99px;background:var(--mist);overflow:hidden;min-width:70px}.bar i{display:block;height:100%;background:var(--good)}.bar i.w{background:var(--warn)}.bar i.x{background:var(--bad)}
+.ok{color:var(--good);font-weight:700}.no{color:var(--bad);font-weight:700}
+.params{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:0 14px}
+.qbar{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 12px}.qbar select{flex:1;min-width:180px;font:inherit;padding:11px 13px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink)}
+.sp-add{display:flex;gap:10px;flex-wrap:wrap}.sp-add input{flex:1;min-width:180px;font:inherit;padding:11px 13px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink)}
+.tally{display:grid;gap:10px;margin-top:12px}.trow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border-radius:16px;border:1px solid var(--line);background:var(--mist)}
+.tn{display:grid;gap:2px;min-width:0}.tn b{overflow-wrap:anywhere}.lnk{background:none;border:0;color:var(--ink-soft);font-size:.8rem;text-align:left;cursor:pointer;padding:0;text-decoration:underline}
+.tc{display:flex;align-items:center;gap:12px}.tc output{font:800 1.8rem var(--display);min-width:2.2ch;text-align:center;font-variant-numeric:tabular-nums}
+.tb{width:56px;height:56px;border-radius:50%;border:2px solid var(--line);background:var(--card);color:var(--ink);font:700 1.6rem var(--display);cursor:pointer}.tb.p{background:var(--river);border-color:var(--river);color:#fff}.tb:active{transform:scale(.94)}
+.cv{position:relative;height:240px}
+.sr{position:absolute;left:-999px}
+.leg{display:flex;align-items:center;flex-wrap:wrap;gap:8px;font-size:.8rem;color:var(--ink-soft);margin-top:6px}.leg i{display:block;height:10px;width:120px;border-radius:99px}#map{width:100%;height:100%;border-radius:12px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:6px}
+.kpi{padding:12px;border-radius:14px;background:var(--mist);border:1px solid var(--line);text-align:center}
+.kpi small{display:block;font:700 .72rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em}
+.kpi b{font:800 1.35rem var(--display);font-variant-numeric:tabular-nums}
+.warnb{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border-radius:14px;background:color-mix(in srgb,var(--warn) 18%,var(--card));border:1px solid var(--warn);margin-bottom:16px;font-size:.95rem}.warnb i{margin-top:3px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}.fbig{display:flex;align-items:baseline;gap:8px}.fbig output{font:800 clamp(3rem,12vw,5rem)/1 var(--display);font-variant-numeric:tabular-nums;letter-spacing:-.03em}.fbig span{font:700 1.4rem var(--display);color:var(--ink-soft)}
+.b.big{padding:16px 32px;font-size:1.15rem}
+.fine{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:6px 0 14px}.fine input{width:120px;font:inherit;font-size:1.05rem;padding:10px 12px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink);text-align:center;font-variant-numeric:tabular-nums}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}.kpi{padding:12px;border-radius:14px;background:var(--mist);border:1px solid var(--line);text-align:center}.kpi small{display:block;font:700 .72rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em}.kpi b{font:800 1.1rem var(--display);font-variant-numeric:tabular-nums}
+.presets{display:flex;flex-wrap:wrap;gap:8px}.pt{font:600 .85rem var(--display);padding:7px 12px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}.pt:hover{background:var(--mist)}
+.scope{width:100%;height:170px;border-radius:12px;display:block}
+input[type=range]{width:100%;accent-color:var(--river)}.chk{display:flex;gap:9px;align-items:center;margin:8px 0;font-size:.98rem}.chk input{width:18px;height:18px;accent-color:var(--river)}
+.fld{display:grid;gap:5px;margin-bottom:12px}.fld label{font:700 .8rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em}.fld input[type=number],.fld select{font:inherit;font-size:1.05rem;width:100%;padding:11px 13px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink)}.fld small{font-size:.85rem;color:var(--ink-soft)}
+</style>
+</head>
+<body>
+<div class="progress" id="progress" aria-hidden="true"></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav" id="nav" data-solid>
+  <div class="wrap">
+    <a class="brand" href="../index.html">ESE Research<span> Hub</span></a>
+    <nav class="links" id="links" aria-label="Main">
+      <div class="dd cur"><button class="dd-btn" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="toolsMenu">Tools <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="dd-menu" id="toolsMenu"><a href="../portal.html"><i class="fa-solid fa-building-columns" aria-hidden="true"></i><span><b>JKKNIU &amp; ESE Portal</b><small>Official links in one place</small></span></a><a href="../library.html"><i class="fa-solid fa-folder-open" aria-hidden="true"></i><span><b>Batch Library</b><small>Shared ESE study materials</small></span></a><a href="../sound-meter.html"><i class="fa-solid fa-ear-listen" aria-hidden="true"></i><span><b>Sound Level Meter</b><small>Measure noise with your phone</small></span></a><a href="../soil-texture.html"><i class="fa-solid fa-layer-group" aria-hidden="true"></i><span><b>Soil Texture Triangle</b><small>Plot sand, silt and clay</small></span></a><a href="../rock-cycle.html"><i class="fa-solid fa-gem" aria-hidden="true"></i><span><b>Rock Cycle Simulator</b><small>Weathering to metamorphism</small></span></a><a href="../gis-map.html"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i><span><b>GIS Area Explorer</b><small>Boundary, topography, pollution</small></span></a><a href="../gis-lab.html"><i class="fa-solid fa-satellite" aria-hidden="true"></i><span><b>WebGIS Lab</b><small>DEM profiles and GEE scripts</small></span></a><a href="../field-notebook.html"><i class="fa-solid fa-person-hiking" aria-hidden="true"></i><span><b>Field Notebook</b><small>Phone-only field measurements</small></span></a><a href="../water-quality.html"><i class="fa-solid fa-droplet" aria-hidden="true"></i><span><b>Water Quality</b><small>WQI against WHO and BD limits</small></span></a><a href="../field-tracker.html"><i class="fa-solid fa-route" aria-hidden="true"></i><span><b>Field Tracker</b><small>GPS track and waypoints</small></span></a><a href="../ecology-quadrat.html"><i class="fa-solid fa-table-cells" aria-hidden="true"></i><span><b>Quadrat Counter</b><small>Tally species, diversity indices</small></span></a><a class="on" aria-current="page" href="../simulations/tone-generator.html"><i class="fa-solid fa-industry" aria-hidden="true"></i><span><b>Air Dispersion</b><small>Gaussian plume from a stack</small></span></a><a href="../eia-field.html"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i><span><b>EIA Field Visit Kit</b><small>Baseline checklist and impact matrix</small></span></a><a href="../ee-analyzer.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Earth Engine</b><small>Satellite analysis of any area</small></span></a><a href="../weather.html"><i class="fa-solid fa-cloud-sun-rain" aria-hidden="true"></i><span><b>EcoLens Weather</b><small>Your photo plus live weather and rain chance</small></span></a><a href="../atmosphere-sim.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Atmosphere Simulator</b><small>Three-cell circulation model</small></span></a></div></div>
+      <a href="index.html" aria-current="page">Simulations</a>
+      <a href="../about.html">About</a>
+      <a href="../about.html#contact">Contact</a>
+    </nav>
+    <div class="tools">
+      <button class="icon-btn" id="theme" type="button" aria-label="Switch to dark theme"><i class="fa-solid fa-moon"></i></button>
+      <button class="icon-btn burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="links"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</header>
+<div class="page-hero">
+  <div class="wrap">
+    <h1>Tone generator</h1>
+    <p>Play a pure tone at any frequency from 20 Hz to 20,000 Hz. Switch the wave shape, sweep through the range, mix two tones to hear beats, and see the sound's wavelength, musical note and waveform. A companion to the Sound Level Meter.</p>
+  </div>
+</div>
+<main id="main">
+<div class="wrap">
+  <div class="panel" style="margin-top:-24px;position:relative;z-index:2">
+    <div class="warnb"><i class="fa-solid fa-ear-listen"></i><span><b>Protect your hearing.</b> Start with the volume low and raise it slowly. Loud tones, especially high ones, can hurt your ears and damage speakers. Do not use headphones at a high level.</span></div>
+    <div class="top">
+      <div class="fbig"><output id="fv" aria-live="off">440</output><span>Hz</span></div>
+      <div class="btns" style="margin:0"><button class="b pri big" type="button" id="play" aria-pressed="false"><i class="fa-solid fa-play"></i> <span>Play</span></button></div>
+    </div>
+    <div class="fld"><label for="fs">Frequency (log scale, 20 Hz to 20 kHz)</label><input id="fs" type="range" min="0" max="1000" step="1" value="0"></div>
+    <div class="fine">
+      <button class="b" type="button" data-d="-100">−100</button><button class="b" type="button" data-d="-10">−10</button><button class="b" type="button" data-d="-1">−1</button>
+      <input id="fn" type="number" min="20" max="20000" step="any" value="440" aria-label="Frequency in hertz">
+      <button class="b" type="button" data-d="1">+1</button><button class="b" type="button" data-d="10">+10</button><button class="b" type="button" data-d="100">+100</button>
+      <button class="b" type="button" id="half">× ½</button><button class="b" type="button" id="dbl">× 2</button>
+    </div>
+    <div class="kpis" id="kp"></div>
+  </div>
+
+  <div class="panel">
+    <h2><i class="fa-solid fa-sliders"></i> Sound</h2>
+    <div class="grid2">
+      <div>
+        <div class="fld"><label for="wf">Wave shape</label><select id="wf"><option value="sine">Sine (pure tone)</option><option value="square">Square</option><option value="triangle">Triangle</option><option value="sawtooth">Sawtooth</option></select><small>Square, triangle and sawtooth add harmonics (whole-number multiples of the frequency), so they sound brighter.</small></div>
+        <div class="fld"><label for="vol">Volume: <b id="vv"></b></label><input id="vol" type="range" min="0" max="100" step="1" value="10"></div>
+        <div class="fld"><label for="pan">Balance: <b id="pv"></b></label><input id="pan" type="range" min="-100" max="100" step="1" value="0"></div>
+      </div>
+      <div>
+        <div class="fld"><label for="tc">Air temperature (°C), for wavelength</label><input id="tc" type="number" step="1" min="-20" max="50" value="20"></div>
+        <label class="chk"><input type="checkbox" id="b2"> Add a second tone to hear beats</label>
+        <div class="fld" id="b2box" hidden><label for="bd">Second tone is higher by: <b id="bdv"></b></label><input id="bd" type="range" min="0.5" max="20" step="0.5" value="4"><small>Two close tones alternately reinforce and cancel, so you hear the loudness rise and fall at the difference frequency.</small></div>
+        <div class="sec">Quick frequencies</div>
+        <div class="presets" id="presets"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2><i class="fa-solid fa-wave-square"></i> Sweep</h2>
+    <p class="sub">Glide through a range of frequencies to find the lowest and highest tone you can hear.</p>
+    <div class="row">
+      <div class="fld"><label for="s0">From (Hz)</label><input id="s0" type="number" min="20" max="20000" value="20"></div>
+      <div class="fld"><label for="s1">To (Hz)</label><input id="s1" type="number" min="20" max="20000" value="2000"></div>
+    </div>
+    <div class="fld"><label for="sd">Duration: <b id="sdv"></b></label><input id="sd" type="range" min="3" max="60" step="1" value="15"></div>
+    <div class="btns" style="margin-top:0"><button class="b" type="button" id="sweep"><i class="fa-solid fa-arrow-trend-up"></i> <span>Start sweep</span></button></div>
+  </div>
+
+  <div class="panel">
+    <h2><i class="fa-solid fa-chart-line"></i> What you are hearing</h2>
+    <div class="grid2">
+      <div><div class="sec" style="margin-top:0">Waveform</div><canvas id="sc" class="scope" role="img" aria-label="Live waveform"></canvas></div>
+      <div><div class="sec" style="margin-top:0">Spectrum (frequency content)</div><canvas id="sp" class="scope" role="img" aria-label="Live spectrum"></canvas></div>
+    </div>
+    <p class="note">Sound travels through air at about 331.3 + 0.606 × T metres per second (T in °C), so the wavelength is λ = speed ÷ frequency. Notes use equal temperament with A4 = 440 Hz. Most young people hear roughly 20 Hz to 20,000 Hz, and the upper limit falls with age and noise exposure. Many phone and laptop speakers cannot produce low frequencies below about 100 Hz, so you may see a tone you cannot hear; that is the speaker, not the page. This page makes sound through your device and does not measure it. To measure real noise, use the <a href="../sound-meter.html">Sound Level Meter</a>.</p>
+  </div>
+</div>
+</main>
+<footer>&copy; 2026 Md Rokibul Islam Robin &middot; <a href="../index.html">Back to home</a></footer>
+<script src="../site.js"></script>
+<script>
+(function(){
+'use strict';
+var $=function(i){return document.getElementById(i)},MIN=20,MAX=20000;
+var AC=window.AudioContext||window.webkitAudioContext,ctx=null,o1=null,o2=null,g1=null,g2=null,master=null,pan=null,an=null,playing=false,f=440,raf=null,sweeping=false,swT=null;
+var NN=['C','C♯','D','D♯','E','F','F♯','G','G♯','A','A♯','B'];
+function clampF(v){return Math.max(MIN,Math.min(MAX,v))}
+function sl2f(v){return MIN*Math.pow(MAX/MIN,v/1000)}
+function f2sl(x){return Math.round(1000*Math.log(x/MIN)/Math.log(MAX/MIN))}
+function note(x){var m=69+12*Math.log2(x/440),n=Math.round(m),c=Math.round((m-n)*100);return NN[((n%12)+12)%12]+(Math.floor(n/12)-1)+' '+(c>=0?'+':'')+c+' cents'}
+function fmtF(x){return x<100?(+x.toFixed(2)).toString():x<1000?(+x.toFixed(1)).toString():Math.round(x*10)/10+''}
+function show(){var T=+$('tc').value,v=331.3+.606*T,w=v/f;$('fv').textContent=fmtF(f);if(document.activeElement!==$('fn'))$('fn').value=+f.toFixed(3);$('fs').value=f2sl(f);
+  $('kp').innerHTML=[['Nearest note',note(f)],['Period',(1000/f).toFixed(f<100?2:3)+' ms'],['Wavelength in air',w>=1?w.toFixed(2)+' m':(w*100).toFixed(1)+' cm'],['Speed of sound',v.toFixed(0)+' m/s']].map(function(k){return'<div class="kpi"><small>'+k[0]+'</small><b>'+k[1]+'</b></div>'}).join('');
+  $('vv').textContent=$('vol').value+'%';var p=+$('pan').value;$('pv').textContent=p===0?'centre':(p<0?'left '+(-p):'right '+p)+'%';$('bdv').textContent=$('bd').value+' Hz';$('sdv').textContent=$('sd').value+' s'}
+function ensure(){if(ctx)return true;if(!AC)return false;ctx=new AC();master=ctx.createGain();master.gain.value=0;pan=ctx.createStereoPanner?ctx.createStereoPanner():null;an=ctx.createAnalyser();an.fftSize=4096;an.smoothingTimeConstant=.6;
+  master.connect(pan||an);if(pan){pan.connect(an)}an.connect(ctx.destination);return true}
+function mk(){o1=ctx.createOscillator();g1=ctx.createGain();o1.type=$('wf').value;o1.frequency.value=f;g1.gain.value=1;o1.connect(g1);g1.connect(master);o1.start();
+  o2=ctx.createOscillator();g2=ctx.createGain();o2.type=$('wf').value;o2.frequency.value=clampF(f+ +$('bd').value);g2.gain.value=$('b2').checked?1:0;o2.connect(g2);g2.connect(master);o2.start();vol()}
+function vol(){if(!ctx)return;var v=+$('vol').value/100,two=$('b2').checked?.5:1,t=ctx.currentTime;master.gain.cancelScheduledValues(t);master.gain.setTargetAtTime(playing?v*v*two*.8:0,t,.03);if(pan)pan.pan.setTargetAtTime(+$('pan').value/100,t,.03);if(g2)g2.gain.setTargetAtTime($('b2').checked?1:0,t,.02)}
+function setF(x,fromSlider){f=clampF(x);if(o1){var t=ctx.currentTime;o1.frequency.setTargetAtTime(f,t,.01);o2.frequency.setTargetAtTime(clampF(f+ +$('bd').value),t,.01)}show();hashSet()}
+function start(){if(!ensure()){say('Your browser cannot play audio with the Web Audio API.');return}if(ctx.state==='suspended')ctx.resume();if(!o1)mk();playing=true;vol();ui();draw()}
+function stop(){playing=false;stopSweep();vol();ui()}
+function ui(){$('play').setAttribute('aria-pressed',playing);$('play').querySelector('span').textContent=playing?'Stop':'Play';$('play').querySelector('i').className='fa-solid '+(playing?'fa-stop':'fa-play')}
+function say(t){alert(t)}
+$('play').onclick=function(){playing?stop():start()};
+document.addEventListener('keydown',function(e){var tg=e.target.tagName;if(tg==='INPUT'&&e.target.type==='number'||tg==='SELECT'||tg==='TEXTAREA')return;
+  if(e.code==='Space'&&tg!=='BUTTON'){e.preventDefault();playing?stop():start()}
+  else if(e.key==='ArrowLeft'||e.key==='ArrowRight'){if(tg==='INPUT'&&e.target.type==='range'&&e.target.id!=='fs')return;e.preventDefault();var s=e.key==='ArrowRight'?1:-1,st=e.ctrlKey?.01:e.shiftKey?1:Math.max(.01,f/100);setF(f+s*st)}});
+$('fs').addEventListener('input',function(){stopSweep();setF(sl2f(+this.value))});
+$('fn').addEventListener('input',function(){var v=+this.value;if(v>=MIN&&v<=MAX){stopSweep();setF(v)}});
+$('fn').addEventListener('change',function(){setF(+this.value||440)});
+document.querySelectorAll('.fine [data-d]').forEach(function(b){b.onclick=function(){stopSweep();setF(f+ +b.dataset.d)}});
+$('half').onclick=function(){stopSweep();setF(f/2)};$('dbl').onclick=function(){stopSweep();setF(f*2)};
+['vol','pan'].forEach(function(id){$(id).addEventListener('input',function(){show();vol()})});
+$('wf').onchange=function(){if(o1){o1.type=o2.type=this.value}};
+$('tc').addEventListener('input',show);
+$('b2').onchange=function(){$('b2box').hidden=!this.checked;show();vol();if(o2)o2.frequency.setTargetAtTime(clampF(f+ +$('bd').value),ctx.currentTime,.01)};
+$('bd').addEventListener('input',function(){show();if(o2)o2.frequency.setTargetAtTime(clampF(f+ +this.value),ctx.currentTime,.01)});
+var PRE=[[40,'40 Hz'],[100,'100 Hz'],[261.63,'C4 (middle C)'],[440,'A4 440 Hz'],[1000,'1 kHz'],[4000,'4 kHz'],[10000,'10 kHz'],[15000,'15 kHz']];
+$('presets').innerHTML=PRE.map(function(p){return'<button type="button" class="pt" data-f="'+p[0]+'">'+p[1]+'</button>'}).join('');
+$('presets').addEventListener('click',function(e){var b=e.target.closest('button');if(b){stopSweep();setF(+b.dataset.f)}});
+function stopSweep(){if(!sweeping)return;sweeping=false;clearInterval(swT);$('sweep').querySelector('span').textContent='Start sweep'}
+$('sweep').onclick=function(){if(sweeping){stopSweep();return}
+  var a=clampF(+$('s0').value||20),b=clampF(+$('s1').value||2000),d=+$('sd').value;if(a===b){return}start();sweeping=true;$('sweep').querySelector('span').textContent='Stop sweep';var t0=performance.now();
+  swT=setInterval(function(){var k=Math.min(1,(performance.now()-t0)/(d*1000));setF(a*Math.pow(b/a,k));if(k>=1)stopSweep()},40)};
+$('sd').addEventListener('input',show);
+// visuals
+function fit(c){var r=c.getBoundingClientRect(),dpr=Math.min(2,window.devicePixelRatio||1);c.width=Math.max(200,Math.floor(r.width*dpr));c.height=Math.floor(r.height*dpr);return c.getContext('2d')}
+function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()}
+function draw(){if(raf)return;(function loop(){raf=requestAnimationFrame(loop);if(!an)return;
+  var c1=fit($('sc')),W=c1.canvas.width,H=c1.canvas.height,td=new Uint8Array(an.fftSize);an.getByteTimeDomainData(td);
+  c1.fillStyle=css('--mist')||'#eee';c1.fillRect(0,0,W,H);c1.strokeStyle='#2a7fa8';c1.lineWidth=2;c1.beginPath();
+  // trigger on rising zero-crossing, show about 3 cycles
+  var per=Math.max(8,Math.min(an.fftSize/2,Math.round(ctx.sampleRate/f*3))),st=0;for(var i=1;i<an.fftSize/2;i++){if(td[i-1]<128&&td[i]>=128){st=i;break}}
+  for(var x=0;x<W;x++){var idx=st+Math.floor(x/W*per),v=td[Math.min(idx,td.length-1)]/255;var y=H-v*H;x?c1.lineTo(x,y):c1.moveTo(x,y)}c1.stroke();
+  var c2=fit($('sp')),W2=c2.canvas.width,H2=c2.canvas.height,fd=new Float32Array(an.frequencyBinCount);an.getFloatFrequencyData(fd);
+  c2.fillStyle=css('--mist')||'#eee';c2.fillRect(0,0,W2,H2);c2.strokeStyle=css('--line')||'#ccc';c2.lineWidth=1;c2.font=(11*(W2/400>1?1:1))+'px sans-serif';c2.fillStyle=css('--ink-soft')||'#666';
+  [100,1000,10000].forEach(function(hz){var x=Math.log(hz/MIN)/Math.log(MAX/MIN)*W2;c2.beginPath();c2.moveTo(x,0);c2.lineTo(x,H2);c2.stroke();c2.fillText(hz>=1000?hz/1000+'k':hz,x+3,H2-4)});
+  c2.fillStyle='#d1604a';var nb=an.frequencyBinCount,bw=ctx.sampleRate/an.fftSize;
+  for(var px=0;px<W2;px+=2){var hz=MIN*Math.pow(MAX/MIN,px/W2),b=Math.min(nb-1,Math.round(hz/bw)),db=fd[b];var h=Math.max(0,(db+100)/100)*H2;c2.fillRect(px,H2-h,2,h)}})()}
+function hashSet(){try{history.replaceState(null,'','#f='+(+f.toFixed(2)))}catch(e){}}
+(function(){var m=/#f=([\d.]+)/.exec(location.hash||'');if(m&&+m[1]>=MIN&&+m[1]<=MAX)f=+m[1]})();
+show();
+})();
+</script>
+</body>
+</html>
