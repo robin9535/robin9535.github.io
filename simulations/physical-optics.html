@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Physical Optics | ESE Research Hub</title>
+<meta name="description" content="Interactive physical optics experiments for HSC physics: double slit interference, single-slit diffraction, diffraction grating, Malus law and Brewster angle.">
+<meta name="theme-color" content="#0E2A2F">
+<link rel="canonical" href="https://mdrokibul.me/simulations/physical-optics.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ESE Research Hub">
+<meta property="og:url" content="https://mdrokibul.me/simulations/physical-optics.html">
+<meta property="og:title" content="Physical Optics">
+<meta property="og:description" content="Interactive physical optics experiments for HSC physics: double slit interference, single-slit diffraction, diffraction grating, Malus law and Brewster angle.">
+<meta property="og:image" content="https://mdrokibul.me/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Physical Optics">
+<meta name="twitter:description" content="Interactive physical optics experiments for HSC physics: double slit interference, single-slit diffraction, diffraction grating, Malus law and Brewster angle.">
+<meta name="twitter:image" content="https://mdrokibul.me/og-image.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":["WebPage","WebApplication"],"name":"Physical Optics","url":"https://mdrokibul.me/simulations/physical-optics.html","description":"Interactive physical optics experiments for HSC physics: double slit interference, single-slit diffraction, diffraction grating, Malus law and Brewster angle.","applicationCategory":"EducationalApplication","operatingSystem":"Any","inLanguage":"en","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"isPartOf":{"@type":"WebSite","name":"ESE Research Hub","url":"https://mdrokibul.me/"},"author":{"@type":"Person","name":"Md Rokibul Islam Robin","url":"https://mdrokibul.me/about.html"}}</script>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="../nav.css">
+<link rel="stylesheet" href="../site.css">
+<style>
+main{padding:0 0 56px}
+[hidden]{display:none!important}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:clamp(18px,3vw,28px);box-shadow:0 10px 30px rgba(0,0,0,.09);margin-top:18px}
+.panel h2{font-size:1.25rem;font-weight:800;margin-bottom:6px;display:flex;gap:10px;align-items:center}
+.panel h2 i{color:var(--river)}
+.sub{font-size:.97rem;color:var(--ink-soft);margin-bottom:14px}
+.tabs{display:flex;gap:6px;margin-top:-24px;position:relative;z-index:2;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px;box-shadow:0 10px 30px rgba(0,0,0,.1)}
+.tabs button{flex:1;font:700 .95rem var(--display);padding:11px 8px;border-radius:999px;border:0;background:transparent;color:var(--ink);cursor:pointer;display:inline-flex;gap:8px;align-items:center;justify-content:center}
+.tabs button[aria-selected=true]{background:var(--river);color:#fff}
+.tabs .cnt{font-size:.75rem;background:rgba(255,255,255,.22);padding:1px 8px;border-radius:999px}
+.tabs button:not([aria-selected=true]) .cnt{background:var(--mist);color:var(--ink-soft)}
+@media (max-width:520px){.tabs button span.t{display:none}.tabs button{font-size:.85rem}}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:860px){.grid2{grid-template-columns:1fr}}
+.grid2>*{min-width:0}
+.fld{display:grid;gap:5px;margin-bottom:12px}
+.fld label{font:700 .8rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em}
+.fld input,.fld select,.fld textarea{font:inherit;font-size:1.05rem;width:100%;padding:11px 13px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink);font-variant-numeric:tabular-nums}
+.fld input:focus,.fld select:focus,.fld textarea:focus{outline:none;border-color:var(--river)}
+.fld small{font-size:.85rem;color:var(--ink-soft)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.b{font:700 .95rem var(--display);padding:11px 18px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;display:inline-flex;gap:8px;align-items:center;justify-content:center}
+.b:hover{background:var(--mist)}.b.pri{background:var(--river);border-color:var(--river);color:#fff}.b.pri:hover{background:#27818b}
+.b.bad{color:var(--bad)}.b[disabled]{opacity:.45;cursor:not-allowed}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.big{font:800 clamp(2.6rem,9vw,3.8rem)/1 var(--display);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.live{padding:16px;border-radius:18px;background:var(--mist);border:2px solid var(--line);text-align:center}
+.live small{display:block;font:700 .8rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.live.hit{border-color:var(--good);background:color-mix(in srgb,var(--good) 14%,var(--mist))}
+.stat{font-size:.92rem;color:var(--ink-soft);margin:10px 0;display:flex;gap:8px;align-items:center}
+.stat::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--line);flex:none}
+.stat.ok::before{background:var(--good)}.stat.run::before{background:var(--warn)}.stat.bad::before{background:var(--bad)}
+.cam{position:relative;border-radius:16px;overflow:hidden;background:#000;aspect-ratio:3/4;max-height:420px;margin:12px auto 0;max-width:340px}
+.cam video{width:100%;height:100%;object-fit:cover}
+.cam::before,.cam::after{content:"";position:absolute;background:rgba(255,255,255,.85);z-index:2}
+.cam::before{left:50%;top:0;bottom:0;width:2px;margin-left:-1px}.cam::after{top:50%;left:0;right:0;height:2px;margin-top:-1px}
+.res{margin-top:14px;padding:16px;border-radius:16px;border:2px solid var(--river);background:color-mix(in srgb,var(--river) 8%,var(--card))}
+.res .big{color:var(--river)}
+.res p{margin-top:6px;font-size:.95rem;color:var(--ink-soft)}
+.steps{padding-left:1.2em;color:var(--ink-soft);font-size:.98rem}.steps li+li{margin-top:.5em}
+.msg{min-height:1.3em;font-size:.95rem;margin-top:8px}.msg.err{color:var(--bad);font-weight:600}.msg.ok{color:var(--good);font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th,td{text-align:left;padding:8px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:700 .74rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.scroll{overflow-x:auto}
+.tag{display:inline-block;padding:2px 9px;border-radius:999px;font:700 .75rem var(--display);background:var(--mist);border:1px solid var(--line)}
+.sec{font:800 .85rem var(--display);text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);margin:20px 0 8px}
+.empty{padding:26px;text-align:center;color:var(--ink-soft);border:2px dashed var(--line);border-radius:16px}
+.chk{display:flex;gap:9px;align-items:center;margin:6px 0;font-size:.98rem}.chk input{width:18px;height:18px;accent-color:var(--river)}
+.note{font-size:.88rem;color:var(--ink-soft);margin-top:10px;line-height:1.45}
+.sr{position:absolute;left:-999px}
+.bar{height:8px;border-radius:99px;background:var(--mist);overflow:hidden;min-width:70px}.bar i{display:block;height:100%;background:var(--good)}.bar i.w{background:var(--warn)}.bar i.x{background:var(--bad)}
+.ok{color:var(--good);font-weight:700}.no{color:var(--bad);font-weight:700}
+.params{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:0 14px}
+.qbar{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 12px}.qbar select{flex:1;min-width:180px;font:inherit;padding:11px 13px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink)}
+.sp-add{display:flex;gap:10px;flex-wrap:wrap}.sp-add input{flex:1;min-width:180px;font:inherit;padding:11px 13px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink)}
+.tally{display:grid;gap:10px;margin-top:12px}.trow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border-radius:16px;border:1px solid var(--line);background:var(--mist)}
+.tn{display:grid;gap:2px;min-width:0}.tn b{overflow-wrap:anywhere}.lnk{background:none;border:0;color:var(--ink-soft);font-size:.8rem;text-align:left;cursor:pointer;padding:0;text-decoration:underline}
+.tc{display:flex;align-items:center;gap:12px}.tc output{font:800 1.8rem var(--display);min-width:2.2ch;text-align:center;font-variant-numeric:tabular-nums}
+.tb{width:56px;height:56px;border-radius:50%;border:2px solid var(--line);background:var(--card);color:var(--ink);font:700 1.6rem var(--display);cursor:pointer}.tb.p{background:var(--river);border-color:var(--river);color:#fff}.tb:active{transform:scale(.94)}
+.cv{position:relative;height:240px}
+.sr{position:absolute;left:-999px}
+.leg{display:flex;align-items:center;flex-wrap:wrap;gap:8px;font-size:.8rem;color:var(--ink-soft);margin-top:6px}.leg i{display:block;height:10px;width:120px;border-radius:99px}#map{width:100%;height:100%;border-radius:12px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:6px}
+.kpi{padding:12px;border-radius:14px;background:var(--mist);border:1px solid var(--line);text-align:center}
+.kpi small{display:block;font:700 .72rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em}
+.kpi b{font:800 1.35rem var(--display);font-variant-numeric:tabular-nums}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin-top:-24px;position:relative;z-index:2;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:6px;box-shadow:0 10px 30px rgba(0,0,0,.09)}
+.tabs button{flex:1 1 auto;font:700 .92rem var(--display);padding:10px 14px;border-radius:999px;border:0;background:transparent;color:var(--ink);cursor:pointer}.tabs button[aria-selected=true]{background:var(--river);color:#fff}
+.stage{display:grid;gap:20px;grid-template-columns:minmax(0,1fr);align-items:start}@media(min-width:1000px){.stage{grid-template-columns:minmax(0,1fr) 360px}}
+.plot{width:100%;height:clamp(380px,60vw,520px);border-radius:12px;display:block;cursor:crosshair;background:var(--mist)}
+.rd{display:block;min-height:1.5em;font:600 .9rem var(--display);font-variant-numeric:tabular-nums;color:var(--ink);padding:8px 12px;border-radius:10px;background:var(--mist);margin:10px 0 0;overflow-wrap:anywhere}.rd:empty{display:none}
+.ctl{display:grid;gap:14px;align-content:start}
+.fld{display:grid;gap:6px;margin-bottom:10px}.fld label{font:700 .78rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em}.fld select{font:inherit;font-size:1rem;padding:10px 12px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink);width:100%}
+.pair{display:grid;grid-template-columns:minmax(0,1fr) 96px;gap:12px;align-items:center}.pair input[type=number]{width:100%;text-align:center;font:700 1rem var(--display);padding:8px 4px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink);font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--river);min-width:0}
+.sw{display:inline-block;width:34px;height:12px;border-radius:6px;vertical-align:middle;margin-left:6px;border:1px solid var(--line)}
+.chk{display:flex;gap:9px;align-items:flex-start;margin:4px 0 12px;font-size:.95rem}.chk input{width:18px;height:18px;margin-top:2px;accent-color:var(--river)}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:8px}.kpi{padding:10px;border-radius:12px;background:var(--mist);border:1px solid var(--line);text-align:center}.kpi small{display:block;font:700 .72rem var(--display);color:var(--ink-soft)}.kpi b{font:800 .98rem var(--display);font-variant-numeric:tabular-nums}
+.eq{display:grid;gap:8px}.eqrow{display:grid;grid-template-columns:200px minmax(0,1fr);gap:12px;align-items:baseline;padding:10px 12px;border-radius:12px;background:var(--mist)}.eqrow b{font:700 .8rem var(--display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em}.eqrow code{font:500 .98rem ui-monospace,Menlo,Consolas,monospace;overflow-wrap:anywhere}
+@media(max-width:600px){.eqrow{grid-template-columns:1fr;gap:4px}}
+.tb{border-collapse:collapse;width:100%;font:500 .9rem var(--display)}.tb th,.tb td{padding:4px 6px;border-bottom:1px solid var(--line);text-align:left;font-size:.9rem}
+</style>
+</head>
+<body>
+<div class="progress" id="progress" aria-hidden="true"></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav" id="nav" data-solid>
+  <div class="wrap">
+    <a class="brand" href="../index.html">ESE Research<span> Hub</span></a>
+    <nav class="links" id="links" aria-label="Main">
+      <div class="dd cur"><button class="dd-btn" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="toolsMenu">Tools <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="dd-menu" id="toolsMenu"><a href="../portal.html"><i class="fa-solid fa-building-columns" aria-hidden="true"></i><span><b>JKKNIU &amp; ESE Portal</b><small>Official links in one place</small></span></a><a href="../library.html"><i class="fa-solid fa-folder-open" aria-hidden="true"></i><span><b>Batch Library</b><small>Shared ESE study materials</small></span></a><a href="../sound-meter.html"><i class="fa-solid fa-ear-listen" aria-hidden="true"></i><span><b>Sound Level Meter</b><small>Measure noise with your phone</small></span></a><a href="../soil-texture.html"><i class="fa-solid fa-layer-group" aria-hidden="true"></i><span><b>Soil Texture Triangle</b><small>Plot sand, silt and clay</small></span></a><a href="../rock-cycle.html"><i class="fa-solid fa-gem" aria-hidden="true"></i><span><b>Rock Cycle Simulator</b><small>Weathering to metamorphism</small></span></a><a href="../gis-map.html"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i><span><b>GIS Area Explorer</b><small>Boundary, topography, pollution</small></span></a><a href="../gis-lab.html"><i class="fa-solid fa-satellite" aria-hidden="true"></i><span><b>WebGIS Lab</b><small>DEM profiles and GEE scripts</small></span></a><a href="../field-notebook.html"><i class="fa-solid fa-person-hiking" aria-hidden="true"></i><span><b>Field Notebook</b><small>Phone-only field measurements</small></span></a><a href="../water-quality.html"><i class="fa-solid fa-droplet" aria-hidden="true"></i><span><b>Water Quality</b><small>WQI against WHO and BD limits</small></span></a><a href="../field-tracker.html"><i class="fa-solid fa-route" aria-hidden="true"></i><span><b>Field Tracker</b><small>GPS track and waypoints</small></span></a><a href="../ecology-quadrat.html"><i class="fa-solid fa-table-cells" aria-hidden="true"></i><span><b>Quadrat Counter</b><small>Tally species, diversity indices</small></span></a><a class="on" aria-current="page" href="../simulations/physical-optics.html"><i class="fa-solid fa-industry" aria-hidden="true"></i><span><b>Air Dispersion</b><small>Gaussian plume from a stack</small></span></a><a href="../eia-field.html"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i><span><b>EIA Field Visit Kit</b><small>Baseline checklist and impact matrix</small></span></a><a href="../ee-analyzer.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Earth Engine</b><small>Satellite analysis of any area</small></span></a><a href="../weather.html"><i class="fa-solid fa-cloud-sun-rain" aria-hidden="true"></i><span><b>EcoLens Weather</b><small>Your photo plus live weather and rain chance</small></span></a><a href="../atmosphere-sim.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Atmosphere Simulator</b><small>Three-cell circulation model</small></span></a></div></div>
+      <a href="index.html" aria-current="page">Simulations</a>
+      <a href="../about.html">About</a>
+      <a href="../about.html#contact">Contact</a>
+    </nav>
+    <div class="tools">
+      <button class="icon-btn" id="theme" type="button" aria-label="Switch to dark theme"><i class="fa-solid fa-moon"></i></button>
+      <button class="icon-btn burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="links"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</header>
+<div class="page-hero"><div class="wrap"><h1>Physical optics</h1>
+<p>Five experiments from the physical optics chapter: Young's double slit, single-slit diffraction, the diffraction grating, Malus's law for polarization and Brewster's angle. Change the numbers, watch the pattern change, and read the formula with your values filled in.</p></div></div>
+<main id="main"><div class="wrap">
+<div class="tabs" id="tabs" role="tablist" aria-label="Experiments"></div>
+<div class="stage">
+ <div class="viz panel">
+  <h2 id="ttl"></h2>
+  <canvas id="cv" class="plot" role="img" aria-label="Optics experiment visualization"></canvas>
+  <output class="rd" id="rd" aria-live="off"></output>
+ </div>
+ <aside class="ctl panel" aria-label="Controls"><div id="ctl"></div><div class="kpis" id="kp"></div></aside>
+</div>
+<div class="panel"><h2><i class="fa-solid fa-square-root-variable"></i> Formulas with your numbers</h2><div class="eq" id="eq"></div><p class="note" id="nt"></p></div>
+<div class="panel"><h2><i class="fa-solid fa-circle-info"></i> About this page</h2>
+<p>All results are computed from the standard textbook formulas, using the small-angle approximation for the screen patterns where noted. The brightness of the fringes on the screen is drawn on a gamma scale so that dim fringes stay visible, so compare heights on the graph for true relative intensity. Symbols here follow common international notation (d for slit separation, a for slit width, N for lines per unit length, n for the order or the refractive index). Your textbook may use different letters, for example β for fringe width.</p></div>
+</div></main>
+<footer>&copy; 2026 Md Rokibul Islam Robin &middot; <a href="../index.html">Back to home</a></footer>
+<script src="../site.js"></script>
+<script>(function(){
+'use strict';
+var $=function(i){return document.getElementById(i)},TAU=2*Math.PI,cv=$('cv');
+function rgb(l){var r=0,g=0,b=0,f;if(l>=380&&l<440){r=-(l-440)/60;b=1}else if(l<490){g=(l-440)/50;b=1}else if(l<510){g=1;b=-(l-510)/20}else if(l<580){r=(l-510)/70;g=1}else if(l<645){r=1;g=-(l-645)/65}else if(l<=750){r=1}
+  f=l<420?.3+.7*(l-380)/40:l<=700?1:.3+.7*(750-l)/50;return[r,g,b].map(function(x){return Math.round(255*Math.pow(Math.max(0,x)*f,.8))})}
+function css3(l,k){var c=rgb(l);k=k===undefined?1:k;return'rgb('+Math.round(c[0]*k)+','+Math.round(c[1]*k)+','+Math.round(c[2]*k)+')'}
+function sinc2(x){if(Math.abs(x)<1e-9)return 1;var s=Math.sin(x)/x;return s*s}
+/* physics (SI units inside) */
+function Idbl(y,lamnm,dmm,D,amm,env){var l=lamnm*1e-9,d=dmm*1e-3,a=amm*1e-3,r1=Math.hypot(D,y-d/2),r2=Math.hypot(D,y+d/2),dl=2*y*d/(r1+r2),I=Math.pow(Math.cos(Math.PI*dl/l),2);if(env)I*=sinc2(Math.PI*a*(y/Math.hypot(y,D))/l);return I}
+function Isgl(y,lamnm,amm,D){var l=lamnm*1e-9,a=amm*1e-3;return sinc2(Math.PI*a*(y/Math.hypot(y,D))/l)}
+function gratingAngle(n,lamnm,N){var s=n*lamnm*1e-9*N*1e3;return Math.abs(s)<=1?Math.asin(s)*180/Math.PI:null}
+function brewster(n){return Math.atan(n)*180/Math.PI}
+function fresnel(n,ti){var t=ti*Math.PI/180,st=Math.sin(t)/n;if(st>=1)return[1,1];var tt=Math.asin(st),ci=Math.cos(t),ct=Math.cos(tt),rs=(ci-n*ct)/(ci+n*ct),rp=(n*ci-ct)/(n*ci+ct);return[rs*rs,rp*rp]}
+function polar(V){var i1=V.ptype==='u'?.5:Math.pow(Math.cos((V.p1-0)*Math.PI/180),2),im=i1,prev=V.p1;if(V.mid){im=i1*Math.pow(Math.cos((V.pm-V.p1)*Math.PI/180),2);prev=V.pm}
+  var i2=im*Math.pow(Math.cos((V.p2-prev)*Math.PI/180),2);return{i1:i1,im:im,i2:i2,prev:prev}}
+/* state */
+var V={lam:550,d:0.5,D:1.5,a:0.05,half:10,env:1,a2:0.1,D2:2,half2:40,N:500,white:0,ptype:'u',p1:0,mid:0,pm:45,p2:90,n:1.5,ti:50},tab='dbl',mx=null,pend=false;
+function g(x,n){return (+x.toFixed(n===undefined?2:n)).toString()}
+var TABS={
+ dbl:{name:"Young's double slit",ctl:[['lam','Wavelength',380,750,1,'nm'],['d','Slit separation d',0.1,2,0.05,'mm'],['D','Screen distance D',0.5,5,0.1,'m'],['a','Slit width a',0.01,0.5,0.01,'mm'],['half','Screen half-width shown',2,60,1,'mm'],['env','Include single-slit envelope','c']],
+  kpi:function(){var l=V.lam*1e-9,d=V.d*1e-3,D=V.D,b=l*D/d*1e3;return[['Fringe width β = λD/d',g(b,3)+' mm'],['First dark fringe',g(b/2,3)+' mm'],['Fringe angle λ/d',g(l/d*1e3,3)+' mrad'],['Bright fringes in central envelope','about '+Math.round(2*d/(V.a*1e-3))]]},
+  eq:function(){var l=V.lam*1e-9,d=V.d*1e-3,b=l*V.D/d;return[['Path difference','Δ = d·y / D   (small angles)'],['Bright fringe','Δ = nλ   →   yₙ = n·λD/d   (n = 0, ±1, ±2, …)'],['Dark fringe','Δ = (n + ½)λ'],['With your numbers','β = ('+g(V.lam,0)+'×10⁻⁹ × '+g(V.D)+') ÷ ('+g(V.d,2)+'×10⁻³) = '+g(b*1e3,3)+' mm'],['Intensity','I = I₀ cos²(πd·sinθ/λ) × sinc²(πa·sinθ/λ)']]},
+  note:'Each slit is a source of Huygens wavelets. Where the path difference to the two slits is a whole number of wavelengths the waves add (bright). Where it is a half-number they cancel (dark). A wider slit makes the slow envelope narrower. Move the pointer over the graph to read the path difference at any point.'},
+ sgl:{name:'Single-slit diffraction',ctl:[['lam','Wavelength',380,750,1,'nm'],['a2','Slit width a',0.02,1,0.01,'mm'],['D2','Screen distance D',0.5,5,0.1,'m'],['half2','Screen half-width shown',5,150,1,'mm']],
+  kpi:function(){var l=V.lam*1e-9,a=V.a2*1e-3,w=l*V.D2/a*1e3,s=l/a;return[['Central maximum width 2λD/a',g(2*w,3)+' mm'],['First minimum y₁ = λD/a',g(w,3)+' mm'],['First minimum angle',s<=1?g(Math.asin(s)*180/Math.PI,3)+'°':'no minimum (a < λ)'],['First side maximum','about '+g(100*sinc2(1.4303*Math.PI),1)+' % of the peak']]},
+  eq:function(){var l=V.lam*1e-9,a=V.a2*1e-3;return[['Minima','a·sinθ = mλ   (m = ±1, ±2, …)'],['Position','yₘ = m·λD/a'],['Intensity','I = I₀ · [sin β / β]²,  β = πa·sinθ/λ'],['With your numbers','y₁ = ('+g(V.lam,0)+'×10⁻⁹ × '+g(V.D2)+') ÷ ('+g(V.a2,2)+'×10⁻³) = '+g(l*V.D2/a*1e3,3)+' mm']]},
+  note:'Light bends around the edges of a narrow slit. The narrower the slit, the wider the central bright band. The central band is twice as wide as each side band, and the side bands are much dimmer than the centre.'},
+ grt:{name:'Diffraction grating',ctl:[['N','Lines per mm',50,1000,10,''],['lam','Wavelength',380,750,1,'nm'],['white','White light (all colours)','c']],
+  kpi:function(){var d=1e6/V.N,mx_=Math.floor(d/(V.white?380:V.lam)+1e-9);var o1=gratingAngle(1,V.white?550:V.lam,V.N);return[['Grating spacing d = 1/N',g(d/1000,3)+' µm'],[V.white?'Highest order (violet 380 nm)':'Highest order',String(Math.max(0,mx_))],['First-order angle'+(V.white?' (550 nm)':''),o1===null?'none':g(o1,2)+'°'],['Lines for N',g(V.N,0)+' per mm']]},
+  eq:function(){var d=1e6/V.N;return[['Grating equation','d·sinθ = nλ'],['Spacing','d = 1 ÷ N  (N lines per metre)'],['With your numbers','d = 1 ÷ ('+g(V.N*1e3,0)+' per m) = '+g(d,1)+' nm'],['Highest order','n_max = floor(d / λ)'],['Order overlap','n-th order red overlaps (n+1)-th order violet when n·750 > (n+1)·380']]},
+  note:'Many slits make the bright maxima sharp and widely spaced. Each wavelength has its own angle, so white light splits into spectra. The zero order stays white. Visible wavelengths run from about 380 nm to 750 nm, so in white light the second and third spectra overlap.'},
+ pol:{name:'Polarization (Malus)',ctl:[['ptype','Incoming light','s',[['u','Unpolarised'],['p','Polarised along 0°']]],['p1','First polarizer angle',0,180,1,'°'],['mid','Add a middle polarizer','c'],['pm','Middle polarizer angle',0,180,1,'°'],['p2','Analyzer angle',0,180,1,'°']],
+  kpi:function(){var r=polar(V);return[['After first polarizer',g(100*r.i1,1)+' % of I₀'],['After middle polarizer',V.mid?g(100*r.im,1)+' %':'not used'],['Final intensity',g(100*r.i2,1)+' % of I₀'],['Analyzer vs last axis',g(Math.abs(V.p2-r.prev),0)+'°']]},
+  eq:function(){var r=polar(V);return[['Unpolarised light through a polarizer','I = I₀ / 2'],['Malus\'s law','I = I₁ cos²θ   (θ = angle between light\'s polarization and the polarizer axis)'],['With your numbers','I = '+g(r.im,3)+' × cos²('+g(Math.abs(V.p2-r.prev),0)+'°) = '+g(r.i2,3)+' I₀']]},
+  note:'A polarizer passes only the part of the electric field along its axis. Two polarizers at 90° block all the light, but a third one placed between them at 45° lets some through. Try it: set the first to 0°, the analyzer to 90°, then switch on the middle polarizer at 45°.'},
+ brw:{name:'Brewster angle',ctl:[['n','Refractive index n of the surface',1,2.5,0.01,''],['ti','Angle of incidence',0,89,1,'°']],
+  kpi:function(){var tb=brewster(V.n),st=Math.sin(V.ti*Math.PI/180)/V.n,tr=Math.asin(st)*180/Math.PI,f=fresnel(V.n,V.ti);return[['Brewster angle θB = tan⁻¹ n',g(tb,2)+'°'],['Refraction angle at this incidence',g(tr,2)+'°'],['Reflected, polarised ∥ to plane (p)',g(100*f[1],2)+' %'],['Reflected, polarised ⊥ to plane (s)',g(100*f[0],2)+' %']]},
+  eq:function(){var tb=brewster(V.n);return[['Brewster\'s law','tan θB = n   (light going from air, n₁ = 1)'],['At θB','reflected ray ⟂ refracted ray, θB + θr = 90°'],['Snell\'s law','sin θ = n · sin θr'],['With your numbers','θB = tan⁻¹('+g(V.n,2)+') = '+g(tb,2)+'°']]},
+  note:'At the Brewster angle the reflected light is completely polarised, with its electric field perpendicular to the plane of incidence, and the in-plane component is not reflected at all. This is why polarizing sunglasses reduce glare from water and roads.'}
+};
+var ORDER=['dbl','sgl','grt','pol','brw'];
+/* controls */
+function buildCtl(){var T=TABS[tab],h='';T.ctl.forEach(function(c){var k=c[0];
+  if(c[2]==='c')h+='<label class="chk"><input type="checkbox" data-k="'+k+'"'+(V[k]?' checked':'')+'> '+c[1]+'</label>';
+  else if(c[2]==='s'){h+='<div class="fld"><label>'+c[1]+'</label><select data-k="'+k+'">'+c[3].map(function(o){return'<option value="'+o[0]+'"'+(V[k]===o[0]?' selected':'')+'>'+o[1]+'</option>'}).join('')+'</select></div>'}
+  else h+='<div class="fld"><label>'+c[1]+(c[5]?' ('+c[5]+')':'')+(k==='lam'?' <i class="sw" id="sw"></i>':'')+'</label><div class="pair"><input type="range" data-k="'+k+'" min="'+c[2]+'" max="'+c[3]+'" step="'+c[4]+'" value="'+V[k]+'"><input type="number" data-k="'+k+'" min="'+c[2]+'" max="'+c[3]+'" step="any" value="'+V[k]+'" aria-label="'+c[1]+'"></div></div>'});
+  $('ctl').innerHTML=h;swatch()}
+function swatch(){var s=$('sw');if(s)s.style.background=css3(V.lam)}
+$('ctl').addEventListener('input',function(e){var el=e.target,k=el.dataset.k;if(!k)return;
+  if(el.type==='checkbox')V[k]=el.checked?1:0;else if(el.tagName==='SELECT')V[k]=el.value;
+  else{var v=parseFloat(el.value);if(!isFinite(v))return;v=Math.max(+el.min,Math.min(+el.max,v));V[k]=v;document.querySelectorAll('[data-k="'+k+'"]').forEach(function(o){if(o!==el)o.value=v})}
+  swatch();refresh()});
+$('ctl').addEventListener('change',function(e){var el=e.target;if(el.type==='number'){var v=Math.max(+el.min,Math.min(+el.max,parseFloat(el.value)||+el.min));el.value=v;V[el.dataset.k]=v;document.querySelectorAll('[data-k="'+el.dataset.k+'"]').forEach(function(o){o.value=v});swatch();refresh()}});
+/* tabs */
+$('tabs').innerHTML=ORDER.map(function(k){return'<button type="button" role="tab" data-t="'+k+'" aria-selected="'+(k===tab)+'">'+TABS[k].name+'</button>'}).join('');
+$('tabs').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;tab=b.dataset.t;mx=null;document.querySelectorAll('#tabs button').forEach(function(x){x.setAttribute('aria-selected',x.dataset.t===tab)});buildCtl();refresh()});
+function refresh(){var T=TABS[tab];$('kp').innerHTML=T.kpi().map(function(k){return'<div class="kpi"><small>'+k[0]+'</small><b>'+k[1]+'</b></div>'}).join('');
+  $('eq').innerHTML=T.eq().map(function(r){return'<div class="eqrow"><b>'+r[0]+'</b><code>'+r[1]+'</code></div>'}).join('');$('nt').textContent=T.note;$('rd').textContent='';$('ttl').textContent=T.name;redraw()}
+function redraw(){if(pend)return;pend=true;requestAnimationFrame(function(){pend=false;draw()})}
+cv.addEventListener('pointermove',function(e){var r=cv.getBoundingClientRect();mx=(e.clientX-r.left)/r.width;redraw()});cv.addEventListener('pointerdown',function(e){var r=cv.getBoundingClientRect();mx=(e.clientX-r.left)/r.width;redraw()});cv.addEventListener('pointerleave',function(){mx=null;redraw()});cv.style.touchAction='pan-y';
+window.addEventListener('resize',redraw);
+function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()}
+function nice(range){var raw=range/8,p=Math.pow(10,Math.floor(Math.log10(raw))),m=raw/p;return(m<1.5?1:m<3.5?2:m<7.5?5:10)*p}
+/* 1-D pattern plot: screen strip on top, intensity graph below */
+function plot1D(c,W,H,u,half,Ifn,marks,rdfn){var L=48*u,R=14*u,pw=W-L-R,sh=Math.round(H*.2),gy0=sh+34*u,gy1=H-30*u,ink=css('--ink')||'#222',soft=css('--ink-soft')||'#666',line=css('--line')||'#ccc';
+  c.fillStyle='#000';c.fillRect(L,6*u,pw,sh-6*u);var col=rgb(V.lam);
+  for(var i=0;i<pw;i++){var y=(i/pw*2-1)*half*1e-3,I=Math.pow(Math.max(0,Math.min(1,Ifn(y))),.6);c.fillStyle='rgb('+Math.round(col[0]*I)+','+Math.round(col[1]*I)+','+Math.round(col[2]*I)+')';c.fillRect(L+i,6*u,1.5,sh-6*u)}
+  c.fillStyle=soft;c.font=Math.round(11*u)+'px sans-serif';c.textAlign='right';c.fillText('screen',L-6*u,6*u+sh/2);
+  c.fillStyle=css('--card')||'#fff';c.fillRect(L,gy0,pw,gy1-gy0);
+  [0,.5,1].forEach(function(q){var y=gy1-q*(gy1-gy0)*.95;c.strokeStyle=line;c.lineWidth=u;c.beginPath();c.moveTo(L,y);c.lineTo(L+pw,y);c.stroke();c.fillStyle=soft;c.textAlign='right';c.fillText(q,L-6*u,y+4*u)});
+  c.save();c.beginPath();c.rect(L,gy0-2*u,pw,gy1-gy0+4*u);c.clip();c.beginPath();for(var i=0;i<=pw;i++){var y=(i/pw*2-1)*half*1e-3,I=Ifn(y),py=gy1-I*(gy1-gy0)*.95;i?c.lineTo(L+i,py):c.moveTo(L+i,py)}
+  c.lineTo(L+pw,gy1);c.lineTo(L,gy1);c.closePath();var cc=css3(V.lam,.75);c.fillStyle=cc.replace('rgb','rgba').replace(')',',.28)');c.fill();
+  c.beginPath();for(var i=0;i<=pw;i++){var y=(i/pw*2-1)*half*1e-3,I=Ifn(y),py=gy1-I*(gy1-gy0)*.95;i?c.lineTo(L+i,py):c.moveTo(L+i,py)}c.strokeStyle=css3(V.lam,.8);c.lineWidth=2.2*u;c.stroke();c.restore();
+  var st=nice(2*half);c.textAlign='center';c.fillStyle=soft;for(var t=Math.ceil(-half/st)*st;t<=half+1e-9;t+=st){var x=L+(t+half)/(2*half)*pw;c.strokeStyle=line;c.setLineDash([3*u,4*u]);c.beginPath();c.moveTo(x,gy0);c.lineTo(x,gy1);c.stroke();c.setLineDash([]);c.fillText(g(t,2),x,gy1+15*u)}
+  c.textAlign='right';c.fillText('position on screen (mm)',L+pw,H-4*u);
+  (marks||[]).forEach(function(m){if(Math.abs(m.y*1e3)>half)return;var x=L+(m.y*1e3+half)/(2*half)*pw;c.fillStyle=ink;c.textAlign='center';c.font='bold '+Math.round(11*u)+'px sans-serif';c.fillText(m.t,x,gy0-6*u)});
+  if(mx!==null){var x=Math.max(L,Math.min(L+pw,mx*W)),y=((x-L)/pw*2-1)*half*1e-3,I=Ifn(y);c.strokeStyle=ink;c.lineWidth=u;c.beginPath();c.moveTo(x,6*u);c.lineTo(x,gy1);c.stroke();c.fillStyle=ink;c.beginPath();c.arc(x,gy1-I*(gy1-gy0)*.95,4.5*u,0,TAU);c.fill();$('rd').textContent=rdfn(y,I)}}
+function draw(){var r=cv.getBoundingClientRect(),u=Math.min(2,devicePixelRatio||1);cv.width=Math.max(300,Math.floor(r.width*u));cv.height=Math.floor(r.height*u);var c=cv.getContext('2d'),W=cv.width,H=cv.height;c.fillStyle=css('--mist')||'#eee';c.fillRect(0,0,W,H);
+  if(tab==='dbl')dblDraw(c,W,H,u);else if(tab==='sgl')sglDraw(c,W,H,u);else if(tab==='grt')grtDraw(c,W,H,u);else if(tab==='pol')polDraw(c,W,H,u);else brwDraw(c,W,H,u)}
+function dblDraw(c,W,H,u){var l=V.lam*1e-9,d=V.d*1e-3,b=l*V.D/d,marks=[];for(var n=-12;n<=12;n++)marks.push({y:n*b,t:String(n)});if(2*V.half*1e-3/b>26)marks=[];
+  plot1D(c,W,H,u,V.half,function(y){return Idbl(y,V.lam,V.d,V.D,V.a,V.env)},marks,function(y,I){var r1=Math.hypot(V.D,y-d/2),r2=Math.hypot(V.D,y+d/2),dl=Math.abs(r2-r1),k=dl/l,fr=k-Math.floor(k),kind=Math.abs(fr)<.05||Math.abs(fr-1)<.05?'  (bright: whole number of wavelengths)':Math.abs(fr-.5)<.05?'  (dark: half-wavelengths)':'';return'y = '+g(y*1e3,3)+' mm    path difference = '+g(dl*1e9,0)+' nm = '+g(k,3)+' λ'+kind+'    relative intensity = '+g(I,3)})}
+function sglDraw(c,W,H,u){var l=V.lam*1e-9,a=V.a2*1e-3,w=l*V.D2/a,marks=[];for(var m=-8;m<=8;m++)if(m)marks.push({y:m*w,t:String(m)});
+  plot1D(c,W,H,u,V.half2,function(y){return Isgl(y,V.lam,V.a2,V.D2)},marks,function(y,I){return'y = '+g(y*1e3,3)+' mm    a·sinθ = '+g(a*y/Math.hypot(y,V.D2)/l,3)+' λ    relative intensity = '+g(I,4)})}
+function grtDraw(c,W,H,u){var cx=W/2,cy=H-34*u,R=Math.min(W/2-30*u,H-80*u),d=1e6/V.N,ink=css('--ink')||'#222',soft=css('--ink-soft')||'#666',line=css('--line')||'#ccc';
+  c.fillStyle=css('--card')||'#fff';c.beginPath();c.arc(cx,cy,R,Math.PI,0);c.closePath();c.fill();c.strokeStyle=line;c.lineWidth=u;[30,60,90].forEach(function(a){var t=a*Math.PI/180;c.beginPath();c.moveTo(cx,cy);c.lineTo(cx+R*Math.sin(t),cy-R*Math.cos(t));c.moveTo(cx,cy);c.lineTo(cx-R*Math.sin(t),cy-R*Math.cos(t));c.stroke()});
+  c.beginPath();c.arc(cx,cy,R,Math.PI,0);c.strokeStyle=soft;c.lineWidth=2*u;c.stroke();
+  c.fillStyle=soft;c.font=Math.round(11*u)+'px sans-serif';c.textAlign='center';[30,60].forEach(function(a){var t=a*Math.PI/180;c.fillText(a+'°',cx+(R+14*u)*Math.sin(t),cy-(R+8*u)*Math.cos(t));c.fillText(a+'°',cx-(R+14*u)*Math.sin(t),cy-(R+8*u)*Math.cos(t))});
+  c.strokeStyle=ink;c.lineWidth=3*u;c.beginPath();c.moveTo(cx-34*u,cy);c.lineTo(cx+34*u,cy);c.stroke();c.fillStyle=ink;c.textAlign='left';c.fillText('grating',cx+40*u,cy+4*u);
+  c.strokeStyle='rgba(120,120,120,.8)';c.lineWidth=3*u;c.beginPath();c.moveTo(cx,H-4*u);c.lineTo(cx,cy);c.stroke();c.fillText('incoming beam',cx+8*u,H-8*u);
+  function ray(th,col,lw,lab){var t=th*Math.PI/180,x=cx+R*Math.sin(t),y=cy-R*Math.cos(t);c.strokeStyle=col;c.lineWidth=lw*u;c.beginPath();c.moveTo(cx,cy);c.lineTo(x,y);c.stroke();if(lab){c.fillStyle=ink;c.textAlign='center';c.font='bold '+Math.round(11*u)+'px sans-serif';c.fillText(lab,cx+(R*.9)*Math.sin(t)+(th<0?-10:10)*u*(Math.abs(th)>2?1:0),cy-(R*.9)*Math.cos(t)-6*u)}}
+  if(!V.white){ray(0,css3(V.lam),3,'0');for(var n=1;gratingAngle(n,V.lam,V.N)!==null;n++){var a=gratingAngle(n,V.lam,V.N);ray(a,css3(V.lam),3,'n='+n+'  '+g(a,1)+'°');ray(-a,css3(V.lam),3,'')}}
+  else{ray(0,'#fff',4,'0');c.lineWidth=2*u;for(var n=1;n*380<=d;n++)for(var l=380;l<=750;l+=3){if(n*l>d)break;var a=Math.asin(n*l/d),k=Math.sin(a),k2=Math.cos(a);[1,-1].forEach(function(sg){c.strokeStyle=css3(l);c.beginPath();c.moveTo(cx+(R*.3)*sg*k,cy-(R*.3)*k2);c.lineTo(cx+R*sg*k,cy-R*k2);c.lineWidth=3.2*u;c.stroke()})}
+    c.fillStyle=ink;c.textAlign='center';c.font='bold '+Math.round(11*u)+'px sans-serif';for(var n=1;n*380<=d;n++){var a=Math.asin(Math.min(1,n*565/d));c.fillText('n='+n,cx+(R*1.0)*Math.sin(a)*.92,cy-R*Math.cos(a)*.92-8*u)}}
+  c.fillStyle=soft;c.textAlign='left';c.font=Math.round(12*u)+'px sans-serif';c.fillText('Top view. Angles from the zero-order direction.',12*u,18*u);
+  var rows='';var nmax=Math.floor(d/(V.white?380:V.lam)+1e-9);for(var n=1;n<=Math.min(nmax,6);n++){if(V.white){var vi=gratingAngle(n,380,V.N),re=gratingAngle(n,750,V.N);rows+='<tr><td>'+n+'</td><td>'+g(vi,1)+'°</td><td>'+(re===null?'cuts off':g(re,1)+'°')+'</td></tr>'}else{var a=gratingAngle(n,V.lam,V.N);rows+='<tr><td>'+n+'</td><td colspan="2">'+g(a,2)+'° on each side</td></tr>'}}
+  $('rd').innerHTML=nmax<1?'No diffraction orders exist for these settings (wavelength is longer than the spacing).':'<table class="tb"><tr><th>Order n</th><th>'+(V.white?'Violet (380 nm)':'Angle θ')+'</th><th>'+(V.white?'Red (750 nm)':'')+'</th></tr>'+rows+'</table>'}
+function polDraw(c,W,H,u){var r=polar(V),ink=css('--ink')||'#222',soft=css('--ink-soft')||'#666',line=css('--line')||'#ccc',card=css('--card')||'#fff';
+  var stages=[{lab:'Source',I:1,ang:V.ptype==='u'?null:0,ax:null},{lab:'Polarizer 1',I:r.i1,ang:V.p1,ax:V.p1}];if(V.mid)stages.push({lab:'Middle',I:r.im,ang:V.pm,ax:V.pm});stages.push({lab:'Analyzer',I:r.i2,ang:V.p2,ax:V.p2});
+  var n=stages.length,areaH=H*.56,rad=Math.min(areaH*.22,(W/n)*.3),yc=24*u+rad;
+  stages.forEach(function(s,i){var x=W*(i+.5)/n,y=yc;
+    if(i>0){c.fillStyle=card;c.strokeStyle=ink;c.lineWidth=2*u;c.beginPath();c.arc(x,y,rad,0,TAU);c.fill();c.stroke();var t=-s.ax*Math.PI/180;c.strokeStyle='#888';c.lineWidth=u;for(var k=-4;k<=4;k++){var off=k*rad/5,hx=Math.cos(t),hy=Math.sin(t),px=-hy*off,py=hx*off,half=Math.sqrt(Math.max(0,rad*rad-off*off))*.92;c.beginPath();c.moveTo(x+px-hx*half,y+py-hy*half);c.lineTo(x+px+hx*half,y+py+hy*half);c.stroke()}}
+    var amax=rad*.62,lenA=amax*Math.sqrt(Math.max(0,s.I)),ay=yc+rad+10*u+amax;
+    c.strokeStyle='#d1604a';
+    if(i===0&&V.ptype==='u'){c.lineWidth=2*u;for(var a=0;a<180;a+=30){var t2=a*Math.PI/180,L2=amax*Math.sqrt(.5);c.beginPath();c.moveTo(x-Math.cos(t2)*L2,ay+Math.sin(t2)*L2);c.lineTo(x+Math.cos(t2)*L2,ay-Math.sin(t2)*L2);c.stroke()}}
+    else{var ang=(i===0?0:s.ang)*Math.PI/180;c.lineWidth=3*u;c.beginPath();c.moveTo(x-Math.cos(ang)*lenA,ay+Math.sin(ang)*lenA);c.lineTo(x+Math.cos(ang)*lenA,ay-Math.sin(ang)*lenA);c.stroke()}
+    c.fillStyle=ink;c.textAlign='center';c.font='bold '+Math.round(12*u)+'px sans-serif';c.fillText(s.lab,x,14*u);c.font=Math.round(12*u)+'px sans-serif';c.fillStyle=soft;var ty=ay+amax+16*u;c.fillText(g(100*s.I,1)+' % of I₀',x,ty);if(i>0)c.fillText('axis '+g(s.ax,0)+'°',x,ty+15*u)});
+  var L=48*u,pw=W-L-14*u,gy0=areaH+34*u,gy1=H-30*u,V0=V.p2;c.fillStyle=card;c.fillRect(L,gy0,pw,gy1-gy0);c.fillStyle=ink;c.textAlign='left';c.font='bold '+Math.round(12*u)+'px sans-serif';c.fillText('Final intensity as the analyzer is turned (0° to 180°)',L,gy0-8*u);
+  c.font=Math.round(11*u)+'px sans-serif';c.fillStyle=soft;c.textAlign='right';[0,.5,1].forEach(function(q){var y=gy1-q*(gy1-gy0)*.95;c.strokeStyle=line;c.lineWidth=u;c.beginPath();c.moveTo(L,y);c.lineTo(L+pw,y);c.stroke();c.fillText(g(q,1),L-6*u,y+4*u)});
+  c.textAlign='center';[0,45,90,135,180].forEach(function(a){var x=L+a/180*pw;c.fillText(a+'°',x,gy1+15*u)});
+  c.beginPath();for(var i=0;i<=pw;i++){var a=i/pw*180,rr=polar({ptype:V.ptype,p1:V.p1,mid:V.mid,pm:V.pm,p2:a}),py=gy1-rr.i2*(gy1-gy0)*.95;i?c.lineTo(L+i,py):c.moveTo(L+i,py)}c.strokeStyle='#2a7fa8';c.lineWidth=2.4*u;c.stroke();
+  var px=L+V0/180*pw,py=gy1-r.i2*(gy1-gy0)*.95;c.fillStyle='#d1604a';c.beginPath();c.arc(px,py,6*u,0,TAU);c.fill();
+  if(mx!==null){var x=Math.max(L,Math.min(L+pw,mx*W)),a=(x-L)/pw*180,rr=polar({ptype:V.ptype,p1:V.p1,mid:V.mid,pm:V.pm,p2:a});$('rd').textContent='Analyzer at '+g(a,1)+'°  →  final intensity '+g(100*rr.i2,2)+' % of I₀';c.strokeStyle=ink;c.lineWidth=u;c.beginPath();c.moveTo(x,gy0);c.lineTo(x,gy1);c.stroke()}}
+function brwDraw(c,W,H,u){var n=V.n,ti=V.ti*Math.PI/180,tb=brewster(n),ink=css('--ink')||'#222',soft=css('--ink-soft')||'#666',line=css('--line')||'#ccc',card=css('--card')||'#fff',topH=H*.56,cx=W*.5,cy=topH*.5+10*u,R=Math.min(topH*.42,W*.28);
+  c.fillStyle='#cfe6ee';c.fillRect(0,0,W,cy);c.fillStyle='#4b8da3';c.fillRect(0,cy,W,topH-cy);c.fillStyle=ink;c.font=Math.round(12*u)+'px sans-serif';c.textAlign='left';c.fillStyle='#16424f';c.fillText('air (n = 1)',10*u,18*u);c.fillStyle='#e8f4f8';c.fillText('surface (n = '+g(n,2)+')',10*u,topH-10*u);
+  c.strokeStyle='rgba(0,0,0,.35)';c.setLineDash([4*u,4*u]);c.lineWidth=u;c.beginPath();c.moveTo(cx,cy-R*1.1);c.lineTo(cx,cy+R*1.1);c.stroke();c.setLineDash([]);
+  var st=Math.sin(ti)/n,tr=Math.asin(Math.min(1,st)),f=fresnel(n,V.ti);
+  function seg(a,dir,col,lw,len,alpha){c.globalAlpha=alpha;c.strokeStyle=col;c.lineWidth=lw*u;c.beginPath();c.moveTo(cx,cy);c.lineTo(cx+len*Math.sin(a)*dir,cy+(dir===-2?0:0));c.stroke();c.globalAlpha=1}
+  function ray(angle,down,sign,col,lw,alpha){c.globalAlpha=alpha;c.strokeStyle=col;c.lineWidth=lw*u;c.beginPath();c.moveTo(cx,cy);c.lineTo(cx+sign*R*Math.sin(angle),cy+(down?1:-1)*R*Math.cos(angle));c.stroke();c.globalAlpha=1}
+  ray(ti,false,-1,'#f2b134',3,1);ray(ti,false,1,'#d1604a',3,Math.max(.15,Math.min(1,(f[0]+f[1])/2*3+.15)));ray(tr,true,1,'#e8f4f8',3,Math.max(.3,1-(f[0]+f[1])/2));
+  c.fillStyle=ink;c.font='bold '+Math.round(12*u)+'px sans-serif';c.textAlign='center';c.fillText('incident',cx-R*Math.sin(ti)-16*u,cy-R*Math.cos(ti)-6*u);c.fillText('reflected',cx+R*Math.sin(ti)+16*u,cy-R*Math.cos(ti)-6*u);c.fillStyle='#fff';c.fillText('refracted',cx+R*Math.sin(tr)+16*u,cy+R*Math.cos(tr)+14*u);
+  if(Math.abs(V.ti-tb)<1.5){c.fillStyle='#fff';c.strokeStyle='#d1604a';c.lineWidth=2*u;c.strokeRect(cx+4*u,cy+4*u,0,0);c.fillStyle=ink;c.textAlign='left';c.fillText('Brewster angle: reflected ⟂ refracted',10*u,topH+0)}
+  // Fresnel plot
+  var L=48*u,pw=W-L-14*u,gy0=topH+34*u,gy1=H-30*u;c.fillStyle=card;c.fillRect(L,gy0,pw,gy1-gy0);c.fillStyle=ink;c.textAlign='left';c.font='bold '+Math.round(12*u)+'px sans-serif';c.fillText('Fraction of light reflected, against angle of incidence',L,gy0-8*u);
+  c.font=Math.round(11*u)+'px sans-serif';c.fillStyle=soft;c.textAlign='right';[0,.5,1].forEach(function(q){var y=gy1-q*(gy1-gy0)*.95;c.strokeStyle=line;c.lineWidth=u;c.beginPath();c.moveTo(L,y);c.lineTo(L+pw,y);c.stroke();c.fillText(g(q,1),L-6*u,y+4*u)});c.textAlign='center';[0,30,60,90].forEach(function(a){c.fillText(a+'°',L+a/90*pw,gy1+15*u)});
+  [[1,'#d1604a','in-plane (p)'],[0,'#2a7fa8','perpendicular (s)']].forEach(function(s,si){c.beginPath();for(var i=0;i<=pw;i++){var a=i/pw*89.9,q=fresnel(n,a)[s[0]],py=gy1-q*(gy1-gy0)*.95;i?c.lineTo(L+i,py):c.moveTo(L+i,py)}c.strokeStyle=s[1];c.lineWidth=2.4*u;c.stroke();c.fillStyle=s[1];c.textAlign='left';c.fillText(s[2],L+8*u+si*140*u,gy0+14*u)});
+  var bx=L+tb/90*pw;c.strokeStyle=ink;c.setLineDash([4*u,4*u]);c.lineWidth=u;c.beginPath();c.moveTo(bx,gy0);c.lineTo(bx,gy1);c.stroke();c.setLineDash([]);c.fillStyle=ink;c.textAlign='center';c.fillText('θB',bx,gy1-4*u);
+  var mxp=L+V.ti/90*pw;c.fillStyle='#f2b134';c.strokeStyle=ink;c.lineWidth=u;c.beginPath();c.arc(mxp,gy1-f[1]*(gy1-gy0)*.95,5*u,0,TAU);c.fill();c.stroke();
+  if(mx!==null){var x=Math.max(L,Math.min(L+pw,mx*W)),a=(x-L)/pw*89.9,q=fresnel(n,a);$('rd').textContent='Incidence '+g(a,1)+'°  →  reflected in-plane '+g(100*q[1],2)+' %,  perpendicular '+g(100*q[0],2)+' %'}}
+buildCtl();refresh();
+})();
+</script>
+</body>
+</html>
