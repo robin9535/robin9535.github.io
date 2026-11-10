@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Acid-Base Titration | ESE Research Hub</title>
+<meta name="description" content="Run NaOH into a strong or weak acid, watch the pH curve build, and find out which indicator gives the right end point.">
+<meta name="author" content="Md Rokibul Islam Robin">
+<meta name="theme-color" content="#0E2A2F">
+<link rel="canonical" href="https://mdrokibul.me/simulations/titration-curve.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ESE Research Hub">
+<meta property="og:title" content="Acid-Base Titration">
+<meta property="og:description" content="Run NaOH into a strong or weak acid, watch the pH curve build, and find out which indicator gives the right end point.">
+<meta property="og:url" content="https://mdrokibul.me/simulations/titration-curve.html">
+<meta property="og:image" content="https://mdrokibul.me/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Acid-Base Titration">
+<meta name="twitter:description" content="Run NaOH into a strong or weak acid, watch the pH curve build, and find out which indicator gives the right end point.">
+<meta name="twitter:image" content="https://mdrokibul.me/og-image.jpg">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Acid-Base Titration", "url": "https://mdrokibul.me/simulations/titration-curve.html", "description": "Run NaOH into a strong or weak acid, watch the pH curve build, and find out which indicator gives the right end point.", "inLanguage": "en", "isPartOf": {"@type": "WebSite", "name": "ESE Research Hub", "url": "https://mdrokibul.me/"}}</script>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="../nav.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="stylesheet" href="../lab.css">
+</head>
+<body class="sector-hsc">
+<div class="progress" id="progress" aria-hidden="true"></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav" id="nav" data-solid>
+  <div class="wrap">
+    <a class="brand" href="../index.html">ESE Research<span> Hub</span></a>
+    <nav class="links" id="links" aria-label="Main">
+      <div class="dd"><button class="dd-btn" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="toolsMenu">Tools <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="dd-menu" id="toolsMenu"><a href="../portal.html"><i class="fa-solid fa-building-columns" aria-hidden="true"></i><span><b>JKKNIU &amp; ESE Portal</b><small>Official links in one place</small></span></a><a href="../library.html"><i class="fa-solid fa-folder-open" aria-hidden="true"></i><span><b>Batch Library</b><small>Shared ESE study materials</small></span></a><a href="../sound-meter.html"><i class="fa-solid fa-ear-listen" aria-hidden="true"></i><span><b>Sound Level Meter</b><small>Measure noise with your phone</small></span></a><a href="../soil-texture.html"><i class="fa-solid fa-layer-group" aria-hidden="true"></i><span><b>Soil Texture Triangle</b><small>Plot sand, silt and clay</small></span></a><a href="../rock-cycle.html"><i class="fa-solid fa-gem" aria-hidden="true"></i><span><b>Rock Cycle Simulator</b><small>Weathering to metamorphism</small></span></a><a href="../gis-map.html"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i><span><b>GIS Area Explorer</b><small>Boundary, topography, pollution</small></span></a><a href="../gis-lab.html"><i class="fa-solid fa-satellite" aria-hidden="true"></i><span><b>WebGIS Lab</b><small>DEM profiles and GEE scripts</small></span></a><a href="../field-notebook.html"><i class="fa-solid fa-person-hiking" aria-hidden="true"></i><span><b>Field Notebook</b><small>Phone-only field measurements</small></span></a><a href="../water-quality.html"><i class="fa-solid fa-droplet" aria-hidden="true"></i><span><b>Water Quality</b><small>WQI against WHO and BD limits</small></span></a><a href="../field-tracker.html"><i class="fa-solid fa-route" aria-hidden="true"></i><span><b>Field Tracker</b><small>GPS track and waypoints</small></span></a><a href="../ecology-quadrat.html"><i class="fa-solid fa-table-cells" aria-hidden="true"></i><span><b>Quadrat Counter</b><small>Tally species, diversity indices</small></span></a><a class="on" href="../simulations/index.html"><i class="fa-solid fa-industry" aria-hidden="true"></i><span><b>Air Dispersion</b><small>Gaussian plume from a stack</small></span></a><a href="../eia-field.html"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i><span><b>EIA Field Visit Kit</b><small>Baseline checklist and impact matrix</small></span></a><a href="../ee-analyzer.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Earth Engine</b><small>Satellite analysis of any area</small></span></a><a href="../weather.html"><i class="fa-solid fa-cloud-sun-rain" aria-hidden="true"></i><span><b>EcoLens Weather</b><small>Your photo plus live weather and rain chance</small></span></a><a href="../atmosphere-sim.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Atmosphere Simulator</b><small>Three-cell circulation model</small></span></a></div></div>
+      <a href="../eia.html" title="Environmental impact assessment">EIA</a>
+      <a href="../hsc.html" title="Higher secondary, classes 11 and 12">HSC</a>
+      <a href="../ssc.html" title="Secondary, classes 9 and 10">SSC</a>
+      <a href="index.html">Simulations</a>
+      <a href="../about.html">About</a>
+    </nav>
+    <div class="tools">
+      <button class="icon-btn" id="theme" type="button" aria-label="Switch to dark theme"><i class="fa-solid fa-moon"></i></button>
+      <button class="icon-btn burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="links"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</header>
+<div class="page-hero">
+  <div class="wrap">
+    <div class="trail"><a href="../hsc.html">HSC labs</a></div>
+    <h1>Acid-Base Titration</h1>
+    <p>Run sodium hydroxide into an acid drop by drop. Watch the pH curve build and the indicator change, and find out why the wrong indicator gives the wrong answer.</p>
+  </div>
+</div>
+<main id="main" class="lab-main">
+<div class="wrap">
+<div class="lab">
+  <div class="box">
+    <canvas class="stage" id="cv" role="img" aria-label="Conical flask showing the indicator colour, beside a graph of pH against volume of sodium hydroxide added"></canvas>
+    <div class="reads" aria-live="polite">
+      <div class="read"><small>pH in the flask</small><b id="rP"></b></div>
+      <div class="read"><small>NaOH needed to neutralise</small><b id="rE"></b></div>
+      <div class="read"><small>pH at that point</small><b id="rEp"></b></div>
+      <div class="read" id="endBox"><small>Indicator changes at</small><b id="rI"></b></div>
+    </div>
+    <div class="verdict" id="verdict" aria-live="polite"></div>
+  </div>
+  <div class="box">
+    <h2>Set up the titration</h2>
+    <div class="seg" id="acid" role="group" aria-label="Acid in the flask"><button type="button" data-v="s" aria-pressed="true">HCl, strong</button><button type="button" data-v="w" aria-pressed="false">CH₃COOH, weak</button></div>
+    <label class="ctl"><span>Acid concentration <output id="caO"></output></span><input type="range" id="ca" min="0.05" max="0.5" step="0.05" value="0.1"></label>
+    <label class="ctl"><span>NaOH concentration <output id="cbO"></output></span><input type="range" id="cb" min="0.05" max="0.5" step="0.05" value="0.1"></label>
+    <label class="ctl"><span>Indicator</span><select id="ind"><option value="0">Phenolphthalein, pH 8.2 to 10.0</option><option value="1">Methyl orange, pH 3.1 to 4.4</option><option value="2">Bromothymol blue, pH 6.0 to 7.6</option></select></label>
+    <label class="ctl"><span>NaOH added from the burette <output id="vbO"></output></span><input type="range" id="vb" min="0" max="50" step="0.05" value="0"></label>
+    <div class="acts"><button class="go main" type="button" id="run">Open the burette tap</button><button class="go" type="button" id="zero">Refill and start again</button></div>
+    <p class="fine">The flask holds 25.0 mL of acid. The shaded band on the graph is the pH range where the indicator changes colour.</p>
+  </div>
+</div>
+<div class="cols">
+  <div class="box">
+    <h2>Try this</h2>
+    <ul>
+      <li>Titrate HCl with phenolphthalein, then with methyl orange. Both work. Look at how tall the steep part of the curve is and say why.</li>
+      <li>Switch to CH₃COOH and try methyl orange again. Where does the colour change, and how far is that from the true neutralisation point?</li>
+      <li>For the weak acid, read the pH when exactly half the NaOH has been added. Compare it with pK<sub>a</sub> = 4.74.</li>
+      <li>Double the NaOH concentration. Predict the new burette reading before you run it.</li>
+    </ul>
+  </div>
+  <div class="box">
+    <h2>The chemistry</h2>
+    <div class="eq">At neutralisation: C<sub>acid</sub> V<sub>acid</sub> = C<sub>base</sub> V<sub>base</sub></div>
+    <div class="eq">pH = −log [H⁺]</div>
+    <div class="eq">Weak acid buffer region: pH = pK<sub>a</sub> + log ([salt] / [acid])</div>
+    <p class="fine">The curve is found by solving the charge balance [H⁺] + [Na⁺] = [OH⁻] + [A⁻] at 25 °C, with K<sub>a</sub> = 1.8 × 10⁻⁵ for ethanoic acid and K<sub>w</sub> = 10⁻¹⁴. Indicator colours are drawn as a smooth blend across the stated range; real colour judgement varies from person to person.</p>
+  </div>
+</div>
+</div>
+</main>
+<footer>&copy; 2026 Md Rokibul Islam Robin &middot; <a href="../eia.html">EIA</a> &middot; <a href="../hsc.html">HSC</a> &middot; <a href="../ssc.html">SSC</a> &middot; <a href="../about.html">About</a> &middot; A student project, not an official JKKNIU or NCTB website.</footer>
+<script src="../site.js"></script>
+<script src="../lab.js"></script>
+<script>
+(function () {
+  var L = Lab, VA = 25, KA = 1.8e-5, KW = 1e-14;
+  var IND = [{ n: 'Phenolphthalein', lo: 8.2, hi: 10, a: [255, 255, 255, 0.06], b: [226, 54, 140, 0.85] },
+             { n: 'Methyl orange', lo: 3.1, hi: 4.4, a: [226, 60, 60, 0.85], b: [242, 190, 40, 0.85] },
+             { n: 'Bromothymol blue', lo: 6.0, hi: 7.6, a: [240, 205, 60, 0.85], b: [45, 105, 220, 0.85] }];
+  var weak = false, ca, cb, ve, vmax, curve = [], vend = null;
+  function pH(vb) {
+    var tot = VA + vb, cx = ca * VA / tot, na = cb * vb / tot, lo = -1, hi = 15;
+    for (var i = 0; i < 50; i++) {
+      var m = (lo + hi) / 2, H = Math.pow(10, -m), A = weak ? cx * KA / (KA + H) : cx;
+      if (H + na - KW / H - A > 0) lo = m; else hi = m;
+    }
+    return (lo + hi) / 2;
+  }
+  function colour(p, ind) {
+    var f = Math.max(0, Math.min(1, (p - ind.lo) / (ind.hi - ind.lo)));
+    var q = ind.a.map(function (x, i) { return x + (ind.b[i] - x) * f; });
+    return 'rgba(' + Math.round(q[0]) + ',' + Math.round(q[1]) + ',' + Math.round(q[2]) + ',' + q[3].toFixed(2) + ')';
+  }
+  var cv = L.canvas(L.$('cv'), function (ctx, w, h, c) {
+    ctx.clearRect(0, 0, w, h);
+    var ind = IND[+L.$('ind').value], vb = L.val('vb'), p = pH(vb);
+    var fw = Math.min(170, w * 0.28), fx = fw / 2 + 6, top = 30, bot = h - 46, neck = 13, base = fw / 2 - 10, sh = top + (bot - top) * 0.3;
+    // burette tip and drop
+    ctx.strokeStyle = c.soft; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(fx - 4, 0); ctx.lineTo(fx - 4, top - 14); ctx.lineTo(fx + 4, top - 14); ctx.lineTo(fx + 4, 0); ctx.stroke();
+    // liquid
+    var fill = 0.34 + 0.4 * Math.min(1, vb / vmax), ly = bot - (bot - sh) * fill, half = neck + (base - neck) * (ly - sh) / (bot - sh);
+    ctx.fillStyle = colour(p, ind); ctx.beginPath(); ctx.moveTo(fx - half, ly); ctx.lineTo(fx + half, ly); ctx.lineTo(fx + base, bot); ctx.lineTo(fx - base, bot); ctx.closePath(); ctx.fill();
+    // flask outline
+    ctx.strokeStyle = c.ink; ctx.lineWidth = 2.5; ctx.lineJoin = 'round'; ctx.beginPath();
+    ctx.moveTo(fx - neck, top); ctx.lineTo(fx - neck, sh); ctx.lineTo(fx - base, bot); ctx.lineTo(fx + base, bot); ctx.lineTo(fx + neck, sh); ctx.lineTo(fx + neck, top); ctx.stroke();
+    L.text(ctx, 'pH ' + p.toFixed(2), fx, h - 20, c.ink, 15, 'center', 800);
+    L.text(ctx, ind.n, fx, h - 5, c.soft, 11, 'center');
+    // graph
+    var gx = fw + 46, gy = 16, gw = w - gx - 14, gh = h - gy - 40;
+    var X = function (v) { return gx + v / vmax * gw; }, Y = function (q) { return gy + gh - q / 14 * gh; };
+    ctx.fillStyle = colour(ind.hi, ind).replace(/[\d.]+\)$/, '0.22)'); ctx.fillRect(gx, Y(ind.hi), gw, Y(ind.lo) - Y(ind.hi));
+    ctx.strokeStyle = c.line; ctx.lineWidth = 1;
+    for (var q = 0; q <= 14; q += 2) { ctx.beginPath(); ctx.moveTo(gx, Y(q)); ctx.lineTo(gx + gw, Y(q)); ctx.stroke(); L.text(ctx, String(q), gx - 8, Y(q) + 4, c.soft, 12, 'right'); }
+    for (var i = 0; i <= 5; i++) { var v = vmax * i / 5; L.text(ctx, (v % 1 ? v.toFixed(1) : v) + '', X(v), gy + gh + 16, c.soft, 12, 'center'); }
+    L.text(ctx, 'NaOH added, mL', gx + gw / 2, h - 6, c.soft, 12, 'center'); L.text(ctx, 'pH', gx + 6, gy + 12, c.soft, 12);
+    ctx.strokeStyle = c.soft; ctx.setLineDash([4, 5]); ctx.beginPath(); ctx.moveTo(X(ve), gy); ctx.lineTo(X(ve), gy + gh); ctx.stroke(); ctx.setLineDash([]);
+    L.text(ctx, 'neutralised', X(ve) + 6, gy + gh - 8, c.soft, 12);
+    // faint full curve, solid up to the current volume
+    ctx.lineWidth = 2; ctx.strokeStyle = c.line; ctx.beginPath(); curve.forEach(function (d, i) { if (i) ctx.lineTo(X(d[0]), Y(d[1])); else ctx.moveTo(X(d[0]), Y(d[1])); }); ctx.stroke();
+    ctx.lineWidth = 3; ctx.strokeStyle = c.sec; ctx.beginPath();
+    for (i = 0; i < curve.length && curve[i][0] <= vb; i++) { if (i) ctx.lineTo(X(curve[i][0]), Y(curve[i][1])); else ctx.moveTo(X(curve[i][0]), Y(curve[i][1])); }
+    ctx.lineTo(X(vb), Y(p)); ctx.stroke();
+    ctx.fillStyle = c.ink; ctx.beginPath(); ctx.arc(X(vb), Y(p), 6, 0, 7); ctx.fill();
+  });
+  function setup() {
+    ca = L.val('ca'); cb = L.val('cb'); ve = ca * VA / cb; vmax = Math.max(10, Math.ceil(ve * 2 / 10) * 10);
+    var s = L.$('vb'); s.max = vmax; if (+s.value > vmax) s.value = vmax;
+    curve = []; var n = 700; for (var i = 0; i <= n; i++) { var v = vmax * i / n; curve.push([v, pH(v)]); }
+    var ind = IND[+L.$('ind').value], mid = (ind.lo + ind.hi) / 2; vend = null;
+    if (curve[0][1] < mid) { var lo = 0, hi = vmax; if (pH(hi) > mid) { for (i = 0; i < 40; i++) { var m = (lo + hi) / 2; if (pH(m) < mid) lo = m; else hi = m; } vend = (lo + hi) / 2; } }
+    L.out('caO', ca.toFixed(2) + ' mol/L'); L.out('cbO', cb.toFixed(2) + ' mol/L');
+    L.out('rE', ve.toFixed(2) + ' mL'); L.out('rEp', pH(ve).toFixed(2));
+    L.out('rI', vend == null ? 'start' : vend.toFixed(2) + ' mL');
+    var err = vend == null ? ve : Math.abs(vend - ve), good = err <= 0.1, box = L.$('endBox');
+    box.className = 'read ' + (good ? 'hit' : 'miss');
+    L.$('verdict').textContent = good
+      ? ind.n + ' is a good choice here. Its colour change falls on the steep part of the curve, within ' + err.toFixed(2) + ' mL of the true neutralisation point.'
+      : vend == null ? ind.n + ' is a poor choice here. The acid already sits above the middle of its range, so the colour gives no clear end point.'
+      : ind.n + ' is a poor choice here. It changes colour ' + err.toFixed(1) + ' mL ' + (vend < ve ? 'before' : 'after') + ' the acid is neutralised, so the burette reading would be wrong.';
+    step();
+  }
+  function step() { L.out('vbO', L.val('vb').toFixed(2) + ' mL'); L.out('rP', pH(L.val('vb')).toFixed(2)); cv.redraw(); }
+  var run = L.loop(function (dt) {
+    var s = L.$('vb'), v = +s.value, near = Math.abs(v - ve) < 1.5;
+    v += dt * vmax / (near ? 60 : 12);
+    if (v >= vmax) { v = vmax; stop(); }
+    s.value = v; step();
+  });
+  function stop() { run.stop(); L.$('run').textContent = 'Open the burette tap'; }
+  L.seg('acid', function (v) { weak = v === 'w'; setup(); });
+  L.on(['ca', 'cb', 'ind'], setup);
+  L.$('vb').addEventListener('input', step);
+  L.$('run').addEventListener('click', function () { if (run.running()) stop(); else { if (+L.$('vb').value >= vmax) L.$('vb').value = 0; run.start(); this.textContent = 'Close the tap'; } });
+  L.$('zero').addEventListener('click', function () { stop(); L.$('vb').value = 0; step(); });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projectile Motion | ESE Research Hub</title>
+<meta name="description" content="Launch a ball at any speed, angle and height, on Earth, Mars or the Moon, and compare the shots.">
+<meta name="author" content="Md Rokibul Islam Robin">
+<meta name="theme-color" content="#0E2A2F">
+<link rel="canonical" href="https://mdrokibul.me/simulations/projectile-motion.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ESE Research Hub">
+<meta property="og:title" content="Projectile Motion">
+<meta property="og:description" content="Launch a ball at any speed, angle and height, on Earth, Mars or the Moon, and compare the shots.">
+<meta property="og:url" content="https://mdrokibul.me/simulations/projectile-motion.html">
+<meta property="og:image" content="https://mdrokibul.me/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Projectile Motion">
+<meta name="twitter:description" content="Launch a ball at any speed, angle and height, on Earth, Mars or the Moon, and compare the shots.">
+<meta name="twitter:image" content="https://mdrokibul.me/og-image.jpg">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Projectile Motion", "url": "https://mdrokibul.me/simulations/projectile-motion.html", "description": "Launch a ball at any speed, angle and height, on Earth, Mars or the Moon, and compare the shots.", "inLanguage": "en", "isPartOf": {"@type": "WebSite", "name": "ESE Research Hub", "url": "https://mdrokibul.me/"}}</script>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="../nav.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="stylesheet" href="../lab.css">
+</head>
+<body class="sector-hsc">
+<div class="progress" id="progress" aria-hidden="true"></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav" id="nav" data-solid>
+  <div class="wrap">
+    <a class="brand" href="../index.html">ESE Research<span> Hub</span></a>
+    <nav class="links" id="links" aria-label="Main">
+      <div class="dd"><button class="dd-btn" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="toolsMenu">Tools <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="dd-menu" id="toolsMenu"><a href="../portal.html"><i class="fa-solid fa-building-columns" aria-hidden="true"></i><span><b>JKKNIU &amp; ESE Portal</b><small>Official links in one place</small></span></a><a href="../library.html"><i class="fa-solid fa-folder-open" aria-hidden="true"></i><span><b>Batch Library</b><small>Shared ESE study materials</small></span></a><a href="../sound-meter.html"><i class="fa-solid fa-ear-listen" aria-hidden="true"></i><span><b>Sound Level Meter</b><small>Measure noise with your phone</small></span></a><a href="../soil-texture.html"><i class="fa-solid fa-layer-group" aria-hidden="true"></i><span><b>Soil Texture Triangle</b><small>Plot sand, silt and clay</small></span></a><a href="../rock-cycle.html"><i class="fa-solid fa-gem" aria-hidden="true"></i><span><b>Rock Cycle Simulator</b><small>Weathering to metamorphism</small></span></a><a href="../gis-map.html"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i><span><b>GIS Area Explorer</b><small>Boundary, topography, pollution</small></span></a><a href="../gis-lab.html"><i class="fa-solid fa-satellite" aria-hidden="true"></i><span><b>WebGIS Lab</b><small>DEM profiles and GEE scripts</small></span></a><a href="../field-notebook.html"><i class="fa-solid fa-person-hiking" aria-hidden="true"></i><span><b>Field Notebook</b><small>Phone-only field measurements</small></span></a><a href="../water-quality.html"><i class="fa-solid fa-droplet" aria-hidden="true"></i><span><b>Water Quality</b><small>WQI against WHO and BD limits</small></span></a><a href="../field-tracker.html"><i class="fa-solid fa-route" aria-hidden="true"></i><span><b>Field Tracker</b><small>GPS track and waypoints</small></span></a><a href="../ecology-quadrat.html"><i class="fa-solid fa-table-cells" aria-hidden="true"></i><span><b>Quadrat Counter</b><small>Tally species, diversity indices</small></span></a><a class="on" href="../simulations/index.html"><i class="fa-solid fa-industry" aria-hidden="true"></i><span><b>Air Dispersion</b><small>Gaussian plume from a stack</small></span></a><a href="../eia-field.html"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i><span><b>EIA Field Visit Kit</b><small>Baseline checklist and impact matrix</small></span></a><a href="../ee-analyzer.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Earth Engine</b><small>Satellite analysis of any area</small></span></a><a href="../weather.html"><i class="fa-solid fa-cloud-sun-rain" aria-hidden="true"></i><span><b>EcoLens Weather</b><small>Your photo plus live weather and rain chance</small></span></a><a href="../atmosphere-sim.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Atmosphere Simulator</b><small>Three-cell circulation model</small></span></a></div></div>
+      <a href="../eia.html" title="Environmental impact assessment">EIA</a>
+      <a href="../hsc.html" title="Higher secondary, classes 11 and 12">HSC</a>
+      <a href="../ssc.html" title="Secondary, classes 9 and 10">SSC</a>
+      <a href="index.html">Simulations</a>
+      <a href="../about.html">About</a>
+    </nav>
+    <div class="tools">
+      <button class="icon-btn" id="theme" type="button" aria-label="Switch to dark theme"><i class="fa-solid fa-moon"></i></button>
+      <button class="icon-btn burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="links"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</header>
+<div class="page-hero">
+  <div class="wrap">
+    <div class="trail"><a href="../hsc.html">HSC labs</a></div>
+    <h1>Projectile Motion</h1>
+    <p>Throw a ball at any speed, angle and height and watch the path it takes. Earlier shots stay on screen, so you can test what really changes the range.</p>
+  </div>
+</div>
+<main id="main" class="lab-main">
+<div class="wrap">
+<div class="lab">
+  <div class="box">
+    <canvas class="stage" id="cv" role="img" aria-label="Path of the projectile over the ground, with earlier shots shown faded"></canvas>
+    <div class="reads" aria-live="polite">
+      <div class="read"><small>Time of flight</small><b id="rT"></b></div>
+      <div class="read"><small>Greatest height</small><b id="rH"></b></div>
+      <div class="read"><small>Horizontal range</small><b id="rR"></b></div>
+    </div>
+  </div>
+  <div class="box">
+    <h2>Set up the throw</h2>
+    <label class="ctl"><span>Launch speed <output id="uO"></output></span><input type="range" id="u" min="5" max="40" step="1" value="20"></label>
+    <label class="ctl"><span>Launch angle <output id="thO"></output></span><input type="range" id="th" min="0" max="90" step="1" value="45"></label>
+    <label class="ctl"><span>Launch height <output id="hO"></output></span><input type="range" id="h" min="0" max="30" step="1" value="0"></label>
+    <label class="ctl"><span>Gravity</span><select id="g"><option value="9.8">Earth, 9.8 m/s²</option><option value="3.71">Mars, 3.71 m/s²</option><option value="1.62">Moon, 1.62 m/s²</option></select></label>
+    <div class="acts"><button class="go main" type="button" id="fire">Launch</button><button class="go" type="button" id="clear">Clear old shots</button></div>
+    <p class="fine">The dashed line is the predicted path. Each launch leaves a faded trace, so you can compare shots.</p>
+  </div>
+</div>
+<div class="cols">
+  <div class="box">
+    <h2>Try this</h2>
+    <ul>
+      <li>From ground level, find the angle that gives the longest range. Then launch at 30° and at 60° and compare where they land.</li>
+      <li>Raise the launch height to 30 m. Is 45° still the best angle?</li>
+      <li>Keep speed and angle fixed and switch to the Moon. By what factor does the range change, and why that number?</li>
+      <li>Watch the two arrows on the ball. Which one never changes during the flight?</li>
+    </ul>
+  </div>
+  <div class="box">
+    <h2>The equations</h2>
+    <div class="eq">x = u cos θ · t</div>
+    <div class="eq">y = h + u sin θ · t − ½ g t²</div>
+    <div class="eq">On level ground: R = u² sin 2θ / g,&nbsp; H = u² sin² θ / 2g,&nbsp; T = 2u sin θ / g</div>
+    <p class="fine">Air resistance is ignored, as in the textbook treatment. A real ball lands shorter than this, and its best angle is a little under 45°.</p>
+  </div>
+</div>
+</div>
+</main>
+<footer>&copy; 2026 Md Rokibul Islam Robin &middot; <a href="../eia.html">EIA</a> &middot; <a href="../hsc.html">HSC</a> &middot; <a href="../ssc.html">SSC</a> &middot; <a href="../about.html">About</a> &middot; A student project, not an official JKKNIU or NCTB website.</footer>
+<script src="../site.js"></script>
+<script src="../lab.js"></script>
+<script>
+(function () {
+  var L = Lab, shots = [], t = 0, flying = false, p;
+  function calc() {
+    var u = L.val('u'), th = L.val('th') * Math.PI / 180, h = L.val('h'), g = L.val('g');
+    var vy = u * Math.sin(th), vx = u * Math.cos(th), T = (vy + Math.sqrt(vy * vy + 2 * g * h)) / g;
+    return { u: u, th: th, h: h, g: g, vx: vx, vy: vy, T: T, R: vx * T, H: h + vy * vy / (2 * g) };
+  }
+  function nice(x) { var e = Math.pow(10, Math.floor(Math.log10(x))), m = x / e; return (m < 1.5 ? 1 : m < 3.5 ? 2 : m < 7.5 ? 5 : 10) * e; }
+  function path(ctx, s, X, Y, upto) {
+    ctx.beginPath();
+    for (var i = 0; i <= 60; i++) { var tt = upto * i / 60; var x = s.vx * tt, y = s.h + s.vy * tt - 0.5 * s.g * tt * tt; if (i) ctx.lineTo(X(x), Y(y)); else ctx.moveTo(X(x), Y(y)); }
+    ctx.stroke();
+  }
+  function arrow(ctx, x, y, dx, dy, c) {
+    var n = Math.hypot(dx, dy); if (n < 4) return;
+    ctx.strokeStyle = c; ctx.fillStyle = c; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + dx, y + dy); ctx.stroke();
+    var a = Math.atan2(dy, dx); ctx.beginPath(); ctx.moveTo(x + dx, y + dy);
+    ctx.lineTo(x + dx - 8 * Math.cos(a - .45), y + dy - 8 * Math.sin(a - .45)); ctx.lineTo(x + dx - 8 * Math.cos(a + .45), y + dy - 8 * Math.sin(a + .45)); ctx.fill();
+  }
+  var cv = L.canvas(L.$('cv'), function (ctx, w, h, c) {
+    ctx.clearRect(0, 0, w, h);
+    var padL = 44, padB = 34, padT = 20, padR = 18, all = shots.concat([p]);
+    var mR = 10, mH = 5; all.forEach(function (s) { mR = Math.max(mR, s.R); mH = Math.max(mH, s.H); });
+    var k = Math.min((w - padL - padR) / (mR * 1.05), (h - padT - padB) / (mH * 1.1));
+    var X = function (x) { return padL + x * k; }, Y = function (y) { return h - padB - y * k; };
+    var st = nice(Math.max(mR, mH * (w / h)) / 6);
+    ctx.lineWidth = 1; ctx.strokeStyle = c.line;
+    for (var x = 0; X(x) < w - 4; x += st) { ctx.beginPath(); ctx.moveTo(X(x), padT); ctx.lineTo(X(x), Y(0)); ctx.stroke(); L.text(ctx, x + (x ? '' : ' m'), X(x), h - 12, c.soft, 12, 'center'); }
+    for (var y = st; Y(y) > padT; y += st) { ctx.beginPath(); ctx.moveTo(padL, Y(y)); ctx.lineTo(w - padR, Y(y)); ctx.stroke(); L.text(ctx, String(y), padL - 8, Y(y) + 4, c.soft, 12, 'right'); }
+    ctx.strokeStyle = c.ink; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(padL, Y(0)); ctx.lineTo(w - padR, Y(0)); ctx.stroke();
+    if (p.h > 0) { ctx.fillStyle = c.line; ctx.fillRect(X(0) - 14, Y(p.h), 14, p.h * k); }
+    ctx.lineWidth = 2; ctx.globalAlpha = .45; ctx.strokeStyle = c.soft;
+    shots.forEach(function (s) { path(ctx, s, X, Y, s.T); L.text(ctx, Math.round(s.th * 180 / Math.PI) + '°', X(s.R), Y(0) - 8, c.soft, 12, 'center'); });
+    ctx.globalAlpha = 1; ctx.strokeStyle = c.sec; ctx.setLineDash([6, 6]); path(ctx, p, X, Y, p.T); ctx.setLineDash([]);
+    var tt = flying ? t : 0, bx = p.vx * tt, by = p.h + p.vy * tt - 0.5 * p.g * tt * tt;
+    if (flying) { ctx.lineWidth = 3; path(ctx, p, X, Y, tt); }
+    var a = 2.2 * Math.min(1, 34 / p.u * 0.9) , vyNow = p.vy - p.g * tt;
+    arrow(ctx, X(bx), Y(by), p.vx * a, 0, c.river); arrow(ctx, X(bx), Y(by), 0, -vyNow * a, c.bad);
+    ctx.fillStyle = c.ink; ctx.beginPath(); ctx.arc(X(bx), Y(by), 7, 0, 7); ctx.fill();
+    L.text(ctx, 'horizontal velocity', padL + 6, padT + 2, c.river, 12); L.text(ctx, 'vertical velocity', padL + 132, padT + 2, c.bad, 12);
+  });
+  var run = L.loop(function (dt) {
+    t += dt * Math.max(1, p.T / 4);
+    if (t >= p.T) { t = p.T; flying = false; run.stop(); shots.push(p); if (shots.length > 4) shots.shift(); L.$('fire').textContent = 'Launch'; }
+    cv.redraw();
+  });
+  function update() {
+    if (flying) { flying = false; run.stop(); L.$('fire').textContent = 'Launch'; }
+    p = calc();
+    L.out('uO', p.u + ' m/s'); L.out('thO', L.val('th') + '°'); L.out('hO', p.h + ' m');
+    L.out('rT', L.fx(p.T) + ' s'); L.out('rH', L.fx(p.H, 1) + ' m'); L.out('rR', L.fx(p.R, 1) + ' m');
+    cv.redraw();
+  }
+  L.on(['u', 'th', 'h', 'g'], update);
+  L.$('fire').addEventListener('click', function () {
+    if (flying) return; p = calc();
+    if (L.reduce) { shots.push(p); if (shots.length > 4) shots.shift(); cv.redraw(); return; }
+    t = 0; flying = true; this.textContent = 'In flight'; run.start();
+  });
+  L.$('clear').addEventListener('click', function () { shots = []; cv.redraw(); });
+})();
+</script>
+</body>
+</html>

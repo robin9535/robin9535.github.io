@@ -3,25 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ESE Research Hub | Tools and study materials for students</title>
-<meta name="description" content="Free academic and research tools for university students: live weather, a phone sound meter, an atmosphere simulator, a shared study library and JKKNIU &amp; ESE links. Made by Md Rokibul Islam Robin.">
+<title>ESE Research Hub | Interactive labs for EIA, HSC and SSC</title>
+<meta name="description" content="Free interactive labs and simulations in three sections: environmental impact assessment (EIA), HSC science and SSC science. Change a number and see what happens. Made by Md Rokibul Islam Robin.">
 <meta name="author" content="Md Rokibul Islam Robin">
 <meta name="theme-color" content="#0E2A2F">
 <link rel="canonical" href="https://mdrokibul.me/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ESE Research Hub">
 <meta property="og:title" content="ESE Research Hub">
-<meta property="og:description" content="Weather, sound meter, atmosphere simulator and a study library for university students and researchers.">
+<meta property="og:description" content="Free interactive labs and simulations in three sections: environmental impact assessment (EIA), HSC science and SSC science. Change a number and see what happens. Made by Md Rokibul Islam Robin.">
 <meta property="og:url" content="https://mdrokibul.me/">
 <meta property="og:image" content="https://mdrokibul.me/og-image.jpg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="ESE Research Hub">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="ESE Research Hub">
-<meta name="twitter:description" content="Weather, sound meter, atmosphere simulator and a study library for university students and researchers.">
+<meta name="twitter:description" content="Free interactive labs and simulations in three sections: environmental impact assessment (EIA), HSC science and SSC science. Change a number and see what happens. Made by Md Rokibul Islam Robin.">
 <meta name="twitter:image" content="https://mdrokibul.me/og-image.jpg">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "name": "ESE Research Hub", "alternateName": "mdrokibul.me", "url": "https://mdrokibul.me/", "description": "Free academic and research tools for university students: live weather, a phone sound meter, an atmosphere simulator, a shared study library and JKKNIU & ESE links. Made by Md Rokibul Islam Robin.", "inLanguage": "en", "publisher": {"@type": "Person", "name": "Md Rokibul Islam Robin", "url": "https://mdrokibul.me/about.html"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "ESE Research Hub", "url": "https://mdrokibul.me/", "description": "Free interactive labs and simulations in three sections: environmental impact assessment (EIA), HSC science and SSC science. Change a number and see what happens. Made by Md Rokibul Islam Robin.", "inLanguage": "en", "isPartOf": {"@type": "WebSite", "name": "ESE Research Hub", "url": "https://mdrokibul.me/"}}</script>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,56 +26,42 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link rel="stylesheet" href="nav.css">
 <link rel="stylesheet" href="site.css">
+<link rel="stylesheet" href="lab.css">
 <style>
-.hero{position:relative;overflow:hidden;background:radial-gradient(1000px 520px at 88% 8%,rgba(79,179,190,.35),transparent 62%),radial-gradient(700px 400px at 0% 100%,rgba(181,138,75,.22),transparent 60%),radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.3px) 0 0/24px 24px,linear-gradient(160deg,var(--estuary) 0%,#12373d 100%);color:#eaf3ee;padding:156px 0 96px}
-.hero .wrap{position:relative;z-index:1}
-.contours{position:absolute;right:-120px;top:-40px;width:min(720px,70vw);opacity:.5;pointer-events:none;z-index:0}
-.badge{display:inline-flex;gap:8px;align-items:center;font-family:var(--display);font-weight:600;font-size:.9rem;padding:7px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);color:#cfe6dc;margin-bottom:22px}
-.badge::before{content:"";width:8px;height:8px;border-radius:50%;background:#5fd27a;box-shadow:0 0 0 4px rgba(95,210,122,.2)}
-.hero h1{font-size:clamp(2.6rem,7.4vw,5.4rem);font-weight:800;margin-bottom:22px;max-width:14ch;line-height:1.02}
-.hero h1 em{font-style:normal;background:linear-gradient(90deg,#e8c88c,var(--silt),#9bc16a);-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero p{max-width:54ch;font-size:1.2rem;color:#cfe0da;margin-bottom:30px}
-.cta-row{display:flex;flex-wrap:wrap;gap:12px}
-.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:34px}
-.chips span{font:600 .85rem var(--display);padding:7px 14px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);color:#d4e6df}
-.chips i{color:var(--silt);margin-right:7px}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-@media (max-width:980px){.grid{grid-template-columns:1fr 1fr}}
-@media (max-width:640px){.grid{grid-template-columns:1fr}}
-.grid>*{min-width:0}
-.tool{--a:var(--river);position:relative;display:grid;align-content:start;gap:12px;padding:26px 26px 24px;border-radius:24px;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);overflow:hidden;transition:transform .25s,box-shadow .25s,border-color .25s}
-.tool::before{content:"";position:absolute;inset:auto -30% -55% auto;width:75%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--a) 28%,transparent),transparent 68%);transition:transform .4s;pointer-events:none}
-.tool:hover{transform:translateY(-6px);border-color:var(--a);box-shadow:0 22px 44px color-mix(in srgb,var(--a) 22%,transparent)}
-.tool:hover::before{transform:scale(1.25)}
-.tool i{width:50px;height:50px;border-radius:16px;display:grid;place-items:center;font-size:1.35rem;color:#fff;background:var(--a);box-shadow:0 8px 18px color-mix(in srgb,var(--a) 40%,transparent)}
-.tool h3{font-size:1.32rem;font-weight:800;position:relative}
-.tool p{font-size:1rem;color:var(--ink-soft);position:relative}
-.tool b{font-family:var(--display);font-weight:700;color:var(--a);position:relative;display:inline-flex;gap:8px;align-items:center}
-.tool b::after{content:"\2192";transition:transform .2s}
-.tool:hover b::after{transform:translateX(5px)}
-:root[data-theme="dark"] .tool b{filter:brightness(1.35)}
-.tool.wide{grid-column:1/-1;grid-template-columns:auto 15rem minmax(0,1fr) auto;align-items:center;gap:22px}
-@media (max-width:760px){.tool.wide{grid-template-columns:1fr}}
-@media (prefers-reduced-motion:reduce){.tool,.tool::before,.tool b::after{transition:none}}
-.who{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-@media (max-width:820px){.who{grid-template-columns:1fr}}
-.who div{padding:24px;border-radius:18px;background:var(--card);border:1px solid var(--line)}
-.who h3{font-size:1.2rem;font-weight:800;margin-bottom:8px}
-.who p{color:var(--ink-soft);font-size:1rem}
-.note{max-width:70ch}
-.note li{margin:.6em 0 0 1.2em;color:var(--ink-soft)}
+.hero{position:relative;overflow:hidden;color:#eaf3ee;padding:138px 0 72px;background:radial-gradient(1000px 520px at 88% 0%,rgba(79,179,190,.3),transparent 62%),radial-gradient(700px 400px at 0% 100%,rgba(181,138,75,.2),transparent 60%),radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.3px) 0 0/24px 24px,linear-gradient(160deg,var(--estuary) 0%,#12373d 100%)}
+.hero h1{font-size:clamp(2.5rem,7vw,5rem);font-weight:800;line-height:1.02;max-width:13ch;margin-bottom:18px}
+.hero .lead{max-width:56ch;font-size:1.18rem;color:#cfe0da;margin-bottom:36px}
+.benches{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media (max-width:900px){.benches{grid-template-columns:1fr}}
+.bench{--k:#4fb3be;min-width:0;display:grid;gap:10px;align-content:start;padding:16px 16px 18px;border-radius:22px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-top:4px solid var(--k)}
+.bench.hsc{--k:#d3a965}.bench.ssc{--k:#9bc16a}
+.bench canvas{width:100%;height:170px;display:block;border-radius:12px;background:rgba(0,0,0,.22)}
+.bench label{display:grid;gap:2px;font:600 .92rem var(--display);color:#d4e6df}
+.bench label span{display:flex;justify-content:space-between;gap:8px}
+.bench output{color:var(--k);font-weight:800;font-variant-numeric:tabular-nums}
+.bench input{width:100%;accent-color:var(--k);height:28px}
+.bench h2{font-size:1.45rem;font-weight:800}
+.bench p{font-size:1rem;color:#cfe0da}
+.bench a{justify-self:start;margin-top:4px;font:700 .98rem var(--display);text-decoration:none;padding:10px 20px;border-radius:999px;background:var(--k);color:#0b1f23}
+.bench a:hover{filter:brightness(1.1)}
+.bench :focus-visible{outline:3px solid #fff;outline-offset:3px}
+.newest .rowlink.eia{--sec:var(--eia)}.newest .rowlink.hsc{--sec:var(--hsc)}.newest .rowlink.ssc{--sec:var(--ssc)}
+.how{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;counter-reset:how}
+@media (max-width:820px){.how{grid-template-columns:1fr}}
+.how li{list-style:none;counter-increment:how;border-top:3px solid var(--line);padding-top:16px}
+.how li::before{content:counter(how);font:800 2.4rem/1 var(--display);color:var(--river);display:block;margin-bottom:8px}
+.how h3{font-size:1.25rem;font-weight:800;margin-bottom:6px}
+.how p{color:var(--ink-soft);font-size:1.02rem}
 .author{display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center}
 @media (max-width:640px){.author{grid-template-columns:1fr}}
 .author img{width:110px;height:110px;border-radius:50%;object-fit:cover;border:4px solid var(--silt)}
 .author p{color:var(--ink-soft);max-width:60ch;margin:6px 0 14px}
-.btn.dk2{color:var(--ink);border-color:var(--line)}
-.btn.dk2:hover{background:var(--paper)}
 .contact{background:var(--estuary);color:#eaf3ee;text-align:center}
 .contact h2{font-size:clamp(1.8rem,4.5vw,2.8rem);font-weight:800;margin-bottom:12px}
 .contact p{max-width:52ch;margin:0 auto 24px;color:#bcd0c9}
 </style>
 </head>
-<body>
+<body class="">
 <div class="progress" id="progress" aria-hidden="true"></div>
 <a class="skip" href="#main">Skip to content</a>
 <header class="nav" id="nav">
@@ -86,9 +69,11 @@
     <a class="brand" href="index.html">ESE Research<span> Hub</span></a>
     <nav class="links" id="links" aria-label="Main">
       <div class="dd"><button class="dd-btn" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="toolsMenu">Tools <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="dd-menu" id="toolsMenu"><a href="portal.html"><i class="fa-solid fa-building-columns" aria-hidden="true"></i><span><b>JKKNIU &amp; ESE Portal</b><small>Official links in one place</small></span></a><a href="library.html"><i class="fa-solid fa-folder-open" aria-hidden="true"></i><span><b>Batch Library</b><small>Shared ESE study materials</small></span></a><a href="sound-meter.html"><i class="fa-solid fa-ear-listen" aria-hidden="true"></i><span><b>Sound Level Meter</b><small>Measure noise with your phone</small></span></a><a href="soil-texture.html"><i class="fa-solid fa-layer-group" aria-hidden="true"></i><span><b>Soil Texture Triangle</b><small>Plot sand, silt and clay</small></span></a><a href="rock-cycle.html"><i class="fa-solid fa-gem" aria-hidden="true"></i><span><b>Rock Cycle Simulator</b><small>Weathering to metamorphism</small></span></a><a href="gis-map.html"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i><span><b>GIS Area Explorer</b><small>Boundary, topography, pollution</small></span></a><a href="gis-lab.html"><i class="fa-solid fa-satellite" aria-hidden="true"></i><span><b>WebGIS Lab</b><small>DEM profiles and GEE scripts</small></span></a><a href="field-notebook.html"><i class="fa-solid fa-person-hiking" aria-hidden="true"></i><span><b>Field Notebook</b><small>Phone-only field measurements</small></span></a><a href="water-quality.html"><i class="fa-solid fa-droplet" aria-hidden="true"></i><span><b>Water Quality</b><small>WQI against WHO and BD limits</small></span></a><a href="field-tracker.html"><i class="fa-solid fa-route" aria-hidden="true"></i><span><b>Field Tracker</b><small>GPS track and waypoints</small></span></a><a href="ecology-quadrat.html"><i class="fa-solid fa-table-cells" aria-hidden="true"></i><span><b>Quadrat Counter</b><small>Tally species, diversity indices</small></span></a><a href="air-dispersion.html"><i class="fa-solid fa-industry" aria-hidden="true"></i><span><b>Air Dispersion</b><small>Gaussian plume from a stack</small></span></a><a href="eia-field.html"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i><span><b>EIA Field Visit Kit</b><small>Baseline checklist and impact matrix</small></span></a><a href="ee-analyzer.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Earth Engine</b><small>Satellite analysis of any area</small></span></a><a href="weather.html"><i class="fa-solid fa-cloud-sun-rain" aria-hidden="true"></i><span><b>EcoLens Weather</b><small>Your photo plus live weather and rain chance</small></span></a><a href="atmosphere-sim.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Atmosphere Simulator</b><small>Three-cell circulation model</small></span></a></div></div>
+      <a href="eia.html" title="Environmental impact assessment">EIA</a>
+      <a href="hsc.html" title="Higher secondary, classes 11 and 12">HSC</a>
+      <a href="ssc.html" title="Secondary, classes 9 and 10">SSC</a>
       <a href="simulations/index.html">Simulations</a>
       <a href="about.html">About</a>
-      <a href="about.html#contact">Contact</a>
     </nav>
     <div class="tools">
       <button class="icon-btn" id="theme" type="button" aria-label="Switch to dark theme"><i class="fa-solid fa-moon"></i></button>
@@ -97,160 +82,69 @@
   </div>
 </header>
 <div class="hero" id="top">
-  <svg class="contours" viewBox="0 0 600 600" fill="none" stroke="rgba(255,255,255,.16)" stroke-width="1.4" aria-hidden="true"><g transform="translate(300 300)"><ellipse rx="280" ry="220" transform="rotate(-18)"/><ellipse rx="236" ry="182" transform="rotate(-12)"/><ellipse rx="192" ry="146" transform="rotate(-6)"/><ellipse rx="148" ry="110"/><ellipse rx="106" ry="76" transform="rotate(8)"/><ellipse rx="66" ry="44" transform="rotate(14)"/><ellipse rx="30" ry="18" transform="rotate(20)"/></g></svg>
   <div class="wrap">
-    <span class="badge">Environmental Science &amp; Engineering</span>
-    <h1>Tools for <em>academic study</em> and research</h1>
-    <p>Live weather, a phone sound meter, an atmosphere simulator and a shared study library, free for university students and anyone doing research. Made by a JKKNIU student.</p>
-    <div class="cta-row">
-      <a class="btn fill" href="#tools"><i class="fa-solid fa-screwdriver-wrench"></i> Explore the tools</a>
-      <a class="btn" href="library.html"><i class="fa-solid fa-folder-open"></i> Batch library</a>
+    <h1>Change a number. See what happens.</h1>
+    <p class="lead">Free interactive labs in three sections: environmental impact assessment for university and field work, and science experiments for HSC and SSC students. Try one right here.</p>
+    <div class="benches">
+      <div class="bench eia">
+        <canvas id="m1" role="img" aria-label="Smoke plume leaving a factory stack and bending with the wind"></canvas>
+        <label><span>Wind speed <output id="m1o"></output></span><input type="range" id="m1s" min="1" max="10" step="0.5" value="3"></label>
+        <h2>EIA</h2>
+        <p>Environmental impact assessment: scope a site, measure the baseline, predict the impact.</p>
+        <a href="eia.html">Open EIA labs</a>
+      </div>
+      <div class="bench hsc">
+        <canvas id="m2" role="img" aria-label="A ball following a curved path through the air"></canvas>
+        <label><span>Launch angle <output id="m2o"></output></span><input type="range" id="m2s" min="10" max="80" step="1" value="45"></label>
+        <h2>HSC</h2>
+        <p>Classes 11 and 12: projectiles, pendulums, optics, waves, titration and the cell.</p>
+        <a href="hsc.html">Open HSC labs</a>
+      </div>
+      <div class="bench ssc">
+        <canvas id="m3" role="img" aria-label="A battery lighting a bulb, with dots showing the current"></canvas>
+        <label><span>Battery voltage <output id="m3o"></output></span><input type="range" id="m3s" min="0" max="12" step="0.5" value="6"></label>
+        <h2>SSC</h2>
+        <p>Classes 9 and 10: circuits, lenses, the pendulum practical, sound and the rock cycle.</p>
+        <a href="ssc.html">Open SSC labs</a>
+      </div>
     </div>
-    <div class="chips"><span><i class="fa-solid fa-gift"></i>Free</span><span><i class="fa-solid fa-user-slash"></i>No sign-up</span><span><i class="fa-solid fa-mobile-screen"></i>Works on phones</span><span><i class="fa-solid fa-wind"></i>Live air quality, top right</span></div>
   </div>
 </div>
 
 <main id="main">
-<section id="tools">
+<section class="newest">
   <div class="wrap">
-    <div class="sec-head"><h2>Tools and resources</h2><div class="bar"></div></div>
-    <div class="grid">
-      <a class="tool" style="--a:#2a8fbd" href="weather.html">
-        <i class="fa-solid fa-cloud-sun-rain"></i>
-        <h3>EcoLens Weather</h3>
-        <p>Add a photo and a place to see live weather, the chance of rain over the next 24 hours, and the rain and cloud drawn over your picture. Your photo never leaves your device.</p>
-        <b>Open EcoLens</b>
-      </a>
-      <a class="tool" style="--a:#d1604a" href="sound-meter.html">
-        <i class="fa-solid fa-ear-listen"></i>
-        <h3>Sound Level Meter</h3>
-        <p>Measure noise in decibels with your phone's microphone. Built for quick field checks, with calibration and 10-second measurements.</p>
-        <b>Open the meter</b>
-      </a>
-      <a class="tool" style="--a:#3f9aa3" href="atmosphere-sim.html">
-        <i class="fa-solid fa-earth-asia"></i>
-        <h3>Atmosphere Simulator</h3>
-        <p>Interactive model of the Hadley, Ferrel and Polar cells, with Coriolis deflection and the seasonal shift of the ITCZ that drives the monsoon.</p>
-        <b>Launch simulator</b>
-      </a>
-      <a class="tool" style="--a:#b5803b" href="soil-texture.html">
-        <i class="fa-solid fa-layer-group"></i>
-        <h3>Soil Texture Triangle</h3>
-        <p>Enter sieve and hydrometer results, see the soil plotted on the USDA texture triangle with guide lines to each axis, and get the soil class.</p>
-        <b>Open the triangle</b>
-      </a>
-      <a class="tool" style="--a:#8a6f9e" href="rock-cycle.html">
-        <i class="fa-solid fa-gem"></i>
-        <h3>Rock Cycle &amp; Petrology Simulator</h3>
-        <p>Explore weathering, sedimentation, lithification and metamorphism with a live thin-section microscope and crustal P&ndash;T&ndash;W controls.</p>
-        <b>Launch rock cycle</b>
-      </a>
-      <a class="tool slide" href="gis-lab.html" style="--d:.72s">
-        <i class="fa-solid fa-satellite"></i>
-        <h3>WebGIS, Topography &amp; Pollution Lab</h3>
-        <p>Extract area boundaries, analyze DEM elevation profiles, map real-time air pollution rates, and generate Python (geemap) &amp; GEE scripts.</p>
-        <b>Open WebGIS lab</b>
-      </a>
-      <a class="tool" style="--a:#2f7d5b" href="gis-map.html">
-        <i class="fa-solid fa-map-location-dot"></i>
-        <h3>GIS Area Explorer</h3>
-        <p>Search any area in Bangladesh, get its boundary, elevation and modelled air pollution, draw and measure, and export GeoJSON.</p>
-        <b>Open explorer</b>
-      </a>
-      <a class="tool" style="--a:#6b8e23" href="field-notebook.html">
-        <i class="fa-solid fa-person-hiking"></i>
-        <h3>Field Notebook</h3>
-        <p>Measure tree or building height and strike and dip with just your phone, then analyse and export your data.</p>
-        <b>Open notebook</b>
-      </a>
-      <a class="tool" style="--a:#2a7fa8" href="water-quality.html">
-        <i class="fa-solid fa-droplet"></i>
-        <h3>Water Quality Calculator</h3>
-        <p>Compare water samples with WHO or Bangladesh limits and get a Water Quality Index.</p>
-        <b>Open calculator</b>
-      </a>
-      <a class="tool" style="--a:#c0702b" href="field-tracker.html">
-        <i class="fa-solid fa-route"></i>
-        <h3>Field Tracker</h3>
-        <p>Record a GPS track and waypoints with notes while you survey, see distance and area, and export GPX, GeoJSON or CSV.</p>
-        <b>Open tracker</b>
-      </a>
-      <a class="tool" style="--a:#1f8a70" href="ee-analyzer.html">
-        <i class="fa-solid fa-earth-asia"></i>
-        <h3>Earth Engine Analyzer</h3>
-        <p>Pick or draw any area and get satellite vegetation, heat, NO2, rainfall, land cover, water and elevation from your own Earth Engine account.</p>
-        <b>Open analyzer</b>
-      </a>
-      <a class="tool" style="--a:#3d8f4f" href="ecology-quadrat.html">
-        <i class="fa-solid fa-table-cells"></i>
-        <h3>Quadrat Counter</h3>
-        <p>Tally species quadrat by quadrat with big tap buttons, then get density, frequency, importance value and Shannon and Simpson diversity.</p>
-        <b>Open counter</b>
-      </a>
-      <a class="tool" style="--a:#8a5a44" href="air-dispersion.html">
-        <i class="fa-solid fa-industry"></i>
-        <h3>Air Dispersion Model</h3>
-        <p>Gaussian plume model for a stack or chimney: peak ground-level concentration, where it lands, a receptor value and a plan-view plume map.</p>
-        <b>Open model</b>
-      </a>
-      <a class="tool" style="--a:#b0544a" href="eia-field.html">
-        <i class="fa-solid fa-clipboard-check"></i>
-        <h3>EIA Field Visit Kit</h3>
-        <p>Guided baseline checklist for the site visit, a scored impact matrix, ranked adverse impacts, mitigation notes and a printable summary.</p>
-        <b>Open the kit</b>
-      </a>
-      <a class="tool" style="--a:#2a7fa8" href="simulations/index.html">
-        <i class="fa-solid fa-flask-vial"></i>
-        <h3>Simulations</h3>
-        <p>Interactive models: river oxygen sag, atmosphere circulation, rock cycle and air dispersion. New simulations are added regularly.</p>
-        <b>Open simulations</b>
-      </a>
-      <a class="tool" style="--a:#5B7F3A" href="library.html">
-        <i class="fa-solid fa-folder-open"></i>
-        <h3>Batch Library</h3>
-        <p>A shared folder for the ESE batch's assignments, reports and notes, kept in one place so they are easy to find.</p>
-        <b>Open the library</b>
-      </a>
-      <a class="tool wide" style="--a:#1F6F78" href="portal.html">
-        <i class="fa-solid fa-building-columns"></i>
-        <h3>JKKNIU &amp; ESE Portal</h3>
-        <p>Official university and Environmental Science and Engineering department links in one searchable place: notices, admission, library, offices, and more.</p>
-        <b>Open the portal</b>
-      </a>
+    <div class="sec-head"><h2>Newest labs</h2><div class="bar"></div><p>Six experiments added with the three sections. Each has controls, live readouts, the equations behind it and questions to try.</p></div>
+    <div class="rows">
+      <a class="rowlink hsc" href="simulations/projectile-motion.html"><i class="fa-solid fa-bullseye" aria-hidden="true"></i><b>Projectile Motion</b><span>Speed, angle, height and gravity: what really sets the range?</span><em>HSC</em></a>
+      <a class="rowlink hsc" href="simulations/titration-curve.html"><i class="fa-solid fa-flask" aria-hidden="true"></i><b>Acid-Base Titration</b><span>Watch the pH curve build and find out which indicator to trust.</span><em>HSC</em></a>
+      <a class="rowlink hsc" href="simulations/simple-pendulum.html"><i class="fa-solid fa-clock" aria-hidden="true"></i><b>Simple Pendulum</b><span>Time ten swings, find g, then measure an unknown planet.</span><em>HSC, SSC</em></a>
+      <a class="rowlink ssc" href="simulations/ohms-law-circuit.html"><i class="fa-solid fa-bolt" aria-hidden="true"></i><b>Ohm's Law Circuit</b><span>Series and parallel, with moving current and a bulb that glows.</span><em>SSC</em></a>
+      <a class="rowlink ssc" href="simulations/lens-ray-diagram.html"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><b>Lens Ray Diagram</b><span>Drag the object and watch the rays locate the image.</span><em>SSC, HSC</em></a>
+      <a class="rowlink eia" href="simulations/noise-distance.html"><i class="fa-solid fa-volume-high" aria-hidden="true"></i><b>Noise with Distance</b><span>Predict site noise at a house and test it against day and night limits.</span><em>EIA</em></a>
     </div>
   </div>
 </section>
 
 <section class="alt">
   <div class="wrap">
-    <div class="sec-head"><h2>Who it is for</h2><div class="bar"></div></div>
-    <div class="who">
-      <div><h3>University students</h3><p>Find department links and shared study materials without asking around.</p></div>
-      <div><h3>Field and lab work</h3><p>Check the weather and measure noise before and during fieldwork.</p></div>
-      <div><h3>Learning and teaching</h3><p>Explore atmospheric circulation hands-on instead of only from a diagram.</p></div>
-    </div>
+    <div class="sec-head"><h2>How to learn from a lab</h2><div class="bar"></div></div>
+    <ol class="how">
+      <li><h3>Predict first</h3><p>Before you touch a slider, say what you think will happen. Each lab lists questions to start from.</p></li>
+      <li><h3>Change one thing</h3><p>Move a single control and leave the rest alone, the way you would in a real experiment.</p></li>
+      <li><h3>Check with the equation</h3><p>Every lab shows the formula it uses. Put your numbers in and see if your answer matches the screen.</p></li>
+    </ol>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <div class="sec-head"><h2>How to read the results</h2><div class="bar"></div></div>
-    <ul class="note">
-      <li>Weather comes from forecast models through <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a>. It is a forecast for a place, not a measurement at your exact spot.</li>
-      <li>The Sound Level Meter uses a phone microphone. It is good for comparing and rough checks, not a replacement for a certified meter.</li>
-      <li>The Atmosphere Simulator is a simplified teaching model.</li>
-    </ul>
-  </div>
-</section>
-
-<section class="alt">
-  <div class="wrap">
     <div class="author">
       <img src="website1.jpeg" alt="Md Rokibul Islam Robin" width="110" height="110" loading="lazy">
       <div>
         <h2 style="font-size:1.5rem;font-weight:800">Made by Md Rokibul Islam Robin</h2>
-        <p>Undergraduate student of Environmental Science and Engineering at Jatiya Kabi Kazi Nazrul Islam University (JKKNIU), 9th batch.</p>
-        <a class="btn dk2" href="about.html">About the author <i class="fa-solid fa-arrow-right"></i></a>
+        <p>Undergraduate student of Environmental Science and Engineering at Jatiya Kabi Kazi Nazrul Islam University (JKKNIU), 9th batch. The labs are simplified teaching models; each page says what it leaves out.</p>
+        <a class="btn dark" href="about.html">About the author</a>
       </div>
     </div>
   </div>
@@ -258,13 +152,63 @@
 
 <section class="contact" id="contact">
   <div class="wrap">
-    <h2>Suggest a tool or report a problem</h2>
-    <p>If something is wrong, or you want a feature for your study or research, send an email.</p>
+    <h2>Ask for a lab or report a problem</h2>
+    <p>If a result looks wrong, or there is a topic from your syllabus you want as an experiment, send an email.</p>
     <a class="btn fill" href="mailto:rokibul2480@gmail.com"><i class="fa-solid fa-envelope"></i> Email</a>
   </div>
 </section>
+
 </main>
-<footer>&copy; 2026 Md Rokibul Islam Robin &middot; <a href="about.html">About</a> &middot; A student project, not an official JKKNIU website.</footer>
+<footer>&copy; 2026 Md Rokibul Islam Robin &middot; <a href="eia.html">EIA</a> &middot; <a href="hsc.html">HSC</a> &middot; <a href="ssc.html">SSC</a> &middot; <a href="about.html">About</a> &middot; A student project, not an official JKKNIU or NCTB website.</footer>
 <script src="site.js"></script>
+<script src="lab.js"></script>
+<script>
+/* Three small live experiments in the hero, one per section. */
+(function () {
+  var L = Lab, t = 0, W = '#eaf3ee', DIM = 'rgba(234,243,238,.45)';
+  // EIA: plume from a stack. Stronger wind bends the plume over sooner and keeps it narrow.
+  var puffs = []; for (var i = 0; i < 70; i++) puffs.push({ a: i / 70 * 6, j: Math.random() * 2 - 1 });
+  var c1 = L.canvas(L.$('m1'), function (ctx, w, h) {
+    ctx.clearRect(0, 0, w, h); var u = L.val('m1s'), sx = 34, sy = h - 62;
+    ctx.fillStyle = DIM; ctx.fillRect(0, h - 14, w, 2); ctx.fillStyle = W; ctx.fillRect(sx - 7, sy, 14, h - 14 - sy); ctx.fillRect(sx - 26, h - 34, 52, 20);
+    puffs.forEach(function (p) {
+      var a = p.a, x = sx + a * u * 16, rise = 46 * (3 / (u + 2)) * (1 - Math.exp(-a / 1.2)), sp = (4 + a * 9) * (3 / (u + 2));
+      if (x > w + 20) return;
+      ctx.fillStyle = 'rgba(79,179,190,' + Math.max(0, .5 - a * .07).toFixed(2) + ')'; ctx.beginPath(); ctx.arc(x, sy - rise + p.j * sp, 4 + a * 2.6, 0, 7); ctx.fill();
+    });
+    for (var k = 0; k < 3; k++) { var y = 22 + k * 16, x0 = ((t * u * 22 + k * 70) % (w + 60)) - 40; ctx.strokeStyle = DIM; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x0 + 8 + u * 3, y); ctx.stroke(); }
+  });
+  // HSC: projectile at a fixed speed.
+  var c2 = L.canvas(L.$('m2'), function (ctx, w, h) {
+    ctx.clearRect(0, 0, w, h); var th = L.val('m2s') * Math.PI / 180, u = 20, g = 9.8, T = 2 * u * Math.sin(th) / g, k = (w - 40) / (u * u / g);
+    var X = function (x) { return 20 + x * k; }, Y = function (y) { return h - 18 - y * k; };
+    ctx.fillStyle = DIM; ctx.fillRect(0, h - 16, w, 2);
+    ctx.strokeStyle = '#d3a965'; ctx.lineWidth = 2.5; ctx.setLineDash([5, 6]); ctx.beginPath();
+    for (var i = 0; i <= 40; i++) { var q = T * i / 40, x = X(u * Math.cos(th) * q), y = Y(u * Math.sin(th) * q - .5 * g * q * q); if (i) ctx.lineTo(x, y); else ctx.moveTo(x, y); }
+    ctx.stroke(); ctx.setLineDash([]);
+    var q2 = L.reduce ? T * .5 : (t % (T + .8)); if (q2 > T) q2 = T;
+    ctx.fillStyle = W; ctx.beginPath(); ctx.arc(X(u * Math.cos(th) * q2), Y(u * Math.sin(th) * q2 - .5 * g * q2 * q2), 6, 0, 7); ctx.fill();
+  });
+  // SSC: battery and bulb, 10 ohm.
+  var c3 = L.canvas(L.$('m3'), function (ctx, w, h) {
+    ctx.clearRect(0, 0, w, h); var V = L.val('m3s'), I = V / 10, x0 = 40, x1 = w - 46, y0 = 30, y1 = h - 30, ym = h / 2, glow = Math.min(1, Math.sqrt(V * I / 14.4));
+    ctx.strokeStyle = W; ctx.lineWidth = 2; ctx.strokeRect(x0, y0, x1 - x0, y1 - y0);
+    var per = 2 * (x1 - x0 + y1 - y0), n = Math.floor(per / 24);
+    ctx.fillStyle = '#9bc16a';
+    for (var i = 0; I > 0 && i < n; i++) { var d = (i * 24 + t * I * 60) % per, x, y; if (d < x1 - x0) { x = x0 + d; y = y0; } else if ((d -= x1 - x0) < y1 - y0) { x = x1; y = y0 + d; } else if ((d -= y1 - y0) < x1 - x0) { x = x1 - d; y = y1; } else { d -= x1 - x0; x = x0; y = y1 - d; } ctx.beginPath(); ctx.arc(x, y, 3, 0, 7); ctx.fill(); }
+    if (glow > .01) { var gr = ctx.createRadialGradient(x1, ym, 4, x1, ym, 26 + 50 * glow); gr.addColorStop(0, 'rgba(255,205,70,' + (.4 + .6 * glow) + ')'); gr.addColorStop(1, 'rgba(255,205,70,0)'); ctx.fillStyle = gr; ctx.beginPath(); ctx.arc(x1, ym, 26 + 50 * glow, 0, 7); ctx.fill(); }
+    ctx.fillStyle = '#12373d'; ctx.beginPath(); ctx.arc(x1, ym, 15, 0, 7); ctx.fill(); ctx.fillStyle = 'rgba(255,205,70,' + glow + ')'; ctx.beginPath(); ctx.arc(x1, ym, 15, 0, 7); ctx.fill();
+    ctx.strokeStyle = W; ctx.beginPath(); ctx.arc(x1, ym, 15, 0, 7); ctx.stroke();
+    ctx.fillStyle = '#12373d'; ctx.fillRect(x0 - 16, ym - 9, 32, 18); ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(x0 - 15, ym - 7); ctx.lineTo(x0 + 15, ym - 7); ctx.stroke(); ctx.lineWidth = 5; ctx.beginPath(); ctx.moveTo(x0 - 8, ym + 7); ctx.lineTo(x0 + 8, ym + 7); ctx.stroke();
+  });
+  function labels() {
+    var th = L.val('m2s') * Math.PI / 180;
+    L.out('m1o', L.val('m1s').toFixed(1) + ' m/s'); L.out('m2o', L.val('m2s') + '°, lands at ' + (400 * Math.sin(2 * th) / 9.8).toFixed(1) + ' m'); L.out('m3o', L.val('m3s').toFixed(1) + ' V, ' + (L.val('m3s') / 10).toFixed(2) + ' A');
+    c1.redraw(); c2.redraw(); c3.redraw();
+  }
+  L.on(['m1s', 'm2s', 'm3s'], labels);
+  if (!L.reduce) L.loop(function (dt) { t += dt; puffs.forEach(function (p) { p.a += dt; if (p.a > 6) { p.a = 0; p.j = Math.random() * 2 - 1; } }); c1.redraw(); c2.redraw(); c3.redraw(); }).start();
+})();
+</script>
 </body>
 </html>

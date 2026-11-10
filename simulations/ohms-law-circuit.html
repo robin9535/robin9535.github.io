@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ohm&#x27;s Law Circuit | ESE Research Hub</title>
+<meta name="description" content="Connect a resistor and a bulb in series or parallel and watch the current, voltage and brightness change.">
+<meta name="author" content="Md Rokibul Islam Robin">
+<meta name="theme-color" content="#0E2A2F">
+<link rel="canonical" href="https://mdrokibul.me/simulations/ohms-law-circuit.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ESE Research Hub">
+<meta property="og:title" content="Ohm&#x27;s Law Circuit">
+<meta property="og:description" content="Connect a resistor and a bulb in series or parallel and watch the current, voltage and brightness change.">
+<meta property="og:url" content="https://mdrokibul.me/simulations/ohms-law-circuit.html">
+<meta property="og:image" content="https://mdrokibul.me/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ohm&#x27;s Law Circuit">
+<meta name="twitter:description" content="Connect a resistor and a bulb in series or parallel and watch the current, voltage and brightness change.">
+<meta name="twitter:image" content="https://mdrokibul.me/og-image.jpg">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Ohm's Law Circuit", "url": "https://mdrokibul.me/simulations/ohms-law-circuit.html", "description": "Connect a resistor and a bulb in series or parallel and watch the current, voltage and brightness change.", "inLanguage": "en", "isPartOf": {"@type": "WebSite", "name": "ESE Research Hub", "url": "https://mdrokibul.me/"}}</script>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="../nav.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="stylesheet" href="../lab.css">
+</head>
+<body class="sector-ssc">
+<div class="progress" id="progress" aria-hidden="true"></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav" id="nav" data-solid>
+  <div class="wrap">
+    <a class="brand" href="../index.html">ESE Research<span> Hub</span></a>
+    <nav class="links" id="links" aria-label="Main">
+      <div class="dd"><button class="dd-btn" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="toolsMenu">Tools <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="dd-menu" id="toolsMenu"><a href="../portal.html"><i class="fa-solid fa-building-columns" aria-hidden="true"></i><span><b>JKKNIU &amp; ESE Portal</b><small>Official links in one place</small></span></a><a href="../library.html"><i class="fa-solid fa-folder-open" aria-hidden="true"></i><span><b>Batch Library</b><small>Shared ESE study materials</small></span></a><a href="../sound-meter.html"><i class="fa-solid fa-ear-listen" aria-hidden="true"></i><span><b>Sound Level Meter</b><small>Measure noise with your phone</small></span></a><a href="../soil-texture.html"><i class="fa-solid fa-layer-group" aria-hidden="true"></i><span><b>Soil Texture Triangle</b><small>Plot sand, silt and clay</small></span></a><a href="../rock-cycle.html"><i class="fa-solid fa-gem" aria-hidden="true"></i><span><b>Rock Cycle Simulator</b><small>Weathering to metamorphism</small></span></a><a href="../gis-map.html"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i><span><b>GIS Area Explorer</b><small>Boundary, topography, pollution</small></span></a><a href="../gis-lab.html"><i class="fa-solid fa-satellite" aria-hidden="true"></i><span><b>WebGIS Lab</b><small>DEM profiles and GEE scripts</small></span></a><a href="../field-notebook.html"><i class="fa-solid fa-person-hiking" aria-hidden="true"></i><span><b>Field Notebook</b><small>Phone-only field measurements</small></span></a><a href="../water-quality.html"><i class="fa-solid fa-droplet" aria-hidden="true"></i><span><b>Water Quality</b><small>WQI against WHO and BD limits</small></span></a><a href="../field-tracker.html"><i class="fa-solid fa-route" aria-hidden="true"></i><span><b>Field Tracker</b><small>GPS track and waypoints</small></span></a><a href="../ecology-quadrat.html"><i class="fa-solid fa-table-cells" aria-hidden="true"></i><span><b>Quadrat Counter</b><small>Tally species, diversity indices</small></span></a><a class="on" href="../simulations/index.html"><i class="fa-solid fa-industry" aria-hidden="true"></i><span><b>Air Dispersion</b><small>Gaussian plume from a stack</small></span></a><a href="../eia-field.html"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i><span><b>EIA Field Visit Kit</b><small>Baseline checklist and impact matrix</small></span></a><a href="../ee-analyzer.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Earth Engine</b><small>Satellite analysis of any area</small></span></a><a href="../weather.html"><i class="fa-solid fa-cloud-sun-rain" aria-hidden="true"></i><span><b>EcoLens Weather</b><small>Your photo plus live weather and rain chance</small></span></a><a href="../atmosphere-sim.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Atmosphere Simulator</b><small>Three-cell circulation model</small></span></a></div></div>
+      <a href="../eia.html" title="Environmental impact assessment">EIA</a>
+      <a href="../hsc.html" title="Higher secondary, classes 11 and 12">HSC</a>
+      <a href="../ssc.html" title="Secondary, classes 9 and 10">SSC</a>
+      <a href="index.html">Simulations</a>
+      <a href="../about.html">About</a>
+    </nav>
+    <div class="tools">
+      <button class="icon-btn" id="theme" type="button" aria-label="Switch to dark theme"><i class="fa-solid fa-moon"></i></button>
+      <button class="icon-btn burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="links"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</header>
+<div class="page-hero">
+  <div class="wrap">
+    <div class="trail"><a href="../ssc.html">SSC labs</a></div>
+    <h1>Ohm&#x27;s Law Circuit</h1>
+    <p>Connect a resistor and a bulb to a battery, in series or in parallel. Change the voltage and the resistances and watch the current and the brightness respond.</p>
+  </div>
+</div>
+<main id="main" class="lab-main">
+<div class="wrap">
+<div class="lab">
+  <div class="box">
+    <canvas class="stage" id="cv" role="img" aria-label="Circuit with a battery, a resistor and a bulb. Moving dots show the current."></canvas>
+    <canvas class="stage short" id="gr" role="img" aria-label="Graph of current against voltage for this circuit"></canvas>
+    <div class="reads" aria-live="polite">
+      <div class="read"><small>Total resistance</small><b id="rR"></b></div>
+      <div class="read"><small>Current from the battery</small><b id="rI"></b></div>
+      <div class="read"><small>Resistor: voltage, current</small><b id="r1"></b></div>
+      <div class="read"><small>Bulb: voltage, current</small><b id="r2"></b></div>
+      <div class="read"><small>Power in the bulb</small><b id="rP"></b></div>
+    </div>
+  </div>
+  <div class="box">
+    <h2>Build the circuit</h2>
+    <div class="seg" id="mode" role="group" aria-label="How the resistor and bulb are connected"><button type="button" data-v="s" aria-pressed="true">Series</button><button type="button" data-v="p" aria-pressed="false">Parallel</button></div>
+    <label class="ctl"><span>Battery voltage <output id="vO"></output></span><input type="range" id="v" min="0" max="12" step="0.5" value="6"></label>
+    <label class="ctl"><span>Resistor <output id="aO"></output></span><input type="range" id="a" min="1" max="40" step="1" value="10"></label>
+    <label class="ctl"><span>Bulb resistance <output id="bO"></output></span><input type="range" id="b" min="1" max="40" step="1" value="10"></label>
+    <p class="fine">Dots move the way conventional current flows, from the positive plate round to the negative. Faster dots mean more current. The glow shows the power in the bulb.</p>
+  </div>
+</div>
+<div class="cols">
+  <div class="box">
+    <h2>Try this</h2>
+    <ul>
+      <li>In series, double the battery voltage. What happens to the current? Check the graph: why is it a straight line through zero?</li>
+      <li>In series, make the resistor bigger. The bulb dims. Now do the same in parallel. Why does the bulb not care?</li>
+      <li>Switch from series to parallel without touching anything else. Does the battery supply more current or less?</li>
+      <li>In parallel, add the two branch currents. Compare with the current from the battery.</li>
+    </ul>
+  </div>
+  <div class="box">
+    <h2>The equations</h2>
+    <div class="eq">V = I R</div>
+    <div class="eq">Series: R = R₁ + R₂</div>
+    <div class="eq">Parallel: 1/R = 1/R₁ + 1/R₂</div>
+    <div class="eq">P = V I</div>
+    <p class="fine">The bulb is treated as a fixed resistance and the battery and wires as having none. A real filament's resistance rises as it heats up, so a real bulb's graph bends.</p>
+  </div>
+</div>
+</div>
+</main>
+<footer>&copy; 2026 Md Rokibul Islam Robin &middot; <a href="../eia.html">EIA</a> &middot; <a href="../hsc.html">HSC</a> &middot; <a href="../ssc.html">SSC</a> &middot; <a href="../about.html">About</a> &middot; A student project, not an official JKKNIU or NCTB website.</footer>
+<script src="../site.js"></script>
+<script src="../lab.js"></script>
+<script>
+(function () {
+  var L = Lab, par = false, off = 0, S;
+  function calc() {
+    var V = L.val('v'), a = L.val('a'), b = L.val('b'), s = { V: V, a: a, b: b };
+    if (par) { s.R = a * b / (a + b); s.I = V / s.R; s.Va = V; s.Vb = V; s.Ia = V / a; s.Ib = V / b; }
+    else { s.R = a + b; s.I = V / s.R; s.Ia = s.Ib = s.I; s.Va = s.I * a; s.Vb = s.I * b; }
+    s.P = s.Vb * s.Ib; return s;
+  }
+  function dots(ctx, pts, I, c) {
+    var len = [], tot = 0, i; for (i = 1; i < pts.length; i++) { var d = Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]); len.push(d); tot += d; }
+    if (I <= 0) return; var gap = 26, start = (off * Math.min(I, 6) * 40) % gap;
+    ctx.fillStyle = c;
+    for (var s = start; s < tot; s += gap) { var r = s; for (i = 0; i < len.length && r > len[i]; i++) r -= len[i]; if (i >= len.length) break; var f = r / len[i]; ctx.beginPath(); ctx.arc(pts[i][0] + (pts[i + 1][0] - pts[i][0]) * f, pts[i][1] + (pts[i + 1][1] - pts[i][1]) * f, 3.5, 0, 7); ctx.fill(); }
+  }
+  function wire(ctx, pts) { ctx.beginPath(); pts.forEach(function (p, i) { if (i) ctx.lineTo(p[0], p[1]); else ctx.moveTo(p[0], p[1]); }); ctx.stroke(); }
+  function resistor(ctx, x, y, vert, c, label, sub) {
+    var n = 6, l = 60, a = 9;
+    ctx.fillStyle = c.mist; if (vert) ctx.fillRect(x - a - 3, y - l / 2, 2 * a + 6, l); else ctx.fillRect(x - l / 2, y - a - 3, l, 2 * a + 6);
+    ctx.strokeStyle = c.ink; ctx.lineWidth = 2.5; ctx.lineJoin = 'round'; ctx.beginPath();
+    for (var i = 0; i <= n * 2; i++) { var t = -l / 2 + l * i / (n * 2), o = i === 0 || i === n * 2 ? 0 : (i % 2 ? a : -a); if (vert) { if (i) ctx.lineTo(x + o, y + t); else ctx.moveTo(x + o, y + t); } else { if (i) ctx.lineTo(x + t, y + o); else ctx.moveTo(x + t, y + o); } }
+    ctx.stroke();
+    if (vert) { L.text(ctx, label, x - 20, y - 2, c.ink, 14, 'right', 800); L.text(ctx, sub, x - 20, y + 15, c.soft, 12, 'right'); }
+    else { L.text(ctx, label, x, y - 20, c.ink, 14, 'center', 800); L.text(ctx, sub, x, y + 30, c.soft, 12, 'center'); }
+  }
+  function bulb(ctx, x, y, c, s) {
+    var glow = Math.min(1, Math.sqrt(s.P / 8));
+    if (glow > 0.01) { var g = ctx.createRadialGradient(x, y, 4, x, y, 30 + 60 * glow); g.addColorStop(0, 'rgba(255,205,70,' + (0.35 + 0.6 * glow) + ')'); g.addColorStop(1, 'rgba(255,205,70,0)'); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, 30 + 60 * glow, 0, 7); ctx.fill(); }
+    ctx.fillStyle = c.mist; ctx.beginPath(); ctx.arc(x, y, 17, 0, 7); ctx.fill();
+    ctx.fillStyle = 'rgba(255,205,70,' + glow + ')'; ctx.beginPath(); ctx.arc(x, y, 17, 0, 7); ctx.fill();
+    ctx.strokeStyle = c.ink; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.arc(x, y, 17, 0, 7); ctx.moveTo(x - 12, y - 12); ctx.lineTo(x + 12, y + 12); ctx.moveTo(x + 12, y - 12); ctx.lineTo(x - 12, y + 12); ctx.stroke();
+    L.text(ctx, 'Bulb ' + s.b + ' Ω', x - 28, y - 2, c.ink, 14, 'right', 800); L.text(ctx, L.fx(s.Vb) + ' V, ' + L.fx(s.Ib) + ' A', x - 28, y + 15, c.soft, 12, 'right');
+  }
+  var cv = L.canvas(L.$('cv'), function (ctx, w, h, c) {
+    ctx.clearRect(0, 0, w, h); var s = S;
+    var x0 = Math.max(46, w * 0.12), x1 = w - Math.max(40, w * 0.1), y0 = 56, y1 = h - 50, xm = (x0 + x1) / 2, ym = (y0 + y1) / 2;
+    ctx.strokeStyle = c.ink; ctx.lineWidth = 2.5; ctx.lineJoin = 'round';
+    if (par) {
+      wire(ctx, [[x0, ym - 10], [x0, y0], [x1, y0], [x1, y1], [x0, y1], [x0, ym + 10]]); wire(ctx, [[xm, y0], [xm, y1]]);
+      dots(ctx, [[x0, ym - 10], [x0, y0], [xm, y0]], s.I, c.sec); dots(ctx, [[xm, y1], [x0, y1], [x0, ym + 10]], s.I, c.sec);
+      dots(ctx, [[xm, y0], [xm, y1]], s.Ia, c.sec); dots(ctx, [[xm, y0], [x1, y0], [x1, y1], [xm, y1]], s.Ib, c.sec);
+      resistor(ctx, xm, ym, true, c, 'Resistor ' + s.a + ' Ω', L.fx(s.Va) + ' V, ' + L.fx(s.Ia) + ' A');
+    } else {
+      wire(ctx, [[x0, ym - 10], [x0, y0], [x1, y0], [x1, y1], [x0, y1], [x0, ym + 10]]);
+      dots(ctx, [[x0, ym - 10], [x0, y0], [x1, y0], [x1, y1], [x0, y1], [x0, ym + 10]], s.I, c.sec);
+      resistor(ctx, xm, y0, false, c, 'Resistor ' + s.a + ' Ω', L.fx(s.Va) + ' V, ' + L.fx(s.Ia) + ' A');
+    }
+    bulb(ctx, x1, ym, c, s);
+    // battery: long plate is positive, at the top
+    ctx.fillStyle = c.card; ctx.fillRect(x0 - 18, ym - 10, 36, 20);
+    ctx.strokeStyle = c.ink; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(x0 - 18, ym - 8); ctx.lineTo(x0 + 18, ym - 8); ctx.stroke();
+    ctx.lineWidth = 5; ctx.beginPath(); ctx.moveTo(x0 - 9, ym + 8); ctx.lineTo(x0 + 9, ym + 8); ctx.stroke();
+    L.text(ctx, '+', x0 + 24, ym - 4, c.ink, 15, 'left', 800); L.text(ctx, '−', x0 + 24, ym + 14, c.ink, 15, 'left', 800);
+    L.text(ctx, s.V.toFixed(1) + ' V', x0 + 42, ym + 5, c.ink, 14, 'left', 800);
+    L.text(ctx, 'I = ' + L.fx(s.I) + ' A', (x0 + xm) / 2, y1 + 22, c.sec, 14, 'center', 800);
+  });
+  var gr = L.canvas(L.$('gr'), function (ctx, w, h, c) {
+    ctx.clearRect(0, 0, w, h); var s = S, gx = 48, gy = 14, gw = w - gx - 16, gh = h - gy - 38, imax = Math.max(0.5, 12 / s.R) * 1.1;
+    var X = function (v) { return gx + v / 12 * gw; }, Y = function (i) { return gy + gh - i / imax * gh; };
+    ctx.strokeStyle = c.line; ctx.lineWidth = 1;
+    for (var v = 0; v <= 12; v += 2) { ctx.beginPath(); ctx.moveTo(X(v), gy); ctx.lineTo(X(v), gy + gh); ctx.stroke(); L.text(ctx, String(v), X(v), gy + gh + 16, c.soft, 12, 'center'); }
+    L.text(ctx, 'battery voltage, V', gx + gw / 2, h - 5, c.soft, 12, 'center'); L.text(ctx, 'current, A', gx + 6, gy + 12, c.soft, 12); L.text(ctx, imax.toFixed(1), gx - 8, gy + 8, c.soft, 12, 'right'); L.text(ctx, '0', gx - 8, gy + gh + 4, c.soft, 12, 'right');
+    ctx.strokeStyle = c.ink; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(gx, gy); ctx.lineTo(gx, gy + gh); ctx.lineTo(gx + gw, gy + gh); ctx.stroke();
+    ctx.strokeStyle = c.sec; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(X(0), Y(0)); ctx.lineTo(X(12), Y(12 / s.R)); ctx.stroke();
+    ctx.fillStyle = c.ink; ctx.beginPath(); ctx.arc(X(s.V), Y(s.I), 6, 0, 7); ctx.fill();
+    L.text(ctx, 'slope = 1/R = ' + (1 / s.R).toFixed(3) + ' A per V', X(12) - 4, Y(12 / s.R) + 26, c.soft, 12, 'right');
+  });
+  function update() {
+    S = calc();
+    L.out('vO', S.V.toFixed(1) + ' V'); L.out('aO', S.a + ' Ω'); L.out('bO', S.b + ' Ω');
+    L.out('rR', L.fx(S.R) + ' Ω'); L.out('rI', L.fx(S.I) + ' A'); L.out('r1', L.fx(S.Va) + ' V, ' + L.fx(S.Ia) + ' A'); L.out('r2', L.fx(S.Vb) + ' V, ' + L.fx(S.Ib) + ' A'); L.out('rP', L.fx(S.P) + ' W');
+    cv.redraw(); gr.redraw();
+  }
+  L.seg('mode', function (v) { par = v === 'p'; update(); });
+  L.on(['v', 'a', 'b'], update);
+  if (!L.reduce) L.loop(function (dt) { off += dt; cv.redraw(); }).start();
+})();
+</script>
+</body>
+</html>

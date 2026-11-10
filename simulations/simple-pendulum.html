@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simple Pendulum | ESE Research Hub</title>
+<meta name="description" content="Time ten swings, find g from the period, and work out the gravity of an unknown planet.">
+<meta name="author" content="Md Rokibul Islam Robin">
+<meta name="theme-color" content="#0E2A2F">
+<link rel="canonical" href="https://mdrokibul.me/simulations/simple-pendulum.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ESE Research Hub">
+<meta property="og:title" content="Simple Pendulum">
+<meta property="og:description" content="Time ten swings, find g from the period, and work out the gravity of an unknown planet.">
+<meta property="og:url" content="https://mdrokibul.me/simulations/simple-pendulum.html">
+<meta property="og:image" content="https://mdrokibul.me/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Simple Pendulum">
+<meta name="twitter:description" content="Time ten swings, find g from the period, and work out the gravity of an unknown planet.">
+<meta name="twitter:image" content="https://mdrokibul.me/og-image.jpg">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Simple Pendulum", "url": "https://mdrokibul.me/simulations/simple-pendulum.html", "description": "Time ten swings, find g from the period, and work out the gravity of an unknown planet.", "inLanguage": "en", "isPartOf": {"@type": "WebSite", "name": "ESE Research Hub", "url": "https://mdrokibul.me/"}}</script>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="../nav.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="stylesheet" href="../lab.css">
+</head>
+<body class="sector-hsc">
+<div class="progress" id="progress" aria-hidden="true"></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav" id="nav" data-solid>
+  <div class="wrap">
+    <a class="brand" href="../index.html">ESE Research<span> Hub</span></a>
+    <nav class="links" id="links" aria-label="Main">
+      <div class="dd"><button class="dd-btn" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="toolsMenu">Tools <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="dd-menu" id="toolsMenu"><a href="../portal.html"><i class="fa-solid fa-building-columns" aria-hidden="true"></i><span><b>JKKNIU &amp; ESE Portal</b><small>Official links in one place</small></span></a><a href="../library.html"><i class="fa-solid fa-folder-open" aria-hidden="true"></i><span><b>Batch Library</b><small>Shared ESE study materials</small></span></a><a href="../sound-meter.html"><i class="fa-solid fa-ear-listen" aria-hidden="true"></i><span><b>Sound Level Meter</b><small>Measure noise with your phone</small></span></a><a href="../soil-texture.html"><i class="fa-solid fa-layer-group" aria-hidden="true"></i><span><b>Soil Texture Triangle</b><small>Plot sand, silt and clay</small></span></a><a href="../rock-cycle.html"><i class="fa-solid fa-gem" aria-hidden="true"></i><span><b>Rock Cycle Simulator</b><small>Weathering to metamorphism</small></span></a><a href="../gis-map.html"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i><span><b>GIS Area Explorer</b><small>Boundary, topography, pollution</small></span></a><a href="../gis-lab.html"><i class="fa-solid fa-satellite" aria-hidden="true"></i><span><b>WebGIS Lab</b><small>DEM profiles and GEE scripts</small></span></a><a href="../field-notebook.html"><i class="fa-solid fa-person-hiking" aria-hidden="true"></i><span><b>Field Notebook</b><small>Phone-only field measurements</small></span></a><a href="../water-quality.html"><i class="fa-solid fa-droplet" aria-hidden="true"></i><span><b>Water Quality</b><small>WQI against WHO and BD limits</small></span></a><a href="../field-tracker.html"><i class="fa-solid fa-route" aria-hidden="true"></i><span><b>Field Tracker</b><small>GPS track and waypoints</small></span></a><a href="../ecology-quadrat.html"><i class="fa-solid fa-table-cells" aria-hidden="true"></i><span><b>Quadrat Counter</b><small>Tally species, diversity indices</small></span></a><a class="on" href="../simulations/index.html"><i class="fa-solid fa-industry" aria-hidden="true"></i><span><b>Air Dispersion</b><small>Gaussian plume from a stack</small></span></a><a href="../eia-field.html"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i><span><b>EIA Field Visit Kit</b><small>Baseline checklist and impact matrix</small></span></a><a href="../ee-analyzer.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Earth Engine</b><small>Satellite analysis of any area</small></span></a><a href="../weather.html"><i class="fa-solid fa-cloud-sun-rain" aria-hidden="true"></i><span><b>EcoLens Weather</b><small>Your photo plus live weather and rain chance</small></span></a><a href="../atmosphere-sim.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Atmosphere Simulator</b><small>Three-cell circulation model</small></span></a></div></div>
+      <a href="../eia.html" title="Environmental impact assessment">EIA</a>
+      <a href="../hsc.html" title="Higher secondary, classes 11 and 12">HSC</a>
+      <a href="../ssc.html" title="Secondary, classes 9 and 10">SSC</a>
+      <a href="index.html">Simulations</a>
+      <a href="../about.html">About</a>
+    </nav>
+    <div class="tools">
+      <button class="icon-btn" id="theme" type="button" aria-label="Switch to dark theme"><i class="fa-solid fa-moon"></i></button>
+      <button class="icon-btn burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="links"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</header>
+<div class="page-hero">
+  <div class="wrap">
+    <div class="trail"><a href="../hsc.html">HSC labs</a><a href="../ssc.html">SSC labs</a></div>
+    <h1>Simple Pendulum</h1>
+    <p>Do the pendulum practical on screen. Time ten swings, work out g from the period, then find the gravity of a planet nobody has told you about.</p>
+  </div>
+</div>
+<main id="main" class="lab-main">
+<div class="wrap">
+<div class="lab">
+  <div class="box">
+    <canvas class="stage" id="cv" role="img" aria-label="A pendulum swinging from a fixed support"></canvas>
+    <canvas class="stage short" id="gr" role="img" aria-label="Graph of the pendulum's angle against time"></canvas>
+    <div class="reads" aria-live="polite">
+      <div class="read"><small>Period from the formula</small><b id="rF"></b></div>
+      <div class="read"><small>Period of the last swing</small><b id="rM">--</b></div>
+      <div class="read"><small>Time for 10 swings</small><b id="r10">--</b></div>
+      <div class="read"><small>g from your 10 swings</small><b id="rG">--</b></div>
+    </div>
+  </div>
+  <div class="box">
+    <h2>Set up the pendulum</h2>
+    <label class="ctl"><span>String length <output id="lenO"></output></span><input type="range" id="len" min="0.2" max="2" step="0.05" value="1"></label>
+    <label class="ctl"><span>Release angle <output id="angO"></output></span><input type="range" id="ang" min="2" max="80" step="1" value="8"></label>
+    <label class="ctl"><span>Where is the pendulum?</span><select id="g"><option value="9.8">Earth, 9.8 m/s²</option><option value="1.62">Moon, 1.62 m/s²</option><option value="24.8">Jupiter, 24.8 m/s²</option><option value="x">Unknown planet</option></select></label>
+    <div class="acts"><button class="go main" type="button" id="play">Release</button><button class="go" type="button" id="ten">Time 10 swings</button><button class="go" type="button" id="reveal" hidden>Show the planet's g</button></div>
+    <p class="fine" id="msg">Press Release, then Time 10 swings. The stopwatch starts the next time the bob passes the middle.</p>
+  </div>
+</div>
+<div class="cols">
+  <div class="box">
+    <h2>Try this</h2>
+    <ul>
+      <li>Time 10 swings at 1.00 m, then at 0.25 m. The length is a quarter. What happens to the period?</li>
+      <li>Keep the length fixed and compare a release of 5° with 70°. The formula says the period should not change. Does it?</li>
+      <li>Choose the unknown planet, time 10 swings, and work out g yourself before you press the button to check.</li>
+      <li>Mass is not a control here. Look at the formula and say why.</li>
+    </ul>
+  </div>
+  <div class="box">
+    <h2>The equations</h2>
+    <div class="eq">T = 2π √(L / g)</div>
+    <div class="eq">g = 4π² L / T²</div>
+    <p class="fine">The formula is exact only for small swings. This model solves the full equation of motion, so at large angles the measured period comes out longer than the formula, exactly as a real pendulum does. That is why the practical asks for a small release angle. Air resistance and the mass of the string are ignored.</p>
+  </div>
+</div>
+</div>
+</main>
+<footer>&copy; 2026 Md Rokibul Islam Robin &middot; <a href="../eia.html">EIA</a> &middot; <a href="../hsc.html">HSC</a> &middot; <a href="../ssc.html">SSC</a> &middot; <a href="../about.html">About</a> &middot; A student project, not an official JKKNIU or NCTB website.</footer>
+<script src="../site.js"></script>
+<script src="../lab.js"></script>
+<script>
+(function () {
+  var L = Lab, hidden = +(3 + Math.random() * 15).toFixed(1), shown = false;
+  var th = 0, om = 0, T = 0, lastCross = null, hist = [], count = -1, t0 = 0, len, g, a0;
+  function grav() { var v = L.$('g').value; return v === 'x' ? hidden : parseFloat(v); }
+  function acc(x) { return -(g / len) * Math.sin(x); }
+  function reset() {
+    len = L.val('len'); a0 = L.val('ang') * Math.PI / 180; g = grav(); th = a0; om = 0; T = 0; lastCross = null; hist = []; count = -1;
+    L.out('lenO', len.toFixed(2) + ' m'); L.out('angO', L.val('ang') + '°');
+    var unk = L.$('g').value === 'x';
+    L.out('rF', unk && !shown ? 'hidden' : L.fx(2 * Math.PI * Math.sqrt(len / g), 3) + ' s');
+    L.out('rM', '--'); L.out('r10', '--'); L.out('rG', '--');
+    L.$('reveal').hidden = !unk;
+  }
+  var pend = L.canvas(L.$('cv'), function (ctx, w, h, c) {
+    ctx.clearRect(0, 0, w, h);
+    var px = w / 2, py = 26, k = (h - 70) / 2, bx = px + len * k * Math.sin(th), by = py + len * k * Math.cos(th);
+    ctx.fillStyle = c.ink; ctx.fillRect(px - 70, py - 8, 140, 8);
+    ctx.strokeStyle = c.line; ctx.lineWidth = 1.5; ctx.setLineDash([5, 5]); ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(px, py + len * k + 22); ctx.stroke(); ctx.setLineDash([]);
+    ctx.strokeStyle = c.sec; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(px, py, Math.min(46, len * k * .5), Math.PI / 2 - Math.max(th, 0), Math.PI / 2 - Math.min(th, 0)); ctx.stroke();
+    ctx.strokeStyle = c.ink; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(bx, by); ctx.stroke();
+    ctx.fillStyle = c.sec; ctx.beginPath(); ctx.arc(bx, by, 13, 0, 7); ctx.fill();
+    L.text(ctx, (th * 180 / Math.PI).toFixed(1) + '°', px + 12, py + 24, c.soft, 13);
+    L.text(ctx, 'L = ' + len.toFixed(2) + ' m', 12, h - 12, c.soft, 13);
+    if (count >= 0) L.text(ctx, 'Swings counted: ' + count + ' of 10', w - 12, h - 12, c.ink, 14, 'right', 800);
+  });
+  var graph = L.canvas(L.$('gr'), function (ctx, w, h, c) {
+    ctx.clearRect(0, 0, w, h);
+    var mid = h / 2, amp = (h / 2 - 22), span = 10;
+    ctx.strokeStyle = c.line; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(0, mid); ctx.lineTo(w, mid); ctx.stroke();
+    L.text(ctx, 'angle against time, last ' + span + ' s', 10, 16, c.soft, 12);
+    L.text(ctx, '+' + L.val('ang') + '°', w - 8, mid - amp + 4, c.soft, 12, 'right'); L.text(ctx, '−' + L.val('ang') + '°', w - 8, mid + amp + 4, c.soft, 12, 'right');
+    if (hist.length < 2) return;
+    var tEnd = hist[hist.length - 1][0];
+    ctx.strokeStyle = c.sec; ctx.lineWidth = 2; ctx.beginPath();
+    hist.forEach(function (q, i) { var x = w - (tEnd - q[0]) / span * w, y = mid - q[1] / a0 * amp; if (i) ctx.lineTo(x, y); else ctx.moveTo(x, y); });
+    ctx.stroke();
+  });
+  function draw() { pend.redraw(); graph.redraw(); }
+  var run = L.loop(function (dt) {
+    var n = 8, hh = dt / n;
+    for (var i = 0; i < n; i++) {
+      var prev = th;
+      var k1 = om, l1 = acc(th), k2 = om + hh / 2 * l1, l2 = acc(th + hh / 2 * k1), k3 = om + hh / 2 * l2, l3 = acc(th + hh / 2 * k2), k4 = om + hh * l3, l4 = acc(th + hh * k3);
+      th += hh / 6 * (k1 + 2 * k2 + 2 * k3 + k4); om += hh / 6 * (l1 + 2 * l2 + 2 * l3 + l4); T += hh;
+      if (prev < 0 && th >= 0) {
+        var tc = T - hh * th / (th - prev);
+        if (lastCross != null) L.out('rM', L.fx(tc - lastCross, 3) + ' s');
+        lastCross = tc;
+        if (count === 0 && t0 === null) t0 = tc;
+        else if (count >= 0 && t0 !== null) {
+          count++;
+          if (count === 10) {
+            var t10 = tc - t0, per = t10 / 10; count = -1;
+            L.out('r10', L.fx(t10, 2) + ' s'); L.out('rG', L.fx(4 * Math.PI * Math.PI * len / (per * per), 2) + ' m/s²');
+            L.$('msg').textContent = 'Ten swings took ' + t10.toFixed(2) + ' s, so one swing takes ' + per.toFixed(3) + ' s. Put that into g = 4π²L/T².';
+          }
+        }
+      }
+    }
+    hist.push([T, th]); while (hist.length && T - hist[0][0] > 10) hist.shift();
+    draw();
+  });
+  function setPlay(on) { if (on) run.start(); else run.stop(); L.$('play').textContent = on ? 'Pause' : 'Release'; }
+  L.on(['len', 'ang', 'g'], function () { shown = false; reset(); draw(); });
+  L.$('play').addEventListener('click', function () { setPlay(!run.running()); });
+  L.$('ten').addEventListener('click', function () { count = 0; t0 = null; L.out('r10', 'timing'); L.out('rG', '--'); L.$('msg').textContent = 'Counting. The stopwatch starts when the bob next passes the middle moving right.'; if (!run.running()) setPlay(true); });
+  L.$('reveal').addEventListener('click', function () { shown = true; L.out('rF', L.fx(2 * Math.PI * Math.sqrt(len / g), 3) + ' s'); L.$('msg').textContent = 'This planet has g = ' + hidden.toFixed(1) + ' m/s². Reload the page for a new planet.'; });
+})();
+</script>
+</body>
+</html>
