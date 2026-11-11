@@ -64,5 +64,11 @@ window.Lab = (function () {
     ctx.fillStyle = c; ctx.font = (weight || 600) + ' ' + (size || 12) + 'px "Bricolage Grotesque",system-ui,sans-serif';
     ctx.textAlign = align || 'left'; ctx.fillText(s, x, y);
   }
-  return { canvas: canvas, $: $, val: val, out: out, on: on, seg: seg, loop: loop, drag: drag, fx: fx, text: text, reduce: reduce, palette: palette };
+  function line(ctx, x1, y1, x2, y2, c, wd, dash) { ctx.strokeStyle = c; ctx.lineWidth = wd || 2; ctx.setLineDash(dash ? [6, 6] : []); ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke(); ctx.setLineDash([]); }
+  function arrow(ctx, x, y, dx, dy, c, wd) {
+    var n = Math.hypot(dx, dy); if (n < 3) return; line(ctx, x, y, x + dx, y + dy, c, wd || 3);
+    var a = Math.atan2(dy, dx); ctx.fillStyle = c; ctx.beginPath(); ctx.moveTo(x + dx, y + dy);
+    ctx.lineTo(x + dx - 10 * Math.cos(a - .42), y + dy - 10 * Math.sin(a - .42)); ctx.lineTo(x + dx - 10 * Math.cos(a + .42), y + dy - 10 * Math.sin(a + .42)); ctx.fill();
+  }
+  return { line: line, arrow: arrow, canvas: canvas, $: $, val: val, out: out, on: on, seg: seg, loop: loop, drag: drag, fx: fx, text: text, reduce: reduce, palette: palette };
 })();
