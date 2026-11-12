@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ideal Gas: Boyle and Charles | Your Study Material</title>
+<meta name="description" content="Squeeze and heat a gas of moving molecules and watch pressure follow PV = nRT, with Boyle and Charles laws on a graph.">
+<meta name="author" content="Md Rokibul Islam Robin">
+<meta name="theme-color" content="#0E2A2F">
+<link rel="canonical" href="https://mdrokibul.me/simulations/ideal-gas.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Your Study Material">
+<meta property="og:title" content="Ideal Gas: Boyle and Charles">
+<meta property="og:description" content="Squeeze and heat a gas of moving molecules and watch pressure follow PV = nRT, with Boyle and Charles laws on a graph.">
+<meta property="og:url" content="https://mdrokibul.me/simulations/ideal-gas.html">
+<meta property="og:image" content="https://mdrokibul.me/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ideal Gas: Boyle and Charles">
+<meta name="twitter:description" content="Squeeze and heat a gas of moving molecules and watch pressure follow PV = nRT, with Boyle and Charles laws on a graph.">
+<meta name="twitter:image" content="https://mdrokibul.me/og-image.jpg">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Ideal Gas: Boyle and Charles", "url": "https://mdrokibul.me/simulations/ideal-gas.html", "description": "Squeeze and heat a gas of moving molecules and watch pressure follow PV = nRT, with Boyle and Charles laws on a graph.", "inLanguage": "en", "isPartOf": {"@type": "WebSite", "name": "Your Study Material", "url": "https://mdrokibul.me/"}}</script>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="../nav.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="stylesheet" href="../lab.css">
+<style>
+.num{font:inherit;font-size:1.05rem;width:100%;padding:10px 12px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink)}
+.ans-row{display:flex;gap:10px;align-items:center}.ans-row .num{flex:1}
+</style>
+</head>
+<body class="sector-hsc">
+<div class="progress" id="progress" aria-hidden="true"></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav" id="nav" data-solid>
+  <div class="wrap">
+    <a class="brand" href="../index.html">Your Study<span> Material</span></a>
+    <nav class="links" id="links" aria-label="Main">
+      <div class="dd"><button class="dd-btn" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="toolsMenu">Tools <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="dd-menu" id="toolsMenu"><a href="../portal.html"><i class="fa-solid fa-building-columns" aria-hidden="true"></i><span><b>JKKNIU &amp; ESE Portal</b><small>Official links in one place</small></span></a><a href="../library.html"><i class="fa-solid fa-folder-open" aria-hidden="true"></i><span><b>Batch Library</b><small>Shared ESE study materials</small></span></a><a href="../sound-meter.html"><i class="fa-solid fa-ear-listen" aria-hidden="true"></i><span><b>Sound Level Meter</b><small>Measure noise with your phone</small></span></a><a href="../soil-texture.html"><i class="fa-solid fa-layer-group" aria-hidden="true"></i><span><b>Soil Texture Triangle</b><small>Plot sand, silt and clay</small></span></a><a href="../rock-cycle.html"><i class="fa-solid fa-gem" aria-hidden="true"></i><span><b>Rock Cycle Simulator</b><small>Weathering to metamorphism</small></span></a><a href="../gis-map.html"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i><span><b>GIS Area Explorer</b><small>Boundary, topography, pollution</small></span></a><a href="../gis-lab.html"><i class="fa-solid fa-satellite" aria-hidden="true"></i><span><b>WebGIS Lab</b><small>DEM profiles and GEE scripts</small></span></a><a href="../field-notebook.html"><i class="fa-solid fa-person-hiking" aria-hidden="true"></i><span><b>Field Notebook</b><small>Phone-only field measurements</small></span></a><a href="../water-quality.html"><i class="fa-solid fa-droplet" aria-hidden="true"></i><span><b>Water Quality</b><small>WQI against WHO and BD limits</small></span></a><a href="../field-tracker.html"><i class="fa-solid fa-route" aria-hidden="true"></i><span><b>Field Tracker</b><small>GPS track and waypoints</small></span></a><a href="../ecology-quadrat.html"><i class="fa-solid fa-table-cells" aria-hidden="true"></i><span><b>Quadrat Counter</b><small>Tally species, diversity indices</small></span></a><a class="on" href="../simulations/index.html"><i class="fa-solid fa-industry" aria-hidden="true"></i><span><b>Air Dispersion</b><small>Gaussian plume from a stack</small></span></a><a href="../eia-field.html"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i><span><b>EIA Field Visit Kit</b><small>Baseline checklist and impact matrix</small></span></a><a href="../ee-analyzer.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Earth Engine</b><small>Satellite analysis of any area</small></span></a><a href="../weather.html"><i class="fa-solid fa-cloud-sun-rain" aria-hidden="true"></i><span><b>EcoLens Weather</b><small>Your photo plus live weather and rain chance</small></span></a><a href="../atmosphere-sim.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Atmosphere Simulator</b><small>Three-cell circulation model</small></span></a></div></div>
+      <a href="../eia.html" title="Environmental impact assessment">EIA</a>
+      <a href="../hsc.html" title="Higher secondary, classes 11 and 12">HSC</a>
+      <a href="../ssc.html" title="Secondary, classes 9 and 10">SSC</a>
+      <a href="index.html" aria-current="page">Simulations</a>
+      <a href="../about.html">About</a>
+    </nav>
+    <div class="tools">
+      <button class="icon-btn" id="theme" type="button" aria-label="Switch to dark theme"><i class="fa-solid fa-moon"></i></button>
+      <button class="icon-btn burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="links"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</header>
+<div class="page-hero">
+  <div class="wrap">
+    <div class="trail"><a href="../hsc.html">HSC labs</a></div>
+    <h1>Ideal Gas: Boyle and Charles</h1>
+    <p>Change the volume and temperature of a gas. The molecules, the pressure and the graph all respond together.</p>
+  </div>
+</div>
+<main id="main" class="lab-main">
+<div class="wrap">
+<div class="lab">
+  <div class="box">
+    <canvas class="stage" id="bx" style="height:clamp(230px,32vw,300px)" role="img" aria-label="Gas molecules bouncing in a cylinder with a movable piston"></canvas>
+    <canvas class="stage" id="pv" style="height:clamp(220px,30vw,280px)" role="img" aria-label="Pressure against volume graph with the isotherm for the chosen temperature"></canvas>
+    <div class="reads" aria-live="polite">
+      <div class="read"><small>Pressure P</small><b id="rP"></b></div>
+      <div class="read"><small>Volume V</small><b id="rV"></b></div>
+      <div class="read"><small>Temperature T</small><b id="rT"></b></div>
+      <div class="read"><small>P &times; V</small><b id="rPV"></b></div>
+      <div class="read"><small>Molecule rms speed</small><b id="rS"></b></div>
+      <div class="read"><small>Wall pressure, measured / formula</small><b id="rM"></b></div>
+    </div>
+  </div>
+  <div class="box">
+    <h2>Squeeze and heat the gas</h2>
+    <label class="ctl"><span>Volume <output id="vO"></output></span><input type="range" id="v" min="1" max="10" step="0.1" value="5"></label>
+    <label class="ctl"><span>Temperature <output id="tO"></output></span><input type="range" id="t" min="100" max="600" step="5" value="300"></label>
+    <div class="seg" id="hold" role="group" aria-label="Keep constant"><button type="button" data-v="free" aria-pressed="true">Free</button><button type="button" data-v="T" aria-pressed="false">Boyle (T fixed)</button><button type="button" data-v="P" aria-pressed="false">Charles (P fixed)</button></div>
+    <div class="acts"><button class="go main" type="button" id="pp">Pause</button></div>
+    <p class="fine" id="note"></p>
+  </div>
+</div>
+<div class="cols">
+  <div class="box">
+    <h2>Try this</h2>
+    <ul>
+      <li>Keep T. Halve the volume. The molecules hit the walls twice as often, and the pressure doubles: Boyle&#x27;s law.</li>
+      <li>Choose &ldquo;keep P&rdquo; and raise the temperature. The volume grows in step with T: Charles&#x27;s law.</li>
+      <li>Raise T at fixed V. The molecules move faster, so the pressure rises.</li>
+      <li>Watch &ldquo;measured / formula&rdquo;. It wobbles around 1 because the molecules really do produce the pressure.</li>
+    </ul>
+  </div>
+  <div class="box">
+    <h2>The equations</h2>
+    <div class="eq">PV = nRT</div>
+    <div class="eq">Boyle: PV = constant (T fixed)</div>
+    <div class="eq">Charles: V / T = constant (P fixed)</div>
+    <div class="eq">v<sub>rms</sub> = &radic;(3RT / M) &nbsp;&nbsp; &frac12; m v&sup2; = (3/2) kT</div>
+    <p class="fine">The gas is 0.1 mol of air (M = 0.029 kg/mol) and R = 8.314 J/mol K. The picture is a flat, slowed-down model with 70 molecules and no collisions between them, as in the ideal gas.</p>
+  </div>
+</div>
+</div>
+</main>
+<footer>&copy; 2026 Md Rokibul Islam Robin &middot; <a href="../eia.html">EIA</a> &middot; <a href="../hsc.html">HSC</a> &middot; <a href="../ssc.html">SSC</a> &middot; <a href="../about.html">About</a> &middot; A student project, not an official JKKNIU or NCTB website.</footer>
+<script src="../site.js"></script>
+<script src="../lab.js"></script>
+<script>
+(function () {
+  var L = Lab, R = 8.314, n = 0.1, M = 0.029, N = 70, parts = [], hold = 'free', playing = true, lock = null;
+  var impulse = 0, tAcc = 0, hist = [], geo = { Lx: 1, H: 1 };
+  var holdGet = L.seg('hold', function (m) { hold = m; L.$('t').disabled = m !== 'free'; lock = m === 'T' ? L.val('t') : m === 'P' ? n * R * L.val('t') / (L.val('v') / 1000) : null; update(); });
+  function Vm3() { return L.val('v') / 1000; }
+  function press() { return n * R * L.val('t') / Vm3(); }
+  for (var i = 0; i < N; i++) { var a = Math.random() * 6.283; parts.push({ x: Math.random(), y: Math.random(), a: a }); }
+  function speed() { return 0.55 * Math.sqrt(L.val('t') / 300); } /* box-widths... in height units per second */
+  function step(dt) {
+    var Lx = Math.sqrt(L.val('v') / 5), sp = speed(), imp = 0; /* x runs 0..Lx (in H units), y 0..1 */
+    parts.forEach(function (p) {
+      p.x += Math.cos(p.a) * sp * dt; p.y += Math.sin(p.a) * sp * dt; var vx = Math.cos(p.a) * sp;
+      if (p.x < 0) { p.x = -p.x; p.a = Math.PI - p.a; } if (p.y < 0) { p.y = -p.y; p.a = -p.a; } if (p.y > 1) { p.y = 2 - p.y; p.a = -p.a; }
+      if (p.x > Lx) { imp += 2 * Math.abs(vx); p.x = 2 * Lx - p.x; p.a = Math.PI - p.a; if (p.x < 0) p.x = Math.random() * Lx; }
+    });
+    impulse += imp; tAcc += dt; if (tAcc > 0.5) { hist.push({ p: impulse / tAcc, th: sp, Lx: Lx }); if (hist.length > 6) hist.shift(); impulse = 0; tAcc = 0; }
+  }
+  var bx = L.canvas(L.$('bx'), function (ctx, w, h, c) {
+    ctx.clearRect(0, 0, w, h); var padL = 20, padR = 24, padT = 16, padB = 16, H = h - padT - padB, Lx = Math.sqrt(L.val('v') / 5), full = Math.sqrt(2), kx = (w - padL - padR - 28) / full, Wd = Lx * kx * (H / kx > 0 ? 1 : 1);
+    var hs = H; kx = Math.min(kx, (w - padL - padR - 28) / full); var W = Lx * kx; geo.H = H; geo.k = kx;
+    ctx.fillStyle = c.card; ctx.fillRect(padL, padT, W, H); ctx.strokeStyle = c.ink; ctx.lineWidth = 3; ctx.strokeRect(padL, padT, W, H);
+    var heat = (L.val('t') - 100) / 500; ctx.fillStyle = 'rgba(209,96,74,' + (0.04 + heat * 0.16) + ')'; ctx.fillRect(padL, padT, W, H);
+    ctx.fillStyle = c.ink; ctx.fillRect(padL + W, padT - 6, 10, H + 12); ctx.fillRect(padL + W + 10, padT + H / 2 - 4, Math.min(28, w - padL - W - 14), 8);
+    L.arrow(ctx, padL + W + 20 - 2, padT + H / 2 - 20, 0, 0, c.soft, 1);
+    ctx.fillStyle = c.sec; parts.forEach(function (p) { ctx.beginPath(); ctx.arc(padL + Math.min(p.x, Lx) * kx * (W / (Lx * kx)), padT + p.y * H, 3.6, 0, 7); ctx.fill(); });
+    L.text(ctx, 'piston', padL + W + 5, padT + H + 14, c.soft, 11, 'center');
+  });
+  var pv = L.canvas(L.$('pv'), function (ctx, w, h, c) {
+    ctx.clearRect(0, 0, w, h); var padL = 52, padR = 14, padT = 14, padB = 30, Pmax = 500;
+    function X(v) { return padL + (v - 1) / 9 * (w - padL - padR); } function Y(p) { return h - padB - Math.min(p, Pmax) / Pmax * (h - padT - padB); }
+    ctx.lineWidth = 1; for (var i = 0; i <= 5; i++) { var pp = Pmax * i / 5; L.line(ctx, padL, Y(pp), w - padR, Y(pp), c.line, 1); L.text(ctx, pp.toFixed(0), padL - 6, Y(pp) + 4, c.soft, 11, 'right'); }
+    for (i = 1; i <= 10; i += 3) L.text(ctx, String(i), X(i), h - padB + 15, c.soft, 11, 'center');
+    L.line(ctx, padL, h - padB, w - padR, h - padB, c.ink, 1.6); L.line(ctx, padL, padT, padL, h - padB, c.ink, 1.6);
+    L.text(ctx, 'P (kPa)', 6, 12, c.soft, 11); L.text(ctx, 'V (litres)', w - padR, h - 4, c.soft, 11, 'right');
+    [[100, c.line], [300, c.soft], [600, c.line]].forEach(function (a) { if (a[0] === 300) return; ctx.strokeStyle = a[1]; ctx.lineWidth = 1.5; ctx.setLineDash([4, 4]); ctx.beginPath(); for (var v = 1; v <= 10.001; v += .1) { var pk = n * R * a[0] / (v / 1000) / 1000; if (v === 1) ctx.moveTo(X(v), Y(pk)); else ctx.lineTo(X(v), Y(pk)); } ctx.stroke(); ctx.setLineDash([]); L.text(ctx, a[0] + ' K', X(10) - 4, Y(n * R * a[0] / 0.01 / 1000) - 5, c.soft, 10, 'right'); });
+    var T = L.val('t'); ctx.strokeStyle = c.sec; ctx.lineWidth = 3; ctx.beginPath(); for (var v2 = 1; v2 <= 10.001; v2 += .1) { var pk2 = n * R * T / (v2 / 1000) / 1000; if (v2 === 1) ctx.moveTo(X(v2), Y(pk2)); else ctx.lineTo(X(v2), Y(pk2)); } ctx.stroke();
+    var V = L.val('v'), P = press() / 1000; ctx.fillStyle = c.ink; ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(X(V), Y(P), 6.5, 0, 7); ctx.fill(); ctx.stroke();
+    L.text(ctx, 'isotherm at ' + T + ' K', padL + 8, padT + 12, c.sec, 12);
+  });
+  var run = L.loop(function (dt) { step(dt); bx.redraw(); reads(); });
+  function reads() {
+    if (hist.length) { var avg = 0, th = 0; hist.forEach(function (h) { avg += h.p; }); avg /= hist.length; var Lx = Math.sqrt(L.val('v') / 5), sp = speed(), pred = 70 * (sp * sp / 2) / Lx * 1; /* N m <vx^2> / (Lx H), m=1, H=1 */ pred = N * (sp * sp / 2) / Lx; L.out('rM', (avg / pred).toFixed(2)); } else L.out('rM', '...');
+  }
+  function update() {
+    if (hold === 'T') L.$('t').value = lock; if (hold === 'P') { var Tn = lock * Vm3() / n / R; Tn = Math.min(600, Math.max(100, Tn)); L.$('t').value = Tn; }
+    var V = L.val('v'), T = L.val('t'), P = press();
+    L.out('vO', V.toFixed(1) + ' L'); L.out('tO', T.toFixed(0) + ' K (' + (T - 273.15).toFixed(0) + ' °C)');
+    L.out('rP', (P / 1000).toFixed(0) + ' kPa'); L.out('rV', V.toFixed(1) + ' L'); L.out('rT', T.toFixed(0) + ' K'); L.out('rPV', (P * Vm3()).toFixed(0) + ' J'); L.out('rS', Math.sqrt(3 * R * T / M).toFixed(0) + ' m/s');
+    L.out('note', hold === 'T' ? 'Boyle: T is held, so P × V stays the same as you change V.' : hold === 'P' ? 'Charles: P is held, so changing V moves T. T is limited to 100-600 K.' : 'Free: change V and T yourself.');
+    hist = []; impulse = 0; tAcc = 0; bx.redraw(); pv.redraw();
+  }
+  L.on(['v', 't'], function () { if (hold === 'P') { /* moving V sets T */ } update(); });
+  L.$('pp').addEventListener('click', function () { if (run.running()) { run.stop(); this.textContent = 'Play'; } else { run.start(); this.textContent = 'Pause'; } });
+  if (!L.reduce) run.start(); else L.$('pp').textContent = 'Play';
+})();
+</script>
+</body>
+</html>
