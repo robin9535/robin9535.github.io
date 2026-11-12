@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Satellites and Escape Speed | Your Study Material</title>
+<meta name="description" content="Put a satellite at any height, read its orbital speed and period, then choose a launch speed and see the orbit change.">
+<meta name="author" content="Md Rokibul Islam Robin">
+<meta name="theme-color" content="#0E2A2F">
+<link rel="canonical" href="https://mdrokibul.me/simulations/satellite-orbit.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Your Study Material">
+<meta property="og:title" content="Satellites and Escape Speed">
+<meta property="og:description" content="Put a satellite at any height, read its orbital speed and period, then choose a launch speed and see the orbit change.">
+<meta property="og:url" content="https://mdrokibul.me/simulations/satellite-orbit.html">
+<meta property="og:image" content="https://mdrokibul.me/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Satellites and Escape Speed">
+<meta name="twitter:description" content="Put a satellite at any height, read its orbital speed and period, then choose a launch speed and see the orbit change.">
+<meta name="twitter:image" content="https://mdrokibul.me/og-image.jpg">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Satellites and Escape Speed", "url": "https://mdrokibul.me/simulations/satellite-orbit.html", "description": "Put a satellite at any height, read its orbital speed and period, then choose a launch speed and see the orbit change.", "inLanguage": "en", "isPartOf": {"@type": "WebSite", "name": "Your Study Material", "url": "https://mdrokibul.me/"}}</script>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="../nav.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="stylesheet" href="../lab.css">
+<style>
+.num{font:inherit;font-size:1.05rem;width:100%;padding:10px 12px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink)}
+.ans-row{display:flex;gap:10px;align-items:center}.ans-row .num{flex:1}
+</style>
+</head>
+<body class="sector-hsc">
+<div class="progress" id="progress" aria-hidden="true"></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav" id="nav" data-solid>
+  <div class="wrap">
+    <a class="brand" href="../index.html">Your Study<span> Material</span></a>
+    <nav class="links" id="links" aria-label="Main">
+      <div class="dd"><button class="dd-btn" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="toolsMenu">Tools <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="dd-menu" id="toolsMenu"><a href="../portal.html"><i class="fa-solid fa-building-columns" aria-hidden="true"></i><span><b>JKKNIU &amp; ESE Portal</b><small>Official links in one place</small></span></a><a href="../library.html"><i class="fa-solid fa-folder-open" aria-hidden="true"></i><span><b>Batch Library</b><small>Shared ESE study materials</small></span></a><a href="../sound-meter.html"><i class="fa-solid fa-ear-listen" aria-hidden="true"></i><span><b>Sound Level Meter</b><small>Measure noise with your phone</small></span></a><a href="../soil-texture.html"><i class="fa-solid fa-layer-group" aria-hidden="true"></i><span><b>Soil Texture Triangle</b><small>Plot sand, silt and clay</small></span></a><a href="../rock-cycle.html"><i class="fa-solid fa-gem" aria-hidden="true"></i><span><b>Rock Cycle Simulator</b><small>Weathering to metamorphism</small></span></a><a href="../gis-map.html"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i><span><b>GIS Area Explorer</b><small>Boundary, topography, pollution</small></span></a><a href="../gis-lab.html"><i class="fa-solid fa-satellite" aria-hidden="true"></i><span><b>WebGIS Lab</b><small>DEM profiles and GEE scripts</small></span></a><a href="../field-notebook.html"><i class="fa-solid fa-person-hiking" aria-hidden="true"></i><span><b>Field Notebook</b><small>Phone-only field measurements</small></span></a><a href="../water-quality.html"><i class="fa-solid fa-droplet" aria-hidden="true"></i><span><b>Water Quality</b><small>WQI against WHO and BD limits</small></span></a><a href="../field-tracker.html"><i class="fa-solid fa-route" aria-hidden="true"></i><span><b>Field Tracker</b><small>GPS track and waypoints</small></span></a><a href="../ecology-quadrat.html"><i class="fa-solid fa-table-cells" aria-hidden="true"></i><span><b>Quadrat Counter</b><small>Tally species, diversity indices</small></span></a><a class="on" href="../simulations/index.html"><i class="fa-solid fa-industry" aria-hidden="true"></i><span><b>Air Dispersion</b><small>Gaussian plume from a stack</small></span></a><a href="../eia-field.html"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i><span><b>EIA Field Visit Kit</b><small>Baseline checklist and impact matrix</small></span></a><a href="../ee-analyzer.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Earth Engine</b><small>Satellite analysis of any area</small></span></a><a href="../weather.html"><i class="fa-solid fa-cloud-sun-rain" aria-hidden="true"></i><span><b>EcoLens Weather</b><small>Your photo plus live weather and rain chance</small></span></a><a href="../atmosphere-sim.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Atmosphere Simulator</b><small>Three-cell circulation model</small></span></a></div></div>
+      <a href="../eia.html" title="Environmental impact assessment">EIA</a>
+      <a href="../hsc.html" title="Higher secondary, classes 11 and 12">HSC</a>
+      <a href="../ssc.html" title="Secondary, classes 9 and 10">SSC</a>
+      <a href="index.html" aria-current="page">Simulations</a>
+      <a href="../about.html">About</a>
+    </nav>
+    <div class="tools">
+      <button class="icon-btn" id="theme" type="button" aria-label="Switch to dark theme"><i class="fa-solid fa-moon"></i></button>
+      <button class="icon-btn burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="links"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</header>
+<div class="page-hero">
+  <div class="wrap">
+    <div class="trail"><a href="../hsc.html">HSC labs</a></div>
+    <h1>Satellites and Escape Speed</h1>
+    <p>Pick a height and watch the satellite circle the Earth. Then choose your own launch speed to see ellipses, escape and crashes.</p>
+  </div>
+</div>
+<main id="main" class="lab-main">
+<div class="wrap">
+<div class="lab">
+  <div class="box">
+    <canvas class="stage" id="cv" role="img" aria-label="A satellite moving around the Earth, with its path and the speed and gravity arrows"></canvas>
+    <div class="reads" aria-live="polite">
+      <div class="read"><small>Orbital speed (circular)</small><b id="rVc"></b></div>
+      <div class="read"><small>Time for one orbit</small><b id="rT"></b></div>
+      <div class="read"><small>Escape speed here</small><b id="rVe"></b></div>
+      <div class="read"><small>g at this height</small><b id="rG"></b></div>
+    </div>
+    <div class="verdict" id="msg"></div>
+  </div>
+  <div class="box">
+    <h2>Launch a satellite</h2>
+    <div class="seg" id="mode" role="group" aria-label="Mode"><button type="button" data-v="circ" aria-pressed="true">Circular orbit</button><button type="button" data-v="launch" aria-pressed="false">Choose launch speed</button></div>
+    <label class="ctl"><span>Height above the surface <output id="hO"></output></span><input type="range" id="h" min="2.2" max="5.6" step="0.01" value="2.6"></label>
+    <div class="seg" id="pre" role="group" aria-label="Presets"><button type="button" data-v="400" aria-pressed="false">400 km</button><button type="button" data-v="20200" aria-pressed="false">GPS</button><button type="button" data-v="35786" aria-pressed="false">Geostationary</button><button type="button" data-v="378029" aria-pressed="false">Moon</button></div>
+    <label class="ctl" id="kBox" hidden><span>Launch speed <output id="kO"></output></span><input type="range" id="k" min="0.6" max="1.5" step="0.01" value="1"></label>
+    <div class="acts"><button class="go main" type="button" id="go">Launch again</button></div>
+    <p class="fine" id="note"></p>
+  </div>
+</div>
+<div class="cols">
+  <div class="box">
+    <h2>Try this</h2>
+    <ul>
+      <li>Press 400 km, the height of a low Earth orbit. Compare the speed and the time for one orbit with the geostationary preset.</li>
+      <li>At 35 786 km the period is about 24 hours. That is why the satellite seems to stay above one spot.</li>
+      <li>Choose launch speed. Below the circular speed the path becomes an ellipse. What happens if you go too low?</li>
+      <li>Go above the circular speed. Find the speed where the satellite never comes back.</li>
+    </ul>
+  </div>
+  <div class="box">
+    <h2>The equations</h2>
+    <div class="eq">v = &radic;(GM / r) &nbsp;&nbsp; r = R + h</div>
+    <div class="eq">T = 2&pi; &radic;(r&sup3; / GM)</div>
+    <div class="eq">v<sub>escape</sub> = &radic;(2GM / r) = &radic;2 &middot; v</div>
+    <div class="eq">g<sub>h</sub> = GM / r&sup2;</div>
+    <p class="fine">Uses GM = 3.986 &times; 10<super>14</super> m&sup3;/s&sup2; and R = 6371 km for the Earth. Your textbook may round these, so small differences are normal. The animation is sped up so one circular orbit takes about 10 seconds.</p>
+  </div>
+</div>
+</div>
+</main>
+<footer>&copy; 2026 Md Rokibul Islam Robin &middot; <a href="../eia.html">EIA</a> &middot; <a href="../hsc.html">HSC</a> &middot; <a href="../ssc.html">SSC</a> &middot; <a href="../about.html">About</a> &middot; A student project, not an official JKKNIU or NCTB website.</footer>
+<script src="../site.js"></script>
+<script src="../lab.js"></script>
+<script>
+(function () {
+  var L = Lab, GM = 3.986004418e14, RE = 6.371e6, D = Math.PI / 180;
+  var circ = true, px, py, vx, vy, T0, r0, trail = [], crashed = false, escaped = false, time = 0, extent;
+  var modeGet = L.seg('mode', function (m) { circ = m === 'circ'; L.$('kBox').hidden = circ; launch(); });
+  L.$('pre').addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; preset = parseFloat(b.getAttribute('data-v')); L.$('h').value = Math.log10(preset).toFixed(3); launch(); });
+  var preset = null;
+  function hKm() { return preset || Math.pow(10, L.val('h')); }
+  function fmtKm(k) { return k >= 1000 ? Math.round(k).toLocaleString('en') + ' km' : Math.round(k) + ' km'; }
+  function fmtT(s) { return s < 7200 ? (s / 60).toFixed(1) + ' min' : s < 172800 ? (s / 3600).toFixed(2) + ' h' : (s / 86400).toFixed(1) + ' days'; }
+  function kk() { return circ ? 1 : L.val('k'); }
+  function launch() {
+    r0 = RE + hKm() * 1000; var vc = Math.sqrt(GM / r0), a = 35 * D;
+    px = r0 * Math.cos(a); py = r0 * Math.sin(a); var v0 = kk() * vc; vx = -Math.sin(a) * v0; vy = Math.cos(a) * v0;
+    T0 = 2 * Math.PI * Math.sqrt(r0 * r0 * r0 / GM); trail = [{ x: px, y: py }]; crashed = false; escaped = false; time = 0;
+    var k = kk(), ra = k * k < 2 ? r0 * k * k / (2 - k * k) : Infinity;
+    extent = k >= 1.35 ? 3 * r0 : Math.min(Math.max(r0, ra) * 1.12, 8 * r0); extent = Math.max(extent, r0 * 1.15, RE * 1.1);
+    update(); if (!L.reduce) run.start(); else cv.redraw();
+  }
+  var run = L.loop(function (dt) {
+    var adv = dt * T0 / 10, done = 0, n = 0, lastT = 0;
+    while (done < adv && n < 6000 && !crashed) {
+      var r = Math.hypot(px, py), v = Math.hypot(vx, vy), h = Math.min(T0 / 2500, 0.01 * r / Math.max(v, 1), adv - done);
+      var a1 = -GM / (r * r * r); vx += 0.5 * h * a1 * px; vy += 0.5 * h * a1 * py; px += vx * h; py += vy * h;
+      r = Math.hypot(px, py); a1 = -GM / (r * r * r); vx += 0.5 * h * a1 * px; vy += 0.5 * h * a1 * py; done += h; time += h; n++;
+      if (r <= RE) { crashed = true; px *= RE / r; py *= RE / r; }
+    }
+    var last = trail[trail.length - 1];
+    if (Math.hypot(px - last.x, py - last.y) > extent / 220) { trail.push({ x: px, y: py }); if (trail.length > 900) trail.shift(); }
+    if (Math.hypot(px, py) > extent * 1.4) { escaped = true; }
+    msg(); cv.redraw(); if (crashed) run.stop();
+  });
+  function msg() {
+    var k = kk(), t;
+    if (crashed) t = 'The satellite hits the Earth. Launch faster or from higher up.';
+    else if (Math.abs(k - 1) < 0.005) t = 'Circular orbit: gravity is exactly the centripetal force.';
+    else if (k < 1) t = 'Slower than the circular speed: an ellipse, and this launch point is its farthest point.' + (r0 * (2 * k * k / (1 + k * k)) < RE * 0 ? '' : '');
+    else if (k < Math.SQRT2 - 0.005) t = 'Faster than circular, below escape speed: an ellipse, and this launch point is its closest point.';
+    else if (k < Math.SQRT2 + 0.005) t = 'About the escape speed: the path is a parabola and the satellite just gets away.';
+    else t = 'Above the escape speed: it leaves the Earth for good.';
+    L.out('msg', t);
+  }
+  var cv = L.canvas(L.$('cv'), function (ctx, w, h, c) {
+    ctx.clearRect(0, 0, w, h); var cx = w / 2, cy = h / 2, k = Math.min(w, h) / 2 * 0.92 / extent;
+    function X(x) { return cx + x * k; } function Y(y) { return cy - y * k; }
+    ctx.fillStyle = c.ink; ctx.globalAlpha = .5; for (var i = 0; i < 40; i++) { var sx = (Math.sin(i * 91.7) * .5 + .5) * w, sy = (Math.sin(i * 37.1 + 2) * .5 + .5) * h; ctx.fillRect(sx, sy, 1.5, 1.5); } ctx.globalAlpha = 1;
+    ctx.strokeStyle = c.line; ctx.lineWidth = 1.2; ctx.setLineDash([4, 5]); ctx.beginPath(); ctx.arc(cx, cy, r0 * k, 0, 7); ctx.stroke(); ctx.setLineDash([]);
+    var er = Math.max(5, RE * k); var gr = ctx.createRadialGradient(cx - er * .3, cy - er * .3, er * .1, cx, cy, er); gr.addColorStop(0, '#6fb7e8'); gr.addColorStop(1, '#1f5f9a');
+    ctx.fillStyle = gr; ctx.beginPath(); ctx.arc(cx, cy, er, 0, 7); ctx.fill();
+    ctx.fillStyle = '#4f9a5a'; ctx.globalAlpha = .85; ctx.beginPath(); ctx.arc(cx - er * .25, cy - er * .1, er * .3, 0, 7); ctx.fill(); ctx.beginPath(); ctx.arc(cx + er * .35, cy + er * .3, er * .22, 0, 7); ctx.fill(); ctx.globalAlpha = 1;
+    if (er > 24) L.text(ctx, 'Earth', cx, cy + 4, '#fff', 12, 'center');
+    ctx.strokeStyle = c.sec; ctx.lineWidth = 2.5; ctx.beginPath(); trail.forEach(function (p, i) { if (i) ctx.lineTo(X(p.x), Y(p.y)); else ctx.moveTo(X(p.x), Y(p.y)); }); ctx.stroke();
+    var sx = X(px), sy = Y(py), r = Math.hypot(px, py), v = Math.hypot(vx, vy);
+    L.arrow(ctx, sx, sy, -px / r * 38, py / r * 38, c.river, 3); L.arrow(ctx, sx, sy, vx / Math.max(v, 1) * 38, -vy / Math.max(v, 1) * 38, c.bad, 3);
+    ctx.fillStyle = c.ink; ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(sx, sy, 6, 0, 7); ctx.fill(); ctx.stroke();
+    L.text(ctx, 'gravity', 12, 20, c.river, 12); L.text(ctx, 'velocity', 70, 20, c.bad, 12);
+    L.text(ctx, 'speed now ' + (v / 1000).toFixed(2) + ' km/s,  distance ' + fmtKm((r - RE) / 1000) + ' above the surface', w - 12, h - 12, c.soft, 12, 'right');
+  });
+  function update() {
+    var hk = hKm(), r = RE + hk * 1000, vc = Math.sqrt(GM / r);
+    L.out('hO', fmtKm(hk)); L.out('kO', (kk() * vc / 1000).toFixed(2) + ' km/s  (' + kk().toFixed(2) + ' × circular)');
+    L.out('rVc', (vc / 1000).toFixed(2) + ' km/s'); L.out('rT', fmtT(2 * Math.PI * Math.sqrt(r * r * r / GM))); L.out('rVe', (Math.SQRT2 * vc / 1000).toFixed(2) + ' km/s'); L.out('rG', (GM / (r * r)).toFixed(2) + ' m/s²');
+    L.out('note', 'r = R + h = ' + (r / 1000).toFixed(0) + ' km from the centre. ' + (circ ? '' : 'Launch speed is set sideways at this height.'));
+    msg();
+  }
+  L.$('h').addEventListener('input', function () { preset = null; launch(); }); L.$('k').addEventListener('input', launch);
+  L.$('go').addEventListener('click', launch);
+  launch();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stress and Strain: Hooke’s Law | Your Study Material</title>
+<meta name="description" content="Pull a wire of steel, copper, aluminium or glass and watch the stress-strain curve: elastic region, yield, necking, breaking.">
+<meta name="author" content="Md Rokibul Islam Robin">
+<meta name="theme-color" content="#0E2A2F">
+<link rel="canonical" href="https://mdrokibul.me/simulations/stress-strain.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Your Study Material">
+<meta property="og:title" content="Stress and Strain: Hooke’s Law">
+<meta property="og:description" content="Pull a wire of steel, copper, aluminium or glass and watch the stress-strain curve: elastic region, yield, necking, breaking.">
+<meta property="og:url" content="https://mdrokibul.me/simulations/stress-strain.html">
+<meta property="og:image" content="https://mdrokibul.me/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Stress and Strain: Hooke’s Law">
+<meta name="twitter:description" content="Pull a wire of steel, copper, aluminium or glass and watch the stress-strain curve: elastic region, yield, necking, breaking.">
+<meta name="twitter:image" content="https://mdrokibul.me/og-image.jpg">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Stress and Strain: Hooke’s Law", "url": "https://mdrokibul.me/simulations/stress-strain.html", "description": "Pull a wire of steel, copper, aluminium or glass and watch the stress-strain curve: elastic region, yield, necking, breaking.", "inLanguage": "en", "isPartOf": {"@type": "WebSite", "name": "Your Study Material", "url": "https://mdrokibul.me/"}}</script>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="../nav.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="stylesheet" href="../lab.css">
+<style>
+.num{font:inherit;font-size:1.05rem;width:100%;padding:10px 12px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink)}
+.ans-row{display:flex;gap:10px;align-items:center}.ans-row .num{flex:1}
+</style>
+</head>
+<body class="sector-hsc">
+<div class="progress" id="progress" aria-hidden="true"></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav" id="nav" data-solid>
+  <div class="wrap">
+    <a class="brand" href="../index.html">Your Study<span> Material</span></a>
+    <nav class="links" id="links" aria-label="Main">
+      <div class="dd"><button class="dd-btn" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="toolsMenu">Tools <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="dd-menu" id="toolsMenu"><a href="../portal.html"><i class="fa-solid fa-building-columns" aria-hidden="true"></i><span><b>JKKNIU &amp; ESE Portal</b><small>Official links in one place</small></span></a><a href="../library.html"><i class="fa-solid fa-folder-open" aria-hidden="true"></i><span><b>Batch Library</b><small>Shared ESE study materials</small></span></a><a href="../sound-meter.html"><i class="fa-solid fa-ear-listen" aria-hidden="true"></i><span><b>Sound Level Meter</b><small>Measure noise with your phone</small></span></a><a href="../soil-texture.html"><i class="fa-solid fa-layer-group" aria-hidden="true"></i><span><b>Soil Texture Triangle</b><small>Plot sand, silt and clay</small></span></a><a href="../rock-cycle.html"><i class="fa-solid fa-gem" aria-hidden="true"></i><span><b>Rock Cycle Simulator</b><small>Weathering to metamorphism</small></span></a><a href="../gis-map.html"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i><span><b>GIS Area Explorer</b><small>Boundary, topography, pollution</small></span></a><a href="../gis-lab.html"><i class="fa-solid fa-satellite" aria-hidden="true"></i><span><b>WebGIS Lab</b><small>DEM profiles and GEE scripts</small></span></a><a href="../field-notebook.html"><i class="fa-solid fa-person-hiking" aria-hidden="true"></i><span><b>Field Notebook</b><small>Phone-only field measurements</small></span></a><a href="../water-quality.html"><i class="fa-solid fa-droplet" aria-hidden="true"></i><span><b>Water Quality</b><small>WQI against WHO and BD limits</small></span></a><a href="../field-tracker.html"><i class="fa-solid fa-route" aria-hidden="true"></i><span><b>Field Tracker</b><small>GPS track and waypoints</small></span></a><a href="../ecology-quadrat.html"><i class="fa-solid fa-table-cells" aria-hidden="true"></i><span><b>Quadrat Counter</b><small>Tally species, diversity indices</small></span></a><a class="on" href="../simulations/index.html"><i class="fa-solid fa-industry" aria-hidden="true"></i><span><b>Air Dispersion</b><small>Gaussian plume from a stack</small></span></a><a href="../eia-field.html"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i><span><b>EIA Field Visit Kit</b><small>Baseline checklist and impact matrix</small></span></a><a href="../ee-analyzer.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Earth Engine</b><small>Satellite analysis of any area</small></span></a><a href="../weather.html"><i class="fa-solid fa-cloud-sun-rain" aria-hidden="true"></i><span><b>EcoLens Weather</b><small>Your photo plus live weather and rain chance</small></span></a><a href="../atmosphere-sim.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Atmosphere Simulator</b><small>Three-cell circulation model</small></span></a></div></div>
+      <a href="../eia.html" title="Environmental impact assessment">EIA</a>
+      <a href="../hsc.html" title="Higher secondary, classes 11 and 12">HSC</a>
+      <a href="../ssc.html" title="Secondary, classes 9 and 10">SSC</a>
+      <a href="index.html" aria-current="page">Simulations</a>
+      <a href="../about.html">About</a>
+    </nav>
+    <div class="tools">
+      <button class="icon-btn" id="theme" type="button" aria-label="Switch to dark theme"><i class="fa-solid fa-moon"></i></button>
+      <button class="icon-btn burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="links"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</header>
+<div class="page-hero">
+  <div class="wrap">
+    <div class="trail"><a href="../hsc.html">HSC labs</a></div>
+    <h1>Stress and Strain: Hooke’s Law</h1>
+    <p>Stretch a wire step by step. See where Hooke’s law holds, where the stretch becomes permanent, and where the wire breaks.</p>
+  </div>
+</div>
+<main id="main" class="lab-main">
+<div class="wrap">
+<div class="lab">
+  <div class="box">
+    <canvas class="stage" id="cv" style="height:clamp(290px,38vw,360px)" role="img" aria-label="Stress against strain curve with a moving point for the wire being pulled"></canvas>
+    <canvas class="stage short" id="wire" style="height:110px" role="img" aria-label="The wire between two grips, stretching, necking and breaking"></canvas>
+    <div class="reads" aria-live="polite">
+      <div class="read"><small>Stress</small><b id="rS"></b></div>
+      <div class="read"><small>Strain</small><b id="rE"></b></div>
+      <div class="read"><small>Extension of 2 m wire</small><b id="rD"></b></div>
+      <div class="read"><small>Stress / strain (elastic)</small><b id="rY"></b></div>
+    </div>
+    <div class="verdict" id="msg"></div>
+  </div>
+  <div class="box">
+    <h2>Pull the wire</h2>
+    <label class="ctl"><span>Material</span><select id="mat"><option value="steel">Mild steel</option><option value="copper">Copper</option><option value="al">Aluminium</option><option value="glass">Glass (brittle)</option></select></label>
+    <div class="seg" id="view" role="group" aria-label="View"><button type="button" data-v="full" aria-pressed="true">Whole curve</button><button type="button" data-v="zoom" aria-pressed="false">Zoom on elastic part</button></div>
+    <label class="ctl"><span>Pull <output id="pO"></output></span><input type="range" id="pull" min="0" max="1000" step="1" value="0"></label>
+    <div class="acts"><button class="go main" type="button" id="unl">Let go (unload)</button><button class="go" type="button" id="rst">Start again</button></div>
+    <p class="fine" id="note"></p>
+  </div>
+</div>
+<div class="cols">
+  <div class="box">
+    <h2>Try this</h2>
+    <ul>
+      <li>Pull a little and let go. The wire returns to its first length, so it is still elastic. The graph is a straight line.</li>
+      <li>Pull past the yield point and let go. The wire stays longer than before: that is the permanent set.</li>
+      <li>Keep pulling beyond the highest stress. Where does the wire start to thin?</li>
+      <li>Compare steel with copper. Which has the steeper line, and so the larger Young&#x27;s modulus?</li>
+      <li>Try glass. Does it stretch much before it breaks?</li>
+    </ul>
+  </div>
+  <div class="box">
+    <h2>The equations</h2>
+    <div class="eq">Stress = F / A &nbsp;&nbsp; Strain = &Delta;L / L</div>
+    <div class="eq">Hooke&#x27;s law: stress &prop; strain</div>
+    <div class="eq">Young&#x27;s modulus Y = stress / strain = FL / (A&Delta;L)</div>
+    <p class="fine">The numbers are typical, rounded values chosen to give the right shape of curve for each material. Tables in your textbook may differ a little. The curve between the yield point and the break is drawn as a smooth model, not measured data.</p>
+  </div>
+</div>
+</div>
+</main>
+<footer>&copy; 2026 Md Rokibul Islam Robin &middot; <a href="../eia.html">EIA</a> &middot; <a href="../hsc.html">HSC</a> &middot; <a href="../ssc.html">SSC</a> &middot; <a href="../about.html">About</a> &middot; A student project, not an official JKKNIU or NCTB website.</footer>
+<script src="../site.js"></script>
+<script src="../lab.js"></script>
+<script>
+(function () {
+  var MAT = {
+    steel:  { name: 'Mild steel', Y: 200e9, sy: 250e6, su: 400e6, eu: 0.15, ef: 0.22 },
+    copper: { name: 'Copper', Y: 120e9, sy: 70e6, su: 220e6, eu: 0.30, ef: 0.45 },
+    al:     { name: 'Aluminium', Y: 70e9, sy: 100e6, su: 170e6, eu: 0.14, ef: 0.22 },
+    glass:  { name: 'Glass', Y: 70e9, sy: 50e6, su: 50e6, eu: 0, ef: 0, brittle: true }
+  };
+  var L = Lab, M, viewGet, eps = 0, unl = null, perm = 0, LEN = 2;
+  function setMat() { M = MAT[L.$('mat').value]; M.ey = M.sy / M.Y; if (M.brittle) { M.eu = M.ey; M.ef = M.ey; } M.sf = M.brittle ? M.sy : 0.75 * M.su; }
+  function sigma(e) {
+    if (e <= M.ey) return M.Y * e; if (M.brittle) return 0;
+    if (e <= M.eu) { var t = (e - M.ey) / (M.eu - M.ey); return M.sy + (M.su - M.sy) * (1 - (1 - t) * (1 - t)); }
+    var u = Math.min(1, (e - M.eu) / (M.ef - M.eu)); return M.su - (M.su - M.sf) * u * u;
+  }
+  function strainOf(s) { /* slider 0..1 -> strain: first 30% elastic, then plastic, then necking */
+    if (M.brittle) return M.ef * s; if (s <= .3) return M.ey * s / .3; if (s <= .7) return M.ey + (M.eu - M.ey) * (s - .3) / .4; return M.eu + (M.ef - M.eu) * (s - .7) / .3;
+  }
+  function broken() { return eps >= M.ef - 1e-12; }
+  function cur() { return unl ? unl.e : eps; }
+  function curSigma() { return unl ? unl.s : (broken() ? 0 : sigma(eps)); }
+  viewGet = L.seg('view', function () { draw(); });
+  var cv = L.canvas(L.$('cv'), function (ctx, w, h, c) {
+    ctx.clearRect(0, 0, w, h); var padL = 52, padR = 16, padT = 18, padB = 36, zoom = viewGet() === 'zoom';
+    var emax = zoom ? M.ey * 1.5 : M.ef * 1.05, smax = zoom ? M.Y * emax : M.su * 1.12;
+    function X(e) { return padL + e / emax * (w - padL - padR); } function Y(s) { return h - padB - Math.min(s, smax) / smax * (h - padT - padB); }
+    ctx.strokeStyle = c.line; ctx.lineWidth = 1;
+    for (var i = 0; i <= 4; i++) { var sv = smax * i / 4; L.line(ctx, padL, Y(sv), w - padR, Y(sv), c.line, 1); L.text(ctx, (sv / 1e6).toFixed(sv / 1e6 < 10 ? 1 : 0), padL - 6, Y(sv) + 4, c.soft, 11, 'right'); }
+    for (i = 0; i <= 4; i++) { var ev = emax * i / 4; L.text(ctx, zoom ? (ev * 1000).toFixed(2) : (ev * 100).toFixed(ev * 100 < 1 ? 2 : 0) + '%', X(ev), h - padB + 16, c.soft, 11, 'center'); }
+    L.text(ctx, 'stress (MPa)', 6, 12, c.soft, 11); L.text(ctx, zoom ? 'strain (× 10⁻³)' : 'strain (%)', w - padR, h - 4, c.soft, 11, 'right');
+    L.line(ctx, padL, h - padB, w - padR, h - padB, c.ink, 1.8); L.line(ctx, padL, padT, padL, h - padB, c.ink, 1.8);
+    /* curve */
+    var N = 400; ctx.strokeStyle = c.sec; ctx.lineWidth = 2.5; ctx.beginPath();
+    for (i = 0; i <= N; i++) { var e = emax * Math.min(1, i / N) * (zoom ? 1 : 1 / 1.05); if (e > M.ef) break; var s = sigma(e); if (i) ctx.lineTo(X(e), Y(s)); else ctx.moveTo(X(e), Y(s)); }
+    ctx.stroke();
+    if (M.brittle && !zoom) { ctx.fillStyle = c.bad; ctx.beginPath(); ctx.arc(X(M.ef), Y(M.sy), 5, 0, 7); ctx.fill(); }
+    if (!M.brittle) {
+      var pts = [['yield point', M.ey, M.sy], ['highest stress', M.eu, M.su]]; if (!zoom) pts.push(['breaks', M.ef, M.sf]);
+      pts.forEach(function (p) { if (p[1] > emax) return; ctx.fillStyle = c.soft; ctx.beginPath(); ctx.arc(X(p[1]), Y(p[2]), 4, 0, 7); ctx.fill(); L.text(ctx, p[0], X(p[1]) + (p[0] === 'breaks' ? -8 : 8), Y(p[2]) + (p[0] === 'breaks' ? 18 : -8), c.soft, 11, p[0] === 'breaks' ? 'right' : 'left'); });
+    }
+    if (unl) { ctx.setLineDash([5, 5]); ctx.strokeStyle = c.bad; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(X(unl.e0), Y(unl.s0)); ctx.lineTo(X(unl.p), Y(0)); ctx.stroke(); ctx.setLineDash([]); }
+    var e2 = cur(), s2 = curSigma(); if (e2 <= emax) { ctx.fillStyle = c.ink; ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(X(e2), Y(s2), 6.5, 0, 7); ctx.fill(); ctx.stroke(); }
+  });
+  var wire = L.canvas(L.$('wire'), function (ctx, w, h, c) {
+    ctx.clearRect(0, 0, w, h); var y = h / 2, gx = 36, L0 = (w - 2 * gx - 60) * 0.55, e = cur(), len = L0 * (1 + Math.min(e, 0.5));
+    ctx.fillStyle = c.line; ctx.fillRect(gx - 10, 12, 10, h - 24); ctx.fillStyle = c.ink; ctx.fillRect(gx - 10, 12, 10, h - 24);
+    var x1 = gx + len, thick = 8;
+    ctx.setLineDash([3, 3]); ctx.strokeStyle = c.soft; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(gx + L0, 14); ctx.lineTo(gx + L0, h - 14); ctx.stroke(); ctx.setLineDash([]);
+    L.text(ctx, 'original length', gx + L0, h - 2, c.soft, 10, 'center');
+    ctx.fillStyle = c.ink; ctx.fillRect(x1, 12, 10, h - 24);
+    var neck = (!M.brittle && e > M.eu) ? Math.min(1, (e - M.eu) / (M.ef - M.eu)) : 0, bk = broken();
+    ctx.strokeStyle = c.sec; ctx.lineWidth = thick; ctx.lineCap = 'butt';
+    var mid = gx + len / 2;
+    if (bk) { var gap = M.brittle ? 6 : 10, th2 = M.brittle ? thick : thick * .45; ctx.lineWidth = thick; ctx.beginPath(); ctx.moveTo(gx, y); ctx.lineTo(mid - gap, y); ctx.stroke(); ctx.beginPath(); ctx.moveTo(mid + gap, y); ctx.lineTo(x1, y); ctx.stroke(); }
+    else {
+      ctx.beginPath(); for (var i = 0; i <= 60; i++) { var u = i / 60, xx = gx + u * len, tt = thick * (1 - 0.55 * neck * Math.exp(-Math.pow((u - 0.5) / 0.12, 2))); ctx.lineTo(xx, y - tt / 2); } for (i = 60; i >= 0; i--) { u = i / 60; xx = gx + u * len; tt = thick * (1 - 0.55 * neck * Math.exp(-Math.pow((u - 0.5) / 0.12, 2))); ctx.lineTo(xx, y + tt / 2); } ctx.closePath(); ctx.fillStyle = c.sec; ctx.fill();
+    }
+    L.arrow(ctx, x1 + 14, y, 28, 0, c.bad, 3); L.text(ctx, 'pull', x1 + 30, y - 12, c.bad, 11, 'center');
+  });
+  var run = L.loop(function (dt) {
+    if (!unl) { run.stop(); return; }
+    unl.t += dt / 1.4; var k = Math.min(1, unl.t); unl.s = unl.s0 * (1 - k); unl.e = unl.p + unl.s / M.Y;
+    if (k >= 1) { perm = unl.p; eps = unl.p; unl = null; run.stop(); L.$('pull').value = 0; msgOut(); }
+    draw(); readouts();
+  });
+  function msgOut() {
+    var t;
+    if (unl) t = 'Letting go along a line parallel to the elastic part.';
+    else if (broken()) t = M.brittle ? 'Snaps with almost no warning: brittle.' : 'The wire has broken, after thinning at the neck.';
+    else if (perm > 0 && eps === perm) t = 'Let go. Permanent set remains: strain ' + (perm * 100).toPrecision(3) + '%, ' + (perm * LEN * 1000).toFixed(1) + ' mm of the wire’s length.';
+    else if (eps <= M.ey) t = 'Elastic region: stress is proportional to strain, and the wire would spring back.';
+    else if (eps <= M.eu) t = 'Past the yield point: part of the stretch is now permanent.';
+    else t = 'Necking: the wire thins, so it carries less stress while it keeps stretching.';
+    L.out('msg', t);
+  }
+  function readouts() {
+    var e = cur(), s = curSigma();
+    L.out('rS', (s / 1e6).toFixed(s / 1e6 < 10 ? 2 : 0) + ' MPa'); L.out('rE', (e * 100).toPrecision(3) + ' %'); L.out('rD', (e * LEN * 1000).toFixed(e * LEN * 1000 < 10 ? 2 : 1) + ' mm');
+    L.out('rY', e > 0 && e <= M.ey + 1e-12 ? (s / e / 1e9).toFixed(0) + ' GPa' : '--');
+  }
+  function draw() { cv.redraw(); wire.redraw(); }
+  function pullChanged() { if (unl) return; var s = L.val('pull') / 1000; eps = strainOf(s); perm = 0; L.out('pO', (eps * 100).toPrecision(2) + ' % strain'); readouts(); msgOut(); draw(); }
+  function matChanged() { setMat(); unl = null; eps = 0; perm = 0; L.$('pull').value = 0; L.out('note', M.name + ': Y = ' + (M.Y / 1e9) + ' GPa, yield about ' + (M.sy / 1e6) + ' MPa' + (M.brittle ? ', breaks at about ' + (M.sy / 1e6) + ' MPa without yielding.' : ', highest stress about ' + (M.su / 1e6) + ' MPa.')); pullChanged(); }
+  L.$('mat').addEventListener('change', matChanged); L.$('pull').addEventListener('input', pullChanged);
+  L.$('unl').addEventListener('click', function () {
+    if (unl || broken() || eps <= 0) return; var s0 = sigma(eps), p = eps - s0 / M.Y; if (L.reduce) { eps = perm = p; L.$('pull').value = 0; msgOut(); readouts(); draw(); return; }
+    unl = { e0: eps, s0: s0, p: p, s: s0, e: eps, t: 0 }; run.start();
+  });
+  L.$('rst').addEventListener('click', matChanged);
+  matChanged();
+})();
+</script>
+</body>
+</html>
