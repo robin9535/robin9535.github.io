@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doppler Effect | Your Study Material</title>
+<meta name="description" content="Move a sound source and see the wavefronts bunch up ahead and spread out behind, with the frequencies each listener hears.">
+<meta name="author" content="Md Rokibul Islam Robin">
+<meta name="theme-color" content="#0E2A2F">
+<link rel="canonical" href="https://mdrokibul.me/simulations/doppler-effect.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Your Study Material">
+<meta property="og:title" content="Doppler Effect">
+<meta property="og:description" content="Move a sound source and see the wavefronts bunch up ahead and spread out behind, with the frequencies each listener hears.">
+<meta property="og:url" content="https://mdrokibul.me/simulations/doppler-effect.html">
+<meta property="og:image" content="https://mdrokibul.me/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Doppler Effect">
+<meta name="twitter:description" content="Move a sound source and see the wavefronts bunch up ahead and spread out behind, with the frequencies each listener hears.">
+<meta name="twitter:image" content="https://mdrokibul.me/og-image.jpg">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Doppler Effect", "url": "https://mdrokibul.me/simulations/doppler-effect.html", "description": "Move a sound source and see the wavefronts bunch up ahead and spread out behind, with the frequencies each listener hears.", "inLanguage": "en", "isPartOf": {"@type": "WebSite", "name": "Your Study Material", "url": "https://mdrokibul.me/"}}</script>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="../nav.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="stylesheet" href="../lab.css">
+<style>
+.num{font:inherit;font-size:1.05rem;width:100%;padding:10px 12px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink)}
+.ans-row{display:flex;gap:10px;align-items:center}.ans-row .num{flex:1}
+</style>
+</head>
+<body class="sector-hsc">
+<div class="progress" id="progress" aria-hidden="true"></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav" id="nav" data-solid>
+  <div class="wrap">
+    <a class="brand" href="../index.html">Your Study<span> Material</span></a>
+    <nav class="links" id="links" aria-label="Main">
+      <div class="dd"><button class="dd-btn" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="toolsMenu">Tools <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="dd-menu" id="toolsMenu"><a href="../portal.html"><i class="fa-solid fa-building-columns" aria-hidden="true"></i><span><b>JKKNIU &amp; ESE Portal</b><small>Official links in one place</small></span></a><a href="../library.html"><i class="fa-solid fa-folder-open" aria-hidden="true"></i><span><b>Batch Library</b><small>Shared ESE study materials</small></span></a><a href="../sound-meter.html"><i class="fa-solid fa-ear-listen" aria-hidden="true"></i><span><b>Sound Level Meter</b><small>Measure noise with your phone</small></span></a><a href="../soil-texture.html"><i class="fa-solid fa-layer-group" aria-hidden="true"></i><span><b>Soil Texture Triangle</b><small>Plot sand, silt and clay</small></span></a><a href="../rock-cycle.html"><i class="fa-solid fa-gem" aria-hidden="true"></i><span><b>Rock Cycle Simulator</b><small>Weathering to metamorphism</small></span></a><a href="../gis-map.html"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i><span><b>GIS Area Explorer</b><small>Boundary, topography, pollution</small></span></a><a href="../gis-lab.html"><i class="fa-solid fa-satellite" aria-hidden="true"></i><span><b>WebGIS Lab</b><small>DEM profiles and GEE scripts</small></span></a><a href="../field-notebook.html"><i class="fa-solid fa-person-hiking" aria-hidden="true"></i><span><b>Field Notebook</b><small>Phone-only field measurements</small></span></a><a href="../water-quality.html"><i class="fa-solid fa-droplet" aria-hidden="true"></i><span><b>Water Quality</b><small>WQI against WHO and BD limits</small></span></a><a href="../field-tracker.html"><i class="fa-solid fa-route" aria-hidden="true"></i><span><b>Field Tracker</b><small>GPS track and waypoints</small></span></a><a href="../ecology-quadrat.html"><i class="fa-solid fa-table-cells" aria-hidden="true"></i><span><b>Quadrat Counter</b><small>Tally species, diversity indices</small></span></a><a class="on" href="../simulations/index.html"><i class="fa-solid fa-industry" aria-hidden="true"></i><span><b>Air Dispersion</b><small>Gaussian plume from a stack</small></span></a><a href="../eia-field.html"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i><span><b>EIA Field Visit Kit</b><small>Baseline checklist and impact matrix</small></span></a><a href="../ee-analyzer.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Earth Engine</b><small>Satellite analysis of any area</small></span></a><a href="../weather.html"><i class="fa-solid fa-cloud-sun-rain" aria-hidden="true"></i><span><b>EcoLens Weather</b><small>Your photo plus live weather and rain chance</small></span></a><a href="../atmosphere-sim.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Atmosphere Simulator</b><small>Three-cell circulation model</small></span></a></div></div>
+      <a href="../eia.html" title="Environmental impact assessment">EIA</a>
+      <a href="../hsc.html" title="Higher secondary, classes 11 and 12">HSC</a>
+      <a href="../ssc.html" title="Secondary, classes 9 and 10">SSC</a>
+      <a href="index.html" aria-current="page">Simulations</a>
+      <a href="../about.html">About</a>
+    </nav>
+    <div class="tools">
+      <button class="icon-btn" id="theme" type="button" aria-label="Switch to dark theme"><i class="fa-solid fa-moon"></i></button>
+      <button class="icon-btn burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="links"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</header>
+<div class="page-hero">
+  <div class="wrap">
+    <div class="trail"><a href="../hsc.html">HSC labs</a></div>
+    <h1>Doppler Effect</h1>
+    <p>Slide the source speed up and watch the wavefronts. Compare the pitch heard ahead of the source and behind it.</p>
+  </div>
+</div>
+<main id="main" class="lab-main">
+<div class="wrap">
+<div class="lab">
+  <div class="box">
+    <canvas class="stage" id="cv" role="img" aria-label="A moving sound source with wavefronts bunched ahead of it and spread out behind it"></canvas>
+    <div class="reads" aria-live="polite">
+      <div class="read"><small>Source frequency</small><b id="rF"></b></div>
+      <div class="read" id="aBox"><small>Heard ahead of the source</small><b id="rA"></b></div>
+      <div class="read" id="bBox"><small>Heard behind the source</small><b id="rB"></b></div>
+      <div class="read"><small>Wavelength ahead / behind</small><b id="rL" style="font-size:1rem"></b></div>
+    </div>
+    <div class="verdict" id="msg"></div>
+  </div>
+  <div class="box">
+    <h2>Move the source</h2>
+    <label class="ctl"><span>Source speed <output id="vO"></output></span><input type="range" id="vs" min="0" max="500" step="5" value="120"></label>
+    <label class="ctl"><span>Source frequency <output id="fO"></output></span><input type="range" id="f" min="100" max="1000" step="10" value="400"></label>
+    <div class="acts"><button class="go main" type="button" id="pp">Pause</button><button class="go" type="button" id="rs">Restart</button></div>
+    <p class="fine" id="note"></p>
+  </div>
+</div>
+<div class="cols">
+  <div class="box">
+    <h2>Try this</h2>
+    <ul>
+      <li>Start with speed 0. The circles are evenly spaced and both listeners hear the true frequency.</li>
+      <li>Raise the speed. Ahead of the source the waves bunch up (higher pitch). Behind it they spread out (lower pitch).</li>
+      <li>Set the speed to 340 m/s, the speed of sound. The waves pile up in front of the source.</li>
+      <li>Go above 340 m/s. The circles form a cone, a shock wave. The simple formula no longer applies.</li>
+    </ul>
+  </div>
+  <div class="box">
+    <h2>The equations</h2>
+    <div class="eq">Source moving toward listener: f&prime; = f v / (v &minus; v<sub>s</sub>)</div>
+    <div class="eq">Source moving away: f&prime; = f v / (v + v<sub>s</sub>)</div>
+    <div class="eq">&lambda;&prime; = (v &minus; v<sub>s</sub>) / f &nbsp; (ahead)</div>
+    <div class="eq">Cone: sin &theta; = v / v<sub>s</sub> &nbsp; (v<sub>s</sub> &gt; v)</div>
+    <p class="fine">The speed of sound is taken as 340 m/s. Listeners are at rest. The picture is slowed down and the number of circles per second is fixed, so the spacing shows the effect clearly. The frequencies in the boxes use the real numbers.</p>
+  </div>
+</div>
+</div>
+</main>
+<footer>&copy; 2026 Md Rokibul Islam Robin &middot; <a href="../eia.html">EIA</a> &middot; <a href="../hsc.html">HSC</a> &middot; <a href="../ssc.html">SSC</a> &middot; <a href="../about.html">About</a> &middot; A student project, not an official JKKNIU or NCTB website.</footer>
+<script src="../site.js"></script>
+<script src="../lab.js"></script>
+<script>
+(function () {
+  var L = Lab, V = 340, waves = [], t = 0, em = 0, sx = 0, started = false, playing = true, geo = {};
+  var PX = 0.35, RATE = 3.2; /* px per (m/s) per second, emissions per second on screen */
+  function vs() { return L.val('vs'); }
+  function reset() { waves = []; t = 0; em = 0; sx = (geo.w || 600) * 0.12; started = true; sx = (geo.w || 600) * 0.12; }
+  function step(dt, w) {
+    var s = vs() * PX; sx += s * dt; t += dt; em += dt;
+    while (em >= 1 / RATE) { em -= 1 / RATE; waves.push({ x: sx - s * em, t0: t - em }); }
+    if (sx > w * 0.9) { reset(); }
+    if (waves.length > 60) waves.shift();
+  }
+  var cv = L.canvas(L.$('cv'), function (ctx, w, h, c) {
+    ctx.clearRect(0, 0, w, h); if (!started) reset(); geo.w = w; var cy = h / 2, s = vs() * PX;
+    if (sx < 1) sx = w * 0.12;
+    for (var i = 0; i < waves.length; i++) { var wv = waves[i], r = V * PX * (t - wv.t0); if (r > w * 1.2) continue; ctx.strokeStyle = c.river; ctx.globalAlpha = Math.max(0.15, 1 - r / (w * .9)); ctx.lineWidth = 1.8; ctx.beginPath(); ctx.arc(wv.x, cy, r, 0, 7); ctx.stroke(); }
+    ctx.globalAlpha = 1;
+    if (vs() > V) { var th = Math.asin(V / vs()), len = w; ctx.strokeStyle = c.bad; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.moveTo(sx, cy); ctx.lineTo(sx - len * Math.cos(th), cy - len * Math.sin(th)); ctx.moveTo(sx, cy); ctx.lineTo(sx - len * Math.cos(th), cy + len * Math.sin(th)); ctx.stroke(); L.text(ctx, 'shock cone, sin θ = ' + (V / vs()).toFixed(2), sx - 30, cy - 60, c.bad, 12, 'right'); }
+    ctx.fillStyle = c.bad; ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(sx, cy, 9, 0, 7); ctx.fill(); ctx.stroke();
+    L.arrow(ctx, sx + 14, cy, Math.min(80, 20 + vs() / 6), 0, c.bad, 3); L.text(ctx, 'source', sx, cy + 28, c.bad, 12, 'center');
+    ctx.fillStyle = c.ink; ctx.beginPath(); ctx.arc(w - 28, cy, 8, 0, 7); ctx.fill(); L.text(ctx, 'ahead', w - 28, cy + 26, c.soft, 12, 'center');
+    ctx.beginPath(); ctx.arc(28, cy, 8, 0, 7); ctx.fill(); L.text(ctx, 'behind', 28, cy + 26, c.soft, 12, 'center');
+  });
+  var run = L.loop(function (dt) { step(dt, geo.w || 600); cv.redraw(); });
+  function update() {
+    var v = vs(), f = L.val('f'); L.out('vO', v + ' m/s'); L.out('fO', f + ' Hz'); L.out('rF', f + ' Hz');
+    var super_ = v >= V, ahead = f * V / (V - v), behind = f * V / (V + v), la = (V - v) / f, lb = (V + v) / f;
+    L.out('rA', v >= V ? 'no steady tone' : ahead.toFixed(0) + ' Hz'); L.out('rB', behind.toFixed(0) + ' Hz');
+    L.out('rL', v >= V ? '0 / ' + lb.toFixed(2) + ' m' : la.toFixed(2) + ' / ' + lb.toFixed(2) + ' m');
+    L.out('msg', v === 0 ? 'Source at rest: no change in pitch.' : v < V ? 'Pitch ahead is raised by ' + (ahead / f).toFixed(2) + ' times and pitch behind is lowered to ' + (behind / f).toFixed(2) + ' times.' : v === V ? 'At the speed of sound the waves pile up into one front, which the formula cannot handle.' : 'Faster than sound: the source outruns its own waves and makes a shock wave.');
+    L.out('note', 'Wavelength at rest = v/f = ' + (V / f).toFixed(2) + ' m.');
+    reset(); cv.redraw();
+  }
+  L.on(['vs', 'f'], update);
+  L.$('pp').addEventListener('click', function () { if (run.running()) { run.stop(); this.textContent = 'Play'; } else { run.start(); this.textContent = 'Pause'; } });
+  L.$('rs').addEventListener('click', function () { reset(); cv.redraw(); });
+  if (!L.reduce) run.start(); else L.$('pp').textContent = 'Play';
+})();
+</script>
+</body>
+</html>

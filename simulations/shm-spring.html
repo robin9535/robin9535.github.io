@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mass on a Spring: SHM | Your Study Material</title>
+<meta name="description" content="Watch a mass on a spring and its displacement, velocity and acceleration graphs. Change mass, spring constant and amplitude.">
+<meta name="author" content="Md Rokibul Islam Robin">
+<meta name="theme-color" content="#0E2A2F">
+<link rel="canonical" href="https://mdrokibul.me/simulations/shm-spring.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Your Study Material">
+<meta property="og:title" content="Mass on a Spring: SHM">
+<meta property="og:description" content="Watch a mass on a spring and its displacement, velocity and acceleration graphs. Change mass, spring constant and amplitude.">
+<meta property="og:url" content="https://mdrokibul.me/simulations/shm-spring.html">
+<meta property="og:image" content="https://mdrokibul.me/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Mass on a Spring: SHM">
+<meta name="twitter:description" content="Watch a mass on a spring and its displacement, velocity and acceleration graphs. Change mass, spring constant and amplitude.">
+<meta name="twitter:image" content="https://mdrokibul.me/og-image.jpg">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Mass on a Spring: SHM", "url": "https://mdrokibul.me/simulations/shm-spring.html", "description": "Watch a mass on a spring and its displacement, velocity and acceleration graphs. Change mass, spring constant and amplitude.", "inLanguage": "en", "isPartOf": {"@type": "WebSite", "name": "Your Study Material", "url": "https://mdrokibul.me/"}}</script>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="../nav.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="stylesheet" href="../lab.css">
+<style>
+.num{font:inherit;font-size:1.05rem;width:100%;padding:10px 12px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink)}
+.ans-row{display:flex;gap:10px;align-items:center}.ans-row .num{flex:1}
+</style>
+</head>
+<body class="sector-hsc">
+<div class="progress" id="progress" aria-hidden="true"></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav" id="nav" data-solid>
+  <div class="wrap">
+    <a class="brand" href="../index.html">Your Study<span> Material</span></a>
+    <nav class="links" id="links" aria-label="Main">
+      <div class="dd"><button class="dd-btn" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="toolsMenu">Tools <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="dd-menu" id="toolsMenu"><a href="../portal.html"><i class="fa-solid fa-building-columns" aria-hidden="true"></i><span><b>JKKNIU &amp; ESE Portal</b><small>Official links in one place</small></span></a><a href="../library.html"><i class="fa-solid fa-folder-open" aria-hidden="true"></i><span><b>Batch Library</b><small>Shared ESE study materials</small></span></a><a href="../sound-meter.html"><i class="fa-solid fa-ear-listen" aria-hidden="true"></i><span><b>Sound Level Meter</b><small>Measure noise with your phone</small></span></a><a href="../soil-texture.html"><i class="fa-solid fa-layer-group" aria-hidden="true"></i><span><b>Soil Texture Triangle</b><small>Plot sand, silt and clay</small></span></a><a href="../rock-cycle.html"><i class="fa-solid fa-gem" aria-hidden="true"></i><span><b>Rock Cycle Simulator</b><small>Weathering to metamorphism</small></span></a><a href="../gis-map.html"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i><span><b>GIS Area Explorer</b><small>Boundary, topography, pollution</small></span></a><a href="../gis-lab.html"><i class="fa-solid fa-satellite" aria-hidden="true"></i><span><b>WebGIS Lab</b><small>DEM profiles and GEE scripts</small></span></a><a href="../field-notebook.html"><i class="fa-solid fa-person-hiking" aria-hidden="true"></i><span><b>Field Notebook</b><small>Phone-only field measurements</small></span></a><a href="../water-quality.html"><i class="fa-solid fa-droplet" aria-hidden="true"></i><span><b>Water Quality</b><small>WQI against WHO and BD limits</small></span></a><a href="../field-tracker.html"><i class="fa-solid fa-route" aria-hidden="true"></i><span><b>Field Tracker</b><small>GPS track and waypoints</small></span></a><a href="../ecology-quadrat.html"><i class="fa-solid fa-table-cells" aria-hidden="true"></i><span><b>Quadrat Counter</b><small>Tally species, diversity indices</small></span></a><a class="on" href="../simulations/index.html"><i class="fa-solid fa-industry" aria-hidden="true"></i><span><b>Air Dispersion</b><small>Gaussian plume from a stack</small></span></a><a href="../eia-field.html"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i><span><b>EIA Field Visit Kit</b><small>Baseline checklist and impact matrix</small></span></a><a href="../ee-analyzer.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Earth Engine</b><small>Satellite analysis of any area</small></span></a><a href="../weather.html"><i class="fa-solid fa-cloud-sun-rain" aria-hidden="true"></i><span><b>EcoLens Weather</b><small>Your photo plus live weather and rain chance</small></span></a><a href="../atmosphere-sim.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Atmosphere Simulator</b><small>Three-cell circulation model</small></span></a></div></div>
+      <a href="../eia.html" title="Environmental impact assessment">EIA</a>
+      <a href="../hsc.html" title="Higher secondary, classes 11 and 12">HSC</a>
+      <a href="../ssc.html" title="Secondary, classes 9 and 10">SSC</a>
+      <a href="index.html" aria-current="page">Simulations</a>
+      <a href="../about.html">About</a>
+    </nav>
+    <div class="tools">
+      <button class="icon-btn" id="theme" type="button" aria-label="Switch to dark theme"><i class="fa-solid fa-moon"></i></button>
+      <button class="icon-btn burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="links"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</header>
+<div class="page-hero">
+  <div class="wrap">
+    <div class="trail"><a href="../hsc.html">HSC labs</a></div>
+    <h1>Mass on a Spring: SHM</h1>
+    <p>Set the mass, the spring and the amplitude. The three graphs show how displacement, velocity and acceleration are linked.</p>
+  </div>
+</div>
+<main id="main" class="lab-main">
+<div class="wrap">
+<div class="lab">
+  <div class="box">
+    <canvas class="stage short" id="sp" role="img" aria-label="A mass on a spring oscillating left and right"></canvas>
+    <canvas class="stage" id="gr" style="height:clamp(220px,30vw,280px)" role="img" aria-label="Graphs of displacement, velocity and acceleration against time"></canvas>
+    <div class="reads" aria-live="polite">
+      <div class="read"><small>Period T</small><b id="rT"></b></div>
+      <div class="read"><small>Frequency f</small><b id="rF"></b></div>
+      <div class="read"><small>Max speed</small><b id="rV"></b></div>
+      <div class="read"><small>Max acceleration</small><b id="rA"></b></div>
+      <div class="read"><small>Total energy</small><b id="rE"></b></div>
+      <div class="read"><small>Now: x, v, a</small><b id="rN" style="font-size:1rem"></b></div>
+    </div>
+  </div>
+  <div class="box">
+    <h2>Set the spring</h2>
+    <label class="ctl"><span>Mass <output id="mO"></output></span><input type="range" id="m" min="0.1" max="2" step="0.05" value="0.5"></label>
+    <label class="ctl"><span>Spring constant k <output id="kO"></output></span><input type="range" id="k" min="5" max="100" step="1" value="20"></label>
+    <label class="ctl"><span>Amplitude A <output id="aO"></output></span><input type="range" id="a" min="0.02" max="0.2" step="0.01" value="0.1"></label>
+    <div class="acts"><button class="go main" type="button" id="pp">Pause</button><button class="go" type="button" id="rs">Restart</button></div>
+    <p class="fine" id="note"></p>
+  </div>
+</div>
+<div class="cols">
+  <div class="box">
+    <h2>Try this</h2>
+    <ul>
+      <li>Change the amplitude only. Does the period change?</li>
+      <li>Quadruple the mass. By what factor does the period change?</li>
+      <li>Pause at the centre and at the ends. Where is the speed largest? Where is the acceleration largest?</li>
+      <li>Compare the three graphs. Velocity is ahead of displacement by a quarter cycle, and acceleration is opposite to displacement.</li>
+    </ul>
+  </div>
+  <div class="box">
+    <h2>The equations</h2>
+    <div class="eq">a = &minus;(k/m) x = &minus;&omega;&sup2; x</div>
+    <div class="eq">x = A cos &omega;t &nbsp;&nbsp; v = &minus;A&omega; sin &omega;t</div>
+    <div class="eq">T = 2&pi; &radic;(m / k) &nbsp;&nbsp; f = 1/T</div>
+    <div class="eq">E = &frac12; k A&sup2; = &frac12; m v&sup2; + &frac12; k x&sup2;</div>
+    <p class="fine">The spring is ideal and there is no friction, so the motion never dies away. The mass starts at +A at the moment you press Restart.</p>
+  </div>
+</div>
+</div>
+</main>
+<footer>&copy; 2026 Md Rokibul Islam Robin &middot; <a href="../eia.html">EIA</a> &middot; <a href="../hsc.html">HSC</a> &middot; <a href="../ssc.html">SSC</a> &middot; <a href="../about.html">About</a> &middot; A student project, not an official JKKNIU or NCTB website.</footer>
+<script src="../site.js"></script>
+<script src="../lab.js"></script>
+<script>
+(function () {
+  var L = Lab, t = 0, playing = true, last = 0;
+  function P() { var m = L.val('m'), k = L.val('k'), A = L.val('a'), w = Math.sqrt(k / m); return { m: m, k: k, A: A, w: w, T: 2 * Math.PI / w }; }
+  function at(p, tt) { return { x: p.A * Math.cos(p.w * tt), v: -p.A * p.w * Math.sin(p.w * tt), a: -p.A * p.w * p.w * Math.cos(p.w * tt) }; }
+  var sp = L.canvas(L.$('sp'), function (ctx, w, h, c) {
+    ctx.clearRect(0, 0, w, h); var p = P(), s = at(p, t), cy = h / 2, wall = 24, k = (w - 90) / 2 / 0.22 * 0.5, mid = wall + (w - wall - 40) / 2, sc = (w - wall - 60) / 2 / 0.22;
+    ctx.fillStyle = c.ink; ctx.fillRect(0, 14, wall, h - 28); L.line(ctx, wall, h - 20, w - 10, h - 20, c.ink, 2);
+    var mx = mid + s.x * sc, bs = 26 + p.m * 14, x1 = mx - bs / 2, turns = 14;
+    ctx.strokeStyle = c.soft; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.moveTo(wall, cy); var len = x1 - wall; for (var i = 0; i <= turns * 4; i++) { var u = i / (turns * 4); ctx.lineTo(wall + u * len, cy + (i === 0 || i === turns * 4 ? 0 : (i % 2 ? (i % 4 === 1 ? -1 : 1) : 0) * 14)); } ctx.stroke();
+    ctx.fillStyle = c.sec; ctx.fillRect(x1, cy - bs / 2, bs, bs); ctx.strokeStyle = c.ink; ctx.lineWidth = 2; ctx.strokeRect(x1, cy - bs / 2, bs, bs);
+    L.line(ctx, mid, 14, mid, h - 14, c.line, 1.5, true); L.text(ctx, 'x = 0', mid, h - 4, c.soft, 11, 'center');
+    L.line(ctx, mid + p.A * sc, h - 26, mid + p.A * sc, h - 14, c.soft, 1.5); L.line(ctx, mid - p.A * sc, h - 26, mid - p.A * sc, h - 14, c.soft, 1.5);
+    L.text(ctx, '+A', mid + p.A * sc, h - 30, c.soft, 11, 'center'); L.text(ctx, '−A', mid - p.A * sc, h - 30, c.soft, 11, 'center');
+    var ar = s.v / (p.A * p.w) * 40; L.arrow(ctx, mx, cy - bs / 2 - 10, ar, 0, c.river, 3); L.arrow(ctx, mx, cy + bs / 2 + 12, s.a / (p.A * p.w * p.w) * 40, 0, c.bad, 3);
+    L.text(ctx, 'velocity', 34, 18, c.river, 11); L.text(ctx, 'acceleration', 94, 18, c.bad, 11);
+  });
+  var gr = L.canvas(L.$('gr'), function (ctx, w, h, c) {
+    ctx.clearRect(0, 0, w, h); var p = P(), padL = 40, padR = 14, padT = 18, padB = 28, span = 2.5 * p.T, base = Math.max(0, t - span * 0.4);
+    function X(tt) { return padL + (tt - base) / span * (w - padL - padR); }
+    var oy = (padT + h - padB) / 2, amp = (h - padT - padB) / 2 * 0.92;
+    L.line(ctx, padL, oy, w - padR, oy, c.ink, 1.5); L.line(ctx, padL, padT, padL, h - padB, c.ink, 1.5);
+    var defs = [['x', p.A, c.ink, 'displacement x'], ['v', p.A * p.w, c.river, 'velocity v'], ['a', p.A * p.w * p.w, c.bad, 'acceleration a']];
+    defs.forEach(function (d, j) {
+      ctx.strokeStyle = d[2]; ctx.lineWidth = 2.5; ctx.beginPath();
+      for (var i = 0; i <= 200; i++) { var tt = base + span * i / 200, s = at(p, tt), val = s[d[0]] / d[1]; var xx = X(tt), yy = oy - val * amp; if (i) ctx.lineTo(xx, yy); else ctx.moveTo(xx, yy); } ctx.stroke();
+      L.text(ctx, d[3], padL + 6 + j * 118, 12, d[2], 12);
+    });
+    var cx = X(t); L.line(ctx, cx, padT, cx, h - padB, c.ink, 1.2, true);
+    var s = at(p, t); defs.forEach(function (d) { ctx.fillStyle = d[2]; ctx.beginPath(); ctx.arc(cx, oy - s[d[0]] / d[1] * amp, 5, 0, 7); ctx.fill(); });
+    for (var q = Math.ceil(base / p.T); q * p.T < base + span; q++) { L.line(ctx, X(q * p.T), oy - 4, X(q * p.T), oy + 4, c.soft, 1.5); L.text(ctx, q + 'T', X(q * p.T), h - 10, c.soft, 11, 'center'); }
+    L.text(ctx, 'time', w - padR, h - 10, c.soft, 11, 'right'); L.text(ctx, 'each curve is scaled to its own maximum', w - padR, 12, c.soft, 10, 'right');
+  });
+  var run = L.loop(function (dt) { t += dt; draw(); read(); });
+  function draw() { sp.redraw(); gr.redraw(); }
+  function read() { var p = P(), s = at(p, t); L.out('rN', s.x.toFixed(3) + ' m, ' + s.v.toFixed(2) + ' m/s, ' + s.a.toFixed(1) + ' m/s²'); }
+  function update() {
+    var p = P(); L.out('mO', p.m.toFixed(2) + ' kg'); L.out('kO', p.k + ' N/m'); L.out('aO', (p.A * 100).toFixed(0) + ' cm');
+    L.out('rT', p.T.toFixed(3) + ' s'); L.out('rF', (1 / p.T).toFixed(2) + ' Hz'); L.out('rV', (p.A * p.w).toFixed(2) + ' m/s'); L.out('rA', (p.A * p.w * p.w).toFixed(1) + ' m/s²'); L.out('rE', (0.5 * p.k * p.A * p.A).toFixed(3) + ' J');
+    L.out('note', 'ω = √(k/m) = ' + p.w.toFixed(2) + ' rad/s.'); read(); draw();
+  }
+  L.on(['m', 'k', 'a'], update);
+  L.$('pp').addEventListener('click', function () { if (run.running()) { run.stop(); this.textContent = 'Play'; } else { run.start(); this.textContent = 'Pause'; } });
+  L.$('rs').addEventListener('click', function () { t = 0; update(); });
+  if (!L.reduce) run.start(); else L.$('pp').textContent = 'Play';
+})();
+</script>
+</body>
+</html>
