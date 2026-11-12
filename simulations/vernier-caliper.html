@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vernier Caliper | Your Study Material</title>
+<meta name="description" content="Read a vernier caliper by sight: main scale, coinciding line, least count and zero error, with a practice mode.">
+<meta name="author" content="Md Rokibul Islam Robin">
+<meta name="theme-color" content="#0E2A2F">
+<link rel="canonical" href="https://mdrokibul.me/simulations/vernier-caliper.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Your Study Material">
+<meta property="og:title" content="Vernier Caliper">
+<meta property="og:description" content="Read a vernier caliper by sight: main scale, coinciding line, least count and zero error, with a practice mode.">
+<meta property="og:url" content="https://mdrokibul.me/simulations/vernier-caliper.html">
+<meta property="og:image" content="https://mdrokibul.me/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Vernier Caliper">
+<meta name="twitter:description" content="Read a vernier caliper by sight: main scale, coinciding line, least count and zero error, with a practice mode.">
+<meta name="twitter:image" content="https://mdrokibul.me/og-image.jpg">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Vernier Caliper", "url": "https://mdrokibul.me/simulations/vernier-caliper.html", "description": "Read a vernier caliper by sight: main scale, coinciding line, least count and zero error, with a practice mode.", "inLanguage": "en", "isPartOf": {"@type": "WebSite", "name": "Your Study Material", "url": "https://mdrokibul.me/"}}</script>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="../nav.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="stylesheet" href="../lab.css">
+<style>
+.num{font:inherit;font-size:1.05rem;width:100%;padding:10px 12px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink)}
+.ans-row{display:flex;gap:10px;align-items:center}.ans-row .num{flex:1}
+</style>
+</head>
+<body class="sector-hsc">
+<div class="progress" id="progress" aria-hidden="true"></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav" id="nav" data-solid>
+  <div class="wrap">
+    <a class="brand" href="../index.html">Your Study<span> Material</span></a>
+    <nav class="links" id="links" aria-label="Main">
+      <div class="dd"><button class="dd-btn" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="toolsMenu">Tools <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="dd-menu" id="toolsMenu"><a href="../portal.html"><i class="fa-solid fa-building-columns" aria-hidden="true"></i><span><b>JKKNIU &amp; ESE Portal</b><small>Official links in one place</small></span></a><a href="../library.html"><i class="fa-solid fa-folder-open" aria-hidden="true"></i><span><b>Batch Library</b><small>Shared ESE study materials</small></span></a><a href="../sound-meter.html"><i class="fa-solid fa-ear-listen" aria-hidden="true"></i><span><b>Sound Level Meter</b><small>Measure noise with your phone</small></span></a><a href="../soil-texture.html"><i class="fa-solid fa-layer-group" aria-hidden="true"></i><span><b>Soil Texture Triangle</b><small>Plot sand, silt and clay</small></span></a><a href="../rock-cycle.html"><i class="fa-solid fa-gem" aria-hidden="true"></i><span><b>Rock Cycle Simulator</b><small>Weathering to metamorphism</small></span></a><a href="../gis-map.html"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i><span><b>GIS Area Explorer</b><small>Boundary, topography, pollution</small></span></a><a href="../gis-lab.html"><i class="fa-solid fa-satellite" aria-hidden="true"></i><span><b>WebGIS Lab</b><small>DEM profiles and GEE scripts</small></span></a><a href="../field-notebook.html"><i class="fa-solid fa-person-hiking" aria-hidden="true"></i><span><b>Field Notebook</b><small>Phone-only field measurements</small></span></a><a href="../water-quality.html"><i class="fa-solid fa-droplet" aria-hidden="true"></i><span><b>Water Quality</b><small>WQI against WHO and BD limits</small></span></a><a href="../field-tracker.html"><i class="fa-solid fa-route" aria-hidden="true"></i><span><b>Field Tracker</b><small>GPS track and waypoints</small></span></a><a href="../ecology-quadrat.html"><i class="fa-solid fa-table-cells" aria-hidden="true"></i><span><b>Quadrat Counter</b><small>Tally species, diversity indices</small></span></a><a class="on" href="../simulations/index.html"><i class="fa-solid fa-industry" aria-hidden="true"></i><span><b>Air Dispersion</b><small>Gaussian plume from a stack</small></span></a><a href="../eia-field.html"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i><span><b>EIA Field Visit Kit</b><small>Baseline checklist and impact matrix</small></span></a><a href="../ee-analyzer.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Earth Engine</b><small>Satellite analysis of any area</small></span></a><a href="../weather.html"><i class="fa-solid fa-cloud-sun-rain" aria-hidden="true"></i><span><b>EcoLens Weather</b><small>Your photo plus live weather and rain chance</small></span></a><a href="../atmosphere-sim.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Atmosphere Simulator</b><small>Three-cell circulation model</small></span></a></div></div>
+      <a href="../eia.html" title="Environmental impact assessment">EIA</a>
+      <a href="../hsc.html" title="Higher secondary, classes 11 and 12">HSC</a>
+      <a href="../ssc.html" title="Secondary, classes 9 and 10">SSC</a>
+      <a href="index.html" aria-current="page">Simulations</a>
+      <a href="../about.html">About</a>
+    </nav>
+    <div class="tools">
+      <button class="icon-btn" id="theme" type="button" aria-label="Switch to dark theme"><i class="fa-solid fa-moon"></i></button>
+      <button class="icon-btn burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="links"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</header>
+<div class="page-hero">
+  <div class="wrap">
+    <div class="trail"><a href="../hsc.html">HSC labs</a></div>
+    <h1>Vernier Caliper</h1>
+    <p>Slide the object between the jaws and read the main scale and the vernier. Then switch to Practice and test your own reading.</p>
+  </div>
+</div>
+<main id="main" class="lab-main">
+<div class="wrap">
+<div class="lab">
+  <div class="box">
+    <canvas class="stage" id="cv" style="height:clamp(330px,40vw,350px)" role="img" aria-label="Vernier caliper holding an object, with a close-up of the main scale and vernier scale"></canvas>
+    <div class="reads" aria-live="polite">
+      <div class="read"><small>Main scale reading</small><b id="rM"></b></div>
+      <div class="read"><small>Vernier reading</small><b id="rV"></b></div>
+      <div class="read"><small>Observed reading</small><b id="rO"></b></div>
+      <div class="read" id="rcBox"><small>After zero correction</small><b id="rC"></b></div>
+    </div>
+    <div class="verdict" id="msg" hidden></div>
+  </div>
+  <div class="box">
+    <h2>Set up the caliper</h2>
+    <div class="seg" id="mode" role="group" aria-label="Mode"><button type="button" data-v="explore" aria-pressed="true">Explore</button><button type="button" data-v="practice" aria-pressed="false">Practice</button></div>
+    <div class="seg" id="lc" role="group" aria-label="Least count"><button type="button" data-v="0.1" aria-pressed="true">LC 0.1 mm</button><button type="button" data-v="0.05" aria-pressed="false">LC 0.05 mm</button></div>
+    <label class="ctl" id="wBox"><span>Object width <output id="wO"></output></span><input type="range" id="w" min="1" max="45" step="0.01" value="23.45"></label>
+    <label class="ctl"><span>Zero error <output id="zO"></output></span><input type="range" id="ze" min="-4" max="4" step="1" value="0"></label>
+    <div id="pr" hidden>
+      <label class="ctl"><span>Your corrected reading (mm)</span><span class="ans-row"><input class="num" type="number" id="ans" step="0.01" inputmode="decimal" placeholder="e.g. 23.4"></span></label>
+      <div class="acts"><button class="go main" type="button" id="chk">Check</button><button class="go" type="button" id="nxt">New object</button></div>
+    </div>
+    <p class="fine" id="note"></p>
+  </div>
+</div>
+<div class="cols">
+  <div class="box">
+    <h2>Try this</h2>
+    <ul>
+      <li>In Explore mode, slide the object width slowly. Watch the vernier zero move along the main scale and the coinciding line shift one step each time.</li>
+      <li>Switch to LC 0.05 mm. The vernier has 20 divisions now, so the reading is twice as fine.</li>
+      <li>Set a zero error of +2 divisions. The jaws read a width even when closed, so the observed reading is too big. Subtract it.</li>
+      <li>Try Practice. Read the scales yourself, type the corrected reading, then press Check.</li>
+    </ul>
+  </div>
+  <div class="box">
+    <h2>The equations</h2>
+    <div class="eq">Least count = 1 main-scale division &minus; 1 vernier division</div>
+    <div class="eq">LC = 1 mm / N, &nbsp;with N vernier divisions equal to (N &minus; 1) mm</div>
+    <div class="eq">Reading = MSR + (coinciding line &times; LC)</div>
+    <div class="eq">True reading = observed reading &minus; zero error</div>
+    <p class="fine">A negative zero error (the vernier zero left of the main zero when closed) is subtracted too, so the correction is then added.</p>
+  </div>
+</div>
+</div>
+</main>
+<footer>&copy; 2026 Md Rokibul Islam Robin &middot; <a href="../eia.html">EIA</a> &middot; <a href="../hsc.html">HSC</a> &middot; <a href="../ssc.html">SSC</a> &middot; <a href="../about.html">About</a> &middot; A student project, not an official JKKNIU or NCTB website.</footer>
+<script src="../site.js"></script>
+<script src="../lab.js"></script>
+<script>
+(function () {
+  var L = Lab, W = 23.45, practice = false, shown = true, st;
+  var lcGet = L.seg('lc', function () { fixZ(); update(); });
+  var modeGet = L.seg('mode', function (m) { practice = m === 'practice'; L.$('wBox').hidden = practice; L.$('pr').hidden = !practice; if (practice) newObj(); else { W = L.val('w'); shown = true; } update(); });
+  function lc() { return parseFloat(lcGet()); }
+  function dp() { return lc() === 0.1 ? 1 : 2; }
+  function fixZ() { L.out('zO', (L.val('ze') * lc() >= 0 ? '+' : '−') + Math.abs(L.val('ze') * lc()).toFixed(dp()) + ' mm'); }
+  function calc() {
+    var l = lc(), per = Math.round(1 / l), e = L.val('ze') * l;
+    var nTot = Math.max(0, Math.round((W + e) / l + 1e-9)), msr = Math.floor(nTot / per), n = nTot - msr * per;
+    return { l: l, per: per, e: e, nTot: nTot, msr: msr, n: n, R: nTot * l, true_: nTot * l - e };
+  }
+  function newObj() { W = 2 + Math.round(Math.random() * 3800) / 100; shown = false; L.$('ans').value = ''; L.$('msg').hidden = true; }
+  var cv = L.canvas(L.$('cv'), function (ctx, w, h, c) {
+    ctx.clearRect(0, 0, w, h); st = calc();
+    var l = st.l, per = st.per, N = per, vdiv = 1 - l, d = dp();
+    /* top: whole instrument, 0 to 50 mm */
+    var k2 = (w - 70) / 56, x0 = 36, by = 22, bh = 20;
+    var fx = x0 + 6 * k2 * 0 + 8, sx = fx + 0; /* fixed jaw at fx */
+    var ox = fx - st.e * k2;                      /* main scale origin */
+    ctx.fillStyle = c.card; ctx.strokeStyle = c.line; ctx.lineWidth = 1.5;
+    ctx.fillRect(x0 - 10, by, w - 40, bh); ctx.strokeRect(x0 - 10, by, w - 40, bh);
+    for (var m = 0; m <= 55; m++) { var tx = ox + m * k2; if (tx < x0 - 8 || tx > w - 14) continue; L.line(ctx, tx, by + bh, tx, by + bh - (m % 10 === 0 ? 9 : m % 5 === 0 ? 7 : 4), c.soft, 1); }
+    var jx = fx + W * k2;
+    ctx.fillStyle = c.ink; ctx.fillRect(fx - 7, by + bh, 7, 52); ctx.fillRect(jx, by + bh, 7, 52);   /* jaws */
+    ctx.fillStyle = c.sec; ctx.globalAlpha = .55; ctx.fillRect(fx, by + bh + 8, jx - fx, 36); ctx.globalAlpha = 1;
+    ctx.fillStyle = c.card; ctx.strokeStyle = c.ink; ctx.lineWidth = 1.5; ctx.fillRect(jx, by - 6, Math.min(8 * k2 + 14, w - jx - 10), bh + 6); ctx.strokeRect(jx, by - 6, Math.min(8 * k2 + 14, w - jx - 10), bh + 6);
+    L.text(ctx, 'object', (fx + jx) / 2, by + bh + 31, '#fff', 12, 'center');
+    /* zoom box marker */
+    var zr = st.R;
+    /* bottom: close-up, 12 mm window */
+    var base = st.msr - 1, span = 12, padx = 30, k = (w - 2 * padx) / span, top = 118;
+    function X(mm) { return padx + (mm - base) * k; }
+    ctx.strokeStyle = c.line; ctx.lineWidth = 1; ctx.setLineDash([4, 4]); ctx.strokeRect(padx - 6, top - 22, w - 2 * padx + 12, h - top - 8); ctx.setLineDash([]);
+    L.text(ctx, 'Close-up of the scales', padx, top - 8, c.soft, 12);
+    var my = top + 14, mh = 52;
+    ctx.fillStyle = c.card; ctx.fillRect(padx - 6, my, w - 2 * padx + 12, mh); ctx.strokeStyle = c.ink; ctx.lineWidth = 1.5; ctx.strokeRect(padx - 6, my, w - 2 * padx + 12, mh);
+    var lbl = k >= 26;
+    for (var mm = base; mm <= base + span; mm++) {
+      var hit = mm === st.msr, x = X(mm);
+      L.line(ctx, x, my + mh, x, my + mh - (mm % 10 === 0 ? 26 : mm % 5 === 0 ? 20 : 15), hit ? c.sec : c.ink, hit ? 3 : 1.4);
+      if (lbl || mm % 5 === 0) L.text(ctx, String(mm), x, my + 15, hit ? c.sec : c.soft, 12, 'center', hit ? 800 : 600);
+    }
+    L.text(ctx, 'main scale (mm)', padx, my - 4 + 0, c.soft, 11);
+    var vy = my + mh + 8, vh = 50, vx0 = X(st.R), vx1 = X(st.R + N * vdiv);
+    ctx.fillStyle = c.mist; ctx.fillRect(vx0 - 6, vy, vx1 - vx0 + 12, vh); ctx.strokeStyle = c.ink; ctx.strokeRect(vx0 - 6, vy, vx1 - vx0 + 12, vh);
+    for (var i = 0; i <= N; i++) {
+      var x2 = X(st.R + i * vdiv), on = i === st.n, major = (N === 10) || i % 5 === 0;
+      L.line(ctx, x2, vy, x2, vy + (i % 5 === 0 ? 22 : 15), on ? c.bad : c.ink, on ? 3 : 1.4);
+      if (N === 10 || i % 5 === 0) L.text(ctx, String(N === 10 ? i : i), x2, vy + 38, on ? c.bad : c.soft, 12, 'center', on ? 800 : 600);
+    }
+    L.text(ctx, N === 10 ? 'vernier scale: 10 divisions' : 'vernier scale: 20 divisions', vx1 + 6, vy + vh + 14, c.soft, 11, 'right');
+    /* zero marker arrow and coincidence guide */
+    L.arrow(ctx, vx0, vy + vh + 26, 0, -14, c.sec, 2.5);
+    L.text(ctx, 'zero', vx0, vy + vh + 40, c.sec, 11, 'center');
+    var cx = X(st.msr + st.n);
+    ctx.save(); ctx.strokeStyle = c.bad; ctx.globalAlpha = .45; ctx.lineWidth = 6; ctx.beginPath(); ctx.moveTo(cx, my + mh - 4); ctx.lineTo(cx, vy + 18); ctx.stroke(); ctx.restore();
+    if (practice && !shown) { /* keep the hint short */ }
+  });
+  function update() {
+    if (!practice) W = L.val('w');
+    L.out('wO', W.toFixed(2) + ' mm'); fixZ(); st = calc(); var d = dp();
+    L.out('rM', st.msr + ' mm');
+    L.out('rV', st.n + ' \u00d7 ' + st.l + ' mm');
+    var hide = practice && !shown;
+    L.out('rO', hide ? '?' : st.R.toFixed(d) + ' mm');
+    L.out('rC', hide ? '?' : st.true_.toFixed(d) + ' mm');
+    if (hide) { L.out('rM', '?'); L.out('rV', '?'); }
+    L.out('note', 'Least count = ' + st.l + ' mm. ' + (st.e === 0 ? 'No zero error.' : 'Zero error ' + (st.e > 0 ? '+' : '−') + Math.abs(st.e).toFixed(d) + ' mm, so subtract it from the observed reading.'));
+    cv.redraw();
+  }
+  L.on(['w', 'ze'], update);
+  L.$('chk').addEventListener('click', function () {
+    var a = parseFloat(L.$('ans').value), m = L.$('msg'); st = calc(); m.hidden = false;
+    if (!isFinite(a)) { m.textContent = 'Type your corrected reading in mm first.'; return; }
+    shown = true; var ok = Math.abs(a - st.true_) <= st.l / 2 + 1e-9;
+    m.textContent = (ok ? 'Correct. ' : 'Not quite. ') + 'MSR ' + st.msr + ' mm + ' + st.n + ' × ' + st.l + ' mm = ' + st.R.toFixed(dp()) + ' mm observed; minus zero error ' + st.e.toFixed(dp()) + ' mm gives ' + st.true_.toFixed(dp()) + ' mm.';
+    update();
+  });
+  L.$('nxt').addEventListener('click', function () { newObj(); update(); });
+  update();
+})();
+</script>
+</body>
+</html>

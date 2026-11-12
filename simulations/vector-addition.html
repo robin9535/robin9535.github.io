@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vector Addition | Your Study Material</title>
+<meta name="description" content="Add or subtract two vectors, see the parallelogram, the resultant, the angle, and the dot and cross products.">
+<meta name="author" content="Md Rokibul Islam Robin">
+<meta name="theme-color" content="#0E2A2F">
+<link rel="canonical" href="https://mdrokibul.me/simulations/vector-addition.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Your Study Material">
+<meta property="og:title" content="Vector Addition">
+<meta property="og:description" content="Add or subtract two vectors, see the parallelogram, the resultant, the angle, and the dot and cross products.">
+<meta property="og:url" content="https://mdrokibul.me/simulations/vector-addition.html">
+<meta property="og:image" content="https://mdrokibul.me/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Vector Addition">
+<meta name="twitter:description" content="Add or subtract two vectors, see the parallelogram, the resultant, the angle, and the dot and cross products.">
+<meta name="twitter:image" content="https://mdrokibul.me/og-image.jpg">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Vector Addition", "url": "https://mdrokibul.me/simulations/vector-addition.html", "description": "Add or subtract two vectors, see the parallelogram, the resultant, the angle, and the dot and cross products.", "inLanguage": "en", "isPartOf": {"@type": "WebSite", "name": "Your Study Material", "url": "https://mdrokibul.me/"}}</script>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="../nav.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="stylesheet" href="../lab.css">
+<style>
+.num{font:inherit;font-size:1.05rem;width:100%;padding:10px 12px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink)}
+.ans-row{display:flex;gap:10px;align-items:center}.ans-row .num{flex:1}
+</style>
+</head>
+<body class="sector-hsc">
+<div class="progress" id="progress" aria-hidden="true"></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav" id="nav" data-solid>
+  <div class="wrap">
+    <a class="brand" href="../index.html">Your Study<span> Material</span></a>
+    <nav class="links" id="links" aria-label="Main">
+      <div class="dd"><button class="dd-btn" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="toolsMenu">Tools <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="dd-menu" id="toolsMenu"><a href="../portal.html"><i class="fa-solid fa-building-columns" aria-hidden="true"></i><span><b>JKKNIU &amp; ESE Portal</b><small>Official links in one place</small></span></a><a href="../library.html"><i class="fa-solid fa-folder-open" aria-hidden="true"></i><span><b>Batch Library</b><small>Shared ESE study materials</small></span></a><a href="../sound-meter.html"><i class="fa-solid fa-ear-listen" aria-hidden="true"></i><span><b>Sound Level Meter</b><small>Measure noise with your phone</small></span></a><a href="../soil-texture.html"><i class="fa-solid fa-layer-group" aria-hidden="true"></i><span><b>Soil Texture Triangle</b><small>Plot sand, silt and clay</small></span></a><a href="../rock-cycle.html"><i class="fa-solid fa-gem" aria-hidden="true"></i><span><b>Rock Cycle Simulator</b><small>Weathering to metamorphism</small></span></a><a href="../gis-map.html"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i><span><b>GIS Area Explorer</b><small>Boundary, topography, pollution</small></span></a><a href="../gis-lab.html"><i class="fa-solid fa-satellite" aria-hidden="true"></i><span><b>WebGIS Lab</b><small>DEM profiles and GEE scripts</small></span></a><a href="../field-notebook.html"><i class="fa-solid fa-person-hiking" aria-hidden="true"></i><span><b>Field Notebook</b><small>Phone-only field measurements</small></span></a><a href="../water-quality.html"><i class="fa-solid fa-droplet" aria-hidden="true"></i><span><b>Water Quality</b><small>WQI against WHO and BD limits</small></span></a><a href="../field-tracker.html"><i class="fa-solid fa-route" aria-hidden="true"></i><span><b>Field Tracker</b><small>GPS track and waypoints</small></span></a><a href="../ecology-quadrat.html"><i class="fa-solid fa-table-cells" aria-hidden="true"></i><span><b>Quadrat Counter</b><small>Tally species, diversity indices</small></span></a><a class="on" href="../simulations/index.html"><i class="fa-solid fa-industry" aria-hidden="true"></i><span><b>Air Dispersion</b><small>Gaussian plume from a stack</small></span></a><a href="../eia-field.html"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i><span><b>EIA Field Visit Kit</b><small>Baseline checklist and impact matrix</small></span></a><a href="../ee-analyzer.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Earth Engine</b><small>Satellite analysis of any area</small></span></a><a href="../weather.html"><i class="fa-solid fa-cloud-sun-rain" aria-hidden="true"></i><span><b>EcoLens Weather</b><small>Your photo plus live weather and rain chance</small></span></a><a href="../atmosphere-sim.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Atmosphere Simulator</b><small>Three-cell circulation model</small></span></a></div></div>
+      <a href="../eia.html" title="Environmental impact assessment">EIA</a>
+      <a href="../hsc.html" title="Higher secondary, classes 11 and 12">HSC</a>
+      <a href="../ssc.html" title="Secondary, classes 9 and 10">SSC</a>
+      <a href="index.html" aria-current="page">Simulations</a>
+      <a href="../about.html">About</a>
+    </nav>
+    <div class="tools">
+      <button class="icon-btn" id="theme" type="button" aria-label="Switch to dark theme"><i class="fa-solid fa-moon"></i></button>
+      <button class="icon-btn burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="links"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</header>
+<div class="page-hero">
+  <div class="wrap">
+    <div class="trail"><a href="../hsc.html">HSC labs</a></div>
+    <h1>Vector Addition</h1>
+    <p>Change the size and direction of two vectors, or drag their tips, and watch the resultant follow the parallelogram law.</p>
+  </div>
+</div>
+<main id="main" class="lab-main">
+<div class="wrap">
+<div class="lab">
+  <div class="box">
+    <canvas class="stage" id="cv" role="img" aria-label="Two vectors A and B drawn from the origin with their parallelogram and the resultant"></canvas>
+    <div class="reads" aria-live="polite">
+      <div class="read"><small id="rLbl">Resultant |R|</small><b id="rR"></b></div>
+      <div class="read"><small>Direction of R from A</small><b id="rD"></b></div>
+      <div class="read"><small>Dot product A·B</small><b id="rDot"></b></div>
+      <div class="read"><small>Cross product |A×B|</small><b id="rCr"></b></div>
+    </div>
+  </div>
+  <div class="box">
+    <h2>Set the vectors</h2>
+    <div class="seg" id="op" role="group" aria-label="Operation"><button type="button" data-v="add" aria-pressed="true">A + B</button><button type="button" data-v="sub" aria-pressed="false">A &minus; B</button></div>
+    <label class="ctl"><span>Magnitude of A <output id="aO"></output></span><input type="range" id="a" min="1" max="10" step="0.5" value="6"></label>
+    <label class="ctl"><span>Direction of A <output id="atO"></output></span><input type="range" id="at" min="0" max="360" step="1" value="20"></label>
+    <label class="ctl"><span>Magnitude of B <output id="bO"></output></span><input type="range" id="b" min="1" max="10" step="0.5" value="4"></label>
+    <label class="ctl"><span>Direction of B <output id="btO"></output></span><input type="range" id="bt" min="0" max="360" step="1" value="100"></label>
+    <div class="acts"><button class="go" type="button" id="perp">Make A &perp; B</button><button class="go" type="button" id="par">Make A &#8741; B</button></div>
+    <p class="fine">You can also drag the tip of A or B on the picture. Angles are measured from the +x axis.</p>
+  </div>
+</div>
+<div class="cols">
+  <div class="box">
+    <h2>Try this</h2>
+    <ul>
+      <li>Set both vectors to the same direction. The resultant is the plain sum A + B.</li>
+      <li>Turn B to the opposite direction. The resultant is the difference of the sizes.</li>
+      <li>Press &ldquo;Make A &perp; B&rdquo;. Check that |R| = &radic;(A&sup2; + B&sup2;) and that the dot product is 0.</li>
+      <li>Switch to A &minus; B. The second arrow flips, and the resultant is the other diagonal of the parallelogram.</li>
+    </ul>
+  </div>
+  <div class="box">
+    <h2>The equations</h2>
+    <div class="eq">R = &radic;(A&sup2; + B&sup2; + 2AB cos&theta;)</div>
+    <div class="eq">tan &alpha; = B sin&theta; / (A + B cos&theta;)</div>
+    <div class="eq">A&middot;B = AB cos&theta; &nbsp;&nbsp; |A&times;B| = AB sin&theta;</div>
+    <div class="eq">Components: A<sub>x</sub> = A cos&phi;, A<sub>y</sub> = A sin&phi;</div>
+    <p class="fine">&theta; is the angle between the two vectors, and &alpha; is the angle R makes with A. For A &minus; B the same formulas hold with B reversed.</p>
+  </div>
+</div>
+</div>
+</main>
+<footer>&copy; 2026 Md Rokibul Islam Robin &middot; <a href="../eia.html">EIA</a> &middot; <a href="../hsc.html">HSC</a> &middot; <a href="../ssc.html">SSC</a> &middot; <a href="../about.html">About</a> &middot; A student project, not an official JKKNIU or NCTB website.</footer>
+<script src="../site.js"></script>
+<script src="../lab.js"></script>
+<script>
+(function () {
+  var L = Lab, D = Math.PI / 180, sub = false;
+  var opGet = L.seg('op', function (v) { sub = v === 'sub'; update(); });
+  function vec(m, a) { return { x: m * Math.cos(a * D), y: m * Math.sin(a * D) }; }
+  function calc() {
+    var A = L.val('a'), at = L.val('at'), B = L.val('b'), bt = L.val('bt');
+    var a = vec(A, at), b = vec(B, bt), s = sub ? -1 : 1, bb = { x: s * b.x, y: s * b.y };
+    var r = { x: a.x + bb.x, y: a.y + bb.y }, mag = Math.hypot(r.x, r.y);
+    var dir = (Math.atan2(r.y, r.x) - Math.atan2(a.y, a.x)) / D; dir = ((dir + 540) % 360) - 180;
+    return { A: A, B: B, a: a, b: b, bb: bb, r: r, mag: mag, dir: dir, dot: a.x * b.x + a.y * b.y, cr: Math.abs(a.x * b.y - a.y * b.x) };
+  }
+  var S, ext = 10;
+  var cv = L.canvas(L.$('cv'), function (ctx, w, h, c) {
+    ctx.clearRect(0, 0, w, h); S = calc();
+    var need = Math.max(S.A, S.B, S.mag) * 1.12; ext = Math.max(10, Math.ceil(need / 5) * 5);
+    var k = Math.min(w, h) / 2 / ext * 0.94, ox = w / 2, oy = h / 2;
+    function X(x) { return ox + x * k; } function Y(y) { return oy - y * k; }
+    var st = ext > 20 ? 10 : 5; ctx.lineWidth = 1;
+    for (var g = -ext; g <= ext; g += st) { L.line(ctx, X(g), 6, X(g), h - 6, g === 0 ? c.soft : c.line, g === 0 ? 1.6 : 1); L.line(ctx, 6, Y(g), w - 6, Y(g), g === 0 ? c.soft : c.line, g === 0 ? 1.6 : 1); if (g) { L.text(ctx, String(g), X(g), oy + 14, c.soft, 11, 'center'); L.text(ctx, String(g), ox - 6, Y(g) + 4, c.soft, 11, 'right'); } }
+    var a = S.a, b = S.bb, r = S.r;
+    /* parallelogram */
+    ctx.fillStyle = c.sec; ctx.globalAlpha = .09; ctx.beginPath(); ctx.moveTo(X(0), Y(0)); ctx.lineTo(X(a.x), Y(a.y)); ctx.lineTo(X(r.x), Y(r.y)); ctx.lineTo(X(b.x), Y(b.y)); ctx.fill(); ctx.globalAlpha = 1;
+    L.line(ctx, X(a.x), Y(a.y), X(r.x), Y(r.y), c.river, 1.5, true); L.line(ctx, X(b.x), Y(b.y), X(r.x), Y(r.y), c.bad, 1.5, true);
+    /* components of R */
+    L.line(ctx, X(r.x), Y(0), X(r.x), Y(r.y), c.soft, 1, true); L.line(ctx, X(0), Y(r.y), X(r.x), Y(r.y), c.soft, 1, true);
+    /* angle arc between A and original B */
+    var t1 = Math.atan2(S.a.y, S.a.x), t2 = Math.atan2(S.b.y, S.b.x), dd = ((t2 - t1 + 3 * Math.PI) % (2 * Math.PI)) - Math.PI;
+    ctx.strokeStyle = c.soft; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(X(0), Y(0), 26, -t1, -(t1 + dd), dd > 0); ctx.stroke();
+    var tm = t1 + dd / 2; L.text(ctx, 'θ = ' + Math.round(Math.abs(dd) / D) + '°', X(0) + 58 * Math.cos(tm), Y(0) - 58 * Math.sin(tm) + 4, c.soft, 12, 'center');
+    if (sub) L.arrow(ctx, X(0), Y(0), X(S.b.x) - X(0), Y(S.b.y) - Y(0), c.line, 2);
+    L.arrow(ctx, X(0), Y(0), X(a.x) - X(0), Y(a.y) - Y(0), c.river, 3.5);
+    L.arrow(ctx, X(0), Y(0), X(b.x) - X(0), Y(b.y) - Y(0), c.bad, 3.5);
+    L.arrow(ctx, X(0), Y(0), X(r.x) - X(0), Y(r.y) - Y(0), c.sec, 4.5);
+    L.text(ctx, 'A', X(a.x) + 8, Y(a.y) - 6, c.river, 15, 'left', 800);
+    L.text(ctx, sub ? '−B' : 'B', X(b.x) + 8, Y(b.y) - 6, c.bad, 15, 'left', 800);
+    L.text(ctx, sub ? 'R = A − B' : 'R = A + B', X(r.x) + 8, Y(r.y) + 16, c.sec, 15, 'left', 800);
+    ctx.fillStyle = c.ink; ctx.beginPath(); ctx.arc(X(0), Y(0), 4, 0, 7); ctx.fill();
+    L.text(ctx, 'units', w - 10, h - 10, c.soft, 11, 'right');
+  });
+  function update() {
+    S = calc();
+    L.out('aO', S.A.toFixed(1)); L.out('bO', S.B.toFixed(1)); L.out('atO', L.val('at') + '°'); L.out('btO', L.val('bt') + '°');
+    L.out('rLbl', sub ? 'Resultant |A − B|' : 'Resultant |A + B|');
+    L.out('rR', L.fx(S.mag, 2)); L.out('rD', L.fx(S.dir, 1) + '°'); L.out('rDot', L.fx(Math.abs(S.dot) < 5e-9 ? 0 : S.dot, 2)); L.out('rCr', L.fx(S.cr, 2));
+    cv.redraw();
+  }
+  L.on(['a', 'at', 'b', 'bt'], update);
+  var which = null;
+  L.drag(L.$('cv'), function (px, py, w, h) {
+    var k = Math.min(w, h) / 2 / ext * 0.94, x = (px - w / 2) / k, y = (h / 2 - py) / k;
+    var A = calc(); var dA = Math.hypot(x - A.a.x, y - A.a.y), dB = Math.hypot(x - A.b.x, y - A.b.y), dI = Math.hypot(x - A.bb.x, y - A.bb.y);
+    if (which === null) which = (dA <= Math.min(dB, dI)) ? 'a' : 'b';
+    var m = Math.min(10, Math.max(1, Math.round(Math.hypot(x, y) * 2) / 2)), ang = Math.atan2(y, x) / D;
+    if (which === 'b' && sub) ang += 180;
+    ang = Math.round(((ang % 360) + 360) % 360);
+    L.$(which).value = m; L.$(which === 'a' ? 'at' : 'bt').value = ang; update();
+  });
+  L.$('cv').addEventListener('pointerup', function () { which = null; });
+  L.$('cv').addEventListener('pointercancel', function () { which = null; });
+  L.$('perp').addEventListener('click', function () { L.$('bt').value = (L.val('at') + 90) % 360; update(); });
+  L.$('par').addEventListener('click', function () { L.$('bt').value = L.val('at'); update(); });
+})();
+</script>
+</body>
+</html>
