@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inclined Plane and Friction | Your Study Material</title>
+<meta name="description" content="Tilt a plane, change mass and friction, see weight, normal force and friction, and find the angle of repose.">
+<meta name="author" content="Md Rokibul Islam Robin">
+<meta name="theme-color" content="#0E2A2F">
+<link rel="canonical" href="https://mdrokibul.me/simulations/inclined-plane.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Your Study Material">
+<meta property="og:title" content="Inclined Plane and Friction">
+<meta property="og:description" content="Tilt a plane, change mass and friction, see weight, normal force and friction, and find the angle of repose.">
+<meta property="og:url" content="https://mdrokibul.me/simulations/inclined-plane.html">
+<meta property="og:image" content="https://mdrokibul.me/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Inclined Plane and Friction">
+<meta name="twitter:description" content="Tilt a plane, change mass and friction, see weight, normal force and friction, and find the angle of repose.">
+<meta name="twitter:image" content="https://mdrokibul.me/og-image.jpg">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Inclined Plane and Friction", "url": "https://mdrokibul.me/simulations/inclined-plane.html", "description": "Tilt a plane, change mass and friction, see weight, normal force and friction, and find the angle of repose.", "inLanguage": "en", "isPartOf": {"@type": "WebSite", "name": "Your Study Material", "url": "https://mdrokibul.me/"}}</script>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="../nav.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="stylesheet" href="../lab.css">
+<style>
+.num{font:inherit;font-size:1.05rem;width:100%;padding:10px 12px;border-radius:12px;border:2px solid var(--line);background:var(--mist);color:var(--ink)}
+.ans-row{display:flex;gap:10px;align-items:center}.ans-row .num{flex:1}
+</style>
+</head>
+<body class="sector-hsc">
+<div class="progress" id="progress" aria-hidden="true"></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav" id="nav" data-solid>
+  <div class="wrap">
+    <a class="brand" href="../index.html">Your Study<span> Material</span></a>
+    <nav class="links" id="links" aria-label="Main">
+      <div class="dd"><button class="dd-btn" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="toolsMenu">Tools <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="dd-menu" id="toolsMenu"><a href="../portal.html"><i class="fa-solid fa-building-columns" aria-hidden="true"></i><span><b>JKKNIU &amp; ESE Portal</b><small>Official links in one place</small></span></a><a href="../library.html"><i class="fa-solid fa-folder-open" aria-hidden="true"></i><span><b>Batch Library</b><small>Shared ESE study materials</small></span></a><a href="../sound-meter.html"><i class="fa-solid fa-ear-listen" aria-hidden="true"></i><span><b>Sound Level Meter</b><small>Measure noise with your phone</small></span></a><a href="../soil-texture.html"><i class="fa-solid fa-layer-group" aria-hidden="true"></i><span><b>Soil Texture Triangle</b><small>Plot sand, silt and clay</small></span></a><a href="../rock-cycle.html"><i class="fa-solid fa-gem" aria-hidden="true"></i><span><b>Rock Cycle Simulator</b><small>Weathering to metamorphism</small></span></a><a href="../gis-map.html"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i><span><b>GIS Area Explorer</b><small>Boundary, topography, pollution</small></span></a><a href="../gis-lab.html"><i class="fa-solid fa-satellite" aria-hidden="true"></i><span><b>WebGIS Lab</b><small>DEM profiles and GEE scripts</small></span></a><a href="../field-notebook.html"><i class="fa-solid fa-person-hiking" aria-hidden="true"></i><span><b>Field Notebook</b><small>Phone-only field measurements</small></span></a><a href="../water-quality.html"><i class="fa-solid fa-droplet" aria-hidden="true"></i><span><b>Water Quality</b><small>WQI against WHO and BD limits</small></span></a><a href="../field-tracker.html"><i class="fa-solid fa-route" aria-hidden="true"></i><span><b>Field Tracker</b><small>GPS track and waypoints</small></span></a><a href="../ecology-quadrat.html"><i class="fa-solid fa-table-cells" aria-hidden="true"></i><span><b>Quadrat Counter</b><small>Tally species, diversity indices</small></span></a><a class="on" href="../simulations/index.html"><i class="fa-solid fa-industry" aria-hidden="true"></i><span><b>Air Dispersion</b><small>Gaussian plume from a stack</small></span></a><a href="../eia-field.html"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i><span><b>EIA Field Visit Kit</b><small>Baseline checklist and impact matrix</small></span></a><a href="../ee-analyzer.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Earth Engine</b><small>Satellite analysis of any area</small></span></a><a href="../weather.html"><i class="fa-solid fa-cloud-sun-rain" aria-hidden="true"></i><span><b>EcoLens Weather</b><small>Your photo plus live weather and rain chance</small></span></a><a href="../atmosphere-sim.html"><i class="fa-solid fa-earth-asia" aria-hidden="true"></i><span><b>Atmosphere Simulator</b><small>Three-cell circulation model</small></span></a></div></div>
+      <a href="../eia.html" title="Environmental impact assessment">EIA</a>
+      <a href="../hsc.html" title="Higher secondary, classes 11 and 12">HSC</a>
+      <a href="../ssc.html" title="Secondary, classes 9 and 10">SSC</a>
+      <a href="index.html" aria-current="page">Simulations</a>
+      <a href="../about.html">About</a>
+    </nav>
+    <div class="tools">
+      <button class="icon-btn" id="theme" type="button" aria-label="Switch to dark theme"><i class="fa-solid fa-moon"></i></button>
+      <button class="icon-btn burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="links"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</header>
+<div class="page-hero">
+  <div class="wrap">
+    <div class="trail"><a href="../hsc.html">HSC labs</a></div>
+    <h1>Inclined Plane and Friction</h1>
+    <p>Raise the slope until the block slips. Watch the weight split into a part along the plane and a part into it, and see friction answer.</p>
+  </div>
+</div>
+<main id="main" class="lab-main">
+<div class="wrap">
+<div class="lab">
+  <div class="box">
+    <canvas class="stage" id="cv" style="height:clamp(340px,46vw,440px)" role="img" aria-label="A block on an inclined plane with weight, normal force and friction arrows"></canvas>
+    <div class="reads" aria-live="polite">
+      <div class="read"><small>Normal force N</small><b id="rN"></b></div>
+      <div class="read"><small>Friction f</small><b id="rF"></b></div>
+      <div class="read"><small>Acceleration</small><b id="rA"></b></div>
+      <div class="read" id="stBox"><small>State</small><b id="rS"></b></div>
+    </div>
+  </div>
+  <div class="box">
+    <h2>Tilt the plane</h2>
+    <label class="ctl"><span>Angle of incline <output id="thO"></output></span><input type="range" id="th" min="0" max="70" step="0.5" value="20"></label>
+    <label class="ctl"><span>Mass of block <output id="mO"></output></span><input type="range" id="m" min="1" max="20" step="1" value="5"></label>
+    <label class="ctl"><span><span>Static friction &mu;<sub>s</sub></span> <output id="msO"></output></span><input type="range" id="ms" min="0.1" max="1" step="0.05" value="0.6"></label>
+    <label class="ctl"><span><span>Kinetic friction &mu;<sub>k</sub></span> <output id="mkO"></output></span><input type="range" id="mk" min="0.05" max="1" step="0.05" value="0.4"></label>
+    <div class="acts"><button class="go main" type="button" id="rel">Release</button><button class="go" type="button" id="rst">Reset block</button></div>
+    <p class="fine" id="note"></p>
+  </div>
+</div>
+<div class="cols">
+  <div class="box">
+    <h2>Try this</h2>
+    <ul>
+      <li>Raise the angle slowly while the block rests. Friction grows to match mg sin&theta; until the block just starts to slip.</li>
+      <li>Find the angle where it slips, then compare with tan<sup>-1</sup>&mu;<sub>s</sub>, the angle of repose.</li>
+      <li>Double the mass. Does the slipping angle change? Does the acceleration change?</li>
+      <li>Set &mu;<sub>k</sub> to 0.05 on a steep plane and compare with a rough one.</li>
+    </ul>
+  </div>
+  <div class="box">
+    <h2>The equations</h2>
+    <div class="eq">N = mg cos&theta; &nbsp;&nbsp; mg sin&theta; pulls down the slope</div>
+    <div class="eq">At rest: f = mg sin&theta; &nbsp; (while f &le; &mu;<sub>s</sub>N)</div>
+    <div class="eq">Sliding: a = g (sin&theta; &minus; &mu;<sub>k</sub> cos&theta;)</div>
+    <div class="eq">Angle of repose: tan &theta; = &mu;<sub>s</sub></div>
+    <p class="fine">Uses g = 9.8 m/s&sup2;. The block starts near the top of a 3 m slope and stops when it reaches the bottom. Needs &mu;<sub>k</sub> &le; &mu;<sub>s</sub> to make sense, so the sliders keep that order.</p>
+  </div>
+</div>
+</div>
+</main>
+<footer>&copy; 2026 Md Rokibul Islam Robin &middot; <a href="../eia.html">EIA</a> &middot; <a href="../hsc.html">HSC</a> &middot; <a href="../ssc.html">SSC</a> &middot; <a href="../about.html">About</a> &middot; A student project, not an official JKKNIU or NCTB website.</footer>
+<script src="../site.js"></script>
+<script src="../lab.js"></script>
+<script>
+(function () {
+  var L = Lab, D = Math.PI / 180, G = 9.8, LEN = 3, s = 0, v = 0, slid = false, released = false, p;
+  function calc() {
+    var th = L.val('th') * D, m = L.val('m'), ms = L.val('ms'), mk = Math.min(L.val('mk'), ms);
+    var N = m * G * Math.cos(th), down = m * G * Math.sin(th), fmax = ms * N, slips = down > fmax + 1e-9;
+    return { th: th, m: m, ms: ms, mk: mk, N: N, down: down, fmax: fmax, slips: slips, a: slips ? G * (Math.sin(th) - mk * Math.cos(th)) : 0, rep: Math.atan(ms) / D };
+  }
+  var run = L.loop(function (dt) {
+    p = calc();
+    if (released && !slid && p.slips) slid = true;
+    if (slid) {
+      var a = p.slips || v > 0 ? G * (Math.sin(p.th) - p.mk * Math.cos(p.th)) : 0;
+      if (v <= 0 && a <= 0) { v = 0; slid = false; }
+      else { v = Math.max(0, v + a * dt); s += v * dt; }
+      if (s >= LEN) { s = LEN; v = 0; slid = false; released = false; }
+    }
+    show(); cv.redraw(); if (!released && !slid) run.stop();
+  });
+  var cv = L.canvas(L.$('cv'), function (ctx, w, h, c) {
+    ctx.clearRect(0, 0, w, h); if (!p) p = calc();
+    var th = p.th, S = Math.min(w * 0.62, (h - 110) / 0.95), ox = Math.max(40, w * 0.12), oy = h - 58;
+    var ux = Math.cos(th), uy = -Math.sin(th), nx = -Math.sin(th), ny = -Math.cos(th);
+    var topx = ox + S * ux, topy = oy + S * uy;
+    ctx.fillStyle = c.card; ctx.strokeStyle = c.ink; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(ox, oy); ctx.lineTo(ox + S * ux, oy); ctx.lineTo(topx, topy); ctx.closePath(); ctx.fill(); ctx.stroke();
+    /* hatch under surface to suggest ground */
+    ctx.strokeStyle = c.line; ctx.lineWidth = 1; for (var i = 0; i < 14; i++) { var hx = ox - 20 + i * ((S * ux + 60) / 13); ctx.beginPath(); ctx.moveTo(hx, oy + 1); ctx.lineTo(hx - 10, oy + 11); ctx.stroke(); }
+    ctx.strokeStyle = c.soft; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(ox, oy, 38, 0, -th, true); ctx.stroke();
+    L.text(ctx, 'θ = ' + (th / D).toFixed(1) + '°', ox + 46, oy - 6 - Math.min(18, 18 * Math.sin(th)), c.ink, 13);
+    /* block */
+    var bs = Math.max(34, Math.min(54, 30 + p.m * 1.2)), travel = S - bs - 18;
+    var bx = ox + ux * (S - 12 - (s / LEN) * travel - bs / 2 - 0) , by = oy + uy * (S - 12 - (s / LEN) * travel - bs / 2);
+    var cx = bx + nx * bs / 2, cy = by + ny * bs / 2;
+    ctx.save(); ctx.translate(cx, cy); ctx.rotate(-th); ctx.fillStyle = c.sec; ctx.globalAlpha = .9; ctx.fillRect(-bs / 2, -bs / 2, bs, bs); ctx.globalAlpha = 1; ctx.strokeStyle = c.ink; ctx.lineWidth = 2; ctx.strokeRect(-bs / 2, -bs / 2, bs, bs); ctx.restore();
+    L.text(ctx, p.m + ' kg', cx, cy + 4, '#fff', 12, 'center', 800);
+    /* force arrows, all scaled to weight = 100 px */
+    var sc = 64 / (p.m * G);
+    L.arrow(ctx, cx, cy, 0, p.m * G * sc, c.bad, 3); L.text(ctx, 'mg = ' + (p.m * G).toFixed(0) + ' N', cx + 8, cy + 76, c.bad, 12);
+    L.arrow(ctx, cx, cy, nx * p.N * sc, ny * p.N * sc, c.river, 3); L.text(ctx, 'N = ' + p.N.toFixed(0) + ' N', cx + nx * p.N * sc - 8, cy + ny * p.N * sc - 8, c.river, 12, 'right');
+    var f = p.slips || slid ? p.mk * p.N : p.down;
+    L.arrow(ctx, cx, cy, -ux * 0 + ux * f * sc, uy * f * sc, c.warn, 3);
+    L.text(ctx, 'f = ' + f.toFixed(0) + ' N', cx + ux * f * sc + 8, cy + uy * f * sc - 6, c.warn, 12);
+    /* dashed components of weight */
+    var tipx = cx, tipy = cy + p.m * G * sc, dn = p.down * sc, nn = p.N * sc;
+    ctx.setLineDash([4, 4]); ctx.lineWidth = 1.5; ctx.strokeStyle = c.soft;
+    ctx.beginPath(); ctx.moveTo(tipx, tipy); ctx.lineTo(cx - ux * dn, cy - uy * dn); ctx.moveTo(tipx, tipy); ctx.lineTo(cx - nx * nn, cy - ny * nn); ctx.stroke(); ctx.setLineDash([]);
+    L.arrow(ctx, cx, cy, -ux * dn, -uy * dn, c.soft, 2); L.arrow(ctx, cx, cy, -nx * nn, -ny * nn, c.soft, 2);
+  });
+  function show() {
+    p = p || calc(); var state, f;
+    if (slid) state = 'Sliding'; else if (s >= LEN - 1e-6) state = 'At the bottom'; else state = p.slips ? 'About to slide' : 'At rest';
+    if (!released && !slid && s === 0 && p.slips) state = 'Will slide when released';
+    f = (p.slips || slid) ? p.mk * p.N : p.down;
+    L.out('rN', p.N.toFixed(1) + ' N'); L.out('rF', f.toFixed(1) + ' N');
+    var a = (slid || p.slips) ? G * (Math.sin(p.th) - p.mk * Math.cos(p.th)) : 0; L.out('rA', a.toFixed(2) + ' m/s²'); L.out('rS', state);
+    L.out('note', 'Angle of repose = tan⁻¹(' + p.ms.toFixed(2) + ') = ' + p.rep.toFixed(1) + '°. ' + (p.slips ? 'Above that, the block slides.' : 'Below that, friction holds the block.') + ' Grey arrows: mg sin\u03b8 = ' + p.down.toFixed(1) + ' N along the slope and mg cos\u03b8 = ' + p.N.toFixed(1) + ' N into it.');
+  }
+  function update() { p = calc(); L.out('thO', L.val('th').toFixed(1) + '°'); L.out('mO', p.m + ' kg'); L.out('msO', p.ms.toFixed(2)); L.out('mkO', p.mk.toFixed(2) + (L.val('mk') > p.ms ? ' (limited to μs)' : '')); show(); cv.redraw(); }
+  L.on(['th', 'm', 'ms', 'mk'], update);
+  L.$('rel').addEventListener('click', function () { s = 0; v = 0; released = true; slid = false; p = calc(); if (L.reduce) { s = LEN; released = false; } run.start(); show(); cv.redraw(); });
+  L.$('rst').addEventListener('click', function () { s = 0; v = 0; released = false; slid = false; run.stop(); update(); });
+})();
+</script>
+</body>
+</html>
