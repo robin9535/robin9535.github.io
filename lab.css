@@ -108,3 +108,5 @@ main.lab-main{padding:0 0 64px}
 .pager a:hover{background:var(--mist)}
 .rowlink i.num{font:800 1.05rem var(--display);font-style:normal}
 .rowlink em.prog{background:transparent;color:var(--good);border:1.5px solid var(--good)}
+
+.rowlink b small.bn{display:block;margin-top:2px;font:500 .95rem/1.4 "Noto Sans Bengali","Hind Siliguri","Nirmala UI","Shonar Bangla",sans-serif;color:var(--ink-soft)}
